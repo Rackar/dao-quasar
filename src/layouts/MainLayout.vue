@@ -1,22 +1,5 @@
 <template>
   <q-layout view="lHh lpR fFf">
-    <!-- <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="leftDrawerOpen = !leftDrawerOpen"
-        />
-
-        <q-toolbar-title>Quasar App</q-toolbar-title>
-
-        <div>cms示例 使用 Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>-->
-
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
@@ -69,6 +52,24 @@ const menuList = [
     path: "/"
   },
   {
+    icon: "settings",
+    label: "管理",
+    separator: false,
+    path: "/manage"
+  },
+  {
+    icon: "people",
+    label: "用户",
+    separator: false,
+    path: "/person"
+  },
+  {
+    icon: "people",
+    label: "测弹窗",
+    separator: true,
+    path: "/toast"
+  },
+  {
     icon: "send",
     label: "写文章",
     separator: false,
@@ -84,7 +85,7 @@ const menuList = [
     icon: "error",
     label: "单篇文章",
     path: "/articles/1",
-    separator: true
+    separator: false
   },
   {
     icon: "settings",

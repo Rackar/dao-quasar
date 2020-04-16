@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHR lpR fFf">
-    人物模板
+    <headerbar />
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -8,9 +8,12 @@
 </template>
 
 <script>
+import headerbar from "components/headerBar";
 export default {
   name: "PersonLayout",
-
+  components: {
+    headerbar
+  },
   data() {
     return {};
   }

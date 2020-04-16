@@ -24,18 +24,6 @@
             elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua.
           </div>
-          <!-- <q-scroll-area
-            :thumb-style="thumbStyle"
-            :content-style="contentStyle"
-            :content-active-style="contentActiveStyle"
-            style="height: 200px; max-width: 600px;"
-          >
-            <div v-for="n in 100" :key="n" class="q-pa-xs">
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.
-            </div>
-          </q-scroll-area>-->
         </div>
       </div>
     </div>
@@ -46,6 +34,36 @@
           <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
         </q-avatar>name
       </span>
+      <span>查看更多</span>
+    </div>
+
+    <div v-for="n in 6" :key="n">
+      <div class="q-pt-lg">
+        <q-avatar rounded size="20px">
+          <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
+        </q-avatar>
+        <span>菜多多</span>
+        <span>2020-03-06 40分钟之前</span>
+      </div>
+
+      <div
+        class="q-py-lg"
+      >见证了日本首富、互联网大佬是如何被喷的决定放弃捐赠的。我想针对这个话题聊聊，从孙正义，到比尔盖茨，再到中国。喷的人都认为自己见证了日本首富、互联网大佬是如何被喷的决定放弃捐赠的。我想针对这个话题聊聊，从孙正义，到比尔盖茨，再到中国。</div>
+      <div class="row" style=" max-width: 600px; ">
+        <q-img
+          v-for="n in 4"
+          :key="n"
+          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587055116202&di=335bb3c60fd6ea78f4723d4b48f03de4&imgtype=0&src=http%3A%2F%2Fimage.biaobaiju.com%2Fuploads%2F20190903%2F20%2F1567514043-wFhstfQLcd.jpg"
+          spinner-color="white"
+          style="height: 240px; max-width: 240px; margin:9px;"
+        />
+      </div>
+      <div>
+        <q-btn flat rounded color="primary" label="300" icon="thumb_up" />
+        <q-btn flat rounded label="200" icon="chat_bubble_outline" />
+        <q-btn flat rounded label="100" icon="share" />
+      </div>
+      <q-separator />
     </div>
   </div>
 </template>

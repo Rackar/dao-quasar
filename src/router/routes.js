@@ -18,10 +18,15 @@ const routes = [
       { path: '', component: () => import('pages/person/Index.vue') },]
     // { path: 'articleLists', component: () => import('pages/Articles.vue') }]
   }, {
-    path: '/manage',//人物信息模板
+    path: '/manage',//管理模板
     component: () => import('layouts/ManageLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/manage/Index.vue') },]
+      { path: '', component: () => import('pages/manage/member.vue') },]
+    // { path: 'articleLists', component: () => import('pages/manage/Articles.vue') }]
+  }, {
+    path: '/toast',//测试弹窗模板
+    component: () => import('pages/toast/index.vue'),
+    name: 'toast'
     // { path: 'articleLists', component: () => import('pages/manage/Articles.vue') }]
   }, { path: '/login', name: "login", component: () => import('pages/test/Login.vue') }
 ]
