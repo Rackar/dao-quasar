@@ -1,7 +1,7 @@
 <template>
   <div>
-    <q-btn label="删除框" color="primary" @click="icon = true" />
-    <q-dialog v-model="icon">
+    <q-btn label="删除框" color="primary" @click="show = true" />
+    <q-dialog v-model="show">
       <q-card style="width: 440px" class="q-pa-lg">
         <q-card-section class="row items-center q-pb-none">
           <div class="text-h6">删除草稿</div>
@@ -26,7 +26,7 @@ export default {
   props: {},
   data() {
     return {
-      icon: true,
+      show: false,
       small: ""
     };
   },
