@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-header elevated>
+  <q-layout view="lHh lpR fFf">
+    <!-- <q-header elevated>
       <q-toolbar>
         <q-btn
           flat
@@ -15,17 +15,24 @@
 
         <div>cms示例 使用 Quasar v{{ $q.version }}</div>
       </q-toolbar>
-    </q-header>
+    </q-header>-->
 
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      :width="240"
-      :breakpoint="500"
+      :width="458"
+      :breakpoint="800"
       bordered
       content-class="bg-grey-3"
     >
       <q-scroll-area class="fit">
+        <div class="q-pa-md">
+          <q-icon name="menu" class="q-pa-md" />DAOChat
+        </div>
+
+        <grouplist />
+
+        <span class="text-weight-bold">以下为测试跳转用</span>
         <q-list v-for="(menuItem, index) in menuList" :key="index">
           <q-item
             clickable
@@ -53,6 +60,7 @@
 </template>
 
 <script>
+import grouplist from "pages/group/GroupList";
 const menuList = [
   {
     icon: "inbox",
@@ -94,7 +102,7 @@ const menuList = [
 export default {
   name: "MainLayout",
 
-  components: {},
+  components: { grouplist },
 
   data() {
     return { menuList, leftDrawerOpen: false, link: "" };
