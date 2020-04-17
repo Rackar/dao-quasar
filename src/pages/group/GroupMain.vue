@@ -33,8 +33,13 @@
     </div>
 
     <div class="row">
-      <member class="col" :members="10" />
-      <span class="col-1">查看更多</span>
+      <member class="col" :members="9" />
+      <span class="col-2">
+        <q-btn flat color="primary" no-caps size="13px" @click="$router.push('/manage')">
+          查看更多
+          <br />(11)
+        </q-btn>
+      </span>
     </div>
 
     <div v-for="n in 6" :key="n">

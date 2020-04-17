@@ -6,32 +6,7 @@
       </q-avatar>
       <span class="text-weight-bold">DAOChat官方讨论组</span>
 
-      <div>
-        <div class="row q-pa-md info">
-          <div class="col-10">
-            <div>
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.
-            </div>
-
-            <div>奖励机制（单位：）</div>
-            <div>正数代表奖励，负数代表收费</div>
-            <div>
-              <div>发帖奖励</div>
-              <div>9</div>
-            </div>
-            <div>
-              <div>帖子回复奖励</div>
-              <div>10</div>
-            </div>
-            <div>
-              <div>邀请成员奖励</div>
-              <div>12</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <groupManage />
     </q-drawer>
 
     <q-page-container>
@@ -41,8 +16,10 @@
 </template>
 
 <script>
+import groupManage from "pages/manage/group";
 export default {
   name: "ManageLayout",
+  components: { groupManage },
   data() {
     return {
       right: false
