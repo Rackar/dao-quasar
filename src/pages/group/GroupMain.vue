@@ -1,5 +1,6 @@
 <template>
-  <div class="q-mx-xl">
+  <div class="q-mx-xl q-pt-xl">
+    <q-btn class="top-login" color="primary" flat @click="$router.push('/login')" label="快速登录" />
     <q-avatar rounded size="20px">
       <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
     </q-avatar>
@@ -108,5 +109,10 @@ export default {
 .info {
   background-color: #d4f6f3;
   color: #8c909d;
+}
+.top-login {
+  position: absolute;
+  top: 20px;
+  right: 40px;
 }
 </style>
