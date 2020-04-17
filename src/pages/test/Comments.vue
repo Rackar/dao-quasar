@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-list
+    <!-- <a-list
       v-if="comments.length"
       :dataSource="comments"
       :pagination="pagination"
@@ -31,7 +31,7 @@
           >提交评论</a-button>
         </a-form-item>
       </div>
-    </a-comment>
+    </a-comment>-->
     <q-list bordered class="rounded-borders" style="max-width: 550px">
       <q-item-label header>Friends</q-item-label>
 

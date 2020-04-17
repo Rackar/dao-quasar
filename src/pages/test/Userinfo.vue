@@ -4,7 +4,7 @@
     <div>
       <h2>修改个人信息</h2>
 
-      <a-row v-if="avatar" type="flex" justify="center">
+      <!-- <a-row v-if="avatar" type="flex" justify="center">
         <a-tooltip>
           <template slot="title">清除头像</template>
           <img :src="avatar" alt="avatar" class="info-avatar" @click="avatar=''" />
@@ -33,7 +33,7 @@
       </a-row>
       <a-row type="flex" justify="center">
         <a-button @click="sumitChange">确定提交</a-button>
-      </a-row>
+      </a-row>-->
     </div>
   </q-page>
 </template>

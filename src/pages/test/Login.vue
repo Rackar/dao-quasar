@@ -18,7 +18,7 @@
         </div>
         <div class="code" v-if="type==2">
           <div class="back" @click="back()">
-            <img class src="assets/icon_down.png" />
+            <img class src="~assets/icon_down.png" />
           </div>
           <div class="tit">
             <div>请输入验证码</div>
@@ -64,23 +64,17 @@ export default {
       let email = self.email;
       let re = /\w+@[a-z0-9]+\.[a-z]{2,4}/;
       if (!re.test(email)) {
-        // self.$toast({
-        //   text: "验证码格式不正确"
-        // });
         this.$q.notify({ position: "center", message: "验证码格式不正确" });
       } else {
-        let postapi = "/user/verify/" + self.email;
-        const resDataPost = await this.$axios.get(postapi, {});
+        //调试，注释掉注册接口
+        // let postapi = "/user/verify/" + self.email;
+        // const resDataPost = await this.$axios.get(postapi, {});
+        let resDataPost = { code: 0 };
         if (resDataPost.code == 0) {
           self.type = 2;
-          // self.$toast({
-          //   text: "验证码发送成功"
-          // });
+
           this.$q.notify({ position: "center", message: "验证码发送成功" });
         } else {
-          // self.$toast({
-          //   text: resDataPost.message
-          // });
           this.$q.notify({ position: "center", message: resDataPost.message });
         }
       }
@@ -98,7 +92,10 @@ export default {
         mail: this.email,
         code: this.code
       };
-      const resData = await this.$axios.post("/" + apiCode + "/", testData);
+      //调试，注释掉注册接口
+      // const resData = await this.$axios.post("/" + apiCode + "/", testData);
+      const resData = { code: 0, token: "xx0p", data: { user: "test" } };
+
       if (resData.code == 0) {
         let orignalSetItem = localStorage.setItem;
         localStorage.setItem = function(key, newValue) {
