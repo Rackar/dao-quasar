@@ -1,10 +1,11 @@
 <template>
   <div>
-    <q-btn label="删除帖子" color="primary" @click="show = true" />
+    <q-btn label="转账成功" color="primary" @click="show = true" />
     <q-dialog v-model="show">
       <ToastComponent
         :title="title"
         :content="content"
+        :showInfo="true"
         @taost_cancel="taost_cancel"
         @taost_confirm="taost_confirm"
       />
@@ -20,8 +21,8 @@ export default {
   data() {
     return {
       show: false,
-      title: "你确定要删除自己的帖子吗？",
-      content: ""
+      title: "转账成功",
+      content: "你也可以在「我的主页」中查看刚刚转账的信息"
     };
   },
   watch: {},

@@ -5,6 +5,9 @@
     <deleteArticle />
     <quitGroup />
     <successPublishArticle />
+    <successTransfer />
+    <moneyIn />
+    <moneyOut />
   </div>
 </template>
 
@@ -14,13 +17,19 @@ import deleteComment from "./deleteComment";
 import deleteArticle from "./deleteArticle";
 import quitGroup from "./quitGroup";
 import successPublishArticle from "./successPublishArticle";
+import successTransfer from "./successTransfer";
+import moneyIn from "./moneyIn";
+import moneyOut from "./moneyOut";
 export default {
   components: {
     deleteDraft,
     deleteComment,
     deleteArticle,
     quitGroup,
-    successPublishArticle
+    successPublishArticle,
+    successTransfer,
+    moneyIn,
+    moneyOut
   },
   props: {},
   data() {

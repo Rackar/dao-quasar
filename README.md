@@ -4,9 +4,9 @@ DAOchat front-end with Quasar Framework.
 
 ## 说明
 
-我不知道各位前端投入多大精力做本项目。通过代码目前的状况来看想快速满足项目需求要投入的工作量还是挺大的。现有代码有一部分可以复用。
+本项目为基于区块链的社区项目前端部分，基于 Vue.js 和 Quasar 框架。
 
-下一步我希望我首先就是统一工具，统一代码风格，然后合作开发使用 Git flow 工作流。所有代码都要通过 git PR 和 code review 后才可以并入开发分支。开发工具推荐使用 vscode,使用统一的代码风格检查工具 ESLint，并启用自动格式化。
+第一步希望统一工具，统一代码风格，然后合作开发使用 Git flow 工作流。所有代码都要通过 git PR 和 code review 后才可以并入开发分支。开发工具推荐使用 vscode,使用统一的代码风格检查工具 ESLint，并启用自动格式化。
 
 使用的框架为 Vue.js 2.6.x 版本，UI 框架使用 Quasar 1.9.x，配合 quasar cli 脚手架。自带 axios。不能随意引入未经讨论的新 js 库，避免性能问题。
 
@@ -59,7 +59,7 @@ REST Client
 
 使用 Quasar UI 框架进行开发。[Quasar 中文文档地址](http://www.quasarchs.com/quasar-cli/installation)
 
-### Install the dependencies
+### 安装依赖库 Install the dependencies
 
 ```bash
 npm install
@@ -71,29 +71,25 @@ npm install
 npm i -g @quasar/cli
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-
-开发命令
+### 开发命令 Start the app in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
 quasar dev
 ```
 
-### Lint the files
+### 规则检查 Lint the files
 
 ```bash
 npm run lint
 ```
 
-### Build the app for production
-
-打包命令
+### 打包命令 Build the app for production
 
 ```bash
 quasar build
 ```
 
-### Customize the configuration
+### 配置说明 Customize the configuration
 
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
@@ -106,3 +102,5 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 test 目录下为临时测试。
 
 layout 分为 3 种页面结构，内容切换通过路由嵌套的方式填充组件。
+
+尽量复用 Quasar 已封装组件，最好在官网中反复熟悉各个组件

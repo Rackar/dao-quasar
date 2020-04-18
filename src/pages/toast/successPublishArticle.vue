@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn label="删除框" color="primary" @click="show = true" />
+    <q-btn label="发布成功" color="primary" @click="show = true" />
     <q-dialog v-model="show">
       <ToastComponent
         :title="title"
@@ -22,7 +22,7 @@ export default {
     return {
       show: false,
       title: "发布成功",
-      content: "你也可以在【我的主页】中查看刚刚发布的内容"
+      content: "你也可以在「我的主页」中查看刚刚发布的内容"
     };
   },
   watch: {},
