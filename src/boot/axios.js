@@ -16,7 +16,7 @@ axiosInstance.interceptors.request.use(
             "Content-Type": " application/json"
         };
         let t = store
-        debugger;
+        // debugger;
 
         if (store.state.user.token) {
             config.headers.Authorization = `Bearer ${store.state.user.token}`;

@@ -14,7 +14,7 @@
     <q-avatar rounded size="20px">
       <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
     </q-avatar>
-    <span class="text-weight-bold">DAOChat官方讨论组</span>
+    <span class="text-weight-bold">{{group.name}}</span>
     <q-btn
       flat
       rounded
@@ -29,19 +29,15 @@
       color="primary"
       class="q-mx-md"
       label="加入小组"
-      @click="joinGrp(groupID)"
+      @click="joinGrp(group.id)"
       icon="add"
     />
     <q-btn outline color="primary" class="q-mx-md" label="发言" @click="addArtrcle" icon="create" />
     <div>
       <div class="row q-pa-md info q-my-md">
         <div class="col-10">
-          <span class="text-weight-bold">创建于2019-02-22 组长：绿岛雨</span>
-          <div>
-            Lorem ipsum dolor sit amet, consectetur adipisicing
-            elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua.
-          </div>
+          <span class="text-weight-bold">创建于{{group.create_at}} 组长：{{owner.name}}</span>
+          <div>{{group.desc_text}}</div>
         </div>
       </div>
     </div>
@@ -103,6 +99,12 @@ export default {
   computed: {
     userid() {
       return this.$store.state.user.userid;
+    },
+    group() {
+      return this.$store.state.group.currentGroup;
+    },
+    owner() {
+      return this.$store.state.group.currentGroupOwner;
     }
   },
   methods: {
@@ -116,12 +118,12 @@ export default {
         password: ""
       };
       let postapi = "/protected/grp/join";
-      const postjoin = await this.$axios.post(postapi, data).data;
-      if (postjoin.code == 0) {
+      const postjoin = await this.$axios.post(postapi, data);
+      if (postjoin.data.code == 0) {
         this.$q.notify({
           message: "加入成功！"
         });
-      } else if (postjoin.code == 104) {
+      } else if (postjoin.data.code == 104) {
         this.$router.push({ path: "/login" });
       }
     },

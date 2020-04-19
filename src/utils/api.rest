@@ -9,6 +9,7 @@
 @testemail = 27681135@qq.com
 @createdAt = {{$datetime iso8601}}
 @token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDI4MzY0MDYsImlkIjoxMDAwOX0.E7rsmZiWmrpOkmnnis384RX4dREZsx8ZblR_-pkzvc4
+@testUserId = 10009
 # token半年有效
 
 ### 未登录推荐组
@@ -29,6 +30,8 @@ POST https://{{host}}/user/login HTTP/1.1
 ### GET /user/members/:grp_id（群成员）
 ### GET /comments/:post_id（获取评论）
 ### GET /user/:id（用户信息）
+GET https://{{host}}/user/{{testUserId}} HTTP/1.1
+
 ### GET /protected/user/me（自己信息）
 ### POST /protected/grp/create（创建群）
 ### GET /protected/grp/joined（已加入的群）

@@ -71,7 +71,7 @@ export default {
         const resDataPost = await this.$axios.get(postapi, {});
         // let resDataPost = { code: 0 };
         let res = resDataPost.data;
-        debugger;
+        // debugger;
         if (res.code == 0) {
           this.type = 2;
           this.$q.notify({ message: "验证码发送成功" });

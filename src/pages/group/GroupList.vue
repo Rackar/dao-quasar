@@ -96,14 +96,20 @@ export default {
       await this.getReCommendGroups();
       await this.getMyGroups();
 
-      debugger;
+      // debugger;
       let activeGroupId = 0;
       if (this.myGroups && this.myGroups.length) {
         activeGroupId = this.myGroups[0].id;
       } else if (this.recommendGroups && this.recommendGroups.length) {
         activeGroupId = this.recommendGroups[0].id;
       }
-      this.$emit("getGroupInfo", { id: activeGroupId });
+      // debugger;
+      this.jumpToGroup(activeGroupId);
+    },
+
+    //
+    jumpToGroup(id) {
+      this.$store.dispatch("group/jumpToGroup", { id: id });
     },
     // 获取群信息
     getMyGroups: async function() {

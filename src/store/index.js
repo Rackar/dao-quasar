@@ -3,13 +3,14 @@ import Vuex from 'vuex'
 
 // import example from './module-example'
 import user from "./user";
+import group from "./group";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     // example
-    user
+    user, group
   },
 
   // enable strict mode (adds overhead!)
