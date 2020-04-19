@@ -3,7 +3,14 @@
     <q-dialog v-model="addArticleShow">
       <addArticle />
     </q-dialog>
-    <q-btn class="top-login" color="primary" flat @click="$router.push('/login')" label="快速登录" />
+    <q-btn
+      v-if="!userid"
+      class="top-login"
+      color="primary"
+      flat
+      @click="$router.push('/login')"
+      label="快速登录"
+    />
     <q-avatar rounded size="20px">
       <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
     </q-avatar>
@@ -85,7 +92,11 @@ export default {
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    userid() {
+      return this.$store.state.user.userid;
+    }
+  },
   methods: {
     addArtrcle() {
       this.addArticleShow = true;

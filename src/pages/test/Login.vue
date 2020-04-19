@@ -12,7 +12,8 @@
             <input type="text" class="val" v-model="email" name="email" placeholder="请输入您的邮箱" />
           </div>
           <div class="btn">
-            <button :class="email!=''?'active':''" @click="next">下一步</button>
+            <!-- <button :class="email!=''?'active':''" @click="sumitEmail">下一步</button> -->
+            <q-btn color="primary" :disable="!email" @click="sumitEmail" label="下一步" />
           </div>
           <div class="bei">DAO是一个由用户自治的论坛，该论坛所有社区规则由用户集体投票制定，登录使用DAO代表您同意该论坛的所有社区规则。</div>
         </div>
@@ -28,11 +29,12 @@
             <input type="number" class="val" v-model="code" name="code" placeholder="四位数验证码" />
           </div>
           <div class="btn">
-            <button :class="code!=''?'active':''" @click="login()">登录</button>
+            <!-- <button :class="code!=''?'active':''" @click="login()">登录</button> -->
+            <q-btn color="primary" :disable="!code" @click="login" label="登录" />
           </div>
           <div class="beizhu">
             <span>未收到验证码？</span>
-            <span class="resetcode" @click="next()">重新发送</span>
+            <span class="resetcode" @click="sumitEmail">重新发送</span>
           </div>
         </div>
       </div>
@@ -59,64 +61,54 @@ export default {
     // console.log(axios.commonApi);
   },
   methods: {
-    next: async function() {
-      let self = this;
-      let email = self.email;
+    async sumitEmail() {
       let re = /\w+@[a-z0-9]+\.[a-z]{2,4}/;
-      if (!re.test(email)) {
-        this.$q.notify({ position: "center", message: "验证码格式不正确" });
+      if (!re.test(this.email)) {
+        this.$q.notify({ message: "邮箱格式不正确" });
       } else {
         //调试，注释掉注册接口
-        // let postapi = "/user/verify/" + self.email;
-        // const resDataPost = await this.$axios.get(postapi, {});
-        let resDataPost = { code: 0 };
-        if (resDataPost.code == 0) {
-          self.type = 2;
-
-          this.$q.notify({ position: "center", message: "验证码发送成功" });
+        let postapi = "/user/verify/" + this.email;
+        const resDataPost = await this.$axios.get(postapi, {});
+        // let resDataPost = { code: 0 };
+        let res = resDataPost.data;
+        debugger;
+        if (res.code == 0) {
+          this.type = 2;
+          this.$q.notify({ message: "验证码发送成功" });
         } else {
-          this.$q.notify({ position: "center", message: resDataPost.message });
+          this.$q.notify({ message: res.message });
         }
       }
     },
+
     back: function() {
       this.type = 1;
     },
     login: async function() {
       localStorage.clear();
       let apiCode = "/user/login";
-      // let token = md5(
-      //   "apiKey=wft_web&" + apiCode + "&098f6bcd4621d373cade4e832627b4f6"
-      // );
       let testData = {
         mail: this.email,
         code: this.code
       };
       //调试，注释掉注册接口
-      // const resData = await this.$axios.post("/" + apiCode + "/", testData);
-      const resData = { code: 0, token: "xx0p", data: { user: "test" } };
-
-      if (resData.code == 0) {
-        let orignalSetItem = localStorage.setItem;
-        localStorage.setItem = function(key, newValue) {
-          var setItemEvent = new Event("setItemEvent");
-          setItemEvent.key = key;
-          setItemEvent.newValue = newValue;
-          window.dispatchEvent(setItemEvent);
-          orignalSetItem.apply(this, arguments);
-        };
-        let token = resData.data.token;
-        let userinfo = JSON.stringify(resData.data.user);
+      const resData = await this.$axios.post(apiCode, testData);
+      // const resData = { code: 0, token: "xx0p", data: { user: "test" } };
+      let res = resData.data;
+      if (res.code === 0) {
+        let token = res.data.token;
+        let userinfo = JSON.stringify(res.data.user);
         localStorage.setItem("token", token);
         localStorage.setItem("userinfo", userinfo);
+        this.$store.commit("user/login_saveToken", token);
         setTimeout(() => {
           this.$router.push({ path: "/", query: { token: token } });
-        }, 500);
+        }, 100);
       } else {
         // this.$toast({
         //   text:
         // });
-        this.$q.notify({ position: "center", message: resData.message });
+        this.$q.notify({ position: "center", message: res.message });
       }
     }
   }

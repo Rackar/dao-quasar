@@ -125,7 +125,9 @@
               <div class="chatTxt" v-if="grpinfo.creator && grpinfo.grp" v-show="grpinfo.grp">
                 <p>
                   创建于 {{grpinfo.grp && grpinfo.grp.create_at|dateformat("YYYY-MM-DD HH:mm:ss")}}
-                  <span class="chatPosition">组长：{{grpinfo.creator.name}}</span>
+                  <span
+                    class="chatPosition"
+                  >组长：{{grpinfo.creator.name}}</span>
                 </p>
                 <div class="detail">{{grpinfo.grp && grpinfo.grp.desc_text}}</div>
               </div>
@@ -418,54 +420,7 @@ export default {
         }
       }
     },
-    // 获取群信息
-    getgrp: async function() {
-      if (this.token == "") {
-        console.log("notoken!");
-        return false;
-      }
-      let self = this;
-      let datasss = {};
-      let apiCode = "/protected/grp/joined";
-      const getjoined = await axios.get("/" + apiCode, datasss);
-      if (getjoined) {
-        if (getjoined.code == 0) {
-          self.joindgrp = getjoined.data.grps_joined;
-          if (self.joindgrp.length > 0) {
-            self.active.type = 0;
-            self.getgrpinfo(getjoined.data.grps_joined[0].grp.id);
-            self.active.id = getjoined.data.grps_joined[0].grp.id;
-          } else {
-            self.active.type = 1;
-            self.active.id = 1;
-          }
-        } else if (getjoined.code == 104) {
-          self.active.type = 1;
-          self.active.id = 1;
-        }
-      }
-    },
-    // 获取推荐
-    getgrps: async function() {
-      let self = this;
-      let token = localStorage.getItem("token");
-      let postUrl;
-      if (token) {
-        postUrl = "/protected/grp/recommend";
-      } else {
-        postUrl = "/grp/recommend";
-      }
-      let datasss = {};
-      let apiCode = "/protected/grp/joined";
-      const getgrps = await axios.get("/" + postUrl, datasss);
-      if (getgrps.code == 0) {
-        self.grps = getgrps.data.grps;
-        if (self.grps.length > 0 && self.active.type == 1) {
-          self.getgrpinfo(self.grps[0].id);
-          self.active.id = self.grps[0].id;
-        }
-      }
-    },
+
     // 获取群信息
     getgrpinfo: async function(id) {
       var self = this;

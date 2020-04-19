@@ -6,6 +6,19 @@ import user from "./user";
 
 Vue.use(Vuex)
 
+export default new Vuex.Store({
+  modules: {
+    // example
+    user
+  },
+
+  // enable strict mode (adds overhead!)
+  // for dev mode only
+  strict: process.env.DEV
+})
+
+
+
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -15,17 +28,17 @@ Vue.use(Vuex)
  * with the Store instance.
  */
 
-export default function (/* { ssrContext } */) {
-  const Store = new Vuex.Store({
-    modules: {
-      // example
-      user
-    },
+// export default function (/* { ssrContext } */) {
+//   const Store = new Vuex.Store({
+//     modules: {
+//       // example
+//       user
+//     },
 
-    // enable strict mode (adds overhead!)
-    // for dev mode only
-    strict: process.env.DEV
-  })
+//     // enable strict mode (adds overhead!)
+//     // for dev mode only
+//     strict: process.env.DEV
+//   })
 
-  return Store
-}
+//   return Store
+// }

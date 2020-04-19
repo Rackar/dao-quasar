@@ -1,7 +1,26 @@
+import { axiosInstance } from 'boot/axios'
 const apiPath = {
     getVerify: '/user/verify/:mail',
     postLogin: '/user/login'
 }
+
+export const get = (url, config) => {
+    return new Promise((resolve, reject) => {
+        axiosInstance.get(url, config).then((res) => {
+            // debugger;
+            if (res.data.code === 0) {
+                resolve(res.data)
+            } else {
+                reject(res.data.message)
+            }
+        }).catch(err => {
+            // debugger;
+            reject(err)
+        })
+    })
+}
+
+
 // GET /user/verify/:mail（发送验证码）
 // POST /user/login（登陆）
 // GET /grp/:id （群信息）

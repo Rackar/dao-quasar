@@ -1,0 +1,67 @@
+# 测试后端api接口
+
+@hostname = chatdao.com
+@port = 3031
+
+@host = {{hostname}}:{{port}}
+@contentType = application/json
+
+@testemail = 27681135@qq.com
+@createdAt = {{$datetime iso8601}}
+@token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDI4MzY0MDYsImlkIjoxMDAwOX0.E7rsmZiWmrpOkmnnis384RX4dREZsx8ZblR_-pkzvc4
+# token半年有效
+
+### 未登录推荐组
+GET {{host}}/grp/recommend 
+
+
+### GET /user/verify/:mail（发送验证码）
+GET https://{{host}}/user/verify/{{testemail}}
+### POST /user/login（登陆）
+POST https://{{host}}/user/login HTTP/1.1
+
+{
+	"mail": "{{testemail}}",
+	"code": "4897"
+}
+
+### GET /grp/:id （群信息）
+### GET /user/members/:grp_id（群成员）
+### GET /comments/:post_id（获取评论）
+### GET /user/:id（用户信息）
+### GET /protected/user/me（自己信息）
+### POST /protected/grp/create（创建群）
+### GET /protected/grp/joined（已加入的群）
+### GET /grp/recommend (未登陆) || GET /protected/grp/recommend (已登陆) （群推荐）
+GET https://{{host}}/protected/grp/recommend HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+
+### POST /protected/grp/join（加群）
+POST https://{{host}}/protected/grp/join HTTP/1.1
+
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "grp": 1,
+  "password": ""
+}
+### POST /protected/grp/detach（退群）
+### POST /protected/post/create（发帖）
+### POST /protected/post/like（点赞）
+### POST /protected/post/likes（点赞状态）
+### POST /protected/comment/create（评论）
+### POST /protected/post/pull (已登陆) || POST /post/pull (未登陆) （获取帖子）
+### POST /protected/post/my/pull（我发布的帖子）
+### DELETE /protected/post（删帖）
+### PUT /protected/post（更新帖子）
+### PUT /protected/user/modify（修改个人信息）
+### GET /protected/user/tokens（我的代币）
+### POST /protected/user/token/transfer（转账）
+### POST /protected/user/token/logs（转账日志）
+### GET /protected/user/notifications/:base_notification（获取通知）
+### POST /protected/grp/block（拉黑）
+### POST /grp/against（搜索群）
+### POST /protected/grp/pin（置顶群）
