@@ -154,6 +154,12 @@
 <script>
 export default {
   components: {},
+  props: {
+    id: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
       userName: "",
@@ -192,7 +198,6 @@ export default {
       this.$router.push({ path: "/login", query: {} });
     }
   },
-  ready() {},
   methods: {
     childfn: function() {
       this.getmyabb(tab == 0 ? false : true);

@@ -13,7 +13,8 @@ const routes = [
     path: '/person',//人物信息模板
     component: () => import('layouts/PersonLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/person/Index.vue') },]
+      { path: '', component: () => import('pages/person/Index.vue') },
+      { path: 'show/:id', props: true, component: () => import('pages/person/Index.vue') }]
     // { path: 'articleLists', component: () => import('pages/Articles.vue') }]
   }, {
     path: '/manage',//管理模板
