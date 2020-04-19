@@ -23,6 +23,7 @@
       color="grey"
       label="分享"
       icon="share"
+      @click="shareUrl"
     />
     <q-btn
       unelevated
@@ -179,6 +180,18 @@ export default {
       if (result.data.code == 0) {
         this.posts = result.data.data.posts;
       }
+    },
+    async shareUrl() {
+      let url = window.location.href;
+      navigator.clipboard.writeText(url).then(
+        () => {
+          /* success */ this.$q.notify("地址已复制到剪切板");
+        },
+        err => {
+          /* failure */ this.$q.notify("浏览器不支持，请手动复制地址");
+          console.log(err);
+        }
+      );
     }
   },
   created() {},
