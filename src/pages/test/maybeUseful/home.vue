@@ -15,8 +15,8 @@
       <div class="chatSearch"></div>
       <div class="chatList chatListFirst">
         <div
-          v-if="joindgrp.length>0 && item.grp"
           v-for="(item,index) in joindgrp"
+          :key="index"
           @click="tabgrp(index,item.grp.id,'0')"
           :class="{'listItemBg':item.grp.id==active.id}"
           class="listItem"
@@ -60,6 +60,7 @@
             @click="tabgrp(index,item.id,'1')"
             :class="{'listItemBg':item.id==active.id}"
             v-for="(item,index) in grps"
+            :key="index"
           >
             <div class="chatAvatar">
               <img src="../assets/image/avatar.jpeg" />
@@ -132,7 +133,7 @@
                 <div class="detail">{{grpinfo.grp && grpinfo.grp.desc_text}}</div>
               </div>
               <div class="characterMain">
-                <div v-if="grpuser.length>0" v-for="(items,index) in grpuser">
+                <div v-for="(items,index) in grpuser" :key="index">
                   <div class="characterItem" v-if="index<5">
                     <img src="../assets/image/avatar.jpeg" />
                     <p>{{items.name}}</p>
@@ -163,7 +164,7 @@
         <div class="textarea">
           <textarea v-model="abbcontent" placeholder="有什么新鲜事告诉大家…"></textarea>
           <div id="result">
-            <div class="imaList" v-if="imgList.length>0" v-for="(item,index) in imgList">
+            <div class="imaList" v-for="(item,index) in imgList" :key="index">
               <img :src="item" />
               <div class="close" @click="removeImg(index)">X</div>
             </div>

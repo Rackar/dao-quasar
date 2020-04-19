@@ -24,7 +24,14 @@
       label="分享"
       icon="share"
     />
-    <q-btn unelevated color="primary" class="q-mx-md" label="加入小组" icon="add" />
+    <q-btn
+      unelevated
+      color="primary"
+      class="q-mx-md"
+      label="加入小组"
+      @click="joinGrp(groupID)"
+      icon="add"
+    />
     <q-btn outline color="primary" class="q-mx-md" label="发言" @click="addArtrcle" icon="create" />
     <div>
       <div class="row q-pa-md info q-my-md">
@@ -88,7 +95,8 @@ export default {
   props: {},
   data() {
     return {
-      addArticleShow: false
+      addArticleShow: false,
+      groupID: 0
     };
   },
   watch: {},
@@ -100,6 +108,35 @@ export default {
   methods: {
     addArtrcle() {
       this.addArticleShow = true;
+    },
+    // 加入组
+    joinGrp: async function(id) {
+      let data = {
+        grp: id,
+        password: ""
+      };
+      let postapi = "/protected/grp/join";
+      const postjoin = await this.$axios.post(postapi, data).data;
+      if (postjoin.code == 0) {
+        this.$q.notify({
+          message: "加入成功！"
+        });
+      } else if (postjoin.code == 104) {
+        this.$router.push({ path: "/login" });
+      }
+    },
+    // 跳转时某群组
+    async JumpToGroup(id) {
+      let token = localStorage.getItem("token");
+      let postapi = "/grp/" + id;
+      const getinfo = await this.$axios.get(postapi).data;
+      if (getinfo.code == 0) {
+        this.grpinfo = getinfo.data;
+        // this.grpinfo.grp.create_at.m
+        this.getgrpuser(id);
+        this.getList(id);
+        this.active.id = id;
+      }
     }
   },
   created() {},

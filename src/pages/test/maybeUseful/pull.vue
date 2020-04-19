@@ -6,11 +6,11 @@
 </style>
 <template>
   <div>
-    <div class="items" v-if="item.creator && item.post" v-for="(item,index) in data_item">
+    <div class="items" v-for="(item,index) in data_item" :key="index">
       <div class="itemsTit">
         <img v-if="isinfo" src="../assets/image/avatar.jpeg" />
         <span>
-          <span v-if="isinfo">&nbsp</span>
+          <span v-if="isinfo">&nbsp;</span>
           {{item.creator && item.creator.name}}&nbsp;&nbsp;{{item.post && $moment(item.post.create_at).format('YYYY-MM-DD')}}&nbsp;&nbsp;
           <!--30分钟前-->
         </span>
@@ -23,13 +23,15 @@
         class="dynamicImg"
         v-if="item.post.images.length>0 && matchType(item.post.images[0])=='image'"
       >
-        <img class="imgList" alt="bak" v-for="items in item.post.images" :src="items" />
+        <img
+          class="imgList"
+          alt="bak"
+          v-for="items in item.post.images"
+          :src="items"
+          :key="items.it"
+        />
       </div>
-      <div
-        class="dynamicVideo"
-        v-for="items in item.post.images"
-        v-if="item.post.images.length>0 && matchType(item.post.images[0])=='video'"
-      >
+      <div class="dynamicVideo" v-for="items in item.post.images" :key="items.id">
         <video width="430" height="240" controls="controls">
           <source :src="items" type="video/mp4" />
         </video>
@@ -71,7 +73,7 @@
           <!--              <span class="loading"></span></p>-->
         </p>
         <div class="commentItems">
-          <label v-for="(items,ind) in item.comments">
+          <label v-for="(items,index) in item.comments" :key="index">
             <div class="itemsTit">
               <img src="../assets/image/avatar.jpeg" />
               <span>&nbsp;{{items.creator.name}}&nbsp;&nbsp;{{$timeFn(items.comment.create_at)}}</span>
@@ -82,7 +84,7 @@
                 class="respond"
                 @click="reback.index=index,reback.reindex=ind"
               >回应</span>
-              <div class="childrenItems" v-for="(it,indexs) in items.subs">
+              <div class="childrenItems" v-for="(it,index) in items.subs" :key="index">
                 <div class="itemsTit">
                   <img src="../assets/image/avatar.jpeg" />
                   <span>&nbsp;{{it.creator.name}}&nbsp;&nbsp;{{$timeFn(it.comment.create_at)}}</span>

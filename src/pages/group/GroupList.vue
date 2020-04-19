@@ -2,7 +2,7 @@
   <div>
     <q-list class="rounded-borders" style="max-width: 550px">
       <div v-for="grp in myGroups" :key="grp.id">
-        <q-item clickable v-ripple class="q-px-xl q-py-md">
+        <q-item clickable @click="jumpToGroup(grp.id)" v-ripple class="q-px-xl q-py-md">
           <q-item-section avatar>
             <q-avatar rounded size="40px">
               <img :src="grp.avatar" />
@@ -25,7 +25,7 @@
       </div>
       <q-item-label header class="q-px-xl">推荐</q-item-label>
       <div v-for="grp in recommendGroups" :key="grp.id">
-        <q-item clickable v-ripple class="q-px-xl q-py-md">
+        <q-item clickable @click="jumpToGroup(grp.id)" v-ripple class="q-px-xl q-py-md">
           <q-item-section avatar>
             <q-avatar rounded size="40px">
               <img :src="grp.avatar" />

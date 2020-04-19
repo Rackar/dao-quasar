@@ -147,8 +147,8 @@
   </div>
 </template>
 <script>
-import layerBox from "./layer";
-import pullBox from "./pull";
+// import layerBox from "./layer";
+// import pullBox from "./pull";
 export default {
   data() {
     return {
@@ -157,8 +157,8 @@ export default {
   },
   components: {
     //注册组件
-    layerBox,
-    pullBox
+    // layerBox,
+    // pullBox
   },
   created() {
     let id = this.$route.query.id;
