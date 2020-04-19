@@ -43,11 +43,12 @@
     </div>
 
     <div class="row">
-      <member class="col" :members="9" />
+      <member class="col" :members="grpMembers" />
       <span class="col-2">
         <q-btn flat color="primary" no-caps size="13px" @click="$router.push('/manage')">
           查看更多
-          <br />(11)
+          <br />
+          ({{grpMembers.length}})
         </q-btn>
       </span>
     </div>
@@ -151,12 +152,12 @@ export default {
     },
     // 跳转时某群组
     async getGroupUserAndList(id) {
-      // this.getGroupMembers(id);
+      this.getGroupMembers(id);
       this.getPosts(id);
     },
     // 获取群组员
     getGroupMembers: async function(id) {
-      let postapi = "user/members/" + id;
+      let postapi = "/user/members/" + id;
       const members = await this.$axios.get(postapi);
       if (members.data.code == 0) {
         this.grpMembers = members.data.data.alive;

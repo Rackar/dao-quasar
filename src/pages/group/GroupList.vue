@@ -98,12 +98,12 @@ export default {
 
       // debugger;
       let activeGroupId = 0;
+      // console.log(this.myGroups, this.recommendGroups);
       if (this.myGroups && this.myGroups.length) {
-        activeGroupId = this.myGroups[0].id;
+        activeGroupId = this.myGroups[0].grp.id;
       } else if (this.recommendGroups && this.recommendGroups.length) {
         activeGroupId = this.recommendGroups[0].id;
       }
-      // debugger;
       this.jumpToGroup(activeGroupId);
     },
 
