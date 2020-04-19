@@ -84,28 +84,11 @@ const menuList = [
     separator: false,
     path: "/edit"
   },
-  {
-    icon: "delete",
-    label: "文章列表",
-    separator: false,
-    path: "/articleLists"
-  },
+
   {
     icon: "error",
-    label: "单篇文章",
+    label: "看单篇文章",
     path: "/articles/1",
-    separator: false
-  },
-  {
-    icon: "settings",
-    label: "设置",
-    path: "/setting",
-    separator: false
-  },
-  {
-    icon: "feedback",
-    label: "用户",
-    path: "/userinfo",
     separator: false
   }
 ];

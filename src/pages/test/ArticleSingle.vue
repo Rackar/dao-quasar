@@ -5,17 +5,13 @@
     <q-card flat bordered>
       <q-card-section v-html="editor" />
     </q-card>
-    <comments />
   </q-page>
 </template>
 
 <script>
-import Comments from "pages/test/Comments";
 export default {
   name: "Article",
-  components: {
-    Comments
-  },
+  components: {},
   props: { id: String },
   data() {
     return {

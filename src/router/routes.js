@@ -4,11 +4,9 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/group/Index.vue') },
-      { path: 'articleLists', component: () => import('pages/test/Articles.vue') },
       { path: 'edit', component: () => import('pages/test/ArticleCreate.vue') },
-      { path: 'articles/:id', component: () => import('pages/test/ArticleSingle.vue') },
-      { path: "userinfo", component: () => import('pages/test/Userinfo.vue') },
-      { path: 'setting', component: () => import('pages/test/Setting.vue') },
+      { path: 'articles/:id', component: () => import('pages/test/ArticleSingle.vue') }
+
 
     ]
   }, {

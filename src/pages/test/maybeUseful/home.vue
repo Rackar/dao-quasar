@@ -8,7 +8,6 @@
         <i></i>
         <span>DAOChat</span>
         <div class="toolTip-left" v-if="showTip">
-          <div class="commonBorder" @click="iscrtgrp">创建一个群</div>
           <div class="commonBorder" @click="clearLogin">退出登录</div>
         </div>
       </div>
@@ -111,9 +110,7 @@
           <span class="share">
             <i></i>分享
           </span>
-          <span class="join" v-if="active.type==1" @click="joingrp(grpinfo.grp.id)">
-            <i></i>加入小组
-          </span>
+
           <span class="speak" @click="islayer=true">
             <i></i>发言
           </span>
@@ -402,98 +399,7 @@ export default {
         }
       }
     },
-    // 创建群
-    creategrp: async function() {
-      let self = this;
-      let apiCode = "/protected/grp/create";
-      let val = this.crtgrp;
-      val["name"] = val.tit;
-      val.read_permission = Number(val.read_permission);
-      if ((val.tit = "" || val.desc_text == "" || val.read_permission == "")) {
-        alert("信息不完整，请完善信息");
-      } else {
-        const putgrps = await axios.post("/" + apiCode, val);
-        if (putgrps.code == 0) {
-          this.getgrp();
-          this.iscrtgrp();
-        } else {
-          alert(putgrps.massage);
-        }
-      }
-    },
 
-    // 获取群信息
-    getgrpinfo: async function(id) {
-      var self = this;
-      let datasss = {};
-      let token = localStorage.getItem("token");
-      const bearer = "Bearer " + token;
-      let postapi = "/grp/" + id;
-      const getinfo = await axios.get("/" + postapi, datasss);
-      if (getinfo.code == 0) {
-        self.grpinfo = getinfo.data;
-        // self.grpinfo.grp.create_at.m
-        self.getgrpuser(id);
-        self.getList(id);
-        self.active.id = id;
-      }
-    },
-    // 加入小组
-    joingrp: async function(id) {
-      var self = this;
-      let datasss = {
-        grp: id,
-        password: ""
-      };
-      let token = localStorage.getItem("token");
-      let postapi = "/protected/grp/join";
-      const postjoin = await axios.post("/" + postapi, datasss);
-      if (postjoin.code == 0) {
-        this.$toast({
-          text: "加入成功！"
-        });
-      } else if (postjoin.code == 104) {
-        this.layer = {
-          type: "login",
-          show: true,
-          post: 12345
-        };
-        self.$router.push({ path: "/login", query: { token: token } });
-      }
-    },
-    // 获取群组员
-    getgrpuser: async function(id) {
-      let self = this;
-      let token = localStorage.getItem("token");
-      const bearer = "Bearer " + token;
-      let postapi = "user/members/" + id;
-      const getuser = await axios.get("/" + postapi, {});
-      if (getuser.code == 0) {
-        self.grpuser = getuser.data.alive;
-      }
-    },
-    // 获取帖子
-    getList: async function(id) {
-      let token = localStorage.getItem("token");
-      let url;
-      let self = this;
-      // 获取帖子
-      let dat1 = {
-        grp: id,
-        base_post: null
-      };
-      if (token) {
-        url = "/protected/post/pull";
-        this.token = token;
-      } else {
-        url = "/post/pull";
-      }
-      const List = await axios.post("/" + url, dat1);
-      if (List.code == 0) {
-        self.posts = List.data.posts;
-      }
-      // 获取帖子
-    },
     //   // 创建帖子
     setabb: async function() {
       let self = this;
