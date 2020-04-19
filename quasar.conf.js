@@ -50,9 +50,10 @@ module.exports = function (ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: ['Notify'],
+      plugins: ['Notify', 'Loading'],
       config: {
-        notify: { position: "top", timeout: 1200 /* Notify defaults */ }
+        notify: { position: "top", timeout: 1200 /* Notify defaults */ },
+        loading: { /* Loading defaults */ }
       }
     },
 

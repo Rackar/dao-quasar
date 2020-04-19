@@ -52,23 +52,21 @@
       </span>
     </div>
 
-    <div v-for="n in 6" :key="n">
+    <div v-for="post in posts" :key="post.post.id">
       <div class="q-pt-lg">
         <q-avatar rounded size="20px">
           <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
         </q-avatar>
-        <span>菜多多</span>
-        <span>2020-03-06 40分钟之前</span>
+        <span class="q-px-md">{{post.creator.name}}</span>
+        <span>{{post.post.create_at}}</span>
       </div>
 
-      <div
-        class="q-py-lg"
-      >见证了日本首富、互联网大佬是如何被喷的决定放弃捐赠的。我想针对这个话题聊聊，从孙正义，到比尔盖茨，再到中国。喷的人都认为自己见证了日本首富、互联网大佬是如何被喷的决定放弃捐赠的。我想针对这个话题聊聊，从孙正义，到比尔盖茨，再到中国。</div>
+      <div class="q-py-lg">{{post.post.content}}</div>
       <div class="row" style=" max-width: 600px; ">
         <q-img
-          v-for="n in 4"
-          :key="n"
-          src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1587055116202&di=335bb3c60fd6ea78f4723d4b48f03de4&imgtype=0&src=http%3A%2F%2Fimage.biaobaiju.com%2Fuploads%2F20190903%2F20%2F1567514043-wFhstfQLcd.jpg"
+          v-for="(url,index) in post.post.images"
+          :key="index"
+          :src="url"
           spinner-color="white"
           style="height: 240px; max-width: 240px; margin:9px;"
         />
@@ -84,6 +82,19 @@
 </template>
 
 <script>
+let post = {
+  content: "巨大的福利来袭",
+  create_at: "2020-03-22T12:26:18+00:00",
+  creator: 10001,
+  grp: 10000,
+  id: 14,
+  num_comment: 0,
+  num_like: 0,
+  num_share: 0,
+  num_unlike: 0,
+  title: "",
+  images: ["aws s3 url", "aws s3 url"]
+};
 import addArticle from "pages/article/add";
 import member from "components/member";
 export default {
@@ -92,13 +103,22 @@ export default {
   data() {
     return {
       addArticleShow: false,
-      groupID: 0
+      groupID: 0,
+      posts: [],
+      grpMembers: []
     };
   },
-  watch: {},
+  watch: {
+    groupId: function(newVal, oldVal) {
+      this.getGroupUserAndList(newVal);
+    }
+  },
   computed: {
     userid() {
       return this.$store.state.user.userid;
+    },
+    groupId() {
+      return this.group.id;
     },
     group() {
       return this.$store.state.group.currentGroup;
@@ -118,7 +138,9 @@ export default {
         password: ""
       };
       let postapi = "/protected/grp/join";
+      this.$q.loading.show();
       const postjoin = await this.$axios.post(postapi, data);
+      this.$q.loading.hide();
       if (postjoin.data.code == 0) {
         this.$q.notify({
           message: "加入成功！"
@@ -128,16 +150,33 @@ export default {
       }
     },
     // 跳转时某群组
-    async JumpToGroup(id) {
-      let token = localStorage.getItem("token");
-      let postapi = "/grp/" + id;
-      const getinfo = await this.$axios.get(postapi).data;
-      if (getinfo.code == 0) {
-        this.grpinfo = getinfo.data;
-        // this.grpinfo.grp.create_at.m
-        this.getgrpuser(id);
-        this.getList(id);
-        this.active.id = id;
+    async getGroupUserAndList(id) {
+      // this.getGroupMembers(id);
+      this.getPosts(id);
+    },
+    // 获取群组员
+    getGroupMembers: async function(id) {
+      let postapi = "user/members/" + id;
+      const members = await this.$axios.get(postapi);
+      if (members.data.code == 0) {
+        this.grpMembers = members.data.data.alive;
+      }
+    },
+    // 获取帖子
+    getPosts: async function(id, pageNumber = null) {
+      let data = {
+        grp: id,
+        base_post: pageNumber
+      };
+      let url;
+      if (this.userid) {
+        url = "/protected/post/pull";
+      } else {
+        url = "/post/pull";
+      }
+      const result = await this.$axios.post(url, data);
+      if (result.data.code == 0) {
+        this.posts = result.data.data.posts;
       }
     }
   },

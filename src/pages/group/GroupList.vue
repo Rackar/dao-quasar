@@ -1,23 +1,23 @@
 <template>
   <div>
     <q-list class="rounded-borders" style="max-width: 550px">
-      <div v-for="grp in myGroups" :key="grp.id">
-        <q-item clickable @click="jumpToGroup(grp.id)" v-ripple class="q-px-xl q-py-md">
+      <div v-for="myGroup in myGroups" :key="myGroup.id">
+        <q-item clickable @click="jumpToGroup(myGroup.grp.id)" v-ripple class="q-px-xl q-py-md">
           <q-item-section avatar>
             <q-avatar rounded size="40px">
-              <img :src="grp.avatar" />
+              <img :src="myGroup.grp.avatar" />
             </q-avatar>
           </q-item-section>
 
           <q-item-section>
             <q-item-label lines="1">
-              <span class="text-weight-bold">{{grp.name}}</span>
+              <span class="text-weight-bold">{{myGroup.grp.name}}</span>
             </q-item-label>
-            <q-item-label caption lines="2">{{grp.desc_text}}</q-item-label>
+            <q-item-label caption lines="2">{{myGroup.grp.desc_text}}</q-item-label>
           </q-item-section>
           <q-item-section side top>
-            <q-badge color="grey" :label="grp.num_post" />
-            <q-item-label caption>{{grp.last_post_at}}</q-item-label>
+            <q-badge color="grey" :label="myGroup.grp.num_post" />
+            <q-item-label caption>{{myGroup.grp.last_post_at}}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -120,7 +120,7 @@ export default {
       // debugger;
       if (getjoined) {
         if (getjoined.code == 0) {
-          this.myGroups = getjoined.data.grps;
+          this.myGroups = getjoined.data.grps_joined;
         } else if (getjoined.code == 104) {
         }
       } else {
