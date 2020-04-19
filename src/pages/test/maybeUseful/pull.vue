@@ -143,7 +143,7 @@
   </div>
 </template>
 <script>
-import axios from "../http/axios";
+// import axios from "../http/axios";
 export default {
   name: "pull",
   data() {

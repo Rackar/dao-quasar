@@ -1,14 +1,17 @@
 <template>
   <div>
-    <right />
+    <allDetails />
+    <!-- <right /> -->
   </div>
 </template>
 
 <script>
+import allDetails from "./allDetails";
 import right from "./right";
 export default {
   components: {
-    right
+    // right,
+    allDetails
   },
   props: {},
   data() {
