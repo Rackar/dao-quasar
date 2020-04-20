@@ -9,16 +9,8 @@
       content-class="bg-grey-3"
     >
       <q-scroll-area class="fit">
-        <div class="q-pa-md menu-main" @click="showTip=!showTip" @mouseover="showTip=true">
-          <q-icon name="menu" class="q-pa-md" />DAOChat
-        </div>
-        <div class="toolTip-left" v-if="showTip">
-          <div class="commonBorder" @click="createGrp">创建一个群</div>
-          <div class="commonBorder" @click="clearLogin">退出登录</div>
-        </div>
-
+        <GroupListHeader />
         <grouplist />
-
         <span class="text-weight-bold">以下为测试跳转用</span>
         <q-list v-for="(menuItem, index) in menuList" :key="index">
           <q-item
@@ -40,10 +32,6 @@
       </q-scroll-area>
     </q-drawer>
 
-    <!--      创建群-->
-    <q-dialog v-model="iscreate">
-      <groupCreate />
-    </q-dialog>
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -52,7 +40,7 @@
 
 <script>
 import grouplist from "pages/group/GroupList";
-import groupCreate from "pages/group/GroupCreate";
+import GroupListHeader from "pages/group/GroupListHeader";
 const menuList = [
   {
     icon: "inbox",
@@ -95,29 +83,16 @@ const menuList = [
 export default {
   name: "MainLayout",
 
-  components: { grouplist, groupCreate },
+  components: { grouplist, GroupListHeader },
 
   data() {
     return {
-      menuList,
       leftDrawerOpen: false,
-      link: "",
-      showTip: false,
-      iscreate: false
+      menuList: "",
+      link: ""
     };
   },
-  methods: {
-    createGrp: function() {
-      this.iscreate = true;
-      this.showTip = false;
-    },
-    clearLogin: function() {
-      this.showTip = false;
-      localStorage.removeItem("token");
-      localStorage.removeItem("userinfo");
-      this.$router.go(0);
-    }
-  }
+  methods: {}
 };
 </script>
 

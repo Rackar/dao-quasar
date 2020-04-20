@@ -52,6 +52,14 @@ Content-Type: {{contentType}}
   "password": ""
 }
 ### POST /protected/grp/detach（退群）
+POST https://{{host}}/protected/grp/detach HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "grp": 10015
+}
+
 ### POST /protected/post/create（发帖）
 ### POST /protected/post/like（点赞）
 ### POST /protected/post/likes（点赞状态）

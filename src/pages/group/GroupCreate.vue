@@ -108,7 +108,7 @@ export default {
         if (result.data.code == 0) {
           this.$q.notify("创建成功，需手动刷新页面");
         } else {
-          this.$q.notify(result.massage);
+          this.$q.notify(result.data.message);
         }
       }
     }
