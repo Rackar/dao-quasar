@@ -5,7 +5,7 @@
         <img :src="post.creator.avatar?post.creator.avatar:'statics/user.svg'" />
       </q-avatar>
       <span class="q-px-md">{{post.creator.name}}</span>
-      <span>{{post.post.create_at}}</span>
+      <span>{{$utils.timeStringToLocal(post.post.create_at)}}</span>
     </div>
 
     <div class="q-py-lg">{{post.post.content}}</div>

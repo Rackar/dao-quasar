@@ -37,7 +37,9 @@
     <div>
       <div class="row q-pa-md info q-my-md">
         <div class="col-10">
-          <span class="text-weight-bold">创建于{{group.create_at}} 组长：{{owner.name}}</span>
+          <span
+            class="text-weight-bold"
+          >创建于{{$utils.timeStringToLocal(group.create_at) }} 组长：{{owner.name}}</span>
           <div>{{group.desc_text}}</div>
         </div>
       </div>

@@ -17,7 +17,7 @@
           </q-item-section>
           <q-item-section side top>
             <q-badge color="grey" :label="myGroup.grp.num_post" />
-            <q-item-label caption>{{myGroup.grp.last_post_at}}</q-item-label>
+            <q-item-label caption>{{$utils.timeStringToLocal(myGroup.grp.last_post_at) }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -40,7 +40,7 @@
           </q-item-section>
           <q-item-section side top>
             <q-badge color="grey" :label="grp.num_post" />
-            <q-item-label caption>{{grp.last_post_at}}</q-item-label>
+            <q-item-label caption>{{$utils.timeStringToLocal(grp.last_post_at)}}</q-item-label>
           </q-item-section>
         </q-item>
 
