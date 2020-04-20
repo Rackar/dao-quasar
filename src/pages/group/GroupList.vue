@@ -5,7 +5,7 @@
         <q-item clickable @click="jumpToGroup(myGroup.grp.id)" v-ripple class="q-px-xl q-py-md">
           <q-item-section avatar>
             <q-avatar rounded size="40px">
-              <img :src="myGroup.grp.avatar" />
+              <img :src="myGroup.grp.avatar?myGroup.grp.avatar:'statics/group.svg'" />
             </q-avatar>
           </q-item-section>
 
@@ -28,7 +28,7 @@
         <q-item clickable @click="jumpToGroup(grp.id)" v-ripple class="q-px-xl q-py-md">
           <q-item-section avatar>
             <q-avatar rounded size="40px">
-              <img :src="grp.avatar" />
+              <img :src="grp.avatar?grp.avatar:'statics/group.svg'" />
             </q-avatar>
           </q-item-section>
 

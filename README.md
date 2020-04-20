@@ -6,6 +6,8 @@ DAOchat front-end with Quasar Framework.
 
 本项目为基于区块链的社区项目前端部分，基于 Vue.js 和 Quasar 框架。
 
+[项目演示地址](https://rackar.github.io/dao-quasar)
+
 第一步希望统一工具，统一代码风格，然后合作开发使用 Git flow 工作流。所有代码都要通过 git PR 和 code review 后才可以并入开发分支。开发工具推荐使用 vscode,使用统一的代码风格检查工具 ESLint，并启用自动格式化。
 
 使用的框架为 Vue.js 2.6.x 版本，UI 框架使用 Quasar 1.9.x，配合 quasar cli 脚手架。自带 axios。不能随意引入未经讨论的新 js 库，避免性能问题。

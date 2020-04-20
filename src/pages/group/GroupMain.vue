@@ -11,10 +11,10 @@
       @click="$router.push('/login')"
       label="快速登录"
     />
-    <q-avatar rounded size="20px">
-      <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
+    <q-avatar rounded size="30px">
+      <img :src="owner.avatar?owner.avatar:'statics/user.svg'" />
     </q-avatar>
-    <span class="text-weight-bold">{{group.name}}</span>
+    <span class="text-weight-bold q-px-md">{{group.name}}</span>
     <q-btn
       flat
       rounded
@@ -55,35 +55,13 @@
     </div>
 
     <div v-for="post in posts" :key="post.post.id">
-      <div class="q-pt-lg">
-        <q-avatar rounded size="20px">
-          <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
-        </q-avatar>
-        <span class="q-px-md">{{post.creator.name}}</span>
-        <span>{{post.post.create_at}}</span>
-      </div>
-
-      <div class="q-py-lg">{{post.post.content}}</div>
-      <div class="row" style=" max-width: 600px; ">
-        <q-img
-          v-for="(url,index) in post.post.images"
-          :key="index"
-          :src="url"
-          spinner-color="white"
-          style="height: 240px; max-width: 240px; margin:9px;"
-        />
-      </div>
-      <div>
-        <q-btn flat rounded color="primary" label="300" icon="thumb_up" />
-        <q-btn flat rounded label="200" icon="chat_bubble_outline" />
-        <q-btn flat rounded label="100" icon="share" />
-      </div>
-      <q-separator />
+      <ArticleShow :post="post" />
     </div>
   </div>
 </template>
 
 <script>
+import ArticleShow from "pages/article/ArticleShow";
 let post = {
   content: "巨大的福利来袭",
   create_at: "2020-03-22T12:26:18+00:00",
@@ -100,7 +78,7 @@ let post = {
 import addArticle from "pages/article/add";
 import member from "components/member";
 export default {
-  components: { addArticle, member },
+  components: { addArticle, member, ArticleShow },
   props: {},
   data() {
     return {
