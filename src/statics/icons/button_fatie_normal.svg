@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="245px" height="34px" viewBox="0 0 245 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>84895FD1-E878-40B5-9919-C375BC0FB77E</title>
+    <desc>Created with Sketch.</desc>
+    <g id="视觉规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-840.000000, -2668.000000)" id="button_fatie_normal">
+            <g transform="translate(840.000000, 2668.000000)">
+                <rect id="矩形" fill="#00D6C2" x="0" y="0" width="245" height="34" rx="4"></rect>
+                <g id="编组" transform="translate(83.000000, 10.000000)" fill="#FFFFFF">
+                    <g id="编组-13" transform="translate(20.000000, 0.000000)" font-family="PingFangSC-Semibold, PingFang SC" font-size="14" font-weight="500" line-spacing="14">
+                        <text id="快速发帖">
+                            <tspan x="0" y="15">快速发帖</tspan>
+                        </text>
+                    </g>
+                    <g id="发布" fill-rule="nonzero">
+                        <path d="M0,7.6119169 L4.34806078,9.4751078 L11.3592563,3.24206194 L6.22610956,9.50666405 L11.8812475,11.3520188 L14,0 L0,7.6119169 Z M6.22610956,14 L8.68492603,11.6511172 L6.22610956,10.8375147 L6.22610956,14 Z" id="形状"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

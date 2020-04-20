@@ -2,7 +2,7 @@
   <div>
     <div class="q-pt-lg">
       <q-avatar rounded size="20px">
-        <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
+        <img :src="post.creator.avatar?post.creator.avatar:'statics/user.svg'" />
       </q-avatar>
       <span class="q-px-md">{{post.creator.name}}</span>
       <span>{{post.post.create_at}}</span>

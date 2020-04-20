@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="101px" height="34px" viewBox="0 0 101 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>B327E754-4135-4282-B854-15F00349F903</title>
+    <desc>Created with Sketch.</desc>
+    <g id="视觉规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-488.000000, -2667.000000)" id="button_jiaru_normal">
+            <g transform="translate(488.000000, 2667.000000)">
+                <rect id="矩形-copy-2" fill="#00D6C2" x="0" y="0" width="101" height="34" rx="4"></rect>
+                <g id="编组-13" transform="translate(12.000000, 10.000000)" fill="#FFFFFF">
+                    <text id="加入小组" font-family="PingFangSC-Semibold, PingFang SC" font-size="14" font-weight="500" line-spacing="14">
+                        <tspan x="17" y="15">加入小组</tspan>
+                    </text>
+                    <path d="M10,7.62518418 C10,7.97064491 9.7204089,8.25014168 9.37497167,8.25014168 L6.24983,8.25014168 L6.24983,11.3749292 C6.24983,11.7203899 5.97035224,12 5.624915,12 L4.375085,12 C4.02964776,12 3.75005667,11.7203899 3.75005667,11.3749292 L3.75005667,8.25014168 L0.624915001,8.25014168 C0.279477764,8.25014168 0,7.97064491 0,7.62518418 L0,6.37470248 C0,6.02924175 0.279477764,5.74974498 0.624915001,5.74974498 L3.75005667,5.74974498 L3.75005667,2.6249575 C3.75005667,2.28006347 4.02964776,2 4.375085,2 L5.624915,2 C5.97035224,2 6.24983,2.28006347 6.24983,2.6249575 L6.24983,5.74974498 L9.375085,5.74974498 C9.72052224,5.74974498 10,6.02980846 10,6.37470248 L10,7.62518418 Z" id="路径"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
