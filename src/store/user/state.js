@@ -3,6 +3,8 @@ export default function () {
     userid: "",
     token: "",
     name: "",
-    email: ""
+    mail_export: "",
+    avatar: "",
+    address: ""
   }
 }

@@ -34,6 +34,13 @@ export function logout_delToken(state) {
     state.userid = "";
 }
 
+export function setUserinfo(state, userinfo) {
+    state.avatar = userinfo.avatar
+    state.name = userinfo.name
+    state.mail_export = userinfo.mail_export
+    state.address = userinfo.address
+}
+
 // export function saveTempContent(state, data) {
 //     state.temp.title = data.title;
 //     state.temp.content = data.content;

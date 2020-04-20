@@ -11,6 +11,14 @@
       @click="$router.push('/login')"
       label="快速登录"
     />
+    <div class="top-login" v-else>
+      <q-avatar rounded size="30px" icon="notifications">
+        <q-badge color="red" floating>4</q-badge>
+      </q-avatar>
+      <q-avatar rounded size="20px" @click="$router.push('person/show/'+userid)">
+        <img :src="$store.state.user.avatar?$store.state.user.avatar:'statics/user.svg'" />
+      </q-avatar>
+    </div>
     <q-avatar rounded size="30px">
       <img :src="owner.avatar?owner.avatar:'statics/user.svg'" />
     </q-avatar>
@@ -187,5 +195,6 @@ export default {
   position: absolute;
   top: 20px;
   right: 40px;
+  cursor: pointer;
 }
 </style>
