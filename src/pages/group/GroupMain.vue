@@ -12,12 +12,7 @@
       label="快速登录"
     />
     <div class="top-login" v-else>
-      <q-avatar rounded size="30px" icon="notifications">
-        <q-badge color="red" floating>4</q-badge>
-      </q-avatar>
-      <q-avatar rounded size="20px" @click="$router.push('person/show/'+userid)">
-        <img :src="$store.state.user.avatar||'statics/user.svg'" />
-      </q-avatar>
+      <headerBarRight />
     </div>
     <q-avatar rounded size="30px">
       <img :src="owner.avatar||'statics/user.svg'" />
@@ -72,11 +67,12 @@
 
 <script>
 import ArticleShow from "pages/article/ArticleShow";
+import headerBarRight from "components/headerBarRight";
 
 import addArticle from "pages/article/add";
 import member from "components/member";
 export default {
-  components: { addArticle, member, ArticleShow },
+  components: { addArticle, member, ArticleShow, headerBarRight },
   props: {},
   data() {
     return {
@@ -183,6 +179,5 @@ export default {
   position: absolute;
   top: 20px;
   right: 40px;
-  cursor: pointer;
 }
 </style>

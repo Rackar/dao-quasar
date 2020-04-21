@@ -3,17 +3,15 @@
     <q-toolbar>
       <q-icon name="menu" class="q-pa-md" />DAOChat
       <q-space />
-      <q-btn dense round flat icon="notifications">
-        <q-badge color="red" floating transparent>4</q-badge>
-      </q-btn>
-      <q-avatar size="sm" color="primary" text-color="white" icon="directions" />
+      <headerBarRight />
     </q-toolbar>
   </div>
 </template>
 
 <script>
+import headerBarRight from "./headerBarRight";
 export default {
-  components: {},
+  components: { headerBarRight },
   props: {},
   data() {
     return {};
