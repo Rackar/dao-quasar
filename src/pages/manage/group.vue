@@ -11,14 +11,14 @@
         <div class="chatInfor">
           <!-- <img src="../assets/image/avatar.jpeg" /> -->
           <span class="chatName">
-            <input type="text" :value="grpinfo.grp.name" :readonly="!bj ? 'readonly' : false" />
+            <input type="text" value="group" :readonly="!bj ? 'readonly' : false" />
             <!-- <i @click="bj=!bj" class="editMemberIcon"></i> -->
             <q-icon color="primary" @click="bj = !bj" name="edit" />
           </span>
         </div>
         <textarea
           class="editTextarea"
-          :value="grpinfo.grp.desc_text"
+          :value="'描述'"
           :readonly="!bj ? 'readonly' : false"
         ></textarea>
         <div class="btnSet setChartContent" v-show="bj">
