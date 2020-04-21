@@ -52,29 +52,30 @@
         <div class="personalAvatar left">
           <div v-show="bianji" @click="$refs.file.click()"></div>
           <!-- <img v-show="isShow" :src="files" @error="doError" alt /> -->
-          <img v-show="isShow" :src="userinfo.avatar||'statics/user.svg'" />
+          <img v-show="isShow" :src="userinfo.avatar || 'statics/user.svg'" />
 
           <span v-show="!isShow">AL</span>
           <input type="file" ref="file" @change="fileChange" accept="image/*" hidden="hidden" />
         </div>
         <div class="personalTxt left">
           <div class="nameTxt" v-show="!bianji">
-            {{userinfo.name }}
-            <i @click="bianji=!bianji"></i>
+            {{ userinfo.name }}
+            <i @click="bianji = !bianji"></i>
           </div>
           <div class="nameTxt" v-show="bianji">
             <input v-model="userinfo.name" type="text" />
-            <button class="cancel" @click="bianji=!bianji">取消</button>
+            <button class="cancel" @click="bianji = !bianji">取消</button>
             <button @click="uploadUserinfo(userinfo.name)" class="sure">确认</button>
           </div>
           <div class="numberTxt">
-            DAO ID {{userinfo.id}}
-            <span>{{userinfo.mail_export}}</span>
+            DAO ID {{ userinfo.id }}
+            <span>{{ userinfo.mail_export }}</span>
           </div>
         </div>
       </div>
-      <div class="personalEdit right" @click="bianji=!bianji">
-        <i></i>编辑个人资料
+      <div class="personalEdit right" @click="bianji = !bianji">
+        <i></i>
+        编辑个人资料
       </div>
       <div class="clearfix"></div>
     </div>
@@ -82,8 +83,8 @@
       <div class="detailLeft left">
         <div class="personalNavTab">
           <ul>
-            <li :class="tab==0?'active':''" @click="tab=0,getmyabb(false)">我的帖子</li>
-            <li :class="tab==1?'active':''" @click="tab=1,getmyabb(true)">回收站</li>
+            <li :class="tab == 0 ? 'active' : ''" @click="(tab = 0), getmyabb(false)">我的帖子</li>
+            <li :class="tab == 1 ? 'active' : ''" @click="(tab = 1), getmyabb(true)">回收站</li>
           </ul>
         </div>
         <div class="personalTabCard clearfix">
@@ -107,16 +108,18 @@
     <div class="popupBody" style="position: relative; width: 100%; height: 100%;" v-show="show">
       <div class="popupModal rollOutModal scanModal">
         <div class="popupMain">
-          <div class="closeModal" @click="show=false"></div>
+          <div class="closeModal" @click="show = false"></div>
           <div class="scanTop">
             <div class="popupSureInfor">扫一扫，向我转账</div>
             <div class="scanImg" id="qrcode"></div>
-            <div class="rollOutDes">此钱包仅限接受{{text.name}}代币，转入其它代币会造成永久损失</div>
+            <div class="rollOutDes">
+              此钱包仅限接受{{ text.name }}代币，转入其它代币会造成永久损失
+            </div>
           </div>
           <div class="scanBottom">
             <p>钱包地址</p>
             <span>
-              {{text.contract}}
+              {{ text.contract }}
               <!-- <i
                 v-clipboard:copy="text.contract"
                 v-clipboard:success="onCopy"
@@ -131,19 +134,19 @@
   </div>
 </template>
 <script>
-import ArticleShow from "pages/article/ArticleShow";
-import wallet from "./wallet";
+import ArticleShow from 'pages/article/ArticleShow';
+import wallet from './wallet';
 export default {
   components: { ArticleShow, wallet },
   props: {
     id: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   data() {
     return {
-      userName: "",
+      userName: '',
       bianji: false,
       show: false,
       userinfo: {},
@@ -151,17 +154,17 @@ export default {
       tokens: [],
       istach: false,
       log: [],
-      files: "",
+      files: '',
       isShow: true,
-      userid: "",
+      userid: '',
       tab: 0,
       text: {},
       layer: {
-        type: "",
+        type: '',
         show: false,
-        post: ""
+        post: '',
       },
-      pullList: []
+      pullList: [],
     };
   },
   created() {
@@ -177,7 +180,7 @@ export default {
       //     this.hideinfo();
       //   });
     } else {
-      this.$router.push({ path: "/login", query: {} });
+      this.$router.push({ path: '/login', query: {} });
     }
   },
   methods: {
@@ -189,26 +192,26 @@ export default {
     },
     repays: function(text) {
       this.layer = {
-        type: "repay",
-        post: text
+        type: 'repay',
+        post: text,
       };
       this.$refs.showLayer.showModel();
     },
 
     // 个人信息
     getuserinfo: async function() {
-      let url = "/protected/user/me";
+      let url = '/protected/user/me';
       const resData = await this.$axios.get(url, {});
       if (resData.data.code == 0) {
         this.userinfo = resData.data.data.me;
-        this.$emit("setUserinfo", this.userinfo);
+        this.$emit('setUserinfo', this.userinfo);
       } else if (resData.code == 104) {
-        this.$router.push({ path: "/login", query: {} });
+        this.$router.push({ path: '/login', query: {} });
       }
     },
     // 我的代币
     getmycode: async function() {
-      let url = "protected/user/tokens";
+      let url = 'protected/user/tokens';
       const resCode = await this.$axios.get(url, {});
       if (resCode.data.code == 0) {
         this.tokens = resCode.data.data.tokens;
@@ -217,10 +220,10 @@ export default {
     },
     // 我的帖子
     getmyabb: async function(del) {
-      let url = "protected/post/my/pull";
+      let url = 'protected/post/my/pull';
       const resCode = await this.$axios.post(url, {
         base_post: null,
-        deleted: del
+        deleted: del,
       });
       if (resCode.data.code == 0) {
         this.pullList = [];
@@ -231,10 +234,10 @@ export default {
     },
     // 转账日志
     tokenLog: async function() {
-      let url = "protected/user/token/logs";
+      let url = 'protected/user/token/logs';
       let dat = {
-        contract: "",
-        base_token_log: null
+        contract: '',
+        base_token_log: null,
       };
       const resLog = await this.$axios.post(url, dat);
       if (resLog.data.code == 0) {
@@ -248,11 +251,11 @@ export default {
     },
     // 转账
     payTo: async function() {
-      let url = "protected/user/token/transfer";
+      let url = 'protected/user/token/transfer';
       let dat = {
-        contract: "",
+        contract: '',
         to_user: 10000,
-        value: "10.2"
+        value: '10.2',
       };
       const respay = await this.$axios.post(url, dat);
       if (respay.data.code == 0) {
@@ -263,7 +266,7 @@ export default {
     },
     // 监听图片加载
     doError: function() {
-      console.log("fail");
+      console.log('fail');
       this.isShow = false;
     },
 
@@ -281,30 +284,29 @@ export default {
       this.text = text;
     },
     onCopy: function() {
-      alert("复制成功！");
+      alert('复制成功！');
     },
     onError: function() {
-      alert("复制失败！");
+      alert('复制失败！');
     },
     uploadUserinfo: async function(name) {
-      let url = "protected/user/modify";
+      let url = 'protected/user/modify';
       let postdata = {
-        name: name
+        name: name,
       };
       const respons = await this.$axios.put(url, postdata);
       if (respons.data.code == 0) {
         this.$q.nofity({
-          message: "更新成功！"
+          message: '更新成功！',
         });
         this.getuserinfo();
         this.bianji = false;
       } else {
         this.$q.nofity({
-          message: respons.data.message
+          message: respons.data.message,
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
-

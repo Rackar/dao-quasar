@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {} from "module";
+import {} from 'module';
 export default {
   components: {},
   props: {},
@@ -14,8 +14,7 @@ export default {
   computed: {},
   methods: {},
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

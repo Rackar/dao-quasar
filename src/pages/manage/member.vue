@@ -1,7 +1,8 @@
 <template>
   <div class="q-pa-md">
     <div>
-      <q-icon name="menu" class="q-pa-md" />DAOChat
+      <q-icon name="menu" class="q-pa-md" />
+      DAOChat
       <q-btn label="管理组员" color="primary" outline style="float:right; top:50px;" />
     </div>
     <div>
@@ -29,18 +30,17 @@
 </template>
 
 <script>
-import member from "components/member";
+import member from 'components/member';
 export default {
   components: {
-    member
+    member,
   },
   data() {
     return {
-      current: 3
+      current: 3,
     };
-  }
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

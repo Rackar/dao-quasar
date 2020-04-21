@@ -1,6 +1,13 @@
 <template>
   <div>
-    个人信息部分
+    <div>
+      <q-avatar rounded>
+        <img src="https://cdn.quasar.dev/img/avatar.png" />
+      </q-avatar>
+      用户ID
+      <q-space />
+      <q-btn outline color="primary" icon="menu" label="编辑资料" />
+    </div>
     <div class="row q-gutter-lg">
       <div class="col-6 offset-md-1">
         <q-card flat class="my-card">
@@ -43,19 +50,19 @@
 </template>
 
 <script>
-import ArticleShow from "pages/article/ArticleShow";
+import ArticleShow from 'pages/article/ArticleShow';
 export default {
   components: { ArticleShow },
   props: {},
   data() {
     return {
-      tab: "myPosts",
+      tab: 'myPosts',
       userinfo: {},
       mycode: [],
       tokens: [],
       log: [],
 
-      pullList: []
+      pullList: [],
     };
   },
   watch: {},
@@ -63,18 +70,18 @@ export default {
   methods: {
     // 个人信息
     getuserinfo: async function() {
-      let url = "/protected/user/me";
+      let url = '/protected/user/me';
       const resData = await this.$axios.get(url, {});
       if (resData.data.code == 0) {
         this.userinfo = resData.data.data.me;
-        this.$emit("setUserinfo", this.userinfo);
+        this.$emit('setUserinfo', this.userinfo);
       } else if (resData.code == 104) {
-        this.$router.push({ path: "/login", query: {} });
+        this.$router.push({ path: '/login', query: {} });
       }
     },
     // 我的代币
     getmycode: async function() {
-      let url = "protected/user/tokens";
+      let url = 'protected/user/tokens';
       const resCode = await this.$axios.get(url, {});
       if (resCode.data.code == 0) {
         this.tokens = resCode.data.data.tokens;
@@ -83,10 +90,10 @@ export default {
     },
     // 我的帖子
     getmyabb: async function(del) {
-      let url = "protected/post/my/pull";
+      let url = 'protected/post/my/pull';
       const resCode = await this.$axios.post(url, {
         base_post: null,
-        deleted: del
+        deleted: del,
       });
       if (resCode.data.code == 0) {
         this.pullList = [];
@@ -96,10 +103,10 @@ export default {
       }
     }, // 转账日志
     tokenLog: async function() {
-      let url = "protected/user/token/logs";
+      let url = 'protected/user/token/logs';
       let dat = {
-        contract: "",
-        base_token_log: null
+        contract: '',
+        base_token_log: null,
       };
       const resLog = await this.$axios.post(url, dat);
       if (resLog.data.code == 0) {
@@ -107,7 +114,7 @@ export default {
       } else {
         alert(resLog.data.message);
       }
-    }
+    },
   },
   created() {
     let userid = this.$store.state.user.userid;
@@ -122,10 +129,10 @@ export default {
       //     this.hideinfo();
       //   });
     } else {
-      this.$router.push({ path: "/login", query: {} });
+      this.$router.push({ path: '/login', query: {} });
     }
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 <style lang="scss" scoped>

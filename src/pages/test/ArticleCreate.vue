@@ -10,12 +10,12 @@
 
 <script>
 export default {
-  name: "ArticleCreate",
+  name: 'ArticleCreate',
 
   data() {
     return {
-      editor: "What you see is <b>what</b> you get.",
-      title: ""
+      editor: 'What you see is <b>what</b> you get.',
+      title: '',
     };
   },
   methods: {
@@ -24,36 +24,36 @@ export default {
         username: this.$store.state.username,
         userid: this.$store.state.userid,
         title: this.title,
-        content: this.editorContent
+        content: this.editorContent,
       };
       if (this.editMode) {
         this.$axios
-          .put("/api/articles/" + this.aid, obj)
+          .put('/api/articles/' + this.aid, obj)
           .then(res => {
             console.log(res);
             if (res.status === 200) {
               this.$message.success(res.data.msg);
             }
           })
-          .catch(err => {
-            this.$message.error("修改失败");
+          .catch(() => {
+            this.$message.error('修改失败');
           });
       } else {
         this.$axios
-          .post("/api/articles", obj)
+          .post('/api/articles', obj)
           .then(res => {
             console.log(res);
             if (res.status === 200) {
               this.$message.success(res.data.msg);
             }
           })
-          .catch(err => {
-            this.$message.error("发表失败");
+          .catch(() => {
+            this.$message.error('发表失败');
           });
       }
     },
-    addPic() {}
-  }
+    addPic() {},
+  },
 };
 </script>
 

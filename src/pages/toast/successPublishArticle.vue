@@ -14,30 +14,29 @@
 </template>
 
 <script>
-import ToastComponent from "./ToastComponent";
+import ToastComponent from './ToastComponent';
 export default {
   components: { ToastComponent },
   props: {},
   data() {
     return {
       show: false,
-      title: "发布成功",
-      content: "你也可以在「我的主页」中查看刚刚发布的内容"
+      title: '发布成功',
+      content: '你也可以在「我的主页」中查看刚刚发布的内容',
     };
   },
   watch: {},
   computed: {},
   methods: {
     taost_cancel() {
-      this.$q.notify("已取消");
+      this.$q.notify('已取消');
     },
     taost_confirm() {
-      this.$q.notify("删除成功");
-    }
+      this.$q.notify('删除成功');
+    },
   },
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

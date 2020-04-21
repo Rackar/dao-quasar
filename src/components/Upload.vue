@@ -6,7 +6,7 @@
       class="avatar-uploader"
       :headers="headers"
       :showUploadList="false"
-      :action="$serverUrl+'/api/uploads/image'"
+      :action="$serverUrl + '/api/uploads/image'"
       @change="handleChange"
       :beforeUpload="beforeUpload"
     >
@@ -21,31 +21,30 @@
 <script>
 function getBase64(img, callback) {
   const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
+  reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
 export default {
   data() {
     return {
       loading: false,
-      imageUrl: ""
+      imageUrl: '',
     };
   },
   computed: {
     headers() {
       return { Authorization: `Bearer ${this.$store.state.token}` };
-    }
+    },
   },
   methods: {
     handleChange(info) {
-      if (info.file.status === "uploading") {
+      if (info.file.status === 'uploading') {
         this.loading = true;
         return;
       }
-      if (info.file.status === "done") {
-        let pathString =
-          this.$serverUrl + "/" + info.file.response.data.filename;
-        this.$emit("uploadedPic", pathString);
+      if (info.file.status === 'done') {
+        let pathString = this.$serverUrl + '/' + info.file.response.data.filename;
+        this.$emit('uploadedPic', pathString);
         // Get this url from response in real world.
         getBase64(info.file.originFileObj, imageUrl => {
           this.imageUrl = imageUrl;
@@ -55,20 +54,20 @@ export default {
     },
 
     beforeUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isPNG = file.type === "image/png";
-      const isGIF = file.type === "image/gif";
+      const isJPG = file.type === 'image/jpeg';
+      const isPNG = file.type === 'image/png';
+      const isGIF = file.type === 'image/gif';
       let isPIC = isJPG || isPNG || isGIF;
       if (!isPIC) {
-        this.$message.error("只能上传 jpg/png/gif 格式!");
+        this.$message.error('只能上传 jpg/png/gif 格式!');
       }
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
-        this.$message.error("文件需要小于 2MB!");
+        this.$message.error('文件需要小于 2MB!');
       }
       return isPIC && isLt2M;
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

@@ -17,18 +17,10 @@
       <div class="footer">
         <div class="left">
           <!-- <img class="imgBtn" src="~assets/expression.png" /> -->
-          <img
-            class="imgBtn"
-            @click="onImgBtnClick"
-            src="~assets/picture.png"
-          />
-          <img
-            class="imgBtn"
-            @click="onVideoBtnClick"
-            src="~assets/video.png"
-          />
+          <img class="imgBtn" @click="onImgBtnClick" src="~assets/picture.png" />
+          <img class="imgBtn" @click="onVideoBtnClick" src="~assets/video.png" />
         </div>
-        <div >
+        <div>
           <div class="wordLength" v-if="!hasMaxText">{{ content.length }}/200</div>
           <div class="maxTextErr" v-else>已超出200字</div>
         </div>
@@ -48,18 +40,13 @@
 
         <div class="videoItem" v-for="item in videoList" :key="item.id">
           <video controls="true" :src="item.previewUrl" />
-          <div
-            class="close removeBtn"
-            @click="removeMedia('videoList', item.id)"
-          >
+          <div class="close removeBtn" @click="removeMedia('videoList', item.id)">
             <q-icon :name="removeIcon" />
           </div>
         </div>
       </div>
 
-      <div class="sendPostBtn" @click="publish">
-        快速发帖
-      </div>
+      <div class="sendPostBtn" @click="publish">快速发帖</div>
 
       <input
         hidden="hidden"
@@ -88,18 +75,22 @@ import { matClear } from '@quasar/extras/material-icons';
 
 const createPost = async function(data) {
   const src = '/protected/post/create';
-  const awsUrls = await Promise.all(data.images.map(function({ file }) {
-    return upload({ file, dispositionType: 'attachment' });
-  }));
+  const awsUrls = await Promise.all(
+    data.images.map(function({ file }) {
+      return upload({ file, dispositionType: 'attachment' });
+    })
+  );
   return post(src, { ...data, title: '', images: awsUrls }).then(res => res.post);
 };
 
 const updatePost = async function(data) {
   const src = '/protected/post';
-  const awsUrls = await Promise.all(data.images.map(function({ file, previewUrl }) {
-    if (file === null) return Promise.resolve(previewUrl);
-    return upload({ file, dispositionType: 'attachment' });
-  }));
+  const awsUrls = await Promise.all(
+    data.images.map(function({ file, previewUrl }) {
+      if (file === null) return Promise.resolve(previewUrl);
+      return upload({ file, dispositionType: 'attachment' });
+    })
+  );
   return put(src, { ...data, title: '', images: awsUrls });
 };
 
@@ -116,7 +107,7 @@ export default {
       type: Object,
       default() {
         return { content: '', images: [] };
-      }
+      },
     },
     onSave: { type: Function },
     value: Boolean,
@@ -207,14 +198,16 @@ export default {
       }
       this.isLoading = true;
       const apiCall = this.postId === undefined ? this.create : this.update;
-      apiCall().then(res => {
-        Object.assign(this, this.getDefaultData(), { shouldShow: false });
-        this.$q.notify('发布成功');
-        this.onSave && this.onSave(res);
-      }).catch(err => {
-        this.isLoading = false;
-        this.$q.notify('发布失败' + (err.message || ''));
-      });
+      apiCall()
+        .then(res => {
+          Object.assign(this, this.getDefaultData(), { shouldShow: false });
+          this.$q.notify('发布成功');
+          this.onSave && this.onSave(res);
+        })
+        .catch(err => {
+          this.isLoading = false;
+          this.$q.notify('发布失败' + (err.message || ''));
+        });
     },
   },
 };
@@ -337,6 +330,6 @@ export default {
 }
 
 .wordLength {
-  color: #8C909D;
+  color: #8c909d;
 }
 </style>

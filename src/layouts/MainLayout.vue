@@ -19,7 +19,7 @@
             :to="menuItem.path"
             exact
             :active="link === menuItem.path"
-            @click="link=menuItem.path"
+            @click="link = menuItem.path"
           >
             <q-item-section avatar>
               <q-icon :name="menuItem.icon" />
@@ -39,49 +39,49 @@
 </template>
 
 <script>
-import grouplist from "pages/group/GroupList";
-import GroupListHeader from "pages/group/GroupListHeader";
+import grouplist from 'pages/group/GroupList';
+import GroupListHeader from 'pages/group/GroupListHeader';
 const menuList = [
   {
-    icon: "inbox",
-    label: "首页",
+    icon: 'inbox',
+    label: '首页',
     separator: true,
-    path: "/"
+    path: '/',
   },
   {
-    icon: "settings",
-    label: "管理",
+    icon: 'settings',
+    label: '管理',
     separator: false,
-    path: "/manage"
+    path: '/manage',
   },
   {
-    icon: "people",
-    label: "用户",
+    icon: 'people',
+    label: '用户',
     separator: false,
-    path: "/person"
+    path: '/person',
   },
   {
-    icon: "people",
-    label: "测弹窗",
+    icon: 'people',
+    label: '测弹窗',
     separator: true,
-    path: "/toast"
+    path: '/toast',
   },
   {
-    icon: "send",
-    label: "写文章",
+    icon: 'send',
+    label: '写文章',
     separator: false,
-    path: "/edit"
+    path: '/edit',
   },
 
   {
-    icon: "error",
-    label: "看单篇文章",
-    path: "/articles/1",
-    separator: false
-  }
+    icon: 'error',
+    label: '看单篇文章',
+    path: '/articles/1',
+    separator: false,
+  },
 ];
 export default {
-  name: "MainLayout",
+  name: 'MainLayout',
 
   components: { grouplist, GroupListHeader },
 
@@ -89,10 +89,10 @@ export default {
     return {
       leftDrawerOpen: false,
       menuList,
-      link: ""
+      link: '',
     };
   },
-  methods: {}
+  methods: {},
 };
 </script>
 

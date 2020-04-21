@@ -1,10 +1,10 @@
-export default function () {
+export default function() {
   return {
-    userid: "",
-    token: "",
-    name: "",
-    mail_export: "",
-    avatar: "",
-    address: ""
-  }
+    userid: '',
+    token: '',
+    name: '',
+    mail_export: '',
+    avatar: '',
+    address: '',
+  };
 }

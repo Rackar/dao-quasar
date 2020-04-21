@@ -14,15 +14,15 @@
 </template>
 
 <script>
-import ToastComponent from "./ToastComponent";
+import ToastComponent from './ToastComponent';
 export default {
   components: { ToastComponent },
   props: {},
   data() {
     return {
       show: false,
-      title: "网址已复制到剪贴板",
-      content: ""
+      title: '网址已复制到剪贴板',
+      content: '',
     };
   },
   watch: {},
@@ -33,11 +33,10 @@ export default {
     },
     taost_confirm() {
       // this.$q.notify("删除成功");
-    }
+    },
   },
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

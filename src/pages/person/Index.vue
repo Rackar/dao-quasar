@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import allDetails from "./allDetails";
-import right from "./right";
+import allDetails from './allDetails';
+// import right from "./right";
 export default {
   components: {
     // right,
-    allDetails
+    allDetails,
   },
   props: {},
   data() {
@@ -21,8 +21,7 @@ export default {
   computed: {},
   methods: {},
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

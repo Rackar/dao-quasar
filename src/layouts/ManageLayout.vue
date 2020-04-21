@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import groupManage from "pages/manage/group";
+import groupManage from 'pages/manage/group';
 export default {
-  name: "ManageLayout",
+  name: 'ManageLayout',
   components: { groupManage },
   data() {
     return {
-      right: false
+      right: false,
     };
-  }
+  },
 };
 </script>

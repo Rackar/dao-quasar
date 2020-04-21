@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import deleteDraft from "./deleteDraft";
-import deleteComment from "./deleteComment";
-import deleteArticle from "./deleteArticle";
-import quitGroup from "./quitGroup";
-import successPublishArticle from "./successPublishArticle";
-import successTransfer from "./successTransfer";
-import moneyIn from "./moneyIn";
-import moneyOut from "./moneyOut";
+import deleteDraft from './deleteDraft';
+import deleteComment from './deleteComment';
+import deleteArticle from './deleteArticle';
+import quitGroup from './quitGroup';
+import successPublishArticle from './successPublishArticle';
+import successTransfer from './successTransfer';
+import moneyIn from './moneyIn';
+import moneyOut from './moneyOut';
 export default {
   components: {
     deleteDraft,
@@ -29,7 +29,7 @@ export default {
     successPublishArticle,
     successTransfer,
     moneyIn,
-    moneyOut
+    moneyOut,
   },
   props: {},
   data() {
@@ -39,8 +39,7 @@ export default {
   computed: {},
   methods: {},
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

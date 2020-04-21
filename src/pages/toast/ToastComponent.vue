@@ -2,12 +2,12 @@
   <div>
     <q-card style="width: 440px" class="q-pa-lg">
       <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6">{{title}}</div>
+        <div class="text-h6">{{ title }}</div>
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
 
-      <q-card-section class="q-pt-none">{{content}}</q-card-section>
+      <q-card-section class="q-pt-none">{{ content }}</q-card-section>
 
       <q-card-actions align="center" class="bg-white text-teal" v-if="!showInfo">
         <q-btn
@@ -48,36 +48,35 @@ export default {
   props: {
     title: {
       type: String,
-      default: "弹框默认标题"
+      default: '弹框默认标题',
     },
     content: {
       type: String,
-      default: "弹框默认备注"
+      default: '弹框默认备注',
     },
     showInfo: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       show: false,
-      small: ""
+      small: '',
     };
   },
   watch: {},
   computed: {},
   methods: {
     comfirm() {
-      this.$emit("taost_confirm");
+      this.$emit('taost_confirm');
     },
     cancel() {
-      this.$emit("taost_cancel");
-    }
+      this.$emit('taost_cancel');
+    },
   },
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

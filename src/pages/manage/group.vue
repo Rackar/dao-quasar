@@ -11,18 +11,18 @@
         <div class="chatInfor">
           <!-- <img src="../assets/image/avatar.jpeg" /> -->
           <span class="chatName">
-            <input type="text" :value="grpinfo.grp.name" :readonly="!bj?'readonly':false" />
+            <input type="text" :value="grpinfo.grp.name" :readonly="!bj ? 'readonly' : false" />
             <!-- <i @click="bj=!bj" class="editMemberIcon"></i> -->
-            <q-icon color="primary" @click="bj=!bj" name="edit" />
+            <q-icon color="primary" @click="bj = !bj" name="edit" />
           </span>
         </div>
         <textarea
           class="editTextarea"
           :value="grpinfo.grp.desc_text"
-          :readonly="!bj?'readonly':false"
+          :readonly="!bj ? 'readonly' : false"
         ></textarea>
         <div class="btnSet setChartContent" v-show="bj">
-          <span class="btnCancel" @click="bj=!bj">取消</span>
+          <span class="btnCancel" @click="bj = !bj">取消</span>
           <span class="btnOk" @click="uploadGrp(grpinfo)">保存</span>
         </div>
         <div class="rewardMain">
@@ -31,11 +31,13 @@
             <br />
             <label class="radioLabel">
               <input class="postRadio allPerson" type="radio" name="postRadio" checked />
-              <span class="radioInput"></span>所有人
+              <span class="radioInput"></span>
+              所有人
             </label>
             <label class="radioLabel onlyTeamlabel">
               <input class="postRadio onlyTeam" type="radio" name="postRadio" />
-              <span class="radioInput"></span>仅限组员&nbsp;&nbsp;
+              <span class="radioInput"></span>
+              仅限组员&nbsp;&nbsp;
               <input class="settingPws hide" type="password" placeholder="设置密码" />
             </label>
             <div class="btnSet hide">
@@ -52,7 +54,8 @@
               <!-- <i class="editMemberIcon"></i> -->
               <q-icon color="primary" name="edit" />
             </span>
-            <br />正数代表奖励，负数代表收费
+            <br />
+            正数代表奖励，负数代表收费
           </div>
         </div>
         <div class="numberMain">
@@ -116,46 +119,28 @@ export default {
     return {
       grpinfo: {},
       grpuser: [],
-      bj: false
+      bj: false,
     };
   },
   created() {
-    let grpid = this.$route.query.id;
-    this.getgrpinfo(grpid);
+    // let grpid = this.$route.query.id;
+    // this.getgrpinfo(grpid);
   },
   methods: {
-    getgrpinfo: async function(id) {
-      var self = this;
-      let datasss = {};
-      let token = localStorage.getItem("token");
-      const bearer = "Bearer " + token;
-      let postapi = "/grp/" + id;
-      //注释掉接口
-      //   const getinfo = await axios.get("/" + postapi, datasss);
-      const getinfo = {
-        code: 0,
-        data: { grp: { name: "一个组名", desc_text: "一些描述" } }
-      };
-      if (getinfo.code == 0) {
-        self.grpinfo = getinfo.data;
-        // self.grpinfo.grp.create_at.m
-        self.getgrpuser(id);
-      }
+    getgrpinfo: async function() {},
+    getgrpuser: async function() {
+      // let self = this;
+      // let postapi = "user/members/" + id;
+      // //注释掉接口
+      // //   const getuser = await axios.get("/" + postapi, {});
+      // const getuser = { code: 0, data: {} };
+      // if (getuser.code == 0) {
+      //   self.grpuser = getuser.data;
+      // }
     },
-    getgrpuser: async function(id) {
-      let self = this;
-      let postapi = "user/members/" + id;
-      //注释掉接口
-      //   const getuser = await axios.get("/" + postapi, {});
-
-      const getuser = { code: 0, data: {} };
-      if (getuser.code == 0) {
-        self.grpuser = getuser.data;
-      }
-    },
-    deleteGrp: async function(id) {},
-    uploadGrp: async function() {}
-  }
+    deleteGrp: async function() {},
+    uploadGrp: async function() {},
+  },
 };
 </script>
 <style lang="scss">

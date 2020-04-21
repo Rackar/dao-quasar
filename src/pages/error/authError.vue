@@ -12,7 +12,7 @@
 }
 .error p {
   display: flex;
-  font: 14px/35px "宋体";
+  font: 14px/35px '宋体';
 }
 .error p a {
   color: #333;
@@ -26,18 +26,19 @@
     </div>
     <p>用户非法操作</p>
     <p>
-      <a href="javascript:;" class="sea-feedback-btn">请联系我们</a>告知错误内容吧
+      <a href="javascript:;" class="sea-feedback-btn">请联系我们</a>
+      告知错误内容吧
     </p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AuthError",
+  name: 'AuthError',
   data() {
     return {
-      msg: ""
+      msg: '',
     };
-  }
+  },
 };
 </script>

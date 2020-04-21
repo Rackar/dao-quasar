@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="q-pa-md menu-main" @click="showTip=!showTip" @mouseover="showTip=true">
-      <q-icon name="menu" class="q-pa-md" />DAOChat
+    <div class="q-pa-md menu-main" @click="showTip = !showTip" @mouseover="showTip = true">
+      <q-icon name="menu" class="q-pa-md" />
+      DAOChat
     </div>
-    <div class="toolTip-left" v-if="showTip" @mouseout="showTip=false">
+    <div class="toolTip-left" v-if="showTip" @mouseout="showTip = false">
       <div class="commonBorder" @click="createGrp">创建一个群</div>
       <div class="commonBorder" @click="clearLogin">退出登录</div>
     </div>
@@ -15,7 +16,7 @@
 </template>
 
 <script>
-import groupCreate from "pages/group/GroupCreate";
+import groupCreate from 'pages/group/GroupCreate';
 
 export default {
   components: { groupCreate },
@@ -32,13 +33,13 @@ export default {
     },
     clearLogin: function() {
       this.showTip = false;
-      localStorage.removeItem("token");
-      localStorage.removeItem("userinfo");
+      localStorage.removeItem('token');
+      localStorage.removeItem('userinfo');
       this.$router.go(0);
-    }
+    },
   },
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
 <style lang="scss">

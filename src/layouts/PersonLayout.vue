@@ -8,14 +8,14 @@
 </template>
 
 <script>
-import headerbar from "components/headerBar";
+import headerbar from 'components/headerBar';
 export default {
-  name: "PersonLayout",
+  name: 'PersonLayout',
   components: {
-    headerbar
+    headerbar,
   },
   data() {
     return {};
-  }
+  },
 };
 </script>

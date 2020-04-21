@@ -13,7 +13,7 @@
           <q-badge v-show="edit" color="red" floating style>x</q-badge>
         </q-avatar>
       </div>
-      <div @click="jumpToMember(member.id)" class="clickable">{{member.name}}</div>
+      <div @click="jumpToMember(member.id)" class="clickable">{{ member.name }}</div>
     </div>
   </div>
 </template>
@@ -24,18 +24,19 @@ export default {
     members: Array,
     edit: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   methods: {
     jumpToMember(id) {
-      this.$router.push("/person/show/" + id);
-    }
-  }
+      this.$router.push('/person/show/' + id);
+    },
+  },
 };
 </script>
 
 <style lang="stylus" scoped>
 .clickable {
   cursor: pointer;
-}</style>
+}
+</style>

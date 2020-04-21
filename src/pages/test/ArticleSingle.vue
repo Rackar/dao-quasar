@@ -10,18 +10,18 @@
 
 <script>
 export default {
-  name: "Article",
+  name: 'Article',
   components: {},
   props: { id: String },
   data() {
     return {
-      editor: "What you see is <b>what</b> you get."
+      editor: 'What you see is <b>what</b> you get.',
     };
   },
   methods: {
     edit() {},
-    del() {}
-  }
+    del() {},
+  },
 };
 </script>
 

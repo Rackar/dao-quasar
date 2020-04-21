@@ -1,8 +1,8 @@
 import { axiosInstance } from 'boot/axios';
-const apiPath = {
-  getVerify: '/user/verify/:mail',
-  postLogin: '/user/login',
-};
+// const apiPath = {
+//   getVerify: '/user/verify/:mail',
+//   postLogin: '/user/login',
+// };
 
 const createMethod = function(type) {
   return (url, config) =>

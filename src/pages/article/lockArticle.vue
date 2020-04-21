@@ -6,7 +6,8 @@
       </div>
       <div class="lockTxt">
         私密群
-        <br />只有小组成员可以浏览
+        <br />
+        只有小组成员可以浏览
       </div>
     </div>
   </div>
@@ -23,8 +24,7 @@ export default {
   computed: {},
   methods: {},
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

@@ -13,30 +13,29 @@
 </template>
 
 <script>
-import ToastComponent from "./ToastComponent";
+import ToastComponent from './ToastComponent';
 export default {
   components: { ToastComponent },
   props: {},
   data() {
     return {
       show: false,
-      title: "删除草稿",
-      content: "删除后无法恢复，确定？"
+      title: '删除草稿',
+      content: '删除后无法恢复，确定？',
     };
   },
   watch: {},
   computed: {},
   methods: {
     taost_cancel() {
-      this.$q.notify("已取消");
+      this.$q.notify('已取消');
     },
     taost_confirm() {
-      this.$q.notify("删除成功");
-    }
+      this.$q.notify('删除成功');
+    },
   },
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

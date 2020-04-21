@@ -6,28 +6,28 @@
 <template>
   <div class="popupBody" style="position: relative; width: 100%; height: 100%;" v-show="show">
     <!--  发帖成功-->
-    <div class="popupModal" v-if="layerInfo.type=='setabb'">
+    <div class="popupModal" v-if="layerInfo.type == 'setabb'">
       <div class="popupMain">
         <div class="closeModal" @click="closeModel"></div>
         <div class="popupTitle">发布成功</div>
         <p>你也可以在「我的主页」中查看刚刚发布的内容</p>
-        <router-link :to="{name:'personal',query:{id:layerInfo.post}}">
+        <router-link :to="{ name: 'personal', query: { id: layerInfo.post } }">
           <div class="popupBtn">查看详情</div>
         </router-link>
       </div>
     </div>
-    <div class="popupModal" v-if="layerInfo.type=='payed'">
+    <div class="popupModal" v-if="layerInfo.type == 'payed'">
       <div class="popupMain">
         <div class="closeModal" @click="closeModel"></div>
         <div class="popupTitle">转账成功</div>
         <p>你也可以在「我的主页」中查看刚刚转账的信息</p>
-        <router-link :to="{name:'personal',query:{id:layerInfo.post}}">
+        <router-link :to="{ name: 'personal', query: { id: layerInfo.post } }">
           <div class="popupBtn">查看详情</div>
         </router-link>
       </div>
     </div>
     <!--    转账-->
-    <div class="popupModal rollOutModal" v-if="layerInfo.type=='repay'">
+    <div class="popupModal rollOutModal" v-if="layerInfo.type == 'repay'">
       <div class="popupMain">
         <div class="closeModal" @click="closeModel"></div>
         <div class="popupSureInfor">钱包转账</div>
@@ -46,16 +46,18 @@
             type="text"
             v-model="val"
             @change="lookActive"
-            :placeholder="layerInfo && '可转出余额'+layerInfo.post.token.value"
+            :placeholder="layerInfo && '可转出余额' + layerInfo.post.token.value"
           />
-          <i @click="val=layerInfo.post.token.value">全部</i>
+          <i @click="val = layerInfo.post.token.value">全部</i>
         </div>
-        <div class="rollOutBtn" :class="{'active':val!='' && user!=''}" @click="payTo">确定</div>
+        <div class="rollOutBtn" :class="{ active: val != '' && user != '' }" @click="payTo">
+          确定
+        </div>
         <div class="rollOutDes">所有基于区块链的交易都需要手续费，该手续费将自动扣除。</div>
       </div>
     </div>
     <!--   收款二维码-->
-    <div class="popupModal rollOutModal scanModal" v-if="layerInfo.type=='getcode'">
+    <div class="popupModal rollOutModal scanModal" v-if="layerInfo.type == 'getcode'">
       <div class="popupMain">
         <div class="closeModal" @click="closeModel"></div>
         <div class="scanTop">
@@ -73,7 +75,7 @@
       </div>
     </div>
     <!--    删帖-->
-    <div class="popupModal" v-else-if="layerInfo.type=='deladd'">
+    <div class="popupModal" v-else-if="layerInfo.type == 'deladd'">
       <div class="popupMain">
         <div class="popupTitle">删除草稿</div>
         <p>删除后无法恢复，是否确定要删除这篇草稿？</p>
@@ -84,7 +86,7 @@
       </div>
     </div>
     <!--    删除评论-->
-    <div class="popupModal" v-else-if="layerInfo.type=='delspk'">
+    <div class="popupModal" v-else-if="layerInfo.type == 'delspk'">
       <div class="popupMain">
         <div class="popupSureInfor">你确定要删除这条评论嘛？</div>
         <div class="popupBtnMain center">
@@ -96,27 +98,27 @@
   </div>
 </template>
 <script>
-import QRCode from "qrcodejs2";
-import axios from "../http/axios";
+import QRCode from 'qrcodejs2';
+import axios from '../http/axios';
 export default {
-  name: "layer",
+  name: 'layer',
   data() {
     return {
       show: false,
-      post: "",
+      post: '',
       infos: {},
-      val: "",
-      contract: "",
-      user: ""
+      val: '',
+      contract: '',
+      user: '',
     };
   },
-  props: ["layerInfo"],
+  props: ['layerInfo'],
   watch: {
     chartData: function(newVal, oldVal) {
       console.log(newVal);
       this.infos = newVal; //newVal即是chartData
       // this.drawChart();
-    }
+    },
   },
   methods: {
     closeModel: function() {
@@ -130,17 +132,17 @@ export default {
     payTo: async function() {
       let self = this;
       console.log(this.layerInfo);
-      let url = "protected/user/token/transfer";
+      let url = 'protected/user/token/transfer';
       let dat = {
         contract: this.layerInfo.post.contract.contract,
         to_user: Number(this.user),
-        value: this.val
+        value: this.val,
       };
-      const respay = await axios.post("//" + url, dat);
+      const respay = await axios.post('//' + url, dat);
       if (respay.code == 0) {
         self.closeModel();
         self.$toast({
-          text: "转账成功！"
+          text: '转账成功！',
           // type:""
         });
       } else {
@@ -148,7 +150,7 @@ export default {
         // alert(respay.message);
       }
     },
-    lookActive: function() {}
+    lookActive: function() {},
     // confirmCancel: function () {
     //   this.show = false;
     //   if(typeof (this.confirmModalOptions.btnCancelFunction)==='function'){
@@ -161,9 +163,8 @@ export default {
     //     this.confirmModalOptions.btnSubmitFunction()
     //   }
     // 二维码
-  }
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

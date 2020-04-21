@@ -1,6 +1,6 @@
 <template>
   <div class="q-mx-xl q-pt-xl">
-    <addArticle v-model="addArticleShow"/>
+    <addArticle v-model="addArticleShow" />
     <q-btn
       v-if="!userid"
       class="top-login"
@@ -13,9 +13,9 @@
       <headerBarRight />
     </div>
     <q-avatar rounded size="30px">
-      <img :src="owner.avatar||'statics/user.svg'" />
+      <img :src="owner.avatar || 'statics/user.svg'" />
     </q-avatar>
-    <span class="text-weight-bold q-px-md">{{group.name}}</span>
+    <span class="text-weight-bold q-px-md">{{ group.name }}</span>
     <q-btn
       flat
       rounded
@@ -38,10 +38,10 @@
     <div>
       <div class="row q-pa-md info q-my-md">
         <div class="col-10">
-          <span
-            class="text-weight-bold"
-          >创建于{{$utils.timeStringToLocal(group.create_at) }} 组长：{{owner.name}}</span>
-          <div>{{group.desc_text}}</div>
+          <span class="text-weight-bold">
+            创建于{{ $utils.timeStringToLocal(group.create_at) }} 组长：{{ owner.name }}
+          </span>
+          <div>{{ group.desc_text }}</div>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@
         <q-btn flat color="primary" no-caps size="13px" @click="$router.push('/manage')">
           查看更多
           <br />
-          ({{grpMembers.length}})
+          ({{ grpMembers.length }})
         </q-btn>
       </span>
     </div>
@@ -64,11 +64,11 @@
 </template>
 
 <script>
-import ArticleShow from "pages/article/ArticleShow";
-import headerBarRight from "components/headerBarRight";
+import ArticleShow from 'pages/article/ArticleShow';
+import headerBarRight from 'components/headerBarRight';
 
-import addArticle from "pages/article/add";
-import member from "components/member";
+import addArticle from 'pages/article/add';
+import member from 'components/member';
 export default {
   components: { addArticle, member, ArticleShow, headerBarRight },
   props: {},
@@ -77,13 +77,13 @@ export default {
       addArticleShow: false,
       groupID: 0,
       posts: [],
-      grpMembers: []
+      grpMembers: [],
     };
   },
   watch: {
-    groupId: function(newVal, oldVal) {
+    groupId: function(newVal) {
       this.getGroupUserAndList(newVal);
-    }
+    },
   },
   computed: {
     userid() {
@@ -97,7 +97,7 @@ export default {
     },
     owner() {
       return this.$store.state.group.currentGroupOwner;
-    }
+    },
   },
   methods: {
     addArtrcle() {
@@ -107,18 +107,18 @@ export default {
     joinGrp: async function(id) {
       let data = {
         grp: id,
-        password: ""
+        password: '',
       };
-      let postapi = "/protected/grp/join";
+      let postapi = '/protected/grp/join';
       this.$q.loading.show();
       const postjoin = await this.$axios.post(postapi, data);
       this.$q.loading.hide();
       if (postjoin.data.code == 0) {
         this.$q.notify({
-          message: "加入成功！"
+          message: '加入成功！',
         });
       } else if (postjoin.data.code == 104) {
-        this.$router.push({ path: "/login" });
+        this.$router.push({ path: '/login' });
       }
     },
     // 跳转时某群组
@@ -128,7 +128,7 @@ export default {
     },
     // 获取群组员
     getGroupMembers: async function(id) {
-      let postapi = "/user/members/" + id;
+      let postapi = '/user/members/' + id;
       const members = await this.$axios.get(postapi);
       if (members.data.code == 0) {
         this.grpMembers = members.data.data.alive;
@@ -138,13 +138,13 @@ export default {
     getPosts: async function(id, pageNumber = null) {
       let data = {
         grp: id,
-        base_post: pageNumber
+        base_post: pageNumber,
       };
       let url;
       if (this.userid) {
-        url = "/protected/post/pull";
+        url = '/protected/post/pull';
       } else {
-        url = "/post/pull";
+        url = '/post/pull';
       }
       const result = await this.$axios.post(url, data);
       if (result.data.code == 0) {
@@ -155,17 +155,17 @@ export default {
       let url = window.location.href;
       navigator.clipboard.writeText(url).then(
         () => {
-          /* success */ this.$q.notify("地址已复制到剪切板");
+          /* success */ this.$q.notify('地址已复制到剪切板');
         },
         err => {
-          /* failure */ this.$q.notify("浏览器不支持，请手动复制地址");
+          /* failure */ this.$q.notify('浏览器不支持，请手动复制地址');
           console.log(err);
         }
       );
-    }
+    },
   },
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
 <style lang="scss" scoped>

@@ -1,10 +1,10 @@
 <style scoped>
-@import "../assets/css/home.css";
+@import '../assets/css/home.css';
 </style>
 <template>
   <div class="chatBody" id="app">
     <div class="chatMainL left">
-      <div class="chatHeader" @click="showTip=!showTip">
+      <div class="chatHeader" @click="showTip = !showTip">
         <i></i>
         <span>DAOChat</span>
         <div class="toolTip-left" v-if="showTip">
@@ -14,20 +14,19 @@
       <div class="chatSearch"></div>
       <div class="chatList chatListFirst">
         <div
-          v-for="(item,index) in joindgrp"
+          v-for="(item, index) in joindgrp"
           :key="index"
-          @click="tabgrp(index,item.grp.id,'0')"
-          :class="{'listItemBg':item.grp.id==active.id}"
+          @click="tabgrp(index, item.grp.id, '0')"
+          :class="{ listItemBg: item.grp.id == active.id }"
           class="listItem"
         >
-          <div class="act_icon" v-if="item.grp.id==active.id" @click.stop="showGrp=!showGrp">
+          <div class="act_icon" v-if="item.grp.id == active.id" @click.stop="showGrp = !showGrp">
             <img src="../assets/image/icon_more@2x.png" />
           </div>
-          <div class="toolTip-left" v-if="showGrp && item.grp.id==active.id">
-            <div
-              class="commonBorder"
-              @click.stop="setTop(item.grp.id,item.pinned==1?2:1)"
-            >{{item.pinned==1?"置顶":"取消置顶"}}</div>
+          <div class="toolTip-left" v-if="showGrp && item.grp.id == active.id">
+            <div class="commonBorder" @click.stop="setTop(item.grp.id, item.pinned == 1 ? 2 : 1)">
+              {{ item.pinned == 1 ? '置顶' : '取消置顶' }}
+            </div>
             <div class="commonBorder" @click.stop="clearGrp(item.grp.id)">退出群组</div>
           </div>
           <div class="chatAvatar">
@@ -37,13 +36,13 @@
             <div class="itemDdescription">
               <div class="itemInfo">
                 <div class="infoTop">
-                  <div class="itemName left">{{item.grp && item.grp.name}}</div>
-                  <div class="right">{{item.unread}}</div>
+                  <div class="itemName left">{{ item.grp && item.grp.name }}</div>
+                  <div class="right">{{ item.unread }}</div>
                 </div>
               </div>
               <div class="itemContent">
                 <div class="infoDown">
-                  <span class="left">{{item.grp && item.grp.desc_text}}</span>
+                  <span class="left">{{ item.grp && item.grp.desc_text }}</span>
                   <div class="right">5:20 PM</div>
                 </div>
               </div>
@@ -56,9 +55,9 @@
         <div class="chatList">
           <div
             class="listItem"
-            @click="tabgrp(index,item.id,'1')"
-            :class="{'listItemBg':item.id==active.id}"
-            v-for="(item,index) in grps"
+            @click="tabgrp(index, item.id, '1')"
+            :class="{ listItemBg: item.id == active.id }"
+            v-for="(item, index) in grps"
             :key="index"
           >
             <div class="chatAvatar">
@@ -68,13 +67,13 @@
               <div class="itemDdescription">
                 <div class="itemInfo">
                   <div class="infoTop">
-                    <div class="itemName left">{{item.name}}</div>
-                    <div class="right">{{item.read_permission}}</div>
+                    <div class="itemName left">{{ item.name }}</div>
+                    <div class="right">{{ item.read_permission }}</div>
                   </div>
                 </div>
                 <div class="itemContent">
                   <div class="infoDown">
-                    <span class="left">{{item.desc_text}}</span>
+                    <span class="left">{{ item.desc_text }}</span>
                     <div class="right">5:20 PM</div>
                   </div>
                 </div>
@@ -85,8 +84,10 @@
       </div>
       <div class="copyRight">
         All rights reserved 2020 DAOChat Inc
-        <br />An user owned company
-        <br />Designed by Alina
+        <br />
+        An user owned company
+        <br />
+        Designed by Alina
       </div>
     </div>
     <div class="chatMainR right">
@@ -106,48 +107,54 @@
       <div class="chatCont">
         <div class="chatInfor">
           <img src="../assets/image/avatar.jpeg" />
-          <span class="chatName">{{grpinfo.grp && grpinfo.grp.name}}</span>
+          <span class="chatName">{{ grpinfo.grp && grpinfo.grp.name }}</span>
           <span class="share">
-            <i></i>分享
+            <i></i>
+            分享
           </span>
 
-          <span class="speak" @click="islayer=true">
-            <i></i>发言
+          <span class="speak" @click="islayer = true">
+            <i></i>
+            发言
           </span>
         </div>
       </div>
-      <router-link :to="{path:'/createGroupMember',query: {id: grpinfo.grp.id}}">
+      <router-link :to="{ path: '/createGroupMember', query: { id: grpinfo.grp.id } }">
         <div class="dynamicList">
           <div class="items">
             <div class="itemsTit">
               <div class="chatTxt" v-if="grpinfo.creator && grpinfo.grp" v-show="grpinfo.grp">
                 <p>
-                  创建于 {{grpinfo.grp && grpinfo.grp.create_at|dateformat("YYYY-MM-DD HH:mm:ss")}}
-                  <span
-                    class="chatPosition"
-                  >组长：{{grpinfo.creator.name}}</span>
+                  创建于
+                  {{ grpinfo.grp && grpinfo.grp.create_at | dateformat('YYYY-MM-DD HH:mm:ss') }}
+                  <span class="chatPosition">组长：{{ grpinfo.creator.name }}</span>
                 </p>
-                <div class="detail">{{grpinfo.grp && grpinfo.grp.desc_text}}</div>
+                <div class="detail">{{ grpinfo.grp && grpinfo.grp.desc_text }}</div>
               </div>
               <div class="characterMain">
-                <div v-for="(items,index) in grpuser" :key="index">
-                  <div class="characterItem" v-if="index<5">
+                <div v-for="(items, index) in grpuser" :key="index">
+                  <div class="characterItem" v-if="index < 5">
                     <img src="../assets/image/avatar.jpeg" />
-                    <p>{{items.name}}</p>
+                    <p>{{ items.name }}</p>
                   </div>
                   <div class="characterMore" @click="showall" v-else>查看更多</div>
                 </div>
               </div>
             </div>
           </div>
-          <pull-box v-if="grpinfo.grp.read_permission==1" v-bind:posts="posts" ref="postData"></pull-box>
-          <div class="lockMain" v-else-if="grpinfo.grp.read_permission==2">
+          <pull-box
+            v-if="grpinfo.grp.read_permission == 1"
+            v-bind:posts="posts"
+            ref="postData"
+          ></pull-box>
+          <div class="lockMain" v-else-if="grpinfo.grp.read_permission == 2">
             <div class="lockImg center">
               <img src="../assets/image/icon_suo_1@2x.png" />
             </div>
             <div class="lockTxt">
               私密群
-              <br />只有小组成员可以浏览
+              <br />
+              只有小组成员可以浏览
             </div>
           </div>
           <div class="clearfix"></div>
@@ -161,12 +168,12 @@
         <div class="textarea">
           <textarea v-model="abbcontent" placeholder="有什么新鲜事告诉大家…"></textarea>
           <div id="result">
-            <div class="imaList" v-for="(item,index) in imgList" :key="index">
+            <div class="imaList" v-for="(item, index) in imgList" :key="index">
               <img :src="item" />
               <div class="close" @click="removeImg(index)">X</div>
             </div>
           </div>
-          <div class="right allwords">{{abbcontent.length}}/200</div>
+          <div class="right allwords">{{ abbcontent.length }}/200</div>
         </div>
         <div>
           <div class="left">
@@ -221,7 +228,8 @@
                 placeholder="描述下你的话题，引起大家的兴趣"
               ></textarea>
               <i>
-                <span class="count-change">0</span>/200
+                <span class="count-change">0</span>
+                /200
               </i>
               <div class="clearfix"></div>
             </div>
@@ -236,7 +244,8 @@
                   name="postRadio"
                   checked
                 />
-                <span class="radioInput"></span>所有人
+                <span class="radioInput"></span>
+                所有人
               </label>
               <label class="radioLabel onlyTeamlabel">
                 <input
@@ -246,10 +255,11 @@
                   value="2"
                   name="postRadio"
                 />
-                <span class="radioInput"></span>仅限组员&nbsp;&nbsp;
+                <span class="radioInput"></span>
+                仅限组员&nbsp;&nbsp;
               </label>
             </div>
-            <div class="settingContent" v-if="crtgrp.read_permission==2">
+            <div class="settingContent" v-if="crtgrp.read_permission == 2">
               <label class="setingLabel">设置密码</label>
               <input
                 class="settingPws"
@@ -263,10 +273,12 @@
           <div class="createGroupRight right">
             创建群之后你还可以设置以下参数：入群奖励、阅读奖励、回复奖励等。
             <br />
-            <br />请注意，所有的这些奖励的代币将不经过你的确认直接从你的钱包扣掉。
+            <br />
+            请注意，所有的这些奖励的代币将不经过你的确认直接从你的钱包扣掉。
             若你的钱包余额不够支付奖励，则该群的所有奖励设置将自动归零。
             <br />
-            <br />创建群代表你为群内所有言论负责。你若退群，则系统将自动接替你做群主。
+            <br />
+            创建群代表你为群内所有言论负责。你若退群，则系统将自动接替你做群主。
           </div>
           <div class="clearfix"></div>
         </div>
@@ -275,60 +287,60 @@
   </div>
 </template>
 <script>
-import md5 from "md5";
-import AWS from "aws-sdk";
-import axios from "../http/axios";
-import layerBox from "./layer";
-import pullBox from "./pull";
+import md5 from 'md5';
+import AWS from 'aws-sdk';
+import axios from '../http/axios';
+import layerBox from './layer';
+import pullBox from './pull';
 export default {
   components: {
     //注册组件
     layerBox,
-    pullBox
+    pullBox,
   },
   data() {
     return {
       showTip: false,
       crtgrp: {
-        tit: "",
-        desc_text: "",
-        password: "",
-        read_permission: 1
+        tit: '',
+        desc_text: '',
+        password: '',
+        read_permission: 1,
       },
-      posttype: "image",
+      posttype: 'image',
       showGrp: false,
       video: [],
       joindgrp: [],
       active: {
         type: 0,
         id: null,
-        ind: 0
+        ind: 0,
       },
       iscreate: false,
       islayer: false,
       grps: [],
-      abbcontent: "",
+      abbcontent: '',
       posts: [],
       grpinfo: {
-        grp: {}
+        grp: {},
       },
       grpuser: [],
-      postURL: "https://chatdao.com:3031/",
+      postURL: 'https://chatdao.com:3031/',
       speak: null,
       talk: null,
       comments: [],
       imgList: [],
-      token: "",
+      token: '',
       layer: {
-        type: "setabb",
+        type: 'setabb',
         show: true,
-        post: 12345
-      }
+        post: 12345,
+      },
     };
   },
 
   created() {
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem('token');
     if (token) {
       this.token = token;
     } else {
@@ -346,9 +358,9 @@ export default {
       let file = e.target.files[0];
       let newfile;
       //创建新文件对象
-      if (e.target.accept != "image/*") {
-        newfile = new File([file], md5("12345") + ".jpg", {
-          type: "image/jpeg"
+      if (e.target.accept != 'image/*') {
+        newfile = new File([file], md5('12345') + '.jpg', {
+          type: 'image/jpeg',
         });
       } else {
         newfile = file;
@@ -356,17 +368,17 @@ export default {
       let self = this;
       console.log(e);
       if (
-        (e.target.accept != "image/*" && this.imgList.length == 4) ||
-        (e.target.accept != "image/*" && this.video.length == 1)
+        (e.target.accept != 'image/*' && this.imgList.length == 4) ||
+        (e.target.accept != 'image/*' && this.video.length == 1)
       ) {
-        alert("只能上传四张图片，或一个视频！");
+        alert('只能上传四张图片，或一个视频！');
       } else {
         if (e.target.files) {
           let credentials = {}; //秘钥形式的登录上传
           AWS.config.update(credentials);
-          AWS.config.region = "ap-northeast-1"; //设置区域
+          AWS.config.region = 'ap-northeast-1'; //设置区域
           // create bucket instance
-          let bucket = new AWS.S3({ params: { Bucket: "justdao" } }); //选择桶
+          let bucket = new AWS.S3({ params: { Bucket: 'justdao' } }); //选择桶
           let file = newfile;
           if (file) {
             console.log(file);
@@ -374,22 +386,22 @@ export default {
               Key: file.name,
               ContentType: file.type,
               Body: file,
-              "Access-Control-Allow-Credentials": "*",
-              ACL: "public-read"
+              'Access-Control-Allow-Credentials': '*',
+              ACL: 'public-read',
             }; //key可以设置为桶的相抵路径，Body为文件， ACL最好要设置
             bucket.upload(params, (err, data) => {
               //打印出错误
               if (err) {
                 console.log(err);
               } else {
-                if (e.target.accept == "image/*") {
+                if (e.target.accept == 'image/*') {
                   self.video = [];
                   self.imgList.push(data.Location);
-                  self.posttype = "image";
-                } else if (e.target.accept == "video/*") {
+                  self.posttype = 'image';
+                } else if (e.target.accept == 'video/*') {
                   self.imgList = [];
                   self.video.push(data.Location);
-                  self.posttype = "video";
+                  self.posttype = 'video';
                 }
               }
             });
@@ -405,22 +417,22 @@ export default {
       let self = this;
       if (!this.abbcontent) {
         this.$toast({
-          text: "请输入帖子内容"
+          text: '请输入帖子内容',
         });
         return;
       }
-      let postapi = "/protected/post/create";
+      let postapi = '/protected/post/create';
       let dat = {
         grp: self.active.id,
-        title: "",
-        content: self.abbcontent
+        title: '',
+        content: self.abbcontent,
       };
-      if (self.posttype == "image") {
+      if (self.posttype == 'image') {
         dat.images = self.imgList;
       } else {
         dat.images = self.video;
       }
-      const crt = await axios.post("" + postapi, dat);
+      const crt = await axios.post('' + postapi, dat);
       if (crt.code == 0) {
         // self.posts[index].comments=add.data.comments
         //    this.getList(self.active.id);
@@ -428,9 +440,9 @@ export default {
         self.imgList = [];
         self.islayer = !self.islayer;
         self.layer = {
-          type: "setabb",
+          type: 'setabb',
           show: true,
-          post: crt.data.post.id
+          post: crt.data.post.id,
         };
       }
     },
@@ -459,14 +471,14 @@ export default {
     deleteImg: function() {},
     matchType: function(fileName) {
       // 后缀获取
-      var suffix = "";
+      var suffix = '';
       // 获取类型结果
-      var result = "";
+      var result = '';
       try {
-        var flieArr = fileName.split(".");
+        var flieArr = fileName.split('.');
         suffix = flieArr[flieArr.length - 1];
       } catch (err) {
-        suffix = "";
+        suffix = '';
       }
       // fileName无后缀返回 false
       if (!suffix) {
@@ -474,80 +486,80 @@ export default {
         return result;
       }
       // 图片格式
-      var imglist = ["png", "jpg", "jpeg", "bmp", "gif"];
+      var imglist = ['png', 'jpg', 'jpeg', 'bmp', 'gif'];
       // 进行图片匹配
       result = imglist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "image";
+        result = 'image';
         return result;
       }
       // 匹配txt
-      var txtlist = ["txt"];
+      var txtlist = ['txt'];
       result = txtlist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "txt";
+        result = 'txt';
         return result;
       }
       // 匹配 excel
-      var excelist = ["xls", "xlsx"];
+      var excelist = ['xls', 'xlsx'];
       result = excelist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "excel";
+        result = 'excel';
         return result;
       }
       // 匹配 word
-      var wordlist = ["doc", "docx"];
+      var wordlist = ['doc', 'docx'];
       result = wordlist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "word";
+        result = 'word';
         return result;
       }
       // 匹配 pdf
-      var pdflist = ["pdf"];
+      var pdflist = ['pdf'];
       result = pdflist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "pdf";
+        result = 'pdf';
         return result;
       }
       // 匹配 ppt
-      var pptlist = ["ppt"];
+      var pptlist = ['ppt'];
       result = pptlist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "ppt";
+        result = 'ppt';
         return result;
       }
       // 匹配 视频
-      var videolist = ["mp4", "m2v", "mkv"];
+      var videolist = ['mp4', 'm2v', 'mkv'];
       result = videolist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "video";
+        result = 'video';
         return result;
       }
       // 匹配 音频
-      var radiolist = ["mp3", "wav", "wmv"];
+      var radiolist = ['mp3', 'wav', 'wmv'];
       result = radiolist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "radio";
+        result = 'radio';
         return result;
       }
       // 其他 文件类型
-      result = "other";
+      result = 'other';
       return result;
     },
     removeImg: function(index) {
@@ -557,52 +569,51 @@ export default {
       console.log(res);
     },
     clearLogin: function() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userinfo");
+      localStorage.removeItem('token');
+      localStorage.removeItem('userinfo');
       this.$router.go(0);
     },
     // 置顶 取消置顶
     setTop: async function(id, block) {
       this.showGrp = false;
       let self = this;
-      let postapi = "/protected/grp/pin";
+      let postapi = '/protected/grp/pin';
       let dat = {
         grp: id,
-        pinned: block
+        pinned: block,
       };
       const crt = await axios.post(postapi, dat);
       if (crt.code == 0) {
         self.$toast({
-          text: block == 1 ? "取消置顶成功！" : "置顶成功"
+          text: block == 1 ? '取消置顶成功！' : '置顶成功',
         });
         self.getgrp();
       } else {
         self.$toast({
-          text: crt.message
+          text: crt.message,
         });
       }
     },
     clearGrp: async function(id) {
       this.showGrp = false;
       let self = this;
-      let postapi = "/protected/grp/detach";
+      let postapi = '/protected/grp/detach';
       let dat = {
-        grp: id
+        grp: id,
       };
       const crt = await axios.post(postapi, dat);
       if (crt.code == 0) {
         self.$toast({
-          text: "退出成功！"
+          text: '退出成功！',
         });
         self.getgrp();
         self.getgrps();
       } else {
         self.$toast({
-          text: crt.message
+          text: crt.message,
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
-

@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import GroupMain from "pages/group/GroupMain";
+import GroupMain from 'pages/group/GroupMain';
 export default {
-  name: "PageIndex",
+  name: 'PageIndex',
   components: {
-    GroupMain
-  }
+    GroupMain,
+  },
 };
 </script>

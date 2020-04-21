@@ -6,22 +6,24 @@
 </style>
 <template>
   <div>
-    <div class="items" v-for="(item,index) in data_item" :key="index">
+    <div class="items" v-for="(item, index) in data_item" :key="index">
       <div class="itemsTit">
         <img v-if="isinfo" src="../assets/image/avatar.jpeg" />
         <span>
           <span v-if="isinfo">&nbsp;</span>
-          {{item.creator && item.creator.name}}&nbsp;&nbsp;{{item.post && $moment(item.post.create_at).format('YYYY-MM-DD')}}&nbsp;&nbsp;
+          {{ item.creator && item.creator.name }}&nbsp;&nbsp;{{
+            item.post && $moment(item.post.create_at).format('YYYY-MM-DD')
+          }}&nbsp;&nbsp;
           <!--30分钟前-->
         </span>
       </div>
-      <router-link :to="{path:'/post',query: {id:item.post.id}}">
-        <p class="dynamicTxt">{{item.post.content}}</p>
+      <router-link :to="{ path: '/post', query: { id: item.post.id } }">
+        <p class="dynamicTxt">{{ item.post.content }}</p>
       </router-link>
       <!--          <img class="imgList" @error="imgLoadError(res)" alt="bak" src="https://justdao.s3-ap-northeast-1.amazonaws.com/avatar1.jpeg"/>-->
       <div
         class="dynamicImg"
-        v-if="item.post.images.length>0 && matchType(item.post.images[0])=='image'"
+        v-if="item.post.images.length > 0 && matchType(item.post.images[0]) == 'image'"
       >
         <img
           class="imgList"
@@ -40,27 +42,33 @@
       <div class="interactionCont">
         <div class="thumbsUp">
           <i></i>
-          {{item.post.num_like}}
+          {{ item.post.num_like }}
         </div>
-        <div class="comment" v-if="!item.comments" @click="getadd(item.post.id,index)">
+        <div class="comment" v-if="!item.comments" @click="getadd(item.post.id, index)">
           <i></i>
-          {{item.post.num_comment}}
+          {{ item.post.num_comment }}
         </div>
         <div class="comment" v-else @click="close(index)">
-          <i></i>收起
+          <i></i>
+          收起
         </div>
         <div class="forward">
           <i></i>
-          {{item.post.num_share}}
+          {{ item.post.num_share }}
         </div>
-        <div class="set" v-if="!isinfo" @click="showTip.index=index,showTip.type=!showTip.type">
-          <i></i>设置
-          <div class="toolTip-left" v-if="showTip.index==index && showTip.type">
-            <span v-if="tab==0">
+        <div
+          class="set"
+          v-if="!isinfo"
+          @click="(showTip.index = index), (showTip.type = !showTip.type)"
+        >
+          <i></i>
+          设置
+          <div class="toolTip-left" v-if="showTip.index == index && showTip.type">
+            <span v-if="tab == 0">
               <div class="commonBorder">再编辑</div>
               <div class="commonBorder" @click="deletePull(item.post.id)">删除</div>
             </span>
-            <span v-if="tab==1">
+            <span v-if="tab == 1">
               <div class="commonBorder">还原</div>
               <div class="commonBorder" @click="deletePull(item.post.id)">清除</div>
             </span>
@@ -68,33 +76,36 @@
         </div>
       </div>
       <div class="commentList" v-if="item.comments">
-        <p class="commentTotal" v-if="item.comments.length>0">
-          {{item.comments.length}}条评论
+        <p class="commentTotal" v-if="item.comments.length > 0">
+          {{ item.comments.length }}条评论
           <!--              <span class="loading"></span></p>-->
         </p>
         <div class="commentItems">
-          <label v-for="(items,index) in item.comments" :key="index">
+          <label v-for="(items, index) in item.comments" :key="index">
             <div class="itemsTit">
               <img src="../assets/image/avatar.jpeg" />
-              <span>&nbsp;{{items.creator.name}}&nbsp;&nbsp;{{$timeFn(items.comment.create_at)}}</span>
+              <span>
+                &nbsp;{{ items.creator.name }}&nbsp;&nbsp;{{ $timeFn(items.comment.create_at) }}
+              </span>
             </div>
             <div class="dynamicTxt respondTxt">
-              {{items.comment.content}}
-              <span
-                class="respond"
-                @click="reback.index=index,reback.reindex=ind"
-              >回应</span>
-              <div class="childrenItems" v-for="(it,index) in items.subs" :key="index">
+              {{ items.comment.content }}
+              <span class="respond" @click="(reback.index = index), (reback.reindex = ind)">
+                回应
+              </span>
+              <div class="childrenItems" v-for="(it, index) in items.subs" :key="index">
                 <div class="itemsTit">
                   <img src="../assets/image/avatar.jpeg" />
-                  <span>&nbsp;{{it.creator.name}}&nbsp;&nbsp;{{$timeFn(it.comment.create_at)}}</span>
+                  <span>
+                    &nbsp;{{ it.creator.name }}&nbsp;&nbsp;{{ $timeFn(it.comment.create_at) }}
+                  </span>
                 </div>
                 <div class="chatReplay">
                   <span class="replay">回复</span>
-                  @{{items.creator.name}}
+                  @{{ items.creator.name }}
                 </div>
                 <div class="dynamicTxt respondTxt">
-                  {{it.comment.content}}
+                  {{ it.comment.content }}
                   <span class="respond">取消回应</span>
                   <!--  <div class="respondMain">
                               <div class="respondInput">
@@ -113,7 +124,7 @@
             <div
               class="respondMain"
               style="margin-left: 84px;width: auto;"
-              v-show="reback.index==index && reback.reindex==ind"
+              v-show="reback.index == index && reback.reindex == ind"
             >
               <div class="respondInput">
                 <input type="text" v-model="retalk" placeholder="回应" />
@@ -123,7 +134,9 @@
                   <i @click="$refs.video.click()" class="video"></i>
                 </span>
               </div>
-              <div class="respondBtn" @click="respeak(item.post.id,index,items.comment.id)">回应</div>
+              <div class="respondBtn" @click="respeak(item.post.id, index, items.comment.id)">
+                回应
+              </div>
             </div>
           </label>
           <div class="respondMain">
@@ -135,7 +148,7 @@
                 <i @click="$refs.video.click()" class="video"></i>
               </span>
             </div>
-            <div class="respondBtn" @click="respeak(item.post.id,index)">评价</div>
+            <div class="respondBtn" @click="respeak(item.post.id, index)">评价</div>
           </div>
         </div>
       </div>
@@ -147,29 +160,29 @@
 <script>
 // import axios from "../http/axios";
 export default {
-  name: "pull",
+  name: 'pull',
   data() {
     return {
-      retalk: "",
-      talk: "",
+      retalk: '',
+      talk: '',
       showTip: {
         index: 0,
-        type: false
+        type: false,
       },
       reback: {
-        index: "",
-        reindex: ""
+        index: '',
+        reindex: '',
       },
       show: false,
       data_item: {},
       infos: {},
-      val: "",
-      contract: "",
+      val: '',
+      contract: '',
       isinfo: true,
-      tab: 0
+      tab: 0,
     };
   },
-  props: ["posts", "tabs"],
+  props: ['posts', 'tabs'],
   mounted() {
     this.data_item = this.posts;
     this.tab = this.tabs;
@@ -180,14 +193,14 @@ export default {
       immediate: true,
       handler(val) {
         this.data_item = val;
-      }
+      },
     },
     tabs: {
       immediate: true,
       handler(val) {
         this.tab = val;
-      }
-    }
+      },
+    },
   },
   methods: {
     hideMe: function() {
@@ -196,14 +209,14 @@ export default {
     },
     matchType: function(fileName) {
       // 后缀获取
-      var suffix = "";
+      var suffix = '';
       // 获取类型结果
-      var result = "";
+      var result = '';
       try {
-        var flieArr = fileName.split(".");
+        var flieArr = fileName.split('.');
         suffix = flieArr[flieArr.length - 1];
       } catch (err) {
-        suffix = "";
+        suffix = '';
       }
       // fileName无后缀返回 false
       if (!suffix) {
@@ -211,80 +224,80 @@ export default {
         return result;
       }
       // 图片格式
-      var imglist = ["png", "jpg", "jpeg", "bmp", "gif"];
+      var imglist = ['png', 'jpg', 'jpeg', 'bmp', 'gif'];
       // 进行图片匹配
       result = imglist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "image";
+        result = 'image';
         return result;
       }
       // 匹配txt
-      var txtlist = ["txt"];
+      var txtlist = ['txt'];
       result = txtlist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "txt";
+        result = 'txt';
         return result;
       }
       // 匹配 excel
-      var excelist = ["xls", "xlsx"];
+      var excelist = ['xls', 'xlsx'];
       result = excelist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "excel";
+        result = 'excel';
         return result;
       }
       // 匹配 word
-      var wordlist = ["doc", "docx"];
+      var wordlist = ['doc', 'docx'];
       result = wordlist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "word";
+        result = 'word';
         return result;
       }
       // 匹配 pdf
-      var pdflist = ["pdf"];
+      var pdflist = ['pdf'];
       result = pdflist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "pdf";
+        result = 'pdf';
         return result;
       }
       // 匹配 ppt
-      var pptlist = ["ppt"];
+      var pptlist = ['ppt'];
       result = pptlist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "ppt";
+        result = 'ppt';
         return result;
       }
       // 匹配 视频
-      var videolist = ["mp4", "m2v", "mkv"];
+      var videolist = ['mp4', 'm2v', 'mkv'];
       result = videolist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "video";
+        result = 'video';
         return result;
       }
       // 匹配 音频
-      var radiolist = ["mp3", "wav", "wmv"];
+      var radiolist = ['mp3', 'wav', 'wmv'];
       result = radiolist.some(function(item) {
         return item == suffix;
       });
       if (result) {
-        result = "radio";
+        result = 'radio';
         return result;
       }
       // 其他 文件类型
-      result = "other";
+      result = 'other';
       return result;
     },
     // respeak:function () {
@@ -292,25 +305,25 @@ export default {
     // },
     // 获取评论
     getadd: async function(id, index) {
-      let token = localStorage.getItem("token");
-      const bearer = "Bearer " + token;
+      let token = localStorage.getItem('token');
+      const bearer = 'Bearer ' + token;
       let self = this;
-      let postapi = "/comments/" + id;
-      const add = await this.$axios.get("/" + postapi, {});
+      let postapi = '/comments/' + id;
+      const add = await this.$axios.get('/' + postapi, {});
       if (add.code == 0) {
         // self.posts[index].comments=add.data.comments
-        self.$set(self.data_item[index], "comments", add.data.comments);
+        self.$set(self.data_item[index], 'comments', add.data.comments);
         console.log(add.data.comments);
-        self.talk = "";
+        self.talk = '';
         self.$forceUpdate();
       }
     },
     // 点赞、取消、
     like: async function(id) {
-      let postapi = "/protected/post/like";
+      let postapi = '/protected/post/like';
       let dat = {
         post: id,
-        op: 1
+        op: 1,
       };
     },
     //   // 评论 回复
@@ -320,38 +333,37 @@ export default {
       if (reid) {
         val = this.retalk;
       }
-      let postapi = "/protected/comment/create";
+      let postapi = '/protected/comment/create';
       let dat = {
         post: id,
         content: val,
-        ref_comment: reid ? reid : null
+        ref_comment: reid ? reid : null,
       };
-      const spk = await this.$axios.post("/" + postapi, dat);
+      const spk = await this.$axios.post('/' + postapi, dat);
       if (spk.code == 0) {
         this.getadd(id, index);
       }
     },
     deletePull: async function(id) {
-      let postapi = "/protected/post";
+      let postapi = '/protected/post';
       let dat = {
-        post: id
+        post: id,
       };
-      const spk = await this.$axios.delete("/" + postapi, dat);
+      const spk = await this.$axios.delete('/' + postapi, dat);
       if (spk.code == 0) {
         this.$toast({
-          text: "删除成功！"
+          text: '删除成功！',
         });
-        this.$emit("childFn");
+        this.$emit('childFn');
       }
     },
     close: function(index) {
       let self = this;
-      this.$delete(self.data_item[index], "comments");
+      this.$delete(self.data_item[index], 'comments');
       self.$forceUpdate();
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

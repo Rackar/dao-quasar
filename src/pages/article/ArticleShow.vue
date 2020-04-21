@@ -2,16 +2,16 @@
   <div>
     <div class="q-pt-lg" v-if="post.creator">
       <q-avatar rounded size="20px" v-show="!personPage">
-        <img :src="post.creator.avatar||'statics/user.svg'" />
+        <img :src="post.creator.avatar || 'statics/user.svg'" />
       </q-avatar>
-      <span class="q-px-md" v-show="!personPage">{{post.creator.name}}</span>
-      <span>{{$utils.timeStringToLocal(post.post.create_at)}}</span>
+      <span class="q-px-md" v-show="!personPage">{{ post.creator.name }}</span>
+      <span>{{ $utils.timeStringToLocal(post.post.create_at) }}</span>
     </div>
 
-    <div class="q-py-lg">{{post.post.content}}</div>
+    <div class="q-py-lg">{{ post.post.content }}</div>
     <div class="row" style=" max-width: 600px; ">
       <q-img
-        v-for="(url,index) in post.post.images"
+        v-for="(url, index) in post.post.images"
         :key="index"
         :src="url"
         spinner-color="white"
@@ -46,7 +46,7 @@ export default {
   components: {},
   props: {
     post: Object,
-    personPage: { type: Boolean, default: false }
+    personPage: { type: Boolean, default: false },
   },
   data() {
     return {};
@@ -55,27 +55,26 @@ export default {
   computed: {
     id() {
       return this.post.post.id;
-    }
+    },
   },
   methods: {
     async like() {
-      let api = "/protected/post/like";
+      let api = '/protected/post/like';
       let data = {
         post: this.id,
-        op: 1
+        op: 1,
       };
       const result = await this.$axios.post(api, data);
       if (result.data.code == 0) {
-        this.$q.notify("点赞成功");
+        this.$q.notify('点赞成功');
       }
     },
     comment() {},
     share() {},
-    showSetting() {}
+    showSetting() {},
   },
   created() {},
-  mounted() {}
+  mounted() {},
 };
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

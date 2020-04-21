@@ -6,27 +6,41 @@
     </div>
     <div class="login_box">
       <div class="log">
-        <div class="em" v-if="type==1">
+        <div class="em" v-if="type == 1">
           <div class="tit">欢迎来到DAO</div>
           <div class="email">
-            <input type="text" class="val" v-model="email" name="email" placeholder="请输入您的邮箱" />
+            <input
+              type="text"
+              class="val"
+              v-model="email"
+              name="email"
+              placeholder="请输入您的邮箱"
+            />
           </div>
           <div class="btn">
             <!-- <button :class="email!=''?'active':''" @click="sumitEmail">下一步</button> -->
             <q-btn color="primary" :disable="!email" @click="sumitEmail" label="下一步" />
           </div>
-          <div class="bei">DAO是一个由用户自治的论坛，该论坛所有社区规则由用户集体投票制定，登录使用DAO代表您同意该论坛的所有社区规则。</div>
+          <div class="bei">
+            DAO是一个由用户自治的论坛，该论坛所有社区规则由用户集体投票制定，登录使用DAO代表您同意该论坛的所有社区规则。
+          </div>
         </div>
-        <div class="code" v-if="type==2">
+        <div class="code" v-if="type == 2">
           <div class="back" @click="back()">
             <img class src="~assets/icon_down.png" />
           </div>
           <div class="tit">
             <div>请输入验证码</div>
-            <div class="setcode">验证码已发送至 {{email}}</div>
+            <div class="setcode">验证码已发送至 {{ email }}</div>
           </div>
           <div class="email">
-            <input type="number" class="val" v-model="code" name="code" placeholder="四位数验证码" />
+            <input
+              type="number"
+              class="val"
+              v-model="code"
+              name="code"
+              placeholder="四位数验证码"
+            />
           </div>
           <div class="btn">
             <!-- <button :class="code!=''?'active':''" @click="login()">登录</button> -->
@@ -44,19 +58,19 @@
 
 <script>
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
       type: 1,
-      email: "",
-      code: ""
+      email: '',
+      code: '',
       // auth_token: this.$route.query.auth_token
     };
   },
   created() {
-    let token = localStorage.getItem("token");
+    let token = localStorage.getItem('token');
     if (token) {
-      this.$router.push({ path: "/", query: {} });
+      this.$router.push({ path: '/', query: {} });
     }
     // console.log(axios.commonApi);
   },
@@ -64,17 +78,17 @@ export default {
     async sumitEmail() {
       let re = /\w+@[a-z0-9]+\.[a-z]{2,4}/;
       if (!re.test(this.email)) {
-        this.$q.notify({ message: "邮箱格式不正确" });
+        this.$q.notify({ message: '邮箱格式不正确' });
       } else {
         //调试，注释掉注册接口
-        let postapi = "/user/verify/" + this.email;
+        let postapi = '/user/verify/' + this.email;
         const resDataPost = await this.$axios.get(postapi, {});
         // let resDataPost = { code: 0 };
         let res = resDataPost.data;
         // debugger;
         if (res.code == 0) {
           this.type = 2;
-          this.$q.notify({ message: "验证码发送成功" });
+          this.$q.notify({ message: '验证码发送成功' });
         } else {
           this.$q.notify({ message: res.message });
         }
@@ -86,10 +100,10 @@ export default {
     },
     login: async function() {
       localStorage.clear();
-      let apiCode = "/user/login";
+      let apiCode = '/user/login';
       let testData = {
         mail: this.email,
-        code: this.code
+        code: this.code,
       };
       //调试，注释掉注册接口
       const resData = await this.$axios.post(apiCode, testData);
@@ -98,20 +112,20 @@ export default {
       if (res.code === 0) {
         let token = res.data.token;
         let userinfo = JSON.stringify(res.data.user);
-        localStorage.setItem("token", token);
-        localStorage.setItem("userinfo", userinfo);
-        this.$store.commit("user/login_saveToken", token);
+        localStorage.setItem('token', token);
+        localStorage.setItem('userinfo', userinfo);
+        this.$store.commit('user/login_saveToken', token);
         setTimeout(() => {
-          this.$router.push({ path: "/", query: { token: token } });
+          this.$router.push({ path: '/', query: { token: token } });
         }, 100);
       } else {
         // this.$toast({
         //   text:
         // });
-        this.$q.notify({ position: "center", message: res.message });
+        this.$q.notify({ position: 'center', message: res.message });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
