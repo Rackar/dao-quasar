@@ -9,10 +9,18 @@
       @click="$router.push('/login')"
       label="快速登录"
     />
-    <q-avatar rounded size="20px">
-      <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
+    <div class="top-login" v-else>
+      <q-avatar rounded size="30px" icon="notifications">
+        <q-badge color="red" floating>4</q-badge>
+      </q-avatar>
+      <q-avatar rounded size="20px" @click="$router.push('person/show/'+userid)">
+        <img :src="$store.state.user.avatar?$store.state.user.avatar:'statics/user.svg'" />
+      </q-avatar>
+    </div>
+    <q-avatar rounded size="30px">
+      <img :src="owner.avatar?owner.avatar:'statics/user.svg'" />
     </q-avatar>
-    <span class="text-weight-bold">{{group.name}}</span>
+    <span class="text-weight-bold q-px-md">{{group.name}}</span>
     <q-btn
       flat
       rounded
@@ -35,7 +43,9 @@
     <div>
       <div class="row q-pa-md info q-my-md">
         <div class="col-10">
-          <span class="text-weight-bold">创建于{{group.create_at}} 组长：{{owner.name}}</span>
+          <span
+            class="text-weight-bold"
+          >创建于{{$utils.timeStringToLocal(group.create_at) }} 组长：{{owner.name}}</span>
           <div>{{group.desc_text}}</div>
         </div>
       </div>
@@ -53,35 +63,13 @@
     </div>
 
     <div v-for="post in posts" :key="post.post.id">
-      <div class="q-pt-lg">
-        <q-avatar rounded size="20px">
-          <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
-        </q-avatar>
-        <span class="q-px-md">{{post.creator.name}}</span>
-        <span>{{post.post.create_at}}</span>
-      </div>
-
-      <div class="q-py-lg">{{post.post.content}}</div>
-      <div class="row" style=" max-width: 600px; ">
-        <q-img
-          v-for="(url,index) in post.post.images"
-          :key="index"
-          :src="url"
-          spinner-color="white"
-          style="height: 240px; max-width: 240px; margin:9px;"
-        />
-      </div>
-      <div>
-        <q-btn flat rounded color="primary" label="300" icon="thumb_up" />
-        <q-btn flat rounded label="200" icon="chat_bubble_outline" />
-        <q-btn flat rounded label="100" icon="share" />
-      </div>
-      <q-separator />
+      <ArticleShow :post="post" />
     </div>
   </div>
 </template>
 
 <script>
+import ArticleShow from "pages/article/ArticleShow";
 let post = {
   content: "巨大的福利来袭",
   create_at: "2020-03-22T12:26:18+00:00",
@@ -98,7 +86,7 @@ let post = {
 import addArticle from "pages/article/add";
 import member from "components/member";
 export default {
-  components: { addArticle, member },
+  components: { addArticle, member, ArticleShow },
   props: {},
   data() {
     return {
@@ -205,5 +193,6 @@ export default {
   position: absolute;
   top: 20px;
   right: 40px;
+  cursor: pointer;
 }
 </style>

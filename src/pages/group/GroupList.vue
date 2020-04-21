@@ -2,10 +2,22 @@
   <div>
     <q-list class="rounded-borders" style="max-width: 550px">
       <div v-for="myGroup in myGroups" :key="myGroup.id">
-        <q-item clickable @click="jumpToGroup(myGroup.grp.id)" v-ripple class="q-px-xl q-py-md">
+        <q-item
+          clickable
+          @click="jumpToGroup(myGroup.grp.id)"
+          @mouseover="showListId=myGroup.grp.id"
+          @mouseout="showListId=-1"
+          v-ripple
+          class="q-px-xl q-py-md"
+        >
+          <span
+            v-show="showListId==myGroup.grp.id"
+            class="leftHideTool"
+            @click.stop="showListTool"
+          >...</span>
           <q-item-section avatar>
             <q-avatar rounded size="40px">
-              <img :src="myGroup.grp.avatar" />
+              <img :src="myGroup.grp.avatar?myGroup.grp.avatar:'statics/group.svg'" />
             </q-avatar>
           </q-item-section>
 
@@ -17,7 +29,7 @@
           </q-item-section>
           <q-item-section side top>
             <q-badge color="grey" :label="myGroup.grp.num_post" />
-            <q-item-label caption>{{myGroup.grp.last_post_at}}</q-item-label>
+            <q-item-label caption>{{$utils.timeStringToLocal(myGroup.grp.last_post_at) }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -25,10 +37,18 @@
       </div>
       <q-item-label header class="q-px-xl">推荐</q-item-label>
       <div v-for="grp in recommendGroups" :key="grp.id">
-        <q-item clickable @click="jumpToGroup(grp.id)" v-ripple class="q-px-xl q-py-md">
+        <q-item
+          clickable
+          @click="jumpToGroup(grp.id)"
+          @mouseover="showListId=grp.id"
+          @mouseout="showListId=-1"
+          v-ripple
+          class="q-px-xl q-py-md"
+        >
+          <span v-show="showListId==grp.id" class="leftHideTool" @click.stop="showListTool">...</span>
           <q-item-section avatar>
             <q-avatar rounded size="40px">
-              <img :src="grp.avatar" />
+              <img :src="grp.avatar?grp.avatar:'statics/group.svg'" />
             </q-avatar>
           </q-item-section>
 
@@ -40,7 +60,7 @@
           </q-item-section>
           <q-item-section side top>
             <q-badge color="grey" :label="grp.num_post" />
-            <q-item-label caption>{{grp.last_post_at}}</q-item-label>
+            <q-item-label caption>{{$utils.timeStringToLocal(grp.last_post_at)}}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -72,7 +92,9 @@ export default {
   data() {
     return {
       myGroups: [],
-      recommendGroups: []
+      recommendGroups: [],
+      showTooltip: false,
+      showListId: -1
     };
   },
   created() {
@@ -89,6 +111,11 @@ export default {
     userid() {
       return this.$store.state.user.userid;
     }
+    // myGroupFormat() {
+    //   return this.myGroups.map(my => {
+    //     return my.grp;
+    //   });
+    // }
   },
   methods: {
     async init() {
@@ -142,7 +169,18 @@ export default {
         this.recommendGroups = getgrps.data.grps;
       } else {
       }
+    },
+    showListTool() {
+      this.$q.notify("点击按钮");
     }
   }
 };
 </script>
+<style lang="stylus" scoped>
+.leftHideTool {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  z-index: 2;
+}
+</style>

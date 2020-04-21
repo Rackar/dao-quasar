@@ -51,7 +51,9 @@
       <div class="left">
         <div class="personalAvatar left">
           <div v-show="bianji" @click="$refs.file.click()"></div>
-          <img v-show="isShow" :src="files" @error="doError" alt />
+          <!-- <img v-show="isShow" :src="files" @error="doError" alt /> -->
+          <img v-show="isShow" :src="userinfo.avatar?userinfo.avatar:'statics/user.svg'" />
+
           <span v-show="!isShow">AL</span>
           <input type="file" ref="file" @change="fileChange" accept="image/*" hidden="hidden" />
         </div>
@@ -86,41 +88,14 @@
         </div>
         <div class="personalTabCard clearfix">
           <div class="personalTab dynamicList">
+            <ArticleShow v-if="pullList.length" :post="pullList" />
             <!-- <pull-box @childFn="childfn" :tabs="tab" :posts="pullList" ref="updinfo"></pull-box> -->
           </div>
         </div>
       </div>
-      <div class="detailRight right">
-        <div class="myMoney">
-          <div class="moneyNes">我的钱包</div>
-          <div class="scan" v-for="item in mycode" :key="item.key">
-            <div class="left">
-              <span class="moneyNumber">{{item.token.value}}</span>
-              <span>&nbsp;({{item.contract.symbol}})</span>
-            </div>
-            <div class="right">
-              <div class="img1" @click="repays(item)"></div>
 
-              <div class="img2" @click="qrcode(item.contract)"></div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-        <div class="realtimeDynamic" v-for="item in log" :key="item.key">
-          <div class="dynamicItem">
-            <div class="dynamicTop">
-              <div class="left">{{item.token_log.note}}</div>
-              <div class="right">{{item.token_log.value}}</div>
-              <div class="clearfix"></div>
-            </div>
-            <div class="dynamicBottom">
-              <div class="left">{{item.token_log.create_at|dateformat("YYYY-MM-DD HH:mm:ss")}}</div>
-              <div class="right">839</div>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <wallet :tokens="tokens" :log="log" />
+
       <div class="clearfix"></div>
     </div>
     <!-- <layer-box v-bind:layerInfo="layer" ref="showLayer"></layer-box> -->
@@ -152,9 +127,10 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
+import ArticleShow from "pages/article/ArticleShow";
+import wallet from "./wallet";
 export default {
-  components: {},
+  components: { ArticleShow, wallet },
   props: {
     id: {
       type: Number,
@@ -168,6 +144,7 @@ export default {
       show: false,
       userinfo: {},
       mycode: [],
+      tokens: [],
       istach: false,
       log: [],
       files: "",
@@ -184,13 +161,13 @@ export default {
     };
   },
   created() {
-    let token = localStorage.getItem("token");
-    if (token) {
+    let userid = this.$store.state.user.userid;
+    if (userid) {
       //注释掉接口初始化
-      //   this.getuserinfo();
-      //   this.getmycode();
-      //   this.tokenLog();
-      //   this.getmyabb(false);
+      this.getuserinfo();
+      this.getmycode();
+      this.tokenLog();
+      this.getmyabb(false);
       //   this.$nextTick(function() {
       //     this.doImg();
       //     this.hideinfo();
@@ -216,7 +193,6 @@ export default {
     // 上传文件
     fileChange: async function(e) {
       let file = e.target.files[0];
-      let self = this;
       //创建新文件对象
       let newfile;
       // console.log(e);
@@ -247,10 +223,10 @@ export default {
               if (err) {
                 console.log(err);
               } else {
-                self.files = "";
-                self.files = data.Location + "?" + new Date().getTime();
-                // self.posttype="image"
-                self.$forceUpdate();
+                this.files = "";
+                this.files = data.Location + "?" + new Date().getTime();
+                // this.posttype="image"
+                this.$forceUpdate();
               }
             });
           } else {
@@ -261,55 +237,48 @@ export default {
     },
     // 个人信息
     getuserinfo: async function() {
-      let self = this;
-      let token = localStorage.getItem("token");
-      if (token) {
-        let url = "/protected/user/me";
-        const resData = await axios.get("//" + url, {});
-        if (resData.code == 0) {
-          self.userinfo = resData.data.me;
-          localStorage.setItem("userinfo", JSON.stringify(self.userinfo));
-        }
+      let url = "/protected/user/me";
+      const resData = await this.$axios.get(url, {});
+      if (resData.data.code == 0) {
+        this.userinfo = resData.data.data.me;
+        this.$emit("setUserinfo", this.userinfo);
       } else if (resData.code == 104) {
         this.$router.push({ path: "/login", query: {} });
       }
     },
     // 我的代币
     getmycode: async function() {
-      let self = this;
       let url = "protected/user/tokens";
-      const resCode = await axios.get("//" + url, {});
-      if (resCode.code == 0) {
-        self.mycode = resCode.data.tokens;
-      } else if (resCode.code == 104) {
+      const resCode = await this.$axios.get(url, {});
+      if (resCode.data.code == 0) {
+        this.tokens = resCode.data.data.tokens;
+      } else if (resCode.data.code == 104) {
       }
     },
     // 我的帖子
     getmyabb: async function(del) {
-      let self = this;
       let url = "protected/post/my/pull";
-      const resCode = await axios.post("//" + url, {
+      const resCode = await this.$axios.post(url, {
         base_post: null,
         deleted: del
       });
-      if (resCode.code == 0) {
-        self.pullList = [];
-        self.pullList = resCode.data.posts;
+      if (resCode.data.code == 0) {
+        this.pullList = [];
+        this.pullList = resCode.data.data.posts;
       }
     },
     // 转账日志
     tokenLog: async function() {
-      let self = this;
       let url = "protected/user/token/logs";
       let dat = {
         contract: "",
         base_token_log: null
       };
-      const resLog = await axios.post("//" + url, dat);
-      if (resLog.code == 0) {
-        self.log = resLog.data.token_logs;
+      const resLog = await this.$axios.post(url, dat);
+      if (resLog.data.code == 0) {
+        this.log = resLog.data.data.token_logs;
       } else {
-        alert(resLog.message);
+        alert(resLog.data.message);
       }
     },
     tach: function() {
@@ -323,11 +292,11 @@ export default {
         to_user: 10000,
         value: "10.2"
       };
-      const respay = await axios.post("//" + url, dat);
-      if (respay.code == 0) {
-        // self.log=resLog.data.token_logs;
+      const respay = await axios.post(url, dat);
+      if (respay.data.code == 0) {
+        // this.log=resLog.data.token_logs;
       } else {
-        alert(respay.message);
+        alert(respay.data.message);
       }
     },
     // 监听图片加载
@@ -335,14 +304,7 @@ export default {
       console.log("fail");
       this.isShow = false;
     },
-    doImg: function() {
-      let user = localStorage.getItem("userinfo");
-      // console.log(JSON.parse(user));
-      user = md5("avatar" + JSON.parse(user).id);
-      this.userid = user;
-      this.files =
-        "https://justdao.s3.ap-northeast-1.amazonaws.com/" + user + ".jpg";
-    },
+
     //  生成二维码
     qrcode(text) {
       let qrcode = new QRCode("qrcode", {
@@ -367,16 +329,16 @@ export default {
       let postdata = {
         name: name
       };
-      const respons = await axios.put("//" + url, postdata);
-      if (respons.code == 0) {
-        this.$toast({
-          text: "更新成功！"
+      const respons = await axios.put(url, postdata);
+      if (respons.data.code == 0) {
+        this.$q.nofity({
+          message: "更新成功！"
         });
         this.getuserinfo();
         this.bianji = false;
       } else {
-        this.$toast({
-          text: respons.message
+        this.$q.nofity({
+          message: respons.data.message
         });
       }
     }
