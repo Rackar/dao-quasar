@@ -101,7 +101,8 @@ export default {
   props: {
     // 提供 postId 时是修改。 否则是创建，此时需要 groupId。
     postId: { type: Number },
-    groupId: { type: Number },
+    // groupId 从vuex中获取
+    // groupId: { type: Number },
     // 修改时应提供 initialData 来显示默认值
     initialData: {
       type: Object,
@@ -116,6 +117,9 @@ export default {
     return this.getDefaultData();
   },
   computed: {
+    groupId() {
+      return this.$store.state.group.currentGroup.id;
+    },
     shouldShow: {
       get() {
         return this.value;
