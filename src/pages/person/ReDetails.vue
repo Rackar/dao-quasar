@@ -4,7 +4,19 @@
       <q-avatar rounded size="100px">
         <img :src="userinfo.avatar || 'statics/user.svg'" />
       </q-avatar>
-      {{ this.userinfo.name || this.userinfo.mail_export }} 111
+      {{ this.userinfo.name || this.userinfo.mail_export }}
+      <div class="cursor-pointer" style="width: 100px">
+        {{ edit.name }}
+        <q-icon name="edit" color="primary" />
+
+        <q-popup-edit v-model="edit.name" :cover="false" :offset="[0, 10]">
+          <q-input color="primary" v-model="edit.name" dense autofocus counter>
+            <template v-slot:prepend>
+              <q-icon name="record_voice_over" color="primary" />
+            </template>
+          </q-input>
+        </q-popup-edit>
+      </div>
       <q-space />
       <q-btn outline color="primary" icon="menu" label="编辑资料" />
     </div>
@@ -63,6 +75,9 @@ export default {
       tokens: [],
       log: [],
       pullList: [],
+      edit: {
+        name: '111',
+      },
     };
   },
   watch: {},

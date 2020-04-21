@@ -10,13 +10,34 @@
           v-ripple
           class="q-px-xl q-py-md"
         >
-          <span
+          <!-- <span
             v-show="showListId == myGroup.grp.id"
             class="leftHideTool"
             @click.stop="showListTool"
           >
             ...
-          </span>
+          </span> -->
+          <q-btn
+            flat
+            no-caps
+            icon="menu"
+            v-show="showListId == myGroup.grp.id"
+            class="leftHideTool"
+          >
+            <q-menu auto-close>
+              <q-list style="min-width: 100px">
+                <q-item clickable>
+                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">
+                    置顶群
+                  </q-item-section>
+                </q-item>
+                <q-separator />
+                <q-item clickable>
+                  <q-item-section @click.stop="leaveGroup(myGroup.grp.id)">退出群</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
           <q-item-section avatar>
             <q-avatar rounded size="40px">
               <img :src="myGroup.grp.avatar || 'statics/group.svg'" />
@@ -143,7 +164,7 @@ export default {
     //
     jumpToGroup(id) {
       this.$store.dispatch('group/jumpToGroup', { id: id });
-      this.$router.push('/group/' + id);
+      this.$router.push('/group/' + id).catch(() => {});
     },
     // 获取群信息
     getMyGroups: async function() {
@@ -180,14 +201,16 @@ export default {
     showListTool() {
       this.$q.notify('点击按钮');
     },
+    setGroupToTop(id) {},
+    leaveGroup(id) {},
   },
 };
 </script>
 <style lang="stylus" scoped>
 .leftHideTool {
   position: absolute;
-  left: 20px;
+  left: 0px;
   top: 20px;
-  z-index: 2;
+  z-index: 30;
 }
 </style>
