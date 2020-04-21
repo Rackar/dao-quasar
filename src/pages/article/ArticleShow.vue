@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="q-pt-lg">
-      <q-avatar rounded size="20px">
-        <img :src="post.creator.avatar?post.creator.avatar:'statics/user.svg'" />
+    <div class="q-pt-lg" v-if="post.creator">
+      <q-avatar rounded size="20px" v-show="!personPage">
+        <img :src="post.creator.avatar||'statics/user.svg'" />
       </q-avatar>
-      <span class="q-px-md">{{post.creator.name}}</span>
+      <span class="q-px-md" v-show="!personPage">{{post.creator.name}}</span>
       <span>{{$utils.timeStringToLocal(post.post.create_at)}}</span>
     </div>
 
@@ -35,6 +35,7 @@
         @click="comment"
       />
       <q-btn flat rounded :label="post.post.num_share" icon="share" @click="share" />
+      <q-btn flat rounded icon="settings" @click="showSetting" />
     </div>
     <q-separator />
   </div>
@@ -43,7 +44,10 @@
 <script>
 export default {
   components: {},
-  props: { post: {} },
+  props: {
+    post: Object,
+    personPage: { type: Boolean, default: false }
+  },
   data() {
     return {};
   },
@@ -66,7 +70,8 @@ export default {
       }
     },
     comment() {},
-    share() {}
+    share() {},
+    showSetting() {}
   },
   created() {},
   mounted() {}

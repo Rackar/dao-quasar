@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
-      menuList: "",
+      menuList,
       link: ""
     };
   },

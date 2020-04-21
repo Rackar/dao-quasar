@@ -52,7 +52,7 @@
         <div class="personalAvatar left">
           <div v-show="bianji" @click="$refs.file.click()"></div>
           <!-- <img v-show="isShow" :src="files" @error="doError" alt /> -->
-          <img v-show="isShow" :src="userinfo.avatar?userinfo.avatar:'statics/user.svg'" />
+          <img v-show="isShow" :src="userinfo.avatar||'statics/user.svg'" />
 
           <span v-show="!isShow">AL</span>
           <input type="file" ref="file" @change="fileChange" accept="image/*" hidden="hidden" />
@@ -88,8 +88,12 @@
         </div>
         <div class="personalTabCard clearfix">
           <div class="personalTab dynamicList">
-            <ArticleShow v-if="pullList.length" :post="pullList" />
-            <!-- <pull-box @childFn="childfn" :tabs="tab" :posts="pullList" ref="updinfo"></pull-box> -->
+            <ArticleShow
+              v-for="post in pullList"
+              :post="post"
+              :key="post.post.id"
+              :personPage="true"
+            />
           </div>
         </div>
       </div>
@@ -265,6 +269,8 @@ export default {
       if (resCode.data.code == 0) {
         this.pullList = [];
         this.pullList = resCode.data.data.posts;
+        // if (!this.pullList.length) {
+        // }
       }
     },
     // 转账日志

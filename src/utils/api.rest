@@ -64,6 +64,19 @@ Content-Type: {{contentType}}
 }
 
 ### POST /protected/post/create（发帖）
+POST https://{{host}}/protected/post/create HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+	"grp": 10018,
+	"title": "文本plain text",
+	"content": "内容可以放入html",
+  "images": [
+    "aws s3 url",
+    "aws s3 url"
+  ]
+}
 ### POST /protected/post/like（点赞）
 ### POST /protected/post/likes（点赞状态）
 ### POST /protected/comment/create（评论）

@@ -17,7 +17,7 @@
           >...</span>
           <q-item-section avatar>
             <q-avatar rounded size="40px">
-              <img :src="myGroup.grp.avatar?myGroup.grp.avatar:'statics/group.svg'" />
+              <img :src="myGroup.grp.avatar||'statics/group.svg'" />
             </q-avatar>
           </q-item-section>
 
@@ -48,7 +48,7 @@
           <span v-show="showListId==grp.id" class="leftHideTool" @click.stop="showListTool">...</span>
           <q-item-section avatar>
             <q-avatar rounded size="40px">
-              <img :src="grp.avatar?grp.avatar:'statics/group.svg'" />
+              <img :src="grp.avatar||'statics/group.svg'" />
             </q-avatar>
           </q-item-section>
 
@@ -137,6 +137,7 @@ export default {
     //
     jumpToGroup(id) {
       this.$store.dispatch("group/jumpToGroup", { id: id });
+      this.$router.push("/group/" + id);
     },
     // 获取群信息
     getMyGroups: async function() {

@@ -16,11 +16,11 @@
         <q-badge color="red" floating>4</q-badge>
       </q-avatar>
       <q-avatar rounded size="20px" @click="$router.push('person/show/'+userid)">
-        <img :src="$store.state.user.avatar?$store.state.user.avatar:'statics/user.svg'" />
+        <img :src="$store.state.user.avatar||'statics/user.svg'" />
       </q-avatar>
     </div>
     <q-avatar rounded size="30px">
-      <img :src="owner.avatar?owner.avatar:'statics/user.svg'" />
+      <img :src="owner.avatar||'statics/user.svg'" />
     </q-avatar>
     <span class="text-weight-bold q-px-md">{{group.name}}</span>
     <q-btn
@@ -72,19 +72,7 @@
 
 <script>
 import ArticleShow from "pages/article/ArticleShow";
-let post = {
-  content: "巨大的福利来袭",
-  create_at: "2020-03-22T12:26:18+00:00",
-  creator: 10001,
-  grp: 10000,
-  id: 14,
-  num_comment: 0,
-  num_like: 0,
-  num_share: 0,
-  num_unlike: 0,
-  title: "",
-  images: ["aws s3 url", "aws s3 url"]
-};
+
 import addArticle from "pages/article/add";
 import member from "components/member";
 export default {

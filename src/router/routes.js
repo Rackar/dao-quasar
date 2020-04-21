@@ -5,8 +5,8 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/group/Index.vue') },
       { path: 'edit', component: () => import('pages/test/ArticleCreate.vue') },
-      { path: 'articles/:id', component: () => import('pages/test/ArticleSingle.vue') }
-
+      { path: 'articles/:id', component: () => import('pages/test/ArticleSingle.vue') },
+      { path: 'group/:id', component: () => import('pages/group/GroupMain.vue') },
 
     ]
   }, {

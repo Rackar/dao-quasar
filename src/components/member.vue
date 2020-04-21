@@ -9,7 +9,7 @@
           @click="jumpToMember(member.id)"
           class="clickable"
         >
-          <img :src="member.avatar?member.avatar:'statics/user.svg'" />
+          <img :src="member.avatar || 'statics/user.svg'" />
           <q-badge v-show="edit" color="red" floating style>x</q-badge>
         </q-avatar>
       </div>
