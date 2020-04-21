@@ -1,25 +1,32 @@
-import { axiosInstance } from 'boot/axios'
+import { axiosInstance } from 'boot/axios';
 const apiPath = {
-    getVerify: '/user/verify/:mail',
-    postLogin: '/user/login'
-}
+  getVerify: '/user/verify/:mail',
+  postLogin: '/user/login',
+};
 
-export const get = (url, config) => {
-    return new Promise((resolve, reject) => {
-        axiosInstance.get(url, config).then((res) => {
-            // debugger;
-            if (res.data.code === 0) {
-                resolve(res.data)
-            } else {
-                reject(res.data.message)
-            }
-        }).catch(err => {
-            // debugger;
-            reject(err)
+const createMethod = function(type) {
+  return (url, config) =>
+    new Promise((resolve, reject) => {
+      axiosInstance[type](url, config)
+        .then(res => {
+          // debugger;
+          if (res.data.code === 0) {
+            resolve(res.data);
+          } else {
+            reject(res.data.message);
+          }
         })
-    })
-}
+        .catch(err => {
+          // debugger;
+          reject(err);
+        });
+    });
+};
 
+export const get = createMethod('get');
+export const post = createMethod('post');
+export const put = createMethod('put');
+export const remove = createMethod('delete');
 
 // GET /user/verify/:mail（发送验证码）
 // POST /user/login（登陆）
