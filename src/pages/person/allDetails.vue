@@ -152,6 +152,7 @@
   </div>
 </template>
 <script>
+/* eslint-disable */
 export default {
   components: {},
   props: {

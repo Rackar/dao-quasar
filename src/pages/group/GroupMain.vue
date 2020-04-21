@@ -1,8 +1,6 @@
 <template>
   <div class="q-mx-xl q-pt-xl">
-    <q-dialog v-model="addArticleShow">
-      <addArticle />
-    </q-dialog>
+    <addArticle v-model="addArticleShow"/>
     <q-btn
       v-if="!userid"
       class="top-login"
