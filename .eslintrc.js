@@ -1,6 +1,5 @@
 module.exports = {
   root: true,
-
   parserOptions: {
     parser: 'babel-eslint',
     sourceType: 'module'
@@ -11,6 +10,7 @@ module.exports = {
   },
 
   extends: [
+    'eslint:recommended',
     'prettier',
     // Uncomment any of the lines below to choose desired strictness,
     // but leave only one uncommented!
@@ -36,8 +36,10 @@ module.exports = {
 
   // add your custom rules here
   rules: {
+    'no-unused-vars': 'warn',
+    'no-empty': 'warn',
     'prefer-promise-reject-errors': 'off',
-
+    'no-unreachable': 'warn',
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'warn'
   }
