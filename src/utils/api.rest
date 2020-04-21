@@ -89,6 +89,8 @@ Content-Type: {{contentType}}
 ### POST /protected/user/token/transfer（转账）
 ### POST /protected/user/token/logs（转账日志）
 ### GET /protected/user/notifications/:base_notification（获取通知）
+# 注：read 字段参见枚举定义, base_notification 参数为之前保存的最新通知id，首次获取置0
+
 ### POST /protected/grp/block（拉黑）
 ### POST /grp/against（搜索群）
 ### POST /protected/grp/pin（置顶群）
