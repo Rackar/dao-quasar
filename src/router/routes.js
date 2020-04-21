@@ -14,7 +14,9 @@ const routes = [
     component: () => import('layouts/PersonLayout.vue'),
     children: [
       { path: '', component: () => import('pages/person/Index.vue') },
-      { path: 'show/:id', props: true, component: () => import('pages/person/Index.vue') }]
+      { path: 'show/:id', props: true, component: () => import('pages/person/ReDetails.vue') },
+      { path: 'showr/:id', props: true, component: () => import('pages/person/Index.vue') }
+    ]
     // { path: 'articleLists', component: () => import('pages/Articles.vue') }]
   }, {
     path: '/manage',//管理模板
