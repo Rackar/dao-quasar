@@ -305,8 +305,8 @@ export default {
     // },
     // 获取评论
     getadd: async function(id, index) {
-      let token = localStorage.getItem('token');
-      const bearer = 'Bearer ' + token;
+      // let token = localStorage.getItem('token');
+      // const bearer = 'Bearer ' + token;
       let self = this;
       let postapi = '/comments/' + id;
       const add = await this.$axios.get('/' + postapi, {});
@@ -319,12 +319,12 @@ export default {
       }
     },
     // 点赞、取消、
-    like: async function(id) {
-      let postapi = '/protected/post/like';
-      let dat = {
-        post: id,
-        op: 1,
-      };
+    like: async function() {
+      // let postapi = '/protected/post/like';
+      // let dat = {
+      //   post: id,
+      //   op: 1,
+      // };
     },
     //   // 评论 回复
     respeak: async function(id, index, reid) {

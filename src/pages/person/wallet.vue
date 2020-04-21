@@ -1,37 +1,35 @@
 <template>
-  <div>
-    <div class="detailRight right">
-      <div class="myMoney">
-        <div class="moneyNes">我的钱包</div>
-        <div class="scan" v-for="item in tokens" :key="item.key">
-          <div class="left">
-            <span class="moneyNumber">{{ item.token.value }}</span>
-            <span>&nbsp;({{ item.contract.symbol }})</span>
-          </div>
-          <div class="right">
-            <div class="img1"></div>
-
-            <div class="img2"></div>
-          </div>
-        </div>
-        <div class="clearfix"></div>
-      </div>
-      <div class="realtimeDynamic" v-for="item in log" :key="item.key">
-        <div class="dynamicItem">
-          <div class="dynamicTop">
-            <div class="left">{{ item.token_log.note }}</div>
-            <div class="right">{{ item.token_log.value }}</div>
-            <div class="clearfix"></div>
-          </div>
-          <div class="dynamicBottom">
-            <div class="left">{{ item.token_log.create_at }}</div>
-            <div class="right">839</div>
-            <div class="clearfix"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <q-card class="my-card">
+    <q-card-section class="row no-wrap">
+      我的钱包
+      <q-space />
+      转 二
+    </q-card-section>
+    <q-card-section class="text-center">
+      <q-btn flat label="总金额 (NES)▽">
+        <q-menu auto-close>
+          <q-list style="min-width: 100px">
+            <q-item clickable>
+              <q-item-section>Ethereum ETH</q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item clickable>
+              <q-item-section>DAO NES</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
+    </q-card-section>
+    <q-card-section>
+      <q-list style="min-width: 100px">
+        <q-item v-for="item in log" :key="item.key">
+          <q-item-section>{{ item.token_log.note }} --{{ item.token_log.value }}</q-item-section>
+          <q-item-section>{{ item.token_log.create_at }}-- $848</q-item-section>
+        </q-item>
+        <q-separator />
+      </q-list>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script>

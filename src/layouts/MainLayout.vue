@@ -9,7 +9,7 @@
       content-class="bg-grey-3"
     >
       <q-scroll-area class="fit">
-        <GroupListHeader />
+        <GroupListHeader class="q-ma-md" />
         <grouplist />
         <span class="text-weight-bold">以下为测试跳转用</span>
         <q-list v-for="(menuItem, index) in menuList" :key="index">
@@ -40,7 +40,8 @@
 
 <script>
 import grouplist from 'pages/group/GroupList';
-import GroupListHeader from 'pages/group/GroupListHeader';
+import GroupListHeader from 'components/headerBarLeft';
+// import GroupListHeader from 'pages/group/GroupListHeader';
 const menuList = [
   {
     icon: 'inbox',

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHR lpR fFf">
+  <q-layout view="lHR lpR fFf" class="main">
     <headerbar />
     <q-page-container>
       <router-view />
@@ -19,3 +19,4 @@ export default {
   },
 };
 </script>
+<style lang="stylus" scoped></style>

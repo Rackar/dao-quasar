@@ -98,7 +98,6 @@
   </div>
 </template>
 <script>
-import QRCode from 'qrcodejs2';
 import axios from '../http/axios';
 export default {
   name: 'layer',
@@ -114,7 +113,7 @@ export default {
   },
   props: ['layerInfo'],
   watch: {
-    chartData: function(newVal, oldVal) {
+    chartData: function(newVal) {
       console.log(newVal);
       this.infos = newVal; //newVal即是chartData
       // this.drawChart();

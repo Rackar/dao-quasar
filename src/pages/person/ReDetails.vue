@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div>
-      <q-avatar rounded>
-        <img src="https://cdn.quasar.dev/img/avatar.png" />
+    <div class="row no-wrap items-end q-mt-md q-px-lg  title">
+      <q-avatar rounded size="100px">
+        <img :src="userinfo.avatar || 'statics/user.svg'" />
       </q-avatar>
-      用户ID
+      {{ this.userinfo.name || this.userinfo.mail_export }} 111
       <q-space />
       <q-btn outline color="primary" icon="menu" label="编辑资料" />
     </div>
@@ -27,7 +27,7 @@
           <q-separator />
 
           <q-tab-panels v-model="tab" animated>
-            <q-tab-panel name="myPosts">
+            <q-tab-panel name="myPosts" class="posts">
               <ArticleShow
                 v-for="post in pullList"
                 :post="post"
@@ -43,7 +43,7 @@
         </q-card>
       </div>
       <div class="col-4">
-        <q-card>我的钱包</q-card>
+        <wallet :tokens="tokens" :log="log" />
       </div>
     </div>
   </div>
@@ -51,33 +51,37 @@
 
 <script>
 import ArticleShow from 'pages/article/ArticleShow';
+import wallet from './wallet';
 export default {
-  components: { ArticleShow },
+  components: { ArticleShow, wallet },
   props: {},
   data() {
     return {
       tab: 'myPosts',
-      userinfo: {},
+      // userinfo: {},
       mycode: [],
       tokens: [],
       log: [],
-
       pullList: [],
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    userinfo() {
+      return this.$store.state.user;
+    },
+  },
   methods: {
     // 个人信息
     getuserinfo: async function() {
-      let url = '/protected/user/me';
-      const resData = await this.$axios.get(url, {});
-      if (resData.data.code == 0) {
-        this.userinfo = resData.data.data.me;
-        this.$emit('setUserinfo', this.userinfo);
-      } else if (resData.code == 104) {
-        this.$router.push({ path: '/login', query: {} });
-      }
+      // let url = '/protected/user/me';
+      // const resData = await this.$axios.get(url, {});
+      // if (resData.data.code == 0) {
+      //   this.userinfo = resData.data.data.me;
+      //   this.$emit('setUserinfo', this.userinfo);
+      // } else if (resData.code == 104) {
+      //   this.$router.push({ path: '/login', query: {} });
+      // }
     },
     // 我的代币
     getmycode: async function() {
@@ -136,7 +140,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.posts {
+  height: 500px;
+}
 .my-card {
-  max-width: 400px;
+  max-width: 580px;
+}
+.title {
+  margin-top: -40px;
 }
 </style>

@@ -35,7 +35,20 @@
         @click="comment"
       />
       <q-btn flat rounded :label="post.post.num_share" icon="share" @click="share" />
-      <q-btn flat rounded icon="settings" @click="showSetting" />
+      <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
+      <q-btn flat rounded icon="settings">
+        <q-menu auto-close>
+          <q-list style="min-width: 100px">
+            <q-item clickable>
+              <q-item-section>编辑</q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item clickable>
+              <q-item-section>删除</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
     </div>
     <q-separator />
   </div>
@@ -71,7 +84,6 @@ export default {
     },
     comment() {},
     share() {},
-    showSetting() {},
   },
   created() {},
   mounted() {},
