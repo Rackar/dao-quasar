@@ -296,7 +296,7 @@ export default {
       const bearer = "Bearer " + token;
       let self = this;
       let postapi = "/comments/" + id;
-      const add = await axios.get("/" + postapi, {});
+      const add = await this.$axios.get("/" + postapi, {});
       if (add.code == 0) {
         // self.posts[index].comments=add.data.comments
         self.$set(self.data_item[index], "comments", add.data.comments);
@@ -326,7 +326,7 @@ export default {
         content: val,
         ref_comment: reid ? reid : null
       };
-      const spk = await axios.post("/" + postapi, dat);
+      const spk = await this.$axios.post("/" + postapi, dat);
       if (spk.code == 0) {
         this.getadd(id, index);
       }
@@ -336,7 +336,7 @@ export default {
       let dat = {
         post: id
       };
-      const spk = await axios.delete("/" + postapi, dat);
+      const spk = await this.$axios.delete("/" + postapi, dat);
       if (spk.code == 0) {
         this.$toast({
           text: "删除成功！"

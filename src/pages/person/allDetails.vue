@@ -182,7 +182,7 @@ export default {
   },
   methods: {
     childfn: function() {
-      this.getmyabb(tab == 0 ? false : true);
+      this.getmyabb(this.tab == 0 ? false : true);
     },
     hideinfo: function() {
       this.$refs.updinfo.hideMe();
@@ -194,51 +194,7 @@ export default {
       };
       this.$refs.showLayer.showModel();
     },
-    // 上传文件
-    fileChange: async function(e) {
-      let file = e.target.files[0];
-      //创建新文件对象
-      let newfile;
-      // console.log(e);
-      if (e.target.accept != "image/*") {
-        alert("请上传图片");
-      } else {
-        if (e.target.files) {
-          console.log(e);
-          newfile = new File([file], this.userid + ".jpg", { type: file.type });
-          console.log(newfile);
-          let credentials = {}; //秘钥形式的登录上传
-          AWS.config.update(credentials);
-          AWS.config.region = "ap-northeast-1"; //设置区域
-          // create bucket instance
-          let bucket = new AWS.S3({ params: { Bucket: "justdao" } }); //选择桶
-          let file = newfile;
-          if (file) {
-            // console.log(file);
-            let params = {
-              Key: file.name,
-              ContentType: file.type,
-              Body: file,
-              "Access-Control-Allow-Credentials": "*",
-              ACL: "public-read"
-            }; //key可以设置为桶的相抵路径，Body为文件， ACL最好要设置
-            bucket.upload(params, (err, data) => {
-              //打印出错误
-              if (err) {
-                console.log(err);
-              } else {
-                this.files = "";
-                this.files = data.Location + "?" + new Date().getTime();
-                // this.posttype="image"
-                this.$forceUpdate();
-              }
-            });
-          } else {
-            // results.innerHTML = 'Nothing to upload.';
-          }
-        }
-      }
-    },
+
     // 个人信息
     getuserinfo: async function() {
       let url = "/protected/user/me";
@@ -298,7 +254,7 @@ export default {
         to_user: 10000,
         value: "10.2"
       };
-      const respay = await axios.post(url, dat);
+      const respay = await this.$axios.post(url, dat);
       if (respay.data.code == 0) {
         // this.log=resLog.data.token_logs;
       } else {
@@ -313,14 +269,14 @@ export default {
 
     //  生成二维码
     qrcode(text) {
-      let qrcode = new QRCode("qrcode", {
-        width: 200,
-        height: 200, // 高度
-        text: text.contract // 二维码内容
-        // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
-        // background: '#f0f'
-        // foreground: '#ff0'
-      });
+      // let qrcode = new QRCode("qrcode", {
+      //   width: 200,
+      //   height: 200, // 高度
+      //   text: text.contract // 二维码内容
+      //   // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
+      //   // background: '#f0f'
+      //   // foreground: '#ff0'
+      // });
       this.show = true;
       this.text = text;
     },
@@ -335,7 +291,7 @@ export default {
       let postdata = {
         name: name
       };
-      const respons = await axios.put(url, postdata);
+      const respons = await this.$axios.put(url, postdata);
       if (respons.data.code == 0) {
         this.$q.nofity({
           message: "更新成功！"
