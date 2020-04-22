@@ -217,7 +217,6 @@ export default {
     leaveGroup(id) {
       this.showQuitGroup = true;
       this.quitGroupId = id;
-      debugger;
     },
   },
 };

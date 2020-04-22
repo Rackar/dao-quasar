@@ -22,7 +22,10 @@ const routes = [
   {
     path: '/manage', //管理模板
     component: () => import('layouts/ManageLayout.vue'),
-    children: [{ path: '', component: () => import('pages/manage/member.vue') }],
+    children: [
+      { path: '', component: () => import('pages/manage/member.vue') },
+      { path: ':id', props: true, component: () => import('pages/manage/member.vue') },
+    ],
     // { path: 'articleLists', component: () => import('pages/manage/Articles.vue') }]
   },
   {

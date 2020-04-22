@@ -1,125 +1,61 @@
 <template>
   <div>
-    <div>
-      <div class="msgTop">
-        <span class="bell"></span>
-        <span class="user">
-          <!-- <img src="../assets/image/avatar.jpeg" /> -->
-        </span>
+    <div class="top-login">
+      <headerBarRight />
+    </div>
+    <div class="q-ma-lg">
+      <div class="group-name">
+        <q-avatar size="30px">
+          <img :src="owner.avatar || 'statics/user.svg'" />
+        </q-avatar>
+        <span class="text-weight-bold q-px-md">{{ group.name }}</span>
+        <q-btn flat icon="edit" @click="edit" />
       </div>
-      <div class="taskMain">
-        <div class="chatInfor">
-          <!-- <img src="../assets/image/avatar.jpeg" /> -->
-          <span class="chatName">
-            <input type="text" value="group" :readonly="!bj ? 'readonly' : false" />
-            <!-- <i @click="bj=!bj" class="editMemberIcon"></i> -->
-            <q-icon color="primary" @click="bj = !bj" name="edit" />
-          </span>
-        </div>
-        <textarea
-          class="editTextarea"
-          :value="'描述'"
-          :readonly="!bj ? 'readonly' : false"
-        ></textarea>
-        <div class="btnSet setChartContent" v-show="bj">
-          <span class="btnCancel" @click="bj = !bj">取消</span>
-          <span class="btnOk" @click="uploadGrp(grpinfo)">保存</span>
-        </div>
-        <div class="rewardMain">
-          <div class="rewardTit postRead">
-            帖子阅读
-            <br />
-            <label class="radioLabel">
-              <input class="postRadio allPerson" type="radio" name="postRadio" checked />
-              <span class="radioInput"></span>
-              所有人
-            </label>
-            <label class="radioLabel onlyTeamlabel">
-              <input class="postRadio onlyTeam" type="radio" name="postRadio" />
-              <span class="radioInput"></span>
-              仅限组员&nbsp;&nbsp;
-              <input class="settingPws hide" type="password" placeholder="设置密码" />
-            </label>
-            <div class="btnSet hide">
-              <span class="btnCancel">取消</span>
-              <span class="btnOk">保存</span>
-            </div>
-          </div>
-        </div>
-        <div class="rewardMain">
-          <div class="rewardTit">
-            奖励机制
-            <span>
-              (单位：NES)
-              <!-- <i class="editMemberIcon"></i> -->
-              <q-icon color="primary" name="edit" />
-            </span>
-            <br />
-            正数代表奖励，负数代表收费
-          </div>
-        </div>
-        <div class="numberMain">
-          <div class="left postReward">
-            入群奖励
-            <p>
-              <span>56</span>
-              <input class="hide" type="text" placeholder="56" />
-            </p>
-          </div>
-          <div class="right respondReward">
-            帖子被阅读奖励
-            <p>
-              <span>56</span>
-              <input class="hide" type="text" placeholder="56" />
-            </p>
-          </div>
-          <div class="left postReward">
-            发帖奖励
-            <p>
-              <span>56</span>
-              <input class="hide" type="text" placeholder="56" />
-            </p>
-          </div>
-          <div class="right respondReward">
-            帖子被回复奖励
-            <p>
-              <span>3444</span>
-              <input class="hide" type="text" placeholder="3444" />
-            </p>
-          </div>
-          <div class="left joinReward">
-            邀请新成员奖励
-            <p>
-              <span>156</span>
-              <input class="hide" type="text" placeholder="156" />
-            </p>
-          </div>
-          <div class="clearfix"></div>
-          <div class="btnSet hide">
-            <span class="btnCancel">取消</span>
-            <span class="btnOk">保存</span>
-          </div>
-        </div>
+      <div class="desc">{{ group.desc_text }}</div>
+      <div class="title">帖子阅读</div>
+      <div class="q-gutter-sm">
+        <q-radio v-model="readPermition" val="public" label="任何人" />
+        <q-radio v-model="readPermition" val="member" label="仅限组员" />
+      </div>
+      <div>
+        <span class="title">奖励机制</span>
+        <span class="subtitle">(单位：NES)</span>
+      </div>
+      <div class="comment">正数代表奖励，负数代表收费</div>
+
+      <div class="row text-center q-ma-md">
+        <div class="col">入群奖励</div>
+        <div class="col">帖子被阅读奖励</div>
+      </div>
+      <div class="row text-center text-h6 q-ma-md">
+        <div class="col">5</div>
+        <q-separator vertical />
+        <div class="col">12</div>
       </div>
     </div>
-    <div class="clearfix"></div>
   </div>
 </template>
 
 <script>
+import headerBarRight from 'components/headerBarRight';
 export default {
-  components: {},
+  components: { headerBarRight },
   props: {},
 
   watch: {},
-  computed: {},
+  computed: {
+    owner() {
+      return this.$store.state.group.currentGroupOwner;
+    },
+    group() {
+      return this.$store.state.group.currentGroup;
+    },
+  },
 
   mounted() {},
   data() {
     return {
-      grpinfo: {},
-      grpuser: [],
-      bj: false,
+      readPermition: 'public',
     };
   },
   created() {
@@ -127,51 +63,38 @@ export default {
     // this.getgrpinfo(grpid);
   },
   methods: {
-    getgrpinfo: async function() {},
-    getgrpuser: async function() {
-      // let self = this;
-      // let postapi = "user/members/" + id;
-      // //注释掉接口
-      // //   const getuser = await axios.get("/" + postapi, {});
-      // const getuser = { code: 0, data: {} };
-      // if (getuser.code == 0) {
-      //   self.grpuser = getuser.data;
-      // }
-    },
-    deleteGrp: async function() {},
-    uploadGrp: async function() {},
+    edit() {},
   },
 };
 </script>
-<style lang="scss">
-input,
-textarea {
-  border: 1px solid #999;
-}
-input {
-  padding: 10px;
-}
-textarea {
-  padding: 20px;
-}
-input:read-only,
-textarea:read-only {
-  border: none;
-}
-.memberAvatar {
-  position: relative;
-}
-.memberAvatar .delete {
+<style lang="scss" scoped>
+.top-login {
   position: absolute;
-  right: 0;
-  top: 0;
-  width: 15px;
-  height: 15px;
-  color: #fff;
-  background: #ee000c;
-  border-radius: 50%;
-  font-size: 12px;
-  line-height: 15px;
-  text-align: center;
+  top: 20px;
+  right: 40px;
+}
+.group-name {
+  margin-top: 50px;
+  padding: 30px;
+}
+.desc {
+  height: 250px;
+  background-color: rgb(221, 221, 221);
+  border-radius: 10px;
+  padding: 15px;
+}
+.comment {
+  color: #8c909d;
+  font-size: 14px;
+}
+
+.title {
+  padding-top: 10px;
+  color: #2a3542;
+  font-size: 20px;
+}
+.subtitle {
+  color: #2a3542;
+  font-size: 14px;
 }
 </style>

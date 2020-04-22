@@ -1,21 +1,16 @@
 <template>
   <div class="q-pa-md">
     <div>
-      <q-icon name="menu" class="q-pa-md" />
-      DAOChat
-      <q-btn label="管理组员" color="primary" outline style="float:right; top:50px;" />
-    </div>
-    <div>
-      <member :members="1" />
+      <member :members="[owner]" />
     </div>
     <div>
       <span class="text-weight-bold">所有成员</span>
 
-      <member :members="18" />
+      <member :members="aliveMember" />
     </div>
     <div class="q-pa-lg flex flex-center">
       <q-pagination
-        v-model="current"
+        v-model="currentPage"
         :max="25"
         :max-pages="9"
         :boundary-numbers="true"
@@ -24,7 +19,7 @@
     </div>
     <div>
       <span class="text-weight-bold">小黑屋</span>
-      <member :members="4" />
+      <member :members="blockMember" />
     </div>
   </div>
 </template>
@@ -35,10 +30,32 @@ export default {
   components: {
     member,
   },
+  props: { id: String },
+  computed: {
+    owner() {
+      return this.$store.state.group.currentGroupOwner;
+    },
+  },
   data() {
     return {
-      current: 3,
+      currentPage: 3,
+      aliveMember: [],
+      blockMember: [],
     };
+  },
+  created() {
+    this.$store.dispatch('group/jumpToGroup', { id: this.id });
+    this.getMembers(this.id);
+  },
+  methods: {
+    async getMembers(id) {
+      let url = '/user/members/' + id;
+      const members = await this.$axios.get(url);
+      if (members.data.code == 0) {
+        this.aliveMember = members.data.data.alive;
+        this.blockMember = members.data.data.blocked;
+      }
+    },
   },
 };
 </script>

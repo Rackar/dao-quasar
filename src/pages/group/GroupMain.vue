@@ -38,9 +38,9 @@
     <div>
       <div class="row q-pa-md info q-my-md">
         <div class="col-10">
-          <span class="text-weight-bold">
-            创建于{{ $utils.timeStringToLocal(group.create_at) }} 组长：{{ owner.name }}
-          </span>
+          <span
+            class="text-weight-bold"
+          >创建于{{ $utils.timeStringToLocal(group.create_at) }} 组长：{{ owner.name }}</span>
           <div>{{ group.desc_text }}</div>
         </div>
       </div>
@@ -49,7 +49,7 @@
     <div class="row">
       <member class="col" :members="grpMembers" />
       <span class="col-2">
-        <q-btn flat color="primary" no-caps size="13px" @click="$router.push('/manage')">
+        <q-btn flat color="primary" no-caps size="13px" @click="$router.push('/manage/'+group.id)">
           查看更多
           <br />
           ({{ grpMembers.length }})
@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       addArticleShow: false,
-      groupID: 0,
+      // groupID: 0,
       posts: [],
       grpMembers: [],
     };
