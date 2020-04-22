@@ -1,22 +1,26 @@
 <template>
   <div>
-    <div class="row no-wrap items-end q-mt-md q-px-lg  title">
-      <q-avatar rounded size="100px">
+    <div class="row no-wrap items-end q-mt-md q-px-lg title">
+      <q-avatar rounded size="100px" class="dimmed">
         <img :src="userinfo.avatar || 'statics/user.svg'" />
       </q-avatar>
       {{ this.userinfo.name || this.userinfo.mail_export }}
-      <div class="cursor-pointer" style="width: 100px">
-        {{ edit.name }}
-        <q-icon name="edit" color="primary" />
+      <div class="column">
+        <div class="cursor-pointer col" style="width: 100px">
+          {{ edit.name }}
+          <q-icon name="edit" color="primary" />
 
-        <q-popup-edit v-model="edit.name" :cover="false" :offset="[0, 10]">
-          <q-input color="primary" v-model="edit.name" dense autofocus counter>
-            <template v-slot:prepend>
-              <q-icon name="record_voice_over" color="primary" />
-            </template>
-          </q-input>
-        </q-popup-edit>
+          <q-popup-edit v-model="edit.name" :cover="false" :offset="[0, 10]">
+            <q-input color="primary" v-model="edit.name" dense autofocus counter>
+              <template v-slot:prepend>
+                <q-icon name="record_voice_over" color="primary" />
+              </template>
+            </q-input>
+          </q-popup-edit>
+        </div>
+        <div class="q-size-sm">10234 xxx@qq.com</div>
       </div>
+
       <q-space />
       <q-btn outline color="primary" icon="menu" label="编辑资料" />
     </div>
