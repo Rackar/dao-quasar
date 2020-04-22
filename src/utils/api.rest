@@ -144,7 +144,7 @@ Content-Type: {{contentType}}
 }
 ### GET /protected/user/notifications/:base_notification（获取通知）
 # 注：read 字段参见枚举定义, base_notification 参数为之前保存的最新通知id，首次获取置0
-GET https://{{host}}/protected/user/notifications/ HTTP/1.1
+GET https://{{host}}/protected/user/notifications/0 HTTP/1.1
 Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
 ### POST /protected/grp/block（拉黑）

@@ -1,38 +1,52 @@
 <template>
-  <div>
-    <q-btn label="退组" color="primary" @click="show = true" />
-    <!-- <q-dialog v-model="show"> -->
-    <ToastComponent
-      v-model="show"
-      :title="title"
-      :content="content"
-      @taost_cancel="taost_cancel"
-      @taost_confirm="taost_confirm"
-    />
-    <!-- </q-dialog> -->
-  </div>
+  <ToastComponent
+    v-model="shouldShow"
+    :title="title"
+    :content="content"
+    @taost_cancel="taost_cancel"
+    @taost_confirm="taost_confirm"
+  />
 </template>
 
 <script>
 import ToastComponent from './ToastComponent';
 export default {
   components: { ToastComponent },
-  props: {},
+  props: { value: Boolean, groupId: Number },
   data() {
     return {
-      show: false,
       title: '真的要退出小组？',
       content: '',
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    shouldShow: {
+      get() {
+        return this.value;
+      },
+      set(v) {
+        this.$emit('input', v);
+      },
+    },
+  },
   methods: {
     taost_cancel() {
       this.$q.notify('已取消');
     },
-    taost_confirm() {
-      this.$q.notify('删除成功');
+    async taost_confirm() {
+      let url = '/protected/grp/detach';
+      let data = {
+        grp: this.groupId,
+      };
+      const res = await this.$axios.post(url, data);
+      if (res.data.code === 0) {
+        this.$q.notify({
+          message: '已退出本群。',
+        });
+      } else if (res.data.code === 104) {
+        this.$router.push({ path: '/login' });
+      }
     },
   },
   created() {},

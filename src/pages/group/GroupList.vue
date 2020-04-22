@@ -57,17 +57,20 @@
 
         <q-separator inset="true" />
       </div>
-      <q-item-label header class="q-px-xl">推荐</q-item-label>
+      <q-item-label header class="q-pa-lg">
+        <div class="text-h6 text-weight-bold">推荐</div>
+      </q-item-label>
       <div v-for="grp in recommendGroups" :key="grp.id">
-        <q-item
+        <!-- <q-item
           clickable
           @click="jumpToGroup(grp.id)"
           @mouseover="showListId = grp.id"
           @mouseout="showListId = -1"
           v-ripple
           class="q-px-xl q-py-md"
-        >
-          <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">...</span>
+        >-->
+        <q-item clickable @click="jumpToGroup(grp.id)" v-ripple class="q-px-xl q-py-md">
+          <!-- <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">...</span> -->
           <q-item-section avatar>
             <q-avatar rounded size="40px">
               <img :src="grp.avatar || 'statics/group.svg'" />
@@ -89,6 +92,7 @@
         <q-separator inset="true" />
       </div>
     </q-list>
+    <quitGroup v-model="showQuitGroup" :groupId="quitGroupId" />
   </div>
 </template>
 <script>
@@ -110,13 +114,17 @@ let testList = [
 ];
 
 import { get, post } from 'src/apis/index.js';
+import quitGroup from 'pages/toast/quitGroup';
 export default {
+  components: { quitGroup },
   data() {
     return {
       myGroups: [],
       recommendGroups: [],
       showTooltip: false,
       showListId: -1,
+      showQuitGroup: false,
+      quitGroupId: -1,
     };
   },
   created() {
@@ -206,7 +214,11 @@ export default {
         this.$q.notify('置顶成功');
       }
     },
-    leaveGroup(id) {},
+    leaveGroup(id) {
+      this.showQuitGroup = true;
+      this.quitGroupId = id;
+      debugger;
+    },
   },
 };
 </script>
