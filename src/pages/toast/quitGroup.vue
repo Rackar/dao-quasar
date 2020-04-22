@@ -1,14 +1,15 @@
 <template>
   <div>
     <q-btn label="退组" color="primary" @click="show = true" />
-    <q-dialog v-model="show">
-      <ToastComponent
-        :title="title"
-        :content="content"
-        @taost_cancel="taost_cancel"
-        @taost_confirm="taost_confirm"
-      />
-    </q-dialog>
+    <!-- <q-dialog v-model="show"> -->
+    <ToastComponent
+      v-model="show"
+      :title="title"
+      :content="content"
+      @taost_cancel="taost_cancel"
+      @taost_confirm="taost_confirm"
+    />
+    <!-- </q-dialog> -->
   </div>
 </template>
 

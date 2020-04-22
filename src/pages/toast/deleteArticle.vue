@@ -1,14 +1,13 @@
 <template>
   <div>
     <q-btn label="删除帖子" color="primary" @click="show = true" />
-    <q-dialog v-model="show">
-      <ToastComponent
-        :title="title"
-        :content="content"
-        @taost_cancel="taost_cancel"
-        @taost_confirm="taost_confirm"
-      />
-    </q-dialog>
+    <ToastComponent
+      v-model="show"
+      :title="title"
+      :content="content"
+      @taost_cancel="taost_cancel"
+      @taost_confirm="taost_confirm"
+    />
   </div>
 </template>
 

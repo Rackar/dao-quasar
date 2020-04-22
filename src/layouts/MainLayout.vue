@@ -50,18 +50,6 @@ const menuList = [
     path: '/',
   },
   {
-    icon: 'settings',
-    label: '管理',
-    separator: false,
-    path: '/manage',
-  },
-  {
-    icon: 'people',
-    label: '用户',
-    separator: false,
-    path: '/person',
-  },
-  {
     icon: 'people',
     label: '测弹窗',
     separator: true,

@@ -1,44 +1,46 @@
 <template>
   <div>
-    <q-card style="width: 440px" class="q-pa-lg">
-      <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6">{{ title }}</div>
-        <q-space />
-        <q-btn icon="close" flat round dense v-close-popup />
-      </q-card-section>
+    <q-dialog v-model="shouldShow">
+      <q-card style="width: 440px" class="q-pa-lg">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">{{ title }}</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
 
-      <q-card-section class="q-pt-none">{{ content }}</q-card-section>
+        <q-card-section class="q-pt-none">{{ content }}</q-card-section>
 
-      <q-card-actions align="center" class="bg-white text-teal" v-if="!showInfo">
-        <q-btn
-          outline
-          class="q-px-xl q-mr-lg"
-          color="primary"
-          label="取消"
-          @click="cancel"
-          v-close-popup
-        />
-        <q-btn
-          unelevated
-          class="q-px-xl"
-          color="primary"
-          label="确定"
-          @click="comfirm"
-          v-close-popup
-        />
-      </q-card-actions>
+        <q-card-actions align="center" class="bg-white text-teal" v-if="!showInfo">
+          <q-btn
+            outline
+            class="q-px-xl q-mr-lg"
+            color="primary"
+            label="取消"
+            @click="cancel"
+            v-close-popup
+          />
+          <q-btn
+            unelevated
+            class="q-px-xl"
+            color="primary"
+            label="确定"
+            @click="comfirm"
+            v-close-popup
+          />
+        </q-card-actions>
 
-      <q-card-actions align="center" class="bg-white text-teal" v-if="showInfo">
-        <q-btn
-          unelevated
-          class="q-px-xl"
-          color="primary"
-          label="查看详情"
-          @click="comfirm"
-          v-close-popup
-        />
-      </q-card-actions>
-    </q-card>
+        <q-card-actions align="center" class="bg-white text-teal" v-if="showInfo">
+          <q-btn
+            unelevated
+            class="q-px-xl"
+            color="primary"
+            label="查看详情"
+            @click="comfirm"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -58,6 +60,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    value: Boolean,
   },
   data() {
     return {
@@ -66,7 +69,16 @@ export default {
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    shouldShow: {
+      get() {
+        return this.value;
+      },
+      set(v) {
+        this.$emit('input', v);
+      },
+    },
+  },
   methods: {
     comfirm() {
       this.$emit('taost_confirm');

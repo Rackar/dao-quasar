@@ -9,6 +9,7 @@
           @mouseout="showListId = -1"
           v-ripple
           class="q-px-xl q-py-md"
+          :class="{pin:myGroup.pinned===2}"
         >
           <!-- <span
             v-show="showListId == myGroup.grp.id"
@@ -16,7 +17,7 @@
             @click.stop="showListTool"
           >
             ...
-          </span> -->
+          </span>-->
           <q-btn
             flat
             no-caps
@@ -27,9 +28,7 @@
             <q-menu auto-close>
               <q-list style="min-width: 100px">
                 <q-item clickable>
-                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">
-                    置顶群
-                  </q-item-section>
+                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">置顶群</q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable>
@@ -52,9 +51,7 @@
           </q-item-section>
           <q-item-section side top>
             <q-badge color="grey" :label="myGroup.grp.num_post" />
-            <q-item-label caption>
-              {{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}
-            </q-item-label>
+            <q-item-label caption>{{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -70,9 +67,7 @@
           v-ripple
           class="q-px-xl q-py-md"
         >
-          <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">
-            ...
-          </span>
+          <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">...</span>
           <q-item-section avatar>
             <q-avatar rounded size="40px">
               <img :src="grp.avatar || 'statics/group.svg'" />
@@ -114,7 +109,7 @@ let testList = [
   },
 ];
 
-import { get } from 'src/apis/index.js';
+import { get, post } from 'src/apis/index.js';
 export default {
   data() {
     return {
@@ -168,10 +163,9 @@ export default {
     },
     // 获取群信息
     getMyGroups: async function() {
-      let datasss = {};
       let apiCode = '/protected/grp/joined';
       //注释掉接口
-      const getjoined = await get(apiCode, datasss);
+      const getjoined = await get(apiCode);
       // debugger;
       if (getjoined) {
         if (getjoined.code == 0) {
@@ -189,8 +183,8 @@ export default {
       } else {
         postUrl = '/grp/recommend';
       }
-      let datasss = {};
-      const getgrps = await get(postUrl, datasss);
+
+      const getgrps = await get(postUrl);
       // debugger;
       if (getgrps.code == 0) {
         console.log(getgrps.data);
@@ -201,7 +195,17 @@ export default {
     showListTool() {
       this.$q.notify('点击按钮');
     },
-    setGroupToTop(id) {},
+    async setGroupToTop(id) {
+      let data = {
+        grp: id,
+        pinned: 2,
+      };
+      let postUrl = '/protected/grp/pin';
+      const res = await post(postUrl, data);
+      if (res.code === 0) {
+        this.$q.notify('置顶成功');
+      }
+    },
     leaveGroup(id) {},
   },
 };
@@ -212,5 +216,9 @@ export default {
   left: 0px;
   top: 20px;
   z-index: 30;
+}
+
+.pin {
+  background-color: #dddddd;
 }
 </style>

@@ -1,15 +1,14 @@
 <template>
   <div>
     <q-btn label="分享成功" color="primary" @click="show = true" />
-    <q-dialog v-model="show">
-      <ToastComponent
-        :title="title"
-        :content="content"
-        :showInfo="true"
-        @taost_cancel="taost_cancel"
-        @taost_confirm="taost_confirm"
-      />
-    </q-dialog>
+    <ToastComponent
+      v-model="show"
+      :title="title"
+      :content="content"
+      :showInfo="true"
+      @taost_cancel="taost_cancel"
+      @taost_confirm="taost_confirm"
+    />
   </div>
 </template>
 
