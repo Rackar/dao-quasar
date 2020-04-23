@@ -13,7 +13,7 @@
       <headerBarRight />
     </div>
     <q-avatar rounded size="30px">
-      <img :src="owner.avatar || 'statics/user.svg'" />
+      <img :src="group.avatar || 'statics/group.svg'" />
     </q-avatar>
     <span
       class="text-weight-bold q-px-md cursor-pointer"
@@ -80,6 +80,8 @@ import headerBarRight from 'components/headerBarRight';
 
 import addArticle from 'pages/article/add';
 import member from 'components/member';
+
+import { copyToClipboard } from 'quasar';
 export default {
   components: { addArticle, member, ArticleShow, headerBarRight },
   props: {},
@@ -164,15 +166,24 @@ export default {
     },
     async shareUrl() {
       let url = window.location.href;
-      navigator.clipboard.writeText(url).then(
-        () => {
-          /* success */ this.$q.notify('地址已复制到剪切板');
-        },
-        err => {
-          /* failure */ this.$q.notify('浏览器不支持，请手动复制地址');
-          console.log(err);
-        }
-      );
+      copyToClipboard(url)
+        .then(() => {
+          this.$q.notify('地址已复制到剪切板');
+          // 成功!
+        })
+        .catch(() => {
+          this.$q.notify('浏览器不支持，请手动复制地址');
+          // 失败
+        });
+      // navigator.clipboard.writeText(url).then(
+      //   () => {
+      //     /* success */ this.$q.notify('地址已复制到剪切板');
+      //   },
+      //   err => {
+      //     /* failure */ this.$q.notify('浏览器不支持，请手动复制地址');
+      //     console.log(err);
+      //   }
+      // );
     },
   },
   created() {},

@@ -1,17 +1,16 @@
 <template>
   <!--      创建群-->
   <q-dialog v-model="shouldShow">
-    <q-card style="width: 800px" class="q-pa-lg">
+    <q-card full-width style="width: 700px; max-width: 80vw;" class="q-pa-lg">
       <q-card-section class="row items-center q-pb-none">
         <div class="text-h6">创建一个群</div>
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
       </q-card-section>
-      <q-card-section class="row  items-center q-pa-md">
-        <div class="col">
-          <q-form class="q-gutter-md">
+      <q-card-section class="row  items-top">
+        <div class="col  q-pa-md">
+          <q-form class="q-gutter-xs">
             <q-input
-              filled
               v-model="title"
               label="群名称"
               lazy-rules
@@ -24,6 +23,7 @@
               type="textarea"
               v-model="desc_text"
               counter
+              rows="4"
               @keyup.enter.stop
             />
             <q-radio v-model="read_permission" checked val="1" label="任何人" />
@@ -34,7 +34,7 @@
             </div>
           </q-form>
         </div>
-        <div class="col-5">
+        <div class="col-5  q-pa-md">
           创建群之后你还可以设置以下参数：入群奖励、阅读奖励、回复奖励等。
           <br />
           <br />

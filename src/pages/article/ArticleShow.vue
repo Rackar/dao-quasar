@@ -4,7 +4,13 @@
       <q-avatar rounded size="20px" v-show="!personPage">
         <img :src="post.creator.avatar || 'statics/user.svg'" />
       </q-avatar>
-      <span class="q-px-md" v-show="!personPage">{{ post.creator.name }}</span>
+      <span
+        class="q-px-md cursor-pointer"
+        v-show="!personPage"
+        @click="$router.push('/person/show/' + post.creator.id)"
+      >
+        {{ post.creator.name }}
+      </span>
       <span>{{ $utils.timeStringToLocal(post.post.create_at) }}</span>
     </div>
 
