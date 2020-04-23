@@ -1,12 +1,16 @@
 <template>
   <div class="q-pa-md">
-    <div>
+    <div class="row no-wrap items-center">
       <member :members="[owner]" />
+      <q-space />
+      <div>
+        <q-btn outline label="管理组员" color="primary" @click="edit" v-if="canManage" />
+      </div>
     </div>
     <div>
       <span class="text-weight-bold">所有成员</span>
 
-      <member :members="aliveMember" />
+      <member :members="aliveMember" :edit="editMember" />
     </div>
     <div class="q-pa-lg flex flex-center">
       <q-pagination
@@ -19,7 +23,7 @@
     </div>
     <div>
       <span class="text-weight-bold">小黑屋</span>
-      <member :members="blockMember" />
+      <member :members="blockMember" :edit="editMember" :blocked="true" />
     </div>
   </div>
 </template>
@@ -35,12 +39,16 @@ export default {
     owner() {
       return this.$store.state.group.currentGroupOwner;
     },
+    canManage() {
+      return this.$store.state.group.currentGroupOwner.id === this.$store.state.user.userid;
+    },
   },
   data() {
     return {
       currentPage: 3,
       aliveMember: [],
       blockMember: [],
+      editMember: false,
     };
   },
   created() {
@@ -56,8 +64,12 @@ export default {
         this.blockMember = members.data.data.blocked;
       }
     },
+    edit() {
+      this.editMember = !this.editMember;
+    },
   },
 };
 </script>
 
 <style></style>
+ 

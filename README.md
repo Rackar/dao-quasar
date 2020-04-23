@@ -41,6 +41,9 @@ DAOchat front-end with Quasar Framework.
    git pull origin dev:dev
    git merge dev
    # 处理冲突，然后再进行commit
+
+   # 处理后进行规则检查，然后推送
+   npm run lint
    git push myrepo myjob:myjob
    ```
 
