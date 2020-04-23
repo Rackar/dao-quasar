@@ -218,6 +218,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+textarea {
+  outline: none;
+  border: none;
+}
+
 .waiting {
   position: absolute;
   width: 100%;

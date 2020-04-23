@@ -204,7 +204,7 @@ export default {
       const getgrps = await get(postUrl);
       // debugger;
       if (getgrps.code == 0) {
-        console.log(getgrps.data);
+        // console.log(getgrps.data);
         this.recommendGroups = getgrps.data.grps;
       } else {
       }

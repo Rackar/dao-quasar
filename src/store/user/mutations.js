@@ -7,12 +7,12 @@ export function login_saveToken(state, tokenWithB) {
   window.localStorage.setItem('token', token);
   function parseJwt(token) {
     let secPart = token.split('.')[1];
-    console.log(secPart);
+    // console.log(secPart);
     // 解析jwt，解决包含下划线和中文的问题。
     let userString = decodeURIComponent(
       escape(window.atob(secPart.replace(/-/g, '+').replace(/_/g, '/')))
     );
-    console.log(userString);
+    // console.log(userString);
 
     return JSON.parse(userString);
   }

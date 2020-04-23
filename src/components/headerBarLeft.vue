@@ -14,9 +14,7 @@
       </q-menu>
     </q-btn>
     <!--      创建群-->
-    <q-dialog v-model="showCreate">
-      <groupCreate />
-    </q-dialog>
+    <groupCreate v-model="showCreate" />
   </div>
 </template>
 

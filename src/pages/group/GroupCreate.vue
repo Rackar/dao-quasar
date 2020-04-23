@@ -1,73 +1,40 @@
 <template>
   <!--      创建群-->
-  <div class="popupModal createGroupModal">
-    <div></div>
-    <div class="popupMain">
-      <div class="popupTitle row items-center q-pb-none">
-        <div class="text-h6 q-pl-lg q-pt-lg">创建一个群</div>
+  <q-dialog v-model="shouldShow">
+    <q-card style="width: 800px" class="q-pa-lg">
+      <q-card-section class="row items-center q-pb-none">
+        <div class="text-h6">创建一个群</div>
         <q-space />
         <q-btn icon="close" flat round dense v-close-popup />
-      </div>
-      <div class="createGroupMain">
-        <div class="createGroupLeft left">
-          <div class="groupName">
-            <label class="left">小组名称</label>
-            <!-- <input class="left" v-model="title" type="text" placeholder="" /> -->
-            <q-input square outlined v-model="title" label="必填" />
-            <div class="clearfix"></div>
-          </div>
-          <div class="groupDescription">
-            <label class="left">小组介绍</label>
-            <textarea
-              class="left"
-              v-model="desc_text"
+      </q-card-section>
+      <q-card-section class="row  items-center q-pa-md">
+        <div class="col">
+          <q-form class="q-gutter-md">
+            <q-input
+              filled
+              v-model="title"
+              label="群名称"
+              lazy-rules
+              :rules="[val => (val && val.length > 0) || '群名不能为空']"
+            />
+
+            <q-input
               maxlength="200"
               placeholder="描述下你的话题，引起大家的兴趣"
-            ></textarea>
-            <i>
-              <span class="count-change">0</span>
-              /200
-            </i>
-            <div class="clearfix"></div>
-          </div>
-          <div class="rewardTit postRead">
-            帖子阅读
-            <label class="radioLabel">
-              <input
-                class="postRadio allPerson"
-                v-model="read_permission"
-                type="radio"
-                value="1"
-                name="postRadio"
-                checked
-              />
-              <span class="radioInput"></span>
-              所有人
-            </label>
-            <label class="radioLabel onlyTeamlabel">
-              <input
-                class="postRadio onlyTeam"
-                type="radio"
-                v-model="read_permission"
-                value="2"
-                name="postRadio"
-              />
-              <span class="radioInput"></span>
-              仅限组员&nbsp;&nbsp;
-            </label>
-          </div>
-          <div class="settingContent" v-if="read_permission == 2">
-            <label class="setingLabel">设置密码</label>
-            <input
-              class="settingPws"
-              v-model="password"
-              type="password"
-              placeholder="6位数字或字母"
+              type="textarea"
+              v-model="desc_text"
+              counter
+              @keyup.enter.stop
             />
-          </div>
-          <div class="popupBtn" @click="createGroup">完成</div>
+            <q-radio v-model="read_permission" checked val="1" label="任何人" />
+            <q-radio v-model="read_permission" val="2" label="仅限组员" />
+            <div v-if="read_permission == 2">
+              <!-- <label class="setingLabel">设置密码</label> -->
+              <q-input label="设定密码" v-model="password" type="password" placeholder="" />
+            </div>
+          </q-form>
         </div>
-        <div class="createGroupRight right">
+        <div class="col-5">
           创建群之后你还可以设置以下参数：入群奖励、阅读奖励、回复奖励等。
           <br />
           <br />
@@ -77,16 +44,25 @@
           <br />
           创建群代表你为群内所有言论负责。你若退群，则系统将自动接替你做群主。
         </div>
-        <div class="clearfix"></div>
-      </div>
-    </div>
-  </div>
+      </q-card-section>
+      <q-card-actions align="center" class="bg-white text-teal">
+        <q-btn
+          unelevated
+          class="q-px-xl"
+          color="primary"
+          label="完成"
+          @click="createGroup"
+          v-close-popup
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
 export default {
   components: {},
-  props: {},
+  props: { value: Boolean },
   data() {
     return {
       title: '',
@@ -96,7 +72,16 @@ export default {
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    shouldShow: {
+      get() {
+        return this.value;
+      },
+      set(v) {
+        this.$emit('input', v);
+      },
+    },
+  },
   methods: {
     async createGroup() {
       let data = {
@@ -112,6 +97,7 @@ export default {
         let apiCode = '/protected/grp/create';
         const result = await this.$axios.post(apiCode, data);
         if (result.data.code == 0) {
+          this.shouldShow = false;
           this.$q.notify('创建成功，需手动刷新页面');
         } else {
           this.$q.notify(result.data.message);
