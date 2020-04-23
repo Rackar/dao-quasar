@@ -6,10 +6,10 @@
           clickable
           @click="jumpToGroup(myGroup.grp.id)"
           @mouseover="showListId = myGroup.grp.id"
-          @mouseout="showListId = -1"
+          @mouseout="showListId = 0"
           v-ripple
           class="q-px-xl q-py-md"
-          :class="{pin:myGroup.pinned===2}"
+          :class="{ pin: myGroup.pinned === 2 }"
         >
           <!-- <span
             v-show="showListId == myGroup.grp.id"
@@ -28,7 +28,9 @@
             <q-menu auto-close>
               <q-list style="min-width: 100px">
                 <q-item clickable>
-                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">置顶群</q-item-section>
+                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">
+                    置顶群
+                  </q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable>
@@ -51,7 +53,9 @@
           </q-item-section>
           <q-item-section side top>
             <q-badge color="grey" :label="myGroup.grp.num_post" />
-            <q-item-label caption>{{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}</q-item-label>
+            <q-item-label caption>
+              {{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}
+            </q-item-label>
           </q-item-section>
         </q-item>
 
@@ -122,9 +126,9 @@ export default {
       myGroups: [],
       recommendGroups: [],
       showTooltip: false,
-      showListId: -1,
+      showListId: 0,
       showQuitGroup: false,
-      quitGroupId: -1,
+      quitGroupId: 0,
     };
   },
   created() {
@@ -141,11 +145,9 @@ export default {
     userid() {
       return this.$store.state.user.userid;
     },
-    // myGroupFormat() {
-    //   return this.myGroups.map(my => {
-    //     return my.grp;
-    //   });
-    // }
+    currentGroupId() {
+      return this.$store.state.group.currentGroup.id;
+    },
   },
   methods: {
     async init() {
@@ -156,11 +158,18 @@ export default {
       // debugger;
       let activeGroupId = 0;
       // console.log(this.myGroups, this.recommendGroups);
-      if (this.myGroups && this.myGroups.length) {
-        activeGroupId = this.myGroups[0].grp.id;
-      } else if (this.recommendGroups && this.recommendGroups.length) {
-        activeGroupId = this.recommendGroups[0].id;
+
+      //如果地址里有群组id参数
+      if (this.$route.params.id) {
+        activeGroupId = this.$route.params.id;
+      } else {
+        if (this.myGroups && this.myGroups.length) {
+          activeGroupId = this.myGroups[0].grp.id;
+        } else if (this.recommendGroups && this.recommendGroups.length) {
+          activeGroupId = this.recommendGroups[0].id;
+        }
       }
+
       this.jumpToGroup(activeGroupId);
     },
 

@@ -15,7 +15,12 @@
     <q-avatar rounded size="30px">
       <img :src="owner.avatar || 'statics/user.svg'" />
     </q-avatar>
-    <span class="text-weight-bold q-px-md">{{ group.name }}</span>
+    <span
+      class="text-weight-bold q-px-md cursor-pointer"
+      @click="$router.push('/manage/' + group.id)"
+    >
+      {{ group.name }}
+    </span>
     <q-btn
       flat
       rounded
@@ -38,9 +43,9 @@
     <div>
       <div class="row q-pa-md info q-my-md">
         <div class="col-10">
-          <span
-            class="text-weight-bold"
-          >创建于{{ $utils.timeStringToLocal(group.create_at) }} 组长：{{ owner.name }}</span>
+          <span class="text-weight-bold">
+            创建于{{ $utils.timeStringToLocal(group.create_at) }} 组长：{{ owner.name }}
+          </span>
           <div>{{ group.desc_text }}</div>
         </div>
       </div>
@@ -49,7 +54,13 @@
     <div class="row">
       <member class="col" :members="grpMembers" />
       <span class="col-2">
-        <q-btn flat color="primary" no-caps size="13px" @click="$router.push('/manage/'+group.id)">
+        <q-btn
+          flat
+          color="primary"
+          no-caps
+          size="13px"
+          @click="$router.push('/manage/' + group.id)"
+        >
           查看更多
           <br />
           ({{ grpMembers.length }})
