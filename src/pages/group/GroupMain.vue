@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mx-xl q-pt-xl">
+  <div class="q-mx-xl main">
     <addArticle v-model="addArticleShow" />
     <q-btn
       v-if="!userid"
@@ -12,43 +12,41 @@
     <div class="top-login" v-else>
       <headerBarRight />
     </div>
-    <q-avatar rounded size="30px">
-      <img :src="group.avatar || 'statics/group.svg'" />
-    </q-avatar>
-    <span
-      class="text-weight-bold q-px-md cursor-pointer"
-      @click="$router.push('/manage/' + group.id)"
-    >
-      {{ group.name }}
-    </span>
-    <q-btn
-      flat
-      rounded
-      align="around"
-      class="btn-fixed-width"
-      color="grey"
-      label="分享"
-      icon="share"
-      @click="shareUrl"
-    />
-    <q-btn
-      unelevated
-      color="primary"
-      class="q-mx-md"
-      label="加入小组"
-      @click="joinGrp(group.id)"
-      icon="add"
-    />
-    <q-btn outline color="primary" class="q-mx-md" label="发言" @click="addArtrcle" icon="create" />
+
+    <div class="groupinfo">
+      <q-avatar rounded size="40px">
+        <img :src="group.avatar || 'statics/group.svg'" />
+      </q-avatar>
+      <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
+      <q-btn
+        flat
+        rounded
+        align="around"
+        class="btn-fixed-width"
+        color="grey"
+        label="分享"
+        icon="share"
+        @click="shareUrl"
+      />
+      <q-btn
+        unelevated
+        color="primary"
+        class="q-mx-md"
+        label="加入小组"
+        @click="joinGrp(group.id)"
+        icon="add"
+      />
+      <q-btn outline color="primary" class="q-mx-md" label="发言" @click="addArtrcle" icon="create" />
+    </div>
+
     <div>
-      <div class="row q-pa-md info q-my-md">
-        <div class="col-10">
-          <span class="text-weight-bold">
-            创建于{{ $utils.timeStringToLocal(group.create_at) }} 组长：{{ owner.name }}
-          </span>
-          <div>{{ group.desc_text }}</div>
-        </div>
+      <div class="q-pa-md info q-my-md">
+        <!-- <div class="col-10"> -->
+        <span class="infotitle">创建于{{ $utils.timeStringToLocal(group.create_at) }}</span>
+        <span class="infotitle">组长：{{ owner.name }}</span>
+        <div>{{ group.desc_text }}</div>
       </div>
+      <!-- </div> -->
     </div>
 
     <div class="row">
@@ -136,6 +134,7 @@ export default {
     },
     // 跳转时某群组
     async getGroupUserAndList(id) {
+      // debugger;
       this.getGroupMembers(id);
       this.getPosts(id);
     },
@@ -190,14 +189,38 @@ export default {
   mounted() {},
 };
 </script>
-<style lang="scss" scoped>
+<style lang="stylus" scoped>
 .info {
-  background-color: #d4f6f3;
-  color: #8c909d;
+  background-color: #d4f6f346;
+  color: $dgrey;
+
+  .infotitle {
+    font-weight: bold;
+    padding-right: 30px;
+    line-height: 20px;
+  }
 }
+
 .top-login {
   position: absolute;
   top: 20px;
   right: 40px;
+}
+
+.main {
+  padding-top: 80px;
+
+  .groupinfo {
+    vertical-align: top;
+
+    .groupname {
+      // line-height: 30px;
+      font-size: 20px;
+      cursor: pointer;
+      // margin-top: 5px;
+      padding: 0 12px 0;
+      font-weight: bold;
+    }
+  }
 }
 </style>

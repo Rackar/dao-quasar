@@ -2,14 +2,12 @@
   <div class="fit row">
     <div class="col-1 q-pa-md" v-for="member in members" :key="member.id">
       <div>
-        <q-avatar size="lg" color="primary" text-color="white" class="clickable">
+        <q-avatar color="primary" text-color="white" class="clickable avatar">
           <img :src="member.avatar || 'statics/user.svg'" @click="jumpToMember(member.id)" />
-          <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">
-            x
-          </q-badge>
+          <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">x</q-badge>
         </q-avatar>
       </div>
-      <div @click="jumpToMember(member.id)" class="clickable">{{ member.name }}</div>
+      <div @click="jumpToMember(member.id)" class="clickable name">{{ member.name }}</div>
     </div>
     <blockMember v-model="showBlock" :userId="clickedMemberId" :blocked="blocked" />
   </div>
@@ -51,5 +49,16 @@ export default {
 <style lang="stylus" scoped>
 .clickable {
   cursor: pointer;
+}
+
+.avatar {
+  height: 55px;
+  width: 55px;
+}
+
+.name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: $dgrey;
 }
 </style>

@@ -28,9 +28,7 @@
             <q-menu auto-close>
               <q-list style="min-width: 100px">
                 <q-item clickable>
-                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">
-                    置顶群
-                  </q-item-section>
+                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">置顶群</q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable>
@@ -53,9 +51,7 @@
           </q-item-section>
           <q-item-section side top>
             <q-badge color="grey" :label="myGroup.grp.num_post" />
-            <q-item-label caption>
-              {{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}
-            </q-item-label>
+            <q-item-label caption>{{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -176,7 +172,9 @@ export default {
     //
     jumpToGroup(id) {
       this.$store.dispatch('group/jumpToGroup', { id: id });
-      this.$router.push('/group/' + id).catch(() => {});
+      if (this.$route.params.id != id) {
+        this.$router.push('/group/' + id).catch(() => {});
+      }
     },
     // 获取群信息
     getMyGroups: async function() {
