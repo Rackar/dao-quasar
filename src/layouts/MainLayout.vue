@@ -6,6 +6,7 @@
       :width="458"
       :breakpoint="800"
       bordered
+      class="drawerContainer"
       content-class="bg-grey-3"
     >
       <q-scroll-area class="fit">
@@ -86,6 +87,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.drawerContainer /deep/ aside {
+  position: fixed;
+}
 .toolTip-left {
   position: absolute;
   top: 11px;

@@ -1,4 +1,4 @@
-import { v1 as uuid } from 'uuid';
+import { uid } from 'quasar'
 import AWS from 'aws-sdk';
 
 const parseFileName = function(fileName) {
@@ -29,7 +29,7 @@ const upload = function({ file, dispositionType = 'attachment' }) {
   //key可以设置为桶的相抵路径，Body为文件， ACL最好要设置
   const params = {
     'Access-Control-Allow-Credentials': '*',
-    Key: `${uuid()}.${getFileExtension(file)}`,
+    Key: `${uid()}.${getFileExtension(file)}`,
     ContentType: file.type,
     Body: file,
     ContentDisposition: `${dispositionType};filename="${encodeURIComponent(file.name)}"`,
