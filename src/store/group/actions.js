@@ -7,7 +7,9 @@ export function jumpToGroup({ commit }, data) {
     .get(getGroupApi)
     .then(res => {
       // debugger;
-      commit('jumpGroup', res.data.data);
+      let result = res.data.data;
+      result.grp.joined = data.joined;
+      commit('jumpGroup', result);
     })
     .catch(() => {});
 }

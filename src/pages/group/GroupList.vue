@@ -149,7 +149,10 @@ export default {
     async init() {
       //同步执行了，待优化
       await this.getReCommendGroups();
-      await this.getMyGroups();
+
+      if (this.userid) {
+        await this.getMyGroups();
+      }
 
       // debugger;
       let activeGroupId = 0;
@@ -171,7 +174,11 @@ export default {
 
     //
     jumpToGroup(id) {
-      this.$store.dispatch('group/jumpToGroup', { id: id });
+      //跳转前检查是否已加入该组
+      let ifJoined = this.myGroups.some(joined => {
+        return joined.grp.id == id;
+      });
+      this.$store.dispatch('group/jumpToGroup', { id: id, joined: ifJoined });
       if (this.$route.params.id != id) {
         this.$router.push('/group/' + id).catch(() => {});
       }

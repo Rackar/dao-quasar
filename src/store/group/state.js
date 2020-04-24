@@ -11,6 +11,7 @@ export default function() {
       num_post: 0,
       password: '',
       read_permission: 1,
+      joined: false,
     },
     currentGroupOwner: {
       address: '',

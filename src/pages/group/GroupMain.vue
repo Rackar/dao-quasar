@@ -18,17 +18,9 @@
         <img :src="group.avatar || 'statics/group.svg'" />
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
+      <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
       <q-btn
-        flat
-        rounded
-        align="around"
-        class="btn-fixed-width"
-        color="grey"
-        label="分享"
-        icon="share"
-        @click="shareUrl"
-      />
-      <q-btn
+        v-if="!group.joined"
         unelevated
         color="primary"
         class="q-mx-md"
