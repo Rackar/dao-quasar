@@ -32,7 +32,7 @@
         rounded
         :label="post.post.num_comment"
         icon="chat_bubble_outline"
-        @click="comment"
+        @click="addComment"
       />
       <q-btn flat rounded :label="post.post.num_share" icon="share" @click="share" />
       <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
@@ -60,6 +60,7 @@ export default {
   props: {
     post: Object,
     personPage: { type: Boolean, default: false },
+    addComment: { type: Function, required: true },
   },
   data() {
     return {};
@@ -82,7 +83,6 @@ export default {
         this.$q.notify('点赞成功');
       }
     },
-    comment() {},
     share() {},
   },
   created() {},
