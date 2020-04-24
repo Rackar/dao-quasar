@@ -1,6 +1,7 @@
 <template>
   <div class="q-mx-xl main">
-    <addArticle v-model="addArticleShow" />
+    <AddArticle :groupId="groupId" v-model="addArticleShow" :onSave="onAddArticle" />
+    <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
     <q-btn
       v-if="!userid"
       class="top-login"
@@ -18,7 +19,14 @@
         <img :src="group.avatar || 'statics/group.svg'" />
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
-      <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
+      <q-btn
+        flat
+        align="around"
+        class="btn-fixed-width"
+        label="分享"
+        icon="share"
+        @click="shareUrl"
+      />
       <q-btn
         v-if="!group.joined"
         unelevated
@@ -28,7 +36,14 @@
         @click="joinGrp(group.id)"
         icon="add"
       />
-      <q-btn outline color="primary" class="q-mx-md" label="发言" @click="addArtrcle" icon="create" />
+      <q-btn
+        outline
+        color="primary"
+        class="q-mx-md"
+        label="发言"
+        @click="showAddArtrcle"
+        icon="create"
+      />
     </div>
 
     <div>
@@ -58,8 +73,21 @@
       </span>
     </div>
 
-    <div v-for="post in posts" :key="post.post.id">
-      <ArticleShow :post="post" />
+    <q-infinite-scroll v-if="hasPermission" @load="loadMore" :offset="250">
+      <div v-for="post in posts" :key="post.post.id">
+        <ArticleShow :post="post" :addComment="() => showAddComment(post.post.id)" />
+      </div>
+      <template v-slot:loading>
+        <div class="row justify-center q-my-md">
+          <q-spinner-dots color="primary" size="40px" />
+        </div>
+      </template>
+    </q-infinite-scroll>
+    <div v-else class="noPermission">
+      <img class="noPermission_icon" src="~assets/icon_suo_1@2x.png" />
+      <div class="noPermission_tip">
+        加入小组才能查看
+      </div>
     </div>
   </div>
 </template>
@@ -67,25 +95,22 @@
 <script>
 import ArticleShow from 'pages/article/ArticleShow';
 import headerBarRight from 'components/headerBarRight';
-
-import addArticle from 'pages/article/add';
+import AddArticle from 'pages/article/PublishArticle';
+import AddComment from './AddComment';
 import member from 'components/member';
-
+import { post } from '../../apis/request';
 import { copyToClipboard } from 'quasar';
+
 export default {
-  components: { addArticle, member, ArticleShow, headerBarRight },
+  components: { AddComment, AddArticle, member, ArticleShow, headerBarRight },
   props: {},
   data() {
-    return {
-      addArticleShow: false,
-      // groupID: 0,
-      posts: [],
-      grpMembers: [],
-    };
+    return this.getInitData();
   },
   watch: {
-    groupId: function(newVal) {
-      this.getGroupUserAndList(newVal);
+    groupId: function() {
+      Object.assign(this, this.getInitData());
+      this.$nextTick(this.getPageData);
     },
   },
   computed: {
@@ -93,7 +118,7 @@ export default {
       return this.$store.state.user.userid;
     },
     groupId() {
-      return this.group.id;
+      return +this.$route.params.id;
     },
     group() {
       return this.$store.state.group.currentGroup;
@@ -103,8 +128,46 @@ export default {
     },
   },
   methods: {
-    addArtrcle() {
+    getInitData() {
+      return {
+        isReady: false,
+        hasPermission: true,
+        hasMore: true,
+        posts: [],
+        lastPostId: null,
+        commentPostId: -1,
+        addArticleShow: false,
+        addCommentShow: false,
+        grpMembers: [],
+      };
+    },
+    loadMore(_, done) {
+      if (!this.hasMore) return done();
+      if (!this.isReady) return done();
+      this.getPosts().then(done);
+    },
+    showAddArtrcle() {
       this.addArticleShow = true;
+    },
+    showAddComment(id) {
+      this.commentPostId = id;
+      this.addCommentShow = true;
+    },
+    onAddArticle() {
+      this.reloadList();
+    },
+    onAddComment() {
+      const targetPost = this.posts.find(i => i.post.id === this.commentPostId);
+      targetPost.post.num_comment = targetPost.post.num_comment + 1;
+    },
+    reloadList() {
+      Object.assign(this, {
+        isReady: false,
+        hasMore: true,
+        posts: [],
+        lastPostId: null,
+      });
+      this.$nextTick(this.getPosts);
     },
     // 加入组
     joinGrp: async function(id) {
@@ -124,35 +187,38 @@ export default {
         this.$router.push({ path: '/login' });
       }
     },
-    // 跳转时某群组
-    async getGroupUserAndList(id) {
-      // debugger;
-      this.getGroupMembers(id);
-      this.getPosts(id);
+    getPageData() {
+      return Promise.all([this.getGroupMembers(), this.getPosts()])
+        .then(() => {
+          this.isReady = true;
+        })
+        .catch(err => {
+          if (err.code === 100) {
+            this.hasPermission = false;
+          } else {
+            this.$q.notify(err);
+          }
+        });
+    },
+    getPosts() {
+      const { groupId, userid, lastPostId } = this;
+      const url = userid ? '/protected/post/pull' : '/post/pull';
+      return post(url, { grp: groupId, base_post: lastPostId }).then(res => {
+        const newPosts = res.posts;
+        this.posts = this.posts.concat(newPosts);
+        if (newPosts.length > 0) {
+          this.lastPostId = newPosts[newPosts.length - 1].post.id;
+        } else {
+          this.hasMore = false;
+        }
+      });
     },
     // 获取群组员
-    getGroupMembers: async function(id) {
-      let postapi = '/user/members/' + id;
+    getGroupMembers: async function() {
+      let postapi = '/user/members/' + this.groupId;
       const members = await this.$axios.get(postapi);
       if (members.data.code == 0) {
         this.grpMembers = members.data.data.alive;
-      }
-    },
-    // 获取帖子
-    getPosts: async function(id, pageNumber = null) {
-      let data = {
-        grp: id,
-        base_post: pageNumber,
-      };
-      let url;
-      if (this.userid) {
-        url = '/protected/post/pull';
-      } else {
-        url = '/post/pull';
-      }
-      const result = await this.$axios.post(url, data);
-      if (result.data.code == 0) {
-        this.posts = result.data.data.posts;
       }
     },
     async shareUrl() {
@@ -177,11 +243,26 @@ export default {
       // );
     },
   },
-  created() {},
-  mounted() {},
+  mounted() {
+    this.getPageData();
+  },
 };
 </script>
 <style lang="stylus" scoped>
+.noPermission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10vh;
+  &_tip {
+    font-size: 18px;
+  }
+  &_icon {
+    width: 26px;
+    height: 34px;
+    margin-bottom: 10px;
+  }
+}
 .info {
   background-color: #d4f6f346;
   color: $dgrey;
