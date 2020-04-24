@@ -4,7 +4,9 @@
       <div>
         <q-avatar size="lg" color="primary" text-color="white" class="clickable">
           <img :src="member.avatar || 'statics/user.svg'" @click="jumpToMember(member.id)" />
-          <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">x</q-badge>
+          <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">
+            x
+          </q-badge>
         </q-avatar>
       </div>
       <div @click="jumpToMember(member.id)" class="clickable">{{ member.name }}</div>
@@ -31,7 +33,7 @@ export default {
   data() {
     return {
       showBlock: false,
-      clickedMemberId: -1,
+      clickedMemberId: 0,
     };
   },
   methods: {

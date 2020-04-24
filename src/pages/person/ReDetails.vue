@@ -70,7 +70,9 @@ import ArticleShow from 'pages/article/ArticleShow';
 import wallet from './wallet';
 export default {
   components: { ArticleShow, wallet },
-  props: {},
+  props: {
+    id: String,
+  },
   data() {
     return {
       tab: 'myPosts',
@@ -89,6 +91,9 @@ export default {
     userinfo() {
       return this.$store.state.user;
     },
+    // currentUserId() {
+    //   return this.$route.params.id;
+    // },
   },
   methods: {
     // 个人信息
@@ -143,6 +148,9 @@ export default {
     let userid = this.$store.state.user.userid;
     if (userid) {
       //注释掉接口初始化
+      if (this.id !== userid) {
+        userid = this.id;
+      }
       this.getuserinfo();
       this.getmycode();
       this.tokenLog();

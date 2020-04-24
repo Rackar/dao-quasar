@@ -14,9 +14,14 @@
       <headerBarRight />
     </div>
     <q-avatar rounded size="30px">
-      <img :src="owner.avatar || 'statics/user.svg'" />
+      <img :src="group.avatar || 'statics/group.svg'" />
     </q-avatar>
-    <span class="text-weight-bold q-px-md">{{ group.name }}</span>
+    <span
+      class="text-weight-bold q-px-md cursor-pointer"
+      @click="$router.push('/manage/' + group.id)"
+    >
+      {{ group.name }}
+    </span>
     <q-btn
       flat
       rounded
@@ -97,6 +102,7 @@ import AddArticle from 'pages/article/PublishArticle';
 import AddComment from './AddComment';
 import member from 'components/member';
 import { post } from '../../apis/request';
+import { copyToClipboard } from 'quasar';
 
 export default {
   components: { AddComment, AddArticle, member, ArticleShow, headerBarRight },
@@ -221,15 +227,24 @@ export default {
     },
     async shareUrl() {
       let url = window.location.href;
-      navigator.clipboard.writeText(url).then(
-        () => {
-          /* success */ this.$q.notify('地址已复制到剪切板');
-        },
-        err => {
-          /* failure */ this.$q.notify('浏览器不支持，请手动复制地址');
-          console.log(err);
-        }
-      );
+      copyToClipboard(url)
+        .then(() => {
+          this.$q.notify('地址已复制到剪切板');
+          // 成功!
+        })
+        .catch(() => {
+          this.$q.notify('浏览器不支持，请手动复制地址');
+          // 失败
+        });
+      // navigator.clipboard.writeText(url).then(
+      //   () => {
+      //     /* success */ this.$q.notify('地址已复制到剪切板');
+      //   },
+      //   err => {
+      //     /* failure */ this.$q.notify('浏览器不支持，请手动复制地址');
+      //     console.log(err);
+      //   }
+      // );
     },
   },
   mounted() {

@@ -1,8 +1,8 @@
 {
   "name": "quasar-dao",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "description": "DAO Chat. A Quasar Framework app",
+  "productName": "DAO Chat",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "rackar <27681135@qq.com>",
