@@ -8,9 +8,7 @@
         class="q-px-md cursor-pointer"
         v-show="!personPage"
         @click="$router.push('/person/show/' + post.creator.id)"
-      >
-        {{ post.creator.name }}
-      </span>
+      >{{ post.creator.name }}</span>
       <span>{{ $utils.timeStringToLocal(post.post.create_at) }}</span>
     </div>
 
@@ -25,24 +23,11 @@
       />
     </div>
     <div>
-      <q-btn
-        flat
-        rounded
-        color="primary"
-        :label="post.post.num_like"
-        icon="thumb_up"
-        @click="like"
-      />
-      <q-btn
-        flat
-        rounded
-        :label="post.post.num_comment"
-        icon="chat_bubble_outline"
-        @click="addComment"
-      />
-      <q-btn flat rounded :label="post.post.num_share" icon="share" @click="share" />
+      <q-btn flat color="primary" :label="post.post.num_like" icon="thumb_up" @click="like" />
+      <q-btn flat :label="post.post.num_comment" icon="chat_bubble_outline" @click="addComment" />
+      <q-btn flat :label="post.post.num_share" icon="share" @click="share" />
       <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
-      <q-btn flat rounded icon="settings">
+      <q-btn flat icon="settings">
         <q-menu auto-close>
           <q-list style="min-width: 100px">
             <q-item clickable>

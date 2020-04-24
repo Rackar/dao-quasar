@@ -112,9 +112,7 @@
           <div class="scanTop">
             <div class="popupSureInfor">扫一扫，向我转账</div>
             <div class="scanImg" id="qrcode"></div>
-            <div class="rollOutDes">
-              此钱包仅限接受{{ text.name }}代币，转入其它代币会造成永久损失
-            </div>
+            <div class="rollOutDes">此钱包仅限接受{{ text.name }}代币，转入其它代币会造成永久损失</div>
           </div>
           <div class="scanBottom">
             <p>钱包地址</p>

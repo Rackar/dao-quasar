@@ -5,11 +5,11 @@
       <q-avatar rounded size="100px" class="dimmed">
         <img :src="userinfo.avatar || 'statics/user.svg'" />
       </q-avatar>
-      {{ this.userinfo.name || this.userinfo.mail_export }}
+
       <div class="column">
         <div class="cursor-pointer col" style="width: 100px">
-          {{ edit.name }}
-          <q-icon name="edit" color="primary" />
+          {{ this.userinfo.name || this.userinfo.mail_export }}
+          <!-- <q-icon name="edit" color="primary" />
 
           <q-popup-edit v-model="edit.name" :cover="false" :offset="[0, 10]">
             <q-input color="primary" v-model="edit.name" dense autofocus counter>
@@ -17,13 +17,13 @@
                 <q-icon name="record_voice_over" color="primary" />
               </template>
             </q-input>
-          </q-popup-edit>
+          </q-popup-edit>-->
         </div>
-        <div class="q-size-sm">10234 xxx@qq.com</div>
+        <div class="q-size-sm">DOA ID {{id}} xxx@qq.com</div>
       </div>
 
       <q-space />
-      <q-btn outline color="primary" icon="menu" label="编辑资料" />
+      <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" />
     </div>
     <div class="row q-gutter-lg">
       <div class="col-6 offset-md-1">
@@ -61,7 +61,7 @@
         </q-card>
       </div>
       <div class="col-4">
-        <wallet :tokens="tokens" :log="log" />
+        <wallet :tokens="tokens" :log="log" v-if="isMyself" />
       </div>
     </div>
   </div>
@@ -84,6 +84,7 @@ export default {
       tokens: [],
       log: [],
       pullList: [],
+      userinfo: {},
       edit: {
         name: '111',
       },
@@ -94,8 +95,11 @@ export default {
   },
   watch: {},
   computed: {
-    userinfo() {
+    myUserinfo() {
       return this.$store.state.user;
+    },
+    isMyself() {
+      return this.$store.state.user.userid == this.id;
     },
     // currentUserId() {
     //   return this.$route.params.id;
@@ -103,15 +107,13 @@ export default {
   },
   methods: {
     // 个人信息
-    getuserinfo: async function() {
-      // let url = '/protected/user/me';
-      // const resData = await this.$axios.get(url, {});
-      // if (resData.data.code == 0) {
-      //   this.userinfo = resData.data.data.me;
-      //   this.$emit('setUserinfo', this.userinfo);
-      // } else if (resData.code == 104) {
-      //   this.$router.push({ path: '/login', query: {} });
-      // }
+    getOtherUser: async function(id) {
+      let url = '/user/' + id;
+      const resData = await this.$axios.get(url);
+      if (resData.data.code == 0) {
+        this.userinfo = resData.data.data.user;
+      } else if (resData.code == 104) {
+      }
     },
     // 我的代币
     getmycode: async function() {
@@ -123,7 +125,7 @@ export default {
       }
     },
     // 我的帖子
-    getmyabb: async function(del) {
+    getMyPosts: async function(del) {
       let url = 'protected/post/my/pull';
       const resCode = await this.$axios.post(url, {
         base_post: null,
@@ -135,7 +137,23 @@ export default {
         // if (!this.pullList.length) {
         // }
       }
-    }, // 转账日志
+    },
+    async getOtherPosts(uid) {
+      // 判断是否登录
+      let url = this.userinfo.userid ? '/protected/post/other/pull' : '/post/other/pull';
+      let data = {
+        base_post: null,
+        creator: uid - 0,
+      };
+      const resCode = await this.$axios.post(url, data);
+      if (resCode.data.code == 0) {
+        this.pullList = [];
+        this.pullList = resCode.data.data.posts;
+        // if (!this.pullList.length) {
+        // }
+      }
+    },
+    // 转账日志
     tokenLog: async function() {
       let url = 'protected/user/token/logs';
       let dat = {
@@ -161,18 +179,17 @@ export default {
   created() {
     let userid = this.$store.state.user.userid;
     if (userid) {
-      //注释掉接口初始化
-      if (this.id !== userid) {
+      //判断是否进入本人信息页
+      if (this.isMyself) {
+        this.userinfo = { ...this.myUserinfo };
+        this.getMyPosts(false);
+        this.getmycode();
+        this.tokenLog();
+      } else {
         userid = this.id;
+        this.getOtherUser(userid);
+        this.getOtherPosts(userid);
       }
-      this.getuserinfo();
-      this.getmycode();
-      this.tokenLog();
-      this.getmyabb(false);
-      //   this.$nextTick(function() {
-      //     this.doImg();
-      //     this.hideinfo();
-      //   });
     } else {
       this.$router.push({ path: '/login', query: {} });
     }

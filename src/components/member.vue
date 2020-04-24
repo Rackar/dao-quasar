@@ -2,7 +2,7 @@
   <div class="fit row">
     <div class="col-1 q-pa-md" v-for="member in members" :key="member.id">
       <div>
-        <q-avatar color="primary" text-color="white" class="clickable avatar">
+        <q-avatar class="clickable avatar">
           <img :src="member.avatar || 'statics/user.svg'" @click="jumpToMember(member.id)" />
           <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">x</q-badge>
         </q-avatar>
