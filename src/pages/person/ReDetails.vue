@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
     <div class="row no-wrap items-end q-mt-md q-px-lg title">
       <q-avatar rounded size="100px" class="dimmed">
         <img :src="userinfo.avatar || 'statics/user.svg'" />
@@ -49,6 +50,7 @@
                 :post="post"
                 :key="post.post.id"
                 :personPage="true"
+                :addComment="()=>showAddComment(post.post.id)"
               />
             </q-tab-panel>
 
@@ -67,9 +69,10 @@
 
 <script>
 import ArticleShow from 'pages/article/ArticleShow';
+import AddComment from 'pages/group/AddComment';
 import wallet from './wallet';
 export default {
-  components: { ArticleShow, wallet },
+  components: { ArticleShow, wallet, AddComment },
   props: {
     id: String,
   },
@@ -84,6 +87,9 @@ export default {
       edit: {
         name: '111',
       },
+
+      addCommentShow: false,
+      commentPostId: 0,
     };
   },
   watch: {},
@@ -142,6 +148,14 @@ export default {
       } else {
         alert(resLog.data.message);
       }
+    },
+    showAddComment(id) {
+      this.commentPostId = id;
+      this.addCommentShow = true;
+    },
+    onAddComment() {
+      const targetPost = this.pullList.find(i => i.post.id === this.commentPostId);
+      targetPost.post.num_comment = targetPost.post.num_comment + 1;
     },
   },
   created() {

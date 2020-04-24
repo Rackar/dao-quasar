@@ -13,9 +13,9 @@ const routes = [
     path: '/person', //人物信息模板
     component: () => import('layouts/PersonLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/person/Index.vue') },
+      { path: '', component: () => import('pages/person/ReDetails.vue') },
       { path: 'show/:id', props: true, component: () => import('pages/person/ReDetails.vue') },
-      { path: 'showr/:id', props: true, component: () => import('pages/person/Index.vue') },
+      { path: 'showr/:id', props: true, component: () => import('pages/person/allDetails.vue') },
     ],
     // { path: 'articleLists', component: () => import('pages/Articles.vue') }]
   },
@@ -34,7 +34,7 @@ const routes = [
     name: 'toast',
     // { path: 'articleLists', component: () => import('pages/manage/Articles.vue') }]
   },
-  { path: '/login', name: 'login', component: () => import('pages/test/Login.vue') },
+  { path: '/login', name: 'login', component: () => import('pages/login/Login.vue') },
 ];
 
 // Always leave this as last one
