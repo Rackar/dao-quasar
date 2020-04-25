@@ -35,7 +35,7 @@
             </q-item>
             <q-separator />
             <q-item clickable>
-              <q-item-section>删除</q-item-section>
+              <q-item-section @click="deletePost">删除</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
@@ -84,6 +84,16 @@ export default {
       }
     },
     share() {},
+    async deletePost(id) {
+      let api = '/protected/post';
+      let data = {
+        post: id,
+      };
+      const result = await this.$axios.post(api, data);
+      if (result.data.code == 0) {
+        this.$q.notify('删除成功');
+      }
+    },
   },
   created() {},
   mounted() {},
