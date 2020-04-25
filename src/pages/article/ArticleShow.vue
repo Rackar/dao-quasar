@@ -1,19 +1,19 @@
 <template>
-  <div>
-    <div class="q-pt-lg" v-if="post.creator">
-      <q-avatar rounded size="20px" v-show="!personPage">
+  <div class="container">
+    <div class="q-pt-lg header" v-if="post.creator">
+      <q-avatar rounded size="35px" v-show="!personPage">
         <img :src="post.creator.avatar || 'statics/user.svg'" />
       </q-avatar>
       <span
-        class="q-px-md cursor-pointer"
+        class="authorName q-px-md cursor-pointer"
         v-show="!personPage"
         @click="$router.push('/person/show/' + post.creator.id)"
       >{{ post.creator.name }}</span>
       <span>{{ $utils.timeStringToLocal(post.post.create_at) }}</span>
     </div>
 
-    <div class="q-py-lg">{{ post.post.content }}</div>
-    <div class="row" style=" max-width: 600px; ">
+    <div class="q-py-lg body">{{ post.post.content }}</div>
+    <div class="row images" style=" max-width: 600px; ">
       <q-img
         v-for="(url, index) in post.post.images"
         :key="index"
@@ -22,8 +22,8 @@
         style="height: 240px; max-width: 240px; margin:9px;"
       />
     </div>
-    <div>
-      <q-btn flat color="primary" :label="post.post.num_like" icon="thumb_up" @click="like" />
+    <div class="actions">
+      <q-btn flat :class="{ isLiked }" :label="post.post.num_like" icon="thumb_up" @click="like" />
       <q-btn flat :label="post.post.num_comment" icon="chat_bubble_outline" @click="addComment" />
       <q-btn flat :label="post.post.num_share" icon="share" @click="share" />
       <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
@@ -41,11 +41,19 @@
         </q-menu>
       </q-btn>
     </div>
-    <q-separator />
   </div>
 </template>
 
 <script>
+import { post } from '../../apis/request';
+
+// like状态和code：
+const dict = {
+  cancel: 1,
+  like: 2,
+  dislike: 3,
+};
+
 export default {
   components: {},
   props: {
@@ -58,6 +66,9 @@ export default {
   },
   watch: {},
   computed: {
+    isLiked() {
+      return this.post.likeStatus === dict['like'];
+    },
     id() {
       return this.post.post.id;
     },
@@ -76,12 +87,18 @@ export default {
       let api = '/protected/post/like';
       let data = {
         post: this.id,
-        op: 1,
+        op: this.isLiked ? dict['cancel'] : dict['like'],
       };
-      const result = await this.$axios.post(api, data);
-      if (result.data.code == 0) {
-        this.$q.notify('点赞成功');
-      }
+      post(api, data).then(() => {
+        this.post.likeStatus = data.op;
+        if (data.op === dict['like']) {
+          this.post.post.num_like = this.post.post.num_like + 1;
+        } else {
+          this.post.post.num_like = this.post.post.num_like - 1;
+        }
+      }).catch(err => {
+        this.$q.notify(err.message);
+      });
     },
     share() {},
     async deletePost(id) {
@@ -99,4 +116,50 @@ export default {
   mounted() {},
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss" scoped>
+  .isLiked {
+    color: var(--q-color-primary) !important;
+  }
+  .images {
+    margin-bottom: 16px;
+    .q-img {
+      border-radius: 4px;
+    }
+  }
+  .actions {
+    .q-btn {
+      i {
+
+      }
+      color: #8C909D;
+    }
+  }
+  .header {
+    display: flex;
+    color: #8C909D;
+    align-items: center;
+    font-size: 16px;
+  }
+  .body {
+    font-size: 16px;
+  }
+  .container {
+    position: relative;
+    margin-left: -48px;
+    margin-right: -48px;
+    padding-left: 48px;
+    padding-right: 48px;
+    &:hover {
+      background-color: #FAFAFA;
+    }
+    &::after {
+      content: '';
+      display: block;
+      margin-top: 24px;
+      height: 1px;
+      width: calc(100% + 96px);
+      background-color: #E4E4E4;
+      margin-left: -48px;
+    }
+  }
+</style>

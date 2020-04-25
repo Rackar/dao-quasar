@@ -7,7 +7,6 @@
       :breakpoint="800"
       bordered
       class="drawerContainer"
-      content-class="bg-grey-3"
     >
       <q-scroll-area class="fit">
         <GroupListHeader class="q-ma-md" />
@@ -89,6 +88,7 @@ export default {
 <style lang="stylus" scoped>
 .drawerContainer /deep/ aside {
   position: fixed;
+  background-color: #F8F8F8;
 }
 .toolTip-left {
   position: absolute;
