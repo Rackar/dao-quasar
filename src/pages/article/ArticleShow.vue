@@ -27,7 +27,7 @@
       <q-btn flat :label="post.post.num_comment" icon="chat_bubble_outline" @click="addComment" />
       <q-btn flat :label="post.post.num_share" icon="share" @click="share" />
       <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
-      <q-btn flat icon="settings">
+      <q-btn flat icon="settings" v-show="modifyPermition">
         <q-menu auto-close>
           <q-list style="min-width: 100px">
             <q-item clickable>
@@ -60,6 +60,15 @@ export default {
   computed: {
     id() {
       return this.post.post.id;
+    },
+    userid() {
+      return this.$store.state.user.userid;
+    },
+    owner() {
+      return this.$store.state.group.currentGroupOwner;
+    },
+    modifyPermition() {
+      return this.post.post.creator === this.userid || this.userid === this.owner.id;
     },
   },
   methods: {
