@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mx-xl main">
+  <div class="main">
     <AddArticle :groupId="groupId" v-model="addArticleShow" :onSave="onAddArticle" />
     <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
     <q-btn
@@ -13,7 +13,6 @@
     <div class="top-login" v-else>
       <headerBarRight />
     </div>
-
     <div class="groupinfo">
       <q-avatar rounded size="40px">
         <img :src="group.avatar || 'statics/group.svg'" />
@@ -30,51 +29,48 @@
       />
       <q-btn outline color="primary" label="发言" @click="showAddArtrcle" icon="create" />
     </div>
-
-    <div>
+    <div class="warper">
       <div class="q-pa-md info q-my-md">
-        <!-- <div class="col-10"> -->
         <span class="infotitle">创建于{{ $utils.timeStringToLocal(group.create_at) }}</span>
         <span class="infotitle">组长：{{ owner.name }}</span>
         <div>{{ group.desc_text }}</div>
       </div>
-      <!-- </div> -->
-    </div>
 
-    <div class="members">
-      <member class="members_content" :members="grpMembers" />
-      <span class="members_action">
-        <q-btn
-          flat
-          color="primary"
-          no-caps
-          size="13px"
-          @click="$router.push('/manage/' + group.id)"
-        >
-          查看更多
-          <br />
-          ({{ grpMembers.length }})
-        </q-btn>
-      </span>
-    </div>
-
-    <q-infinite-scroll v-if="hasPermission" @load="loadMore" :offset="250">
-      <div v-for="post in posts" :key="post.post.id">
-        <ArticleShow
-          :post="post"
-          :addComment="() => showAddComment(post.post.id)"
-          @del="postDeleted"
-        />
+      <div class="members">
+        <member class="members_content" :members="grpMembers" />
+        <span class="members_action">
+          <q-btn
+            flat
+            color="primary"
+            no-caps
+            size="13px"
+            @click="$router.push('/manage/' + group.id)"
+          >
+            查看更多
+            <br />
+            ({{ grpMembers.length }})
+          </q-btn>
+        </span>
       </div>
-      <template v-slot:loading>
-        <div class="row justify-center q-my-md">
-          <q-spinner-dots color="primary" size="40px" />
+
+      <q-infinite-scroll v-if="hasPermission" @load="loadMore" :offset="250">
+        <div v-for="post in posts" :key="post.post.id">
+          <ArticleShow
+            :post="post"
+            :addComment="() => showAddComment(post.post.id)"
+            @del="postDeleted"
+          />
         </div>
-      </template>
-    </q-infinite-scroll>
-    <div v-else class="noPermission">
-      <img class="noPermission_icon" src="~assets/icon_suo_1@2x.png" />
-      <div class="noPermission_tip">加入小组才能查看</div>
+        <template v-slot:loading>
+          <div class="row justify-center q-my-md">
+            <q-spinner-dots color="primary" size="40px" />
+          </div>
+        </template>
+      </q-infinite-scroll>
+      <div v-else class="noPermission">
+        <img class="noPermission_icon" src="~assets/icon_suo_1@2x.png" />
+        <div class="noPermission_tip">加入小组才能查看</div>
+      </div>
     </div>
   </div>
 </template>
@@ -331,7 +327,16 @@ export default {
 .main {
   padding-top: 80px;
 
+  .warper {
+    padding: 0 42px;
+  }
+
   .groupinfo {
+    position: sticky;
+    padding: 8px 42px;
+    top: 0;
+    z-index: 9999;
+    background-color: white;
     display: flex;
     align-items: center;
 
