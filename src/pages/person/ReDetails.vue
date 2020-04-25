@@ -51,6 +51,7 @@
                 :key="post.post.id"
                 :personPage="true"
                 :addComment="()=>showAddComment(post.post.id)"
+                @del="postDeleted"
               />
             </q-tab-panel>
 
@@ -174,6 +175,11 @@ export default {
     onAddComment() {
       const targetPost = this.pullList.find(i => i.post.id === this.commentPostId);
       targetPost.post.num_comment = targetPost.post.num_comment + 1;
+    },
+    postDeleted(id) {
+      // 删除帖子回调后，直接清除本地数据数组中的值
+      let index = this.pullList.findIndex(post => post.post.id === id);
+      this.pullList.splice(index, 1);
     },
   },
   created() {

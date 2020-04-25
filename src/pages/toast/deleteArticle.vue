@@ -1,36 +1,52 @@
 <template>
-  <div>
-    <q-btn label="删除帖子" color="primary" @click="show = true" />
-    <ToastComponent
-      v-model="show"
-      :title="title"
-      :content="content"
-      @taost_cancel="taost_cancel"
-      @taost_confirm="taost_confirm"
-    />
-  </div>
+  <ToastComponent
+    v-model="shouldShow"
+    :title="title"
+    :content="content"
+    @taost_cancel="taost_cancel"
+    @taost_confirm="taost_confirm"
+  />
 </template>
 
 <script>
 import ToastComponent from './ToastComponent';
 export default {
+  name: 'deleteArticle',
   components: { ToastComponent },
-  props: {},
+  props: { value: Boolean, postId: Number },
   data() {
     return {
-      show: false,
-      title: '你确定要删除自己的帖子吗？',
+      title: '确定要删除这个帖子吗？',
       content: '',
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    shouldShow: {
+      get() {
+        return this.value;
+      },
+      set(v) {
+        this.$emit('input', v);
+      },
+    },
+  },
   methods: {
     taost_cancel() {
       this.$q.notify('已取消');
     },
-    taost_confirm() {
-      this.$q.notify('删除成功');
+    async taost_confirm() {
+      let api = '/protected/post';
+      let data = {
+        post: this.postId,
+      };
+      const result = await this.$axios.delete(api, { data });
+      if (result.data.code == 0) {
+        this.$q.notify('删除成功');
+        this.$emit('deleteSuccess');
+      } else {
+        this.$q.notify('删除失败');
+      }
     },
   },
   created() {},

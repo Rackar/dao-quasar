@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <deleteArticle
+      v-model="showDeleteArticle"
+      :postId="post.post.id"
+      @deleteSuccess="$emit('del',post.post.id)"
+    />
     <div class="q-pt-lg header" v-if="post.creator">
       <q-avatar rounded size="35px" v-show="!personPage">
         <img :src="post.creator.avatar || 'statics/user.svg'" />
@@ -35,7 +40,7 @@
             </q-item>
             <q-separator />
             <q-item clickable>
-              <q-item-section @click="deletePost">删除</q-item-section>
+              <q-item-section @click="deletePost(post.post.id)">删除</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
@@ -46,6 +51,7 @@
 
 <script>
 import { post } from '../../apis/request';
+import deleteArticle from 'pages/toast/deleteArticle';
 
 // like状态和code：
 const dict = {
@@ -55,14 +61,16 @@ const dict = {
 };
 
 export default {
-  components: {},
+  components: { deleteArticle },
   props: {
     post: Object,
     personPage: { type: Boolean, default: false },
     addComment: { type: Function, required: true },
   },
   data() {
-    return {};
+    return {
+      showDeleteArticle: false,
+    };
   },
   watch: {},
   computed: {
@@ -89,27 +97,22 @@ export default {
         post: this.id,
         op: this.isLiked ? dict['cancel'] : dict['like'],
       };
-      post(api, data).then(() => {
-        this.post.likeStatus = data.op;
-        if (data.op === dict['like']) {
-          this.post.post.num_like = this.post.post.num_like + 1;
-        } else {
-          this.post.post.num_like = this.post.post.num_like - 1;
-        }
-      }).catch(err => {
-        this.$q.notify(err.message);
-      });
+      post(api, data)
+        .then(() => {
+          this.post.likeStatus = data.op;
+          if (data.op === dict['like']) {
+            this.post.post.num_like = this.post.post.num_like + 1;
+          } else {
+            this.post.post.num_like = this.post.post.num_like - 1;
+          }
+        })
+        .catch(err => {
+          this.$q.notify(err.message);
+        });
     },
     share() {},
-    async deletePost(id) {
-      let api = '/protected/post';
-      let data = {
-        post: id,
-      };
-      const result = await this.$axios.post(api, data);
-      if (result.data.code == 0) {
-        this.$q.notify('删除成功');
-      }
+    async deletePost() {
+      this.showDeleteArticle = true;
     },
   },
   created() {},
@@ -117,49 +120,48 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .isLiked {
-    color: var(--q-color-primary) !important;
+.isLiked {
+  color: var(--q-color-primary) !important;
+}
+.images {
+  margin-bottom: 16px;
+  .q-img {
+    border-radius: 4px;
   }
-  .images {
-    margin-bottom: 16px;
-    .q-img {
-      border-radius: 4px;
+}
+.actions {
+  .q-btn {
+    i {
     }
+    color: #8c909d;
   }
-  .actions {
-    .q-btn {
-      i {
-
-      }
-      color: #8C909D;
-    }
+}
+.header {
+  display: flex;
+  color: #8c909d;
+  align-items: center;
+  font-size: 16px;
+}
+.body {
+  font-size: 16px;
+}
+.container {
+  position: relative;
+  margin-left: -48px;
+  margin-right: -48px;
+  padding-left: 48px;
+  padding-right: 48px;
+  &:hover {
+    background-color: #fafafa;
   }
-  .header {
-    display: flex;
-    color: #8C909D;
-    align-items: center;
-    font-size: 16px;
-  }
-  .body {
-    font-size: 16px;
-  }
-  .container {
-    position: relative;
+  &::after {
+    content: '';
+    display: block;
+    margin-top: 24px;
+    height: 1px;
+    width: calc(100% + 96px);
+    background-color: #e4e4e4;
     margin-left: -48px;
-    margin-right: -48px;
-    padding-left: 48px;
-    padding-right: 48px;
-    &:hover {
-      background-color: #FAFAFA;
-    }
-    &::after {
-      content: '';
-      display: block;
-      margin-top: 24px;
-      height: 1px;
-      width: calc(100% + 96px);
-      background-color: #E4E4E4;
-      margin-left: -48px;
-    }
   }
+}
 </style>

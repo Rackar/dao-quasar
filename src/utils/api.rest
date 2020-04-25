@@ -115,7 +115,7 @@ Authorization: Bearer {{token}}
 Content-Type: {{contentType}}
 
 {
-    "post": 31
+    "post": 32
 }
 
 ### PUT /protected/post（更新帖子）

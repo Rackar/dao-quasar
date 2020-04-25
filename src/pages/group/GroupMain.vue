@@ -28,13 +28,7 @@
         @click="joinGrp(group.id)"
         icon="add"
       />
-      <q-btn
-        outline
-        color="primary"
-        label="发言"
-        @click="showAddArtrcle"
-        icon="create"
-      />
+      <q-btn outline color="primary" label="发言" @click="showAddArtrcle" icon="create" />
     </div>
 
     <div>
@@ -66,7 +60,11 @@
 
     <q-infinite-scroll v-if="hasPermission" @load="loadMore" :offset="250">
       <div v-for="post in posts" :key="post.post.id">
-        <ArticleShow :post="post" :addComment="() => showAddComment(post.post.id)" />
+        <ArticleShow
+          :post="post"
+          :addComment="() => showAddComment(post.post.id)"
+          @del="postDeleted"
+        />
       </div>
       <template v-slot:loading>
         <div class="row justify-center q-my-md">
@@ -266,6 +264,11 @@ export default {
       //   }
       // );
     },
+    postDeleted(id) {
+      // 删除帖子回调后，直接清除本地数据数组中的值
+      let index = this.posts.findIndex(post => post.post.id === id);
+      this.posts.splice(index, 1);
+    },
   },
   mounted() {
     this.getPageData();
@@ -276,17 +279,21 @@ export default {
 .members {
   display: flex;
   align-items: center;
+
   &_content {
     flex-wrap: nowrap;
     overflow: hidden;
+
     /deep/ .col-1 {
       width: unset;
     }
   }
+
   &_action {
     white-space: nowrap;
   }
 }
+
 .noPermission {
   display: flex;
   flex-direction: column;
@@ -327,12 +334,15 @@ export default {
   .groupinfo {
     display: flex;
     align-items: center;
+
     /deep/ .q-btn {
       margin-right: 24px;
     }
+
     /deep/ .q-btn__wrapper {
       padding-left: 8px;
       padding-right: 12px;
+
       .q-icon {
         margin-right: 4px;
         font-size: 22px;
