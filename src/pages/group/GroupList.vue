@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <q-list class="rounded-borders" style="max-width: 550px">
       <div v-for="myGroup in myGroups" :key="myGroup.id">
         <q-item
@@ -8,8 +8,7 @@
           @mouseover="showListId = myGroup.grp.id"
           @mouseout="showListId = 0"
           v-ripple
-          class="q-px-xl q-py-md"
-          :class="{ pin: myGroup.pinned === 2 }"
+          :class="[{ isActive: isItemActive(myGroup.grp.id), pin: myGroup.pinned === 2 }, 'q-px-xl', 'q-py-md']"
         >
           <!-- <span
             v-show="showListId == myGroup.grp.id"
@@ -28,7 +27,9 @@
             <q-menu auto-close>
               <q-list style="min-width: 100px">
                 <q-item clickable>
-                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">置顶群</q-item-section>
+                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">
+                    置顶群
+                  </q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable>
@@ -49,9 +50,11 @@
             </q-item-label>
             <q-item-label caption lines="2">{{ myGroup.grp.desc_text }}</q-item-label>
           </q-item-section>
-          <q-item-section side top>
+          <q-item-section side top class="justify-between">
             <q-badge color="grey" :label="myGroup.grp.num_post" />
-            <q-item-label caption>{{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}</q-item-label>
+            <q-item-label caption>
+              {{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}
+            </q-item-label>
           </q-item-section>
         </q-item>
 
@@ -69,7 +72,12 @@
           v-ripple
           class="q-px-xl q-py-md"
         >-->
-        <q-item clickable @click="jumpToGroup(grp.id)" v-ripple class="q-px-xl q-py-md">
+        <q-item
+          clickable
+          @click="jumpToGroup(grp.id)"
+          v-ripple
+          :class="[{ isActive: isItemActive(grp.id) }, 'q-px-xl', 'q-py-md']"
+        >
           <!-- <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">...</span> -->
           <q-item-section avatar>
             <q-avatar rounded size="40px">
@@ -83,7 +91,7 @@
             </q-item-label>
             <q-item-label caption lines="2">{{ grp.desc_text }}</q-item-label>
           </q-item-section>
-          <q-item-section side top>
+          <q-item-section side top class="justify-between">
             <q-badge color="grey" :label="grp.num_post" />
             <q-item-label caption>{{ $utils.timeStringToLocal(grp.last_post_at) }}</q-item-label>
           </q-item-section>
@@ -146,6 +154,9 @@ export default {
     },
   },
   methods: {
+    isItemActive(id) {
+      return +id === +this.$route.params.id;
+    },
     async init() {
       //同步执行了，待优化
       await this.getReCommendGroups();
@@ -236,6 +247,10 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.isActive {
+  background-color: #E4E4E4;
+}
+
 .leftHideTool {
   position: absolute;
   left: 0px;

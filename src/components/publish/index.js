@@ -70,6 +70,10 @@ export default {
     uploadMedia(e, type) {
       const file = e.target.files[0];
       if (!file) return;
+      if (file.size / 1000000 > 500) {
+        e.target.value = '';
+        return this.$q.notify('视频大小不能超过 500M');
+      }
       this[type + 'List'].push({
         file,
         id: Date.now(),

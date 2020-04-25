@@ -24,7 +24,6 @@
         v-if="!group.joined"
         unelevated
         color="primary"
-        class="q-mx-md"
         label="加入小组"
         @click="joinGrp(group.id)"
         icon="add"
@@ -32,7 +31,6 @@
       <q-btn
         outline
         color="primary"
-        class="q-mx-md"
         label="发言"
         @click="showAddArtrcle"
         icon="create"
@@ -49,9 +47,9 @@
       <!-- </div> -->
     </div>
 
-    <div class="row">
-      <member class="col" :members="grpMembers" />
-      <span class="col-2">
+    <div class="members">
+      <member class="members_content" :members="grpMembers" />
+      <span class="members_action">
         <q-btn
           flat
           color="primary"
@@ -276,6 +274,20 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.members {
+  display: flex;
+  align-items: center;
+  &_content {
+    flex-wrap: nowrap;
+    overflow: hidden;
+    /deep/ .col-1 {
+      width: unset;
+    }
+  }
+  &_action {
+    white-space: nowrap;
+  }
+}
 .noPermission {
   display: flex;
   flex-direction: column;
@@ -314,7 +326,19 @@ export default {
   padding-top: 80px;
 
   .groupinfo {
-    vertical-align: top;
+    display: flex;
+    align-items: center;
+    /deep/ .q-btn {
+      margin-right: 24px;
+    }
+    /deep/ .q-btn__wrapper {
+      padding-left: 8px;
+      padding-right: 12px;
+      .q-icon {
+        margin-right: 4px;
+        font-size: 22px;
+      }
+    }
 
     .groupname {
       // line-height: 30px;
