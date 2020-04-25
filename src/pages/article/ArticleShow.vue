@@ -23,7 +23,7 @@
       />
     </div>
     <div class="actions">
-      <q-btn flat color="primary" :label="post.post.num_like" icon="thumb_up" @click="like" />
+      <q-btn flat :class="{ isLiked }" :label="post.post.num_like" icon="thumb_up" @click="like" />
       <q-btn flat :label="post.post.num_comment" icon="chat_bubble_outline" @click="addComment" />
       <q-btn flat :label="post.post.num_share" icon="share" @click="share" />
       <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
@@ -45,6 +45,15 @@
 </template>
 
 <script>
+import { post } from '../../apis/request';
+
+// like状态和code：
+const dict = {
+  cancel: 1,
+  like: 2,
+  dislike: 3,
+};
+
 export default {
   components: {},
   props: {
@@ -57,6 +66,9 @@ export default {
   },
   watch: {},
   computed: {
+    isLiked() {
+      return this.post.likeStatus === dict['like'];
+    },
     id() {
       return this.post.post.id;
     },
@@ -66,13 +78,18 @@ export default {
       let api = '/protected/post/like';
       let data = {
         post: this.id,
-        op: 1,
+        op: this.isLiked ? dict['cancel'] : dict['like'],
       };
-      const result = await this.$axios.post(api, data);
-      if (result.data.code == 0) {
-        this.post.post.num_like = this.post.post.num_like + 1;
-        this.$q.notify('点赞成功');
-      }
+      post(api, data).then(() => {
+        this.post.likeStatus = data.op;
+        if (data.op === dict['like']) {
+          this.post.post.num_like = this.post.post.num_like + 1;
+        } else {
+          this.post.post.num_like = this.post.post.num_like - 1;
+        }
+      }).catch(err => {
+        this.$q.notify(err.message);
+      });
     },
     share() {},
   },
@@ -81,6 +98,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+  .isLiked {
+    color: var(--q-color-primary) !important;
+  }
   .images {
     margin-bottom: 16px;
     .q-img {

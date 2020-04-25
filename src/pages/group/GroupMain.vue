@@ -87,8 +87,8 @@ import headerBarRight from 'components/headerBarRight';
 import AddArticle from 'pages/article/PublishArticle';
 import AddComment from './AddComment';
 import member from 'components/member';
-import { post } from '../../apis/request';
 import { copyToClipboard } from 'quasar';
+import getPosts from '../../apis/getPosts';
 
 export default {
   components: { AddComment, AddArticle, member, ArticleShow, headerBarRight },
@@ -221,14 +221,13 @@ export default {
           if (err.code === 100) {
             this.hasPermission = false;
           } else {
-            this.$q.notify(err);
+            this.$q.notify(err.message);
           }
         });
     },
     getPosts() {
       const { groupId, userid, lastPostId } = this;
-      const url = userid ? '/protected/post/pull' : '/post/pull';
-      return post(url, { grp: groupId, base_post: lastPostId }).then(res => {
+      return getPosts({ userid, groupId, lastPostId }).then(res => {
         const newPosts = res.posts;
         this.posts = this.posts.concat(newPosts);
         if (newPosts.length > 0) {
