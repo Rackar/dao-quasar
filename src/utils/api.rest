@@ -126,9 +126,13 @@ Content-Type: {{contentType}}
     "images": []
 }
 ### PUT /protected/user/modify（修改个人信息）
+PUT  https://{{host}}/protected/user/modify HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
 {
-	"name": "new name",
-        "avatar": ""
+	"name": "杨旭",
+  "avatar": "https://s3.ap-northeast-1.amazonaws.com/justdao/dev/10009/op.jpg"
 }
 ### GET /protected/user/tokens（我的代币）
 ### POST /protected/user/token/transfer（转账）
