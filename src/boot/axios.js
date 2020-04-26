@@ -19,6 +19,10 @@ axiosInstance.interceptors.request.use(
     if (store.state.user.token) {
       config.headers.Authorization = `Bearer ${store.state.user.token}`;
     }
+    // let t = config.url.substring(0, 11);
+    // if (t === 'https://s3.') {
+    //   config.headers = null;
+    // }
     // config.headers[] = localStorage.token;
     return config;
   },

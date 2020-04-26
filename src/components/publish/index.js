@@ -1,4 +1,4 @@
-import upload from '../../apis/upload';
+import upload from '../../apis/uploadNew';
 import { matClear } from '@quasar/extras/material-icons';
 import asyncTryCatch from '../../utils/asyncTryCatch';
 
@@ -117,7 +117,7 @@ export default {
         })
         .catch(err => {
           this.isLoading = false;
-          const msg = typeof err === 'string'? err : err.message;
+          const msg = typeof err === 'string' ? err : err.message;
           this.$q.notify('发布失败,' + msg);
         });
     },

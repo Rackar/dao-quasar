@@ -166,3 +166,24 @@ Content-Type: {{contentType}}
   "grp": 10018,
   "pinned": 2
 }
+
+### POST /protected/oss/presign
+POST https://{{host}}/protected/oss/presign HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "key": "my-avatar.jpg"
+}
+
+# s3上传预签名
+# 注意：前端拿到 headers 和 presigned_url 后向s3上传对象，其中 headers 是字典，需遍历添加到往s3的请求header内，body必须是纯 binary 数据，非 form-data，参见 
+# https://github.com/aws/aws-sdk-js/issues/547#issuecomment-86404872
+# https://github.com/rowanwins/vue-dropzone/issues/411#issuecomment-459255756
+# 往s3的报文格式
+# PUT <data.presigned_url>
+# <common-headers>
+# <data.headers>
+# <binary data>
+# 上传成功后，presigned_url 去除query string后的部分作为资源路径，用于其他接口使用，如更新个人信息
+# https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/s3-example-photo-album.html
