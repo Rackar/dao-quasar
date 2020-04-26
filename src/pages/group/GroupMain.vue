@@ -335,7 +335,7 @@ export default {
     position: sticky;
     padding: 8px 42px;
     top: 0;
-    z-index: 9999;
+    z-index: 5000;
     background-color: white;
     display: flex;
     align-items: center;
