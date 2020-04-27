@@ -1,6 +1,6 @@
-import upload from '../../apis/uploadNew';
+import upload from '@/apis/uploadNew';
 import { matClear } from '@quasar/extras/material-icons';
-import asyncTryCatch from '../../utils/asyncTryCatch';
+import asyncTryCatch from '@/utils/asyncTryCatch';
 
 export default {
   created() {
