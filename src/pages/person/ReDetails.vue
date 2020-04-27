@@ -1,8 +1,9 @@
 <template>
   <div>
     <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
+    <Upload ref="upload" />
     <div class="row no-wrap items-end q-mt-md q-px-lg title">
-      <q-avatar rounded size="100px" class="dimmed">
+      <q-avatar rounded size="100px" :class="{dimmed:editing}" @click="changeAvatar">
         <img :src="userinfo.avatar || 'statics/user.svg'" />
       </q-avatar>
 
@@ -19,11 +20,11 @@
             </q-input>
           </q-popup-edit>-->
         </div>
-        <div class="q-size-sm">DOA ID {{id}} xxx@qq.com</div>
+        <div class="q-size-sm">DOA ID {{id}} {{userinfo.mail_export}}</div>
       </div>
 
       <q-space />
-      <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" />
+      <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" @click="clickEdit" />
     </div>
     <div class="row q-gutter-lg">
       <div class="col-6 offset-md-1">
@@ -72,8 +73,9 @@
 import ArticleShow from 'pages/article/ArticleShow';
 import AddComment from 'pages/group/AddComment';
 import wallet from './wallet';
+import Upload from 'components/Upload';
 export default {
-  components: { ArticleShow, wallet, AddComment },
+  components: { ArticleShow, wallet, AddComment, Upload },
   props: {
     id: String,
   },
@@ -92,21 +94,47 @@ export default {
 
       addCommentShow: false,
       commentPostId: 0,
+
+      editing: false,
+      uploadAvatar: false,
     };
   },
-  watch: {},
+  watch: {
+    id() {
+      this.init();
+    },
+  },
   computed: {
     myUserinfo() {
       return this.$store.state.user;
     },
     isMyself() {
-      return this.$store.state.user.userid == this.id;
+      return this.myUserinfo.userid == this.id;
     },
     // currentUserId() {
     //   return this.$route.params.id;
     // },
   },
   methods: {
+    init() {
+      let userid = this.$store.state.user.userid;
+      if (userid) {
+        //判断是否进入本人信息页
+        if (this.isMyself) {
+          this.userinfo = this.myUserinfo;
+          this.getMyPosts(false);
+          this.getmycode();
+          this.tokenLog();
+        } else {
+          userid = this.id;
+          this.getOtherUser(userid);
+          this.getOtherPosts(userid);
+        }
+      } else {
+        this.$router.push({ path: '/login', query: {} });
+      }
+    },
+
     // 个人信息
     getOtherUser: async function(id) {
       let url = '/user/' + id;
@@ -181,24 +209,17 @@ export default {
       let index = this.pullList.findIndex(post => post.post.id === id);
       this.pullList.splice(index, 1);
     },
+    clickEdit() {
+      this.editing = !this.editing;
+    },
+    changeAvatar() {
+      if (this.editing) {
+        this.$refs.upload.upload();
+      }
+    },
   },
   created() {
-    let userid = this.$store.state.user.userid;
-    if (userid) {
-      //判断是否进入本人信息页
-      if (this.isMyself) {
-        this.userinfo = { ...this.myUserinfo };
-        this.getMyPosts(false);
-        this.getmycode();
-        this.tokenLog();
-      } else {
-        userid = this.id;
-        this.getOtherUser(userid);
-        this.getOtherPosts(userid);
-      }
-    } else {
-      this.$router.push({ path: '/login', query: {} });
-    }
+    this.init();
   },
   mounted() {},
 };
