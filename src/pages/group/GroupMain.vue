@@ -1,6 +1,5 @@
 <template>
   <div class="main">
-    <AddArticle :groupId="groupId" v-model="addArticleShow" :onSave="onAddArticle" />
     <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
     <q-btn
       v-if="!userid"
@@ -19,15 +18,8 @@
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
       <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
-      <q-btn
-        v-if="!group.joined"
-        unelevated
-        color="primary"
-        label="加入小组"
-        @click="joinGrp(group.id)"
-        icon="add"
-      />
-      <q-btn outline color="primary" label="发言" @click="showAddArtrcle" icon="create" />
+      <JoinGroupBtn v-if="!group.joined" :groupInfo="group"/>
+      <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" />
     </div>
     <div class="warper">
       <div class="q-pa-md info q-my-md">
@@ -53,7 +45,7 @@
         </span>
       </div>
 
-      <q-infinite-scroll v-if="hasPermission" @load="loadMore" :offset="250">
+      <q-infinite-scroll class="listContainer" v-if="hasPermission" @load="loadMore" :offset="250">
         <div v-for="post in posts" :key="post.post.id">
           <ArticleShow
             :post="post"
@@ -78,14 +70,15 @@
 <script>
 import ArticleShow from 'pages/article/ArticleShow';
 import headerBarRight from 'components/headerBarRight';
-import AddArticle from 'pages/article/PublishArticle';
+import AddArticleBtn from 'pages/article/AddArticleBtn';
+import JoinGroupBtn from 'pages/article/JoinGroupBtn';
 import AddComment from './AddComment';
 import member from 'components/member';
 import { copyToClipboard } from 'quasar';
-import getPosts from '../../apis/getPosts';
+import getPosts from '@/apis/getPosts';
 
 export default {
-  components: { AddComment, AddArticle, member, ArticleShow, headerBarRight },
+  components: { AddComment, AddArticleBtn, JoinGroupBtn, member, ArticleShow, headerBarRight },
   props: {},
   data() {
     return this.getInitData();
@@ -119,7 +112,6 @@ export default {
         posts: [],
         lastPostId: null,
         commentPostId: -1,
-        addArticleShow: false,
         addCommentShow: false,
         grpMembers: [],
         password: '',
@@ -129,9 +121,6 @@ export default {
       if (!this.hasMore) return done();
       if (!this.isReady) return done();
       this.getPosts().then(done);
-    },
-    showAddArtrcle() {
-      this.addArticleShow = true;
     },
     showAddComment(id) {
       this.commentPostId = id;
@@ -152,59 +141,6 @@ export default {
         lastPostId: null,
       });
       this.$nextTick(this.getPosts);
-    },
-    showPass(id) {
-      this.$q
-        .dialog({
-          title: '加密群组',
-          message: '请输入群组密码',
-          prompt: {
-            model: '',
-            type: 'text', // optional
-          },
-          cancel: true,
-          // persistent: true,
-        })
-        .onOk(data => {
-          this.password = data;
-          this.joinGrp(id);
-        })
-        .onCancel(() => {
-          // console.log('>>>> Cancel')
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
-    },
-    // 加入组
-    joinGrp: async function(id) {
-      let password = '';
-      if (this.group.password === '****' && this.password === '') {
-        this.showPass(id);
-        return;
-      }
-      let data = {
-        grp: id,
-        password: password,
-      };
-      let postapi = '/protected/grp/join';
-      this.$q.loading.show();
-      const postjoin = await this.$axios.post(postapi, data);
-      this.$q.loading.hide();
-      this.password = '';
-      if (postjoin.data.code == 0) {
-        this.$q.notify({
-          message: '加入成功！',
-        });
-      } else if (postjoin.data.code == 100) {
-        this.$q.notify({
-          message: '加入群失败！密码错误',
-        });
-      } else if (postjoin.data.code == 104) {
-        this.$q.notify({
-          message: '加入群失败！请重新登录',
-        });
-      }
     },
     getPageData() {
       return Promise.all([this.getGroupMembers(), this.getPosts()])
@@ -272,9 +208,15 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.listContainer {
+  margin-left: -42px;
+  margin-right: -42px;
+}
 .members {
   display: flex;
   align-items: center;
+  margin-left: -16px;
+  margin-right: -16px;
 
   &_content {
     flex-wrap: nowrap;

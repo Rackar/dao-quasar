@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Publish from '../../components/publish/index.vue';
-import { post, put } from '../../apis/request';
+import Publish from '@/components/publish/index.vue';
+import { post, put } from '@/apis/request';
 
 const createPost = function(data) {
   const src = '/protected/post/create';
