@@ -6,27 +6,12 @@
 import upload from '../apis/uploadNew.js';
 export default {
   components: {},
-  props: { value: Boolean },
+  props: {},
   data() {
     return {};
   },
-  watch: {
-    value(newV) {
-      if (newV) {
-        this.$refs.imgInput.click();
-      }
-    },
-  },
-  computed: {
-    shouldShow: {
-      get() {
-        return this.value;
-      },
-      set(v) {
-        this.$emit('input', v);
-      },
-    },
-  },
+  watch: {},
+  computed: {},
   methods: {
     upload() {
       this.$refs.imgInput.click();
