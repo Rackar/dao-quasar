@@ -20,8 +20,6 @@
 
 .body {
   margin-bottom: 23px;
-  background: rgba(241, 241, 241, 1);
-  border-radius: 4px;
   textarea {
     padding: 18px;
     height: 120px;
@@ -29,6 +27,7 @@
     resize: none;
     background: rgb(241, 241, 241);
     border: none;
+    border-radius: 4px;
   }
 }
 

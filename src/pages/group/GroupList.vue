@@ -118,7 +118,7 @@ export default {
     this.init();
   },
   watch: {
-    $route(to, from) {
+    $route(to) {
       if (to.fullPath === '/') {
         this.init();
       }
