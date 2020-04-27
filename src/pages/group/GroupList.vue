@@ -8,7 +8,11 @@
           @mouseover="showListId = myGroup.grp.id"
           @mouseout="showListId = 0"
           v-ripple
-          :class="[{ isActive: isItemActive(myGroup.grp.id), pin: myGroup.pinned === 2 }, 'q-px-xl', 'q-py-md']"
+          :class="[
+            { isActive: isItemActive(myGroup.grp.id), pin: myGroup.pinned === 2 },
+            'q-px-xl',
+            'q-py-md',
+          ]"
         >
           <!-- <span
             v-show="showListId == myGroup.grp.id"
@@ -27,7 +31,9 @@
             <q-menu auto-close>
               <q-list style="min-width: 100px">
                 <q-item clickable>
-                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">置顶群</q-item-section>
+                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">
+                    {{ myGroup.pinned === 2 ? '取消置顶' : '置顶群' }}
+                  </q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable>
@@ -50,7 +56,9 @@
           </q-item-section>
           <q-item-section side top class="justify-between">
             <q-badge color="grey" :label="myGroup.grp.num_post" />
-            <q-item-label caption>{{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}</q-item-label>
+            <q-item-label caption>
+              {{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}
+            </q-item-label>
           </q-item-section>
         </q-item>
 
@@ -88,7 +96,12 @@
             <q-item-label caption lines="2">{{ grp.desc_text }}</q-item-label>
           </q-item-section>
           <q-item-section side top class="justify-between">
-            <q-badge color="grey" :label="grp.num_post" />
+            <q-icon
+              v-if="grp.read_permission === 2"
+              name="img:statics/icons/icon_suo_2.svg"
+              size="xs"
+            />
+            <q-badge v-else color="grey" :label="grp.num_post" />
             <q-item-label caption>{{ $utils.timeStringToLocal(grp.last_post_at) }}</q-item-label>
           </q-item-section>
         </q-item>
@@ -235,6 +248,7 @@ export default {
   left: 0px;
   top: 20px;
   z-index: 30;
+  padding:1px;
 }
 
 .pin {

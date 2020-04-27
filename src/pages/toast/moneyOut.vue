@@ -1,43 +1,40 @@
 <template>
-  <div>
-    <q-btn label="我要转账" color="primary" @click="show = true" />
-    <q-dialog v-model="show">
-      <q-card style="width: 440px" class="q-pa-lg">
-        <q-card-section class="items-center q-pb-none">钱包转账</q-card-section>
+  <q-dialog v-model="shouldShow">
+    <q-card style="width: 440px" class="q-pa-lg">
+      <q-card-section class="items-center q-pb-none">钱包转账</q-card-section>
 
-        <q-card-actions align="center" class="text-teal">
-          <span>转出地址</span>
-          <input
-            type="text"
-            v-model="user"
-            @change="lookActive"
-            placeholder="请输入 +ERC20 钱包地址/DAO ID"
-          />
-        </q-card-actions>
-        <q-card-actions align="center" class="text-teal">
-          <span>转出金额(单位NES)</span>
-          <input
-            type="text"
-            v-model="val"
-            @change="lookActive"
-            :placeholder="layerInfo && '可转出余额' + totalMoney"
-          />
-          <i @click="val = totalMoney">全部</i>
-        </q-card-actions>
-        <q-card-actions align="center" class="text-teal">
-          <div class="rollOutBtn" :class="{ active: val != '' && user != '' }" @click="payTo">
-            确定
-          </div>
-          <div class="rollOutDes">所有基于区块链的交易都需要手续费，该手续费将自动扣除。</div>
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-  </div>
+      <q-card-actions align="center" class="text-teal">
+        <span>转出地址</span>
+        <input
+          type="text"
+          v-model="user"
+          @change="lookActive"
+          placeholder="请输入 +ERC20 钱包地址/DAO ID"
+        />
+      </q-card-actions>
+      <q-card-actions align="center" class="text-teal">
+        <span>转出金额(单位NES)</span>
+        <input
+          type="text"
+          v-model="val"
+          @change="lookActive"
+          :placeholder="layerInfo && '可转出余额' + totalMoney"
+        />
+        <i @click="val = totalMoney">全部</i>
+      </q-card-actions>
+      <q-card-actions align="center" class="text-teal">
+        <div class="rollOutBtn" :class="{ active: val != '' && user != '' }" @click="payTo">
+          确定
+        </div>
+        <div class="rollOutDes">所有基于区块链的交易都需要手续费，该手续费将自动扣除。</div>
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
 export default {
-  props: {},
+  props: { value: Boolean },
   data() {
     return {
       show: false,
@@ -51,7 +48,16 @@ export default {
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    shouldShow: {
+      get() {
+        return this.value;
+      },
+      set(v) {
+        this.$emit('input', v);
+      },
+    },
+  },
   methods: {
     taost_cancel() {
       this.$q.notify('已取消');

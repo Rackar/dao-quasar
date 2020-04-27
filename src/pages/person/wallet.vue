@@ -1,29 +1,31 @@
 <template>
   <q-card class="my-card">
+    <moneyIn v-model="showMoneyIn" />
+    <moneyOut v-model="showMoneyOut" />
     <q-card-section class="row no-wrap">
       我的钱包
       <q-space />
-      <q-btn flat>
+      <q-btn flat @click="showMoneyIn = true">
         <q-icon name="img:statics/icons/icon_code_normal.svg" />
       </q-btn>
-      <q-btn flat>
+      <q-btn flat @click="showMoneyOut = true">
         <q-icon name="img:statics/icons/icon_zhuanzhang_normal.svg" />
       </q-btn>
     </q-card-section>
     <q-card-section class="text-center">
-      <q-btn flat :label="'总金额 ('+currentToken.name+')▽'">
+      <q-btn flat :label="'总金额 (' + currentToken.name + ')▽'">
         <q-menu auto-close>
           <q-list style="min-width: 100px">
             <div v-for="token in tokens" :key="token.id">
               <q-item clickable @click="pickToken(token)">
-                <q-item-section>{{token.contract.name}}</q-item-section>
+                <q-item-section>{{ token.contract.name }}</q-item-section>
               </q-item>
               <q-separator />
             </div>
           </q-list>
         </q-menu>
       </q-btn>
-      <div>{{currentToken.value}}</div>
+      <div>{{ currentToken.value }}</div>
     </q-card-section>
     <q-card-section>
       <q-list style="min-width: 100px">
@@ -38,8 +40,10 @@
 </template>
 
 <script>
+import moneyIn from 'pages/toast/moneyIn';
+import moneyOut from 'pages/toast/moneyOut';
 export default {
-  components: {},
+  components: { moneyIn, moneyOut },
   props: {
     tokens: Array,
     log: Array,
@@ -51,6 +55,8 @@ export default {
         contract: '',
         value: '0.00',
       },
+      showMoneyIn: false,
+      showMoneyOut: false,
     };
   },
   watch: {
@@ -79,4 +85,3 @@ export default {
   mounted() {},
 };
 </script>
-

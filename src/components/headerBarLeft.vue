@@ -1,12 +1,8 @@
 <template>
   <div>
-    <q-btn flat label="DAOChat" no-caps icon="menu">
+    <q-btn flat no-caps icon="menu">
       <q-menu auto-close>
         <q-list style="min-width: 100px">
-          <q-item clickable>
-            <q-item-section @click="$router.push('/')">首页</q-item-section>
-          </q-item>
-          <q-separator />
           <q-item clickable>
             <q-item-section @click="createGrp">创建一个群</q-item-section>
           </q-item>
@@ -17,6 +13,7 @@
         </q-list>
       </q-menu>
     </q-btn>
+    <q-btn flat no-caps label="DAO" @click="$router.push('/')" />
     <!--      创建群-->
     <groupCreate v-model="showCreate" />
   </div>
