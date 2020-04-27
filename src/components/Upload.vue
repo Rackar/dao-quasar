@@ -1,92 +1,71 @@
 <template>
-  <div>
-    <a-upload
-      name="file"
-      listType="picture-card"
-      class="avatar-uploader"
-      :headers="headers"
-      :showUploadList="false"
-      :action="$serverUrl + '/api/uploads/image'"
-      @change="handleChange"
-      :beforeUpload="beforeUpload"
-    >
-      <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
-      <div v-else>
-        <a-icon :type="loading ? 'loading' : 'plus'" />
-        <div class="ant-upload-text">上传</div>
-      </div>
-    </a-upload>
-  </div>
+  <input hidden="hidden" ref="imgInput" @change="uploadImg" type="file" accept="image/*" />
 </template>
+
 <script>
-function getBase64(img, callback) {
-  const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
-  reader.readAsDataURL(img);
-}
+import upload from '../apis/uploadNew.js';
 export default {
+  components: {},
+  props: { value: Boolean },
   data() {
-    return {
-      loading: false,
-      imageUrl: '',
-    };
+    return {};
+  },
+  watch: {
+    value(newV) {
+      if (newV) {
+        this.$refs.imgInput.click();
+      }
+    },
   },
   computed: {
-    headers() {
-      return { Authorization: `Bearer ${this.$store.state.token}` };
+    shouldShow: {
+      get() {
+        return this.value;
+      },
+      set(v) {
+        this.$emit('input', v);
+      },
     },
   },
   methods: {
-    handleChange(info) {
-      if (info.file.status === 'uploading') {
-        this.loading = true;
-        return;
-      }
-      if (info.file.status === 'done') {
-        let pathString = this.$serverUrl + '/' + info.file.response.data.filename;
-        this.$emit('uploadedPic', pathString);
-        // Get this url from response in real world.
-        getBase64(info.file.originFileObj, imageUrl => {
-          this.imageUrl = imageUrl;
-          this.loading = false;
-        });
-      }
+    upload() {
+      this.$refs.imgInput.click();
     },
 
-    beforeUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isPNG = file.type === 'image/png';
-      const isGIF = file.type === 'image/gif';
-      let isPIC = isJPG || isPNG || isGIF;
-      if (!isPIC) {
-        this.$message.error('只能上传 jpg/png/gif 格式!');
+    async uploadImg(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size / 1000000 > 5) {
+        e.target.value = '';
+        return this.$q.notify('头像大小不能超过 5M');
       }
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isLt2M) {
-        this.$message.error('文件需要小于 2MB!');
+      // let previewUrl = window.URL.createObjectURL(file);
+      let result = await upload({ file });
+      if (result instanceof Error) {
+        this.$q.notify('头像上传失败，' + result);
+      } else {
+        //上传成功
+        this.updateUserAvatar(result);
       }
-      return isPIC && isLt2M;
+      e.target.value = '';
+    },
+    async updateUserAvatar(image_url) {
+      let api = '/protected/user/modify';
+      let data = {
+        name: this.$store.state.user.name,
+        avatar: image_url,
+      };
+      let res = await this.$axios.put(api, data);
+      if (res.data.code === 0) {
+        this.$q.notify('头像修改成功');
+      } else {
+        this.$q.notify('头像修改失败');
+      }
     },
   },
+  created() {},
+  mounted() {},
 };
 </script>
-<style>
-.avatar-uploader > .ant-upload {
-  width: 128px;
-  height: 128px;
-}
-.avatar-uploader > .ant-upload img {
-  width: 128px;
-  height: 128px;
-  object-fit: contain;
-}
-.ant-upload-select-picture-card i {
-  font-size: 32px;
-  color: #999;
-}
-
-.ant-upload-select-picture-card .ant-upload-text {
-  margin-top: 8px;
-  color: #666;
-}
+<style lang="scss">
 </style>

@@ -28,9 +28,7 @@
       />
     </div>
     <div v-else style=" max-width: 500px; max-height: 400px; margin-bottom:20px;">
-      <q-video :ratio="16/9"
-      :src="post.post.images[0]"
-    />
+      <q-video :ratio="16/9" :src="post.post.images[0]" />
     </div>
     <div class="actions">
       <q-btn flat :class="{ isLiked }" :label="post.post.num_like" icon="thumb_up" @click="like" />
@@ -94,17 +92,40 @@ export default {
     modifyPermition() {
       return this.post.post.creator === this.userid || this.userid === this.owner.id;
     },
-    hasVideo(){
-      let list =this.post.post.images
+    hasVideo() {
+      let list = this.post.post.images;
       //可能的视频格式，没有一一测试验证
-      let videoExt=['.mp4','.avi','.flv','.mpeg','.wmv','.dat','.asf','.mov','.3gp','.rm','.rmvb','.divx','.dv','.mkv','.qt','.cpk','.fli','.f4v','.m4v','.mod','.swf','.webm']
-      if(list.length){
-       return videoExt.some(v=>list[0].indexOf(v)!==-1)
-      }else{
-        return false
+      let videoExt = [
+        '.mp4',
+        '.avi',
+        '.flv',
+        '.mpeg',
+        '.wmv',
+        '.dat',
+        '.asf',
+        '.mov',
+        '.3gp',
+        '.rm',
+        '.rmvb',
+        '.divx',
+        '.dv',
+        '.mkv',
+        '.qt',
+        '.cpk',
+        '.fli',
+        '.f4v',
+        '.m4v',
+        '.mod',
+        '.swf',
+        '.webm',
+      ];
+      if (list.length) {
+        return videoExt.some(v => list[0].indexOf(v) !== -1);
+      } else {
+        return false;
       }
       // return list.length && list[0].indexOf('mp4')!==-1
-    }
+    },
   },
   methods: {
     async like() {
@@ -147,8 +168,6 @@ export default {
 }
 .actions {
   .q-btn {
-    i {
-    }
     color: #8c909d;
   }
 }

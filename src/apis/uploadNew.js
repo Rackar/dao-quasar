@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { post } from './request';
 
-const upload = function({ file, dispositionType = 'attachment' }) {
+const upload = function({ file }) {
   return new Promise(function(resolve, reject) {
     var reader = new FileReader();
     reader.onload = evt => {
@@ -17,7 +17,7 @@ const upload = function({ file, dispositionType = 'attachment' }) {
 
       let api = '/protected/oss/presign';
       let data = {
-        key: file.name,
+        key: Date.now() + file.name,
       };
       post(api, data).then(res => {
         if (res) {
