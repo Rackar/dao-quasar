@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container" :data-type="viewType">
     <deleteArticle
       v-model="showDeleteArticle"
       :postId="post.post.id"
-      @deleteSuccess="$emit('del',post.post.id)"
+      @deleteSuccess="$emit('del', post.post.id)"
     />
     <div class="q-pt-lg header" v-if="post.creator">
       <q-avatar rounded size="35px" v-show="!personPage">
@@ -13,11 +13,15 @@
         class="authorName q-px-md cursor-pointer"
         v-show="!personPage"
         @click="$router.push('/person/show/' + post.creator.id)"
-      >{{ post.creator.name }}</span>
+      >
+        {{ post.creator.name }}
+      </span>
       <span>{{ $utils.timeStringToLocal(post.post.create_at) }}</span>
     </div>
 
-    <div class="q-py-lg body">{{ post.post.content }}</div>
+    <div class="q-py-lg body" @click="onContentClick">
+      {{ post.post.content }}
+    </div>
     <div class="row images" style=" max-width: 600px; ">
       <q-img
         v-for="(url, index) in post.post.images"
@@ -27,7 +31,7 @@
         style="height: 240px; max-width: 240px; margin:9px;"
       />
     </div>
-    <div class="actions">
+    <div class="actions" v-if="shouldShowActions">
       <q-btn flat :class="{ isLiked }" :label="post.post.num_like" icon="thumb_up" @click="like" />
       <q-btn flat :label="post.post.num_comment" icon="chat_bubble_outline" @click="addComment" />
       <q-btn flat :label="post.post.num_share" icon="share" @click="share" />
@@ -50,7 +54,7 @@
 </template>
 
 <script>
-import { post } from '../../apis/request';
+import { post } from '@/apis/request';
 import deleteArticle from 'pages/toast/deleteArticle';
 
 // like状态和code：
@@ -63,9 +67,14 @@ const dict = {
 export default {
   components: { deleteArticle },
   props: {
+    // 组件在不同的场景展示，行为有不同
+    viewType: {
+      type: String,
+      default: 'group', // article | comment
+    },
     post: Object,
     personPage: { type: Boolean, default: false },
-    addComment: { type: Function, required: true },
+    addComment: { type: Function },
   },
   data() {
     return {
@@ -74,6 +83,9 @@ export default {
   },
   watch: {},
   computed: {
+    shouldShowActions() {
+      return this.viewType !== 'comment';
+    },
     isLiked() {
       return this.post.likeStatus === dict['like'];
     },
@@ -91,6 +103,11 @@ export default {
     },
   },
   methods: {
+    onContentClick() {
+      if (this.viewType === 'group') {
+        this.$router.push(`/articles/${this.id}`);
+      }
+    },
     async like() {
       let api = '/protected/post/like';
       let data = {
@@ -124,12 +141,13 @@ export default {
   color: var(--q-color-primary) !important;
 }
 .images {
-  margin-bottom: 16px;
   .q-img {
     border-radius: 4px;
   }
 }
 .actions {
+  margin-left: -16px;
+  padding-top: 16px;
   .q-btn {
     i {
     }
@@ -143,25 +161,32 @@ export default {
   font-size: 16px;
 }
 .body {
+  display: block;
   font-size: 16px;
 }
 .container {
-  position: relative;
-  margin-left: -48px;
-  margin-right: -48px;
-  padding-left: 48px;
-  padding-right: 48px;
+  background-color: #fff;
+  border-bottom: 1px solid #e4e4e4;
+  padding-left: 42px;
+  padding-right: 42px;
+  padding-bottom: 16px;
+}
+
+[data-type="group"] {
   &:hover {
     background-color: #fafafa;
   }
-  &::after {
-    content: '';
-    display: block;
-    margin-top: 24px;
-    height: 1px;
-    width: calc(100% + 96px);
-    background-color: #e4e4e4;
-    margin-left: -48px;
+  .body {
+    cursor: pointer;
   }
+}
+
+[data-type="article"] {
+}
+
+[data-type="comment"] {
+  // &:hover {
+  //   background-color: #fafafa;
+  // }
 }
 </style>
