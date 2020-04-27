@@ -5,7 +5,7 @@
         <HeaderBarLeft />
         <HeaderBarRight />
       </div>
-      <div class="body">
+      <div class="body" :key="$route.params.id">
         <BodyLeft class="body_left" @getGroupId="setGroupId"/>
         <BodyRight v-if="groupId !== -1" class="body_right" :groupId="groupId" />
       </div>

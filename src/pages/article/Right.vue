@@ -15,7 +15,7 @@
               小组成员
             </div>
             <div class="popup_data_value">
-              {{groupInfo.num_member}}
+              {{ groupInfo.num_member }}
             </div>
           </div>
           <div class="popup_data">
@@ -23,7 +23,7 @@
               小组文章
             </div>
             <div class="popup_data_value">
-              {{groupInfo.num_post}}
+              {{ groupInfo.num_post }}
             </div>
           </div>
           <div class="popup_data">
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="popup_actions">
-          <JoinGroupBtn v-if="!isJoined" :groupInfo="groupInfo"/>
+          <JoinGroupBtn v-if="!isJoined" :groupInfo="groupInfo" />
           <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" />
         </div>
       </div>
@@ -45,14 +45,19 @@
     <div class="postList" v-if="isReady">
       <div class="postList_header">相关内容</div>
       <div class="postList_body">
-        <div class="post" v-for="item in topPosts" :key="item.post.id">
+        <router-link
+          :to="`/articles/${item.post.id}`"
+          class="post"
+          v-for="item in topPosts"
+          :key="item.post.id"
+        >
           <q-avatar class="post_avatar" rounded size="50px">
             <img :src="item.creator.avatar || 'statics/user.svg'" />
           </q-avatar>
-          <div class="post_title">{{item.post.content}}</div>
-          <div class="post_num">{{item.post.num_like}}赞</div>
-          <div class="post_time">{{formatDate(item.post.create_at)}}</div>
-        </div>
+          <div class="post_title" :title="item.post.content">{{ item.post.content }}</div>
+          <div class="post_num">{{ item.post.num_like }}赞</div>
+          <div class="post_time">{{ formatDate(item.post.create_at) }}</div>
+        </router-link>
       </div>
     </div>
 
@@ -120,7 +125,7 @@ export default {
         this.isJoined = await checkIsGroupJoined(this.groupInfo.id);
       }
       this.isReady = true;
-    } catch(err) {
+    } catch (err) {
       this.$q.notify(err.message);
     }
   },
@@ -154,7 +159,7 @@ export default {
   visibility: hidden;
   top: 80%;
   background-color: #fff;
-  box-shadow:0px 4px 15px 0px rgba(0,0,0,0.15);
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.15);
   padding: 16px 22px;
 
   &_body {
@@ -164,7 +169,7 @@ export default {
   &_data {
     margin-right: 30px;
     &_label {
-      color: #8C909D;
+      color: #8c909d;
       font-size: 16px;
     }
     &_value {
@@ -198,12 +203,13 @@ export default {
   }
 }
 .post {
-
+  text-decoration: none;
+  color: inherit;
   display: grid;
   grid-template-columns: auto 1fr auto;
   grid-template-areas:
-      "avatar title time"
-      "avatar num time";
+    'avatar title time'
+    'avatar num time';
   grid-column-gap: 16px;
   align-items: center;
   margin-bottom: 39px;
@@ -220,13 +226,13 @@ export default {
   &_num {
     grid-area: num;
     font-size: 16px;
-    color: #8C909D;
+    color: #8c909d;
   }
   &_time {
     align-self: baseline;
     grid-area: time;
     font-size: 14px;
-    color: #8C909D;
+    color: #8c909d;
   }
 }
 </style>
