@@ -3,13 +3,13 @@ const routes = [
     path: '/', //首页模板
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/group/Index.vue') },
-      { path: 'edit', component: () => import('pages/test/ArticleCreate.vue') },
+      { path: '', component: () => import('pages/group/GroupMain.vue') },
       { path: 'group/:id', component: () => import('pages/group/GroupMain.vue') },
     ],
   },
   {
-    path: '/articles/:id', component: () => import('pages/article/index.vue')
+    path: '/articles/:id',
+    component: () => import('pages/article/Index.vue'),
   },
   {
     path: '/person', //人物信息模板

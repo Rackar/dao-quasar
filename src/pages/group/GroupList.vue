@@ -27,9 +27,7 @@
             <q-menu auto-close>
               <q-list style="min-width: 100px">
                 <q-item clickable>
-                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">
-                    置顶群
-                  </q-item-section>
+                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">置顶群</q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable>
@@ -52,9 +50,7 @@
           </q-item-section>
           <q-item-section side top class="justify-between">
             <q-badge color="grey" :label="myGroup.grp.num_post" />
-            <q-item-label caption>
-              {{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}
-            </q-item-label>
+            <q-item-label caption>{{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -104,23 +100,6 @@
   </div>
 </template>
 <script>
-let testList = [
-  {
-    avatar: '',
-    create_at: '2020-03-29T13:00:47+00:00',
-    creator: 10001,
-    desc_text:
-      '创建群之后你还可以设置以下参数：入群奖励、阅读奖励、回复奖励等。\n\n请注意，所有的这些奖励的代币将不经过你的确认直接从你的钱包扣掉。 若你的钱包余额不够支付奖励，则该群的所有奖励设置将自动归零。\n\n创建群代表你为群内所有言论负责。你若退群，则系统将自动接替你做群主。',
-    id: 10009,
-    last_post_at: '2020-03-29T13:00:47+00:00',
-    name: '哗哗的最强战队',
-    num_member: 1,
-    num_post: 0,
-    password: '',
-    read_permission: 1,
-  },
-];
-
 import { get, post } from 'src/apis/index.js';
 import quitGroup from 'pages/toast/quitGroup';
 export default {
@@ -136,13 +115,13 @@ export default {
     };
   },
   created() {
-    this.mylist = testList;
     this.init();
   },
-  props: {
-    aid: {
-      type: String,
-      default: '',
+  watch: {
+    $route(to, from) {
+      if (to.fullPath === '/') {
+        this.init();
+      }
     },
   },
   computed: {

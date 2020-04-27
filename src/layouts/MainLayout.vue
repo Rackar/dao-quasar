@@ -44,29 +44,10 @@ import GroupListHeader from 'components/headerBarLeft';
 // import GroupListHeader from 'pages/group/GroupListHeader';
 const menuList = [
   {
-    icon: 'inbox',
-    label: '首页',
-    separator: true,
-    path: '/',
-  },
-  {
     icon: 'people',
     label: '测弹窗',
     separator: true,
     path: '/toast',
-  },
-  {
-    icon: 'send',
-    label: '写文章',
-    separator: false,
-    path: '/edit',
-  },
-
-  {
-    icon: 'error',
-    label: '看单篇文章',
-    path: '/articles/1',
-    separator: false,
   },
 ];
 export default {
@@ -90,6 +71,7 @@ export default {
   position: fixed;
   background-color: #F8F8F8;
 }
+
 .toolTip-left {
   position: absolute;
   top: 11px;
