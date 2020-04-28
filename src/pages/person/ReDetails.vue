@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="main">
     <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
     <Upload ref="upload" />
     <div class="row no-wrap items-end q-mt-md q-px-lg title">
-      <q-avatar rounded size="100px" :class="{dimmed:editing}" @click="changeAvatar">
+      <q-avatar rounded size="100px" :class="{ dimmed: editing }" @click="changeAvatar">
         <img :src="userinfo.avatar || 'statics/user.svg'" />
       </q-avatar>
 
@@ -20,14 +20,21 @@
             </q-input>
           </q-popup-edit>-->
         </div>
-        <div class="q-size-sm">DOA ID {{id}} {{userinfo.mail_export}}</div>
+        <div class="q-size-sm">DOA ID {{ id }} {{ userinfo.mail_export }}</div>
       </div>
 
       <q-space />
-      <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" @click="clickEdit" />
+      <q-btn
+        outline
+        color="primary"
+        icon="menu"
+        label="编辑资料"
+        v-show="isMyself"
+        @click="clickEdit"
+      />
     </div>
-    <div class="row q-gutter-lg">
-      <div class="col-6 offset-md-1">
+    <div class="row ">
+      <div class="col-7 offset-md-1">
         <q-card flat class="my-card">
           <q-tabs
             v-model="tab"
@@ -51,7 +58,7 @@
                 :post="post"
                 :key="post.post.id"
                 :personPage="true"
-                :addComment="()=>showAddComment(post.post.id)"
+                :addComment="() => showAddComment(post.post.id)"
                 @del="postDeleted"
               />
             </q-tab-panel>
@@ -62,7 +69,7 @@
           </q-tab-panels>
         </q-card>
       </div>
-      <div class="col-4">
+      <div class="col-2  offset-md-1">
         <wallet :tokens="tokens" :log="log" v-if="isMyself" />
       </div>
     </div>
@@ -84,7 +91,20 @@ export default {
       tab: 'myPosts',
       // userinfo: {},
       mycode: [],
-      tokens: [],
+      tokens: [
+        {
+          contract: {
+            contract: '',
+            name: '',
+            symbol: '',
+          },
+          token: {
+            contract: '',
+            user: 0,
+            value: '0.00',
+          },
+        },
+      ],
       log: [],
       pullList: [],
       userinfo: {},
@@ -226,12 +246,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .posts {
-  height: 500px;
+  height: 550px;
 }
 .my-card {
-  max-width: 580px;
+  // max-width: 780px;
 }
 .title {
   margin-top: -40px;
+  padding-bottom: 60px;
+  // background-color: #f8f8f8;
+}
+.main {
+  // background-color: #f8f8f8;
 }
 </style>

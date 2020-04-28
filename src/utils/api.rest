@@ -136,10 +136,14 @@ Content-Type: {{contentType}}
 }
 ### GET /protected/user/tokens（我的代币）
 ### POST /protected/user/token/transfer（转账）
+POST  https://{{host}}/user/token/transfer HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
 {
     "contract": "",
-    "to_user": 10000,
-    "value": "10.2"
+    "to_user": 10007,
+    "value": "0"
 }
 ### POST /protected/user/token/logs（转账日志）
 {

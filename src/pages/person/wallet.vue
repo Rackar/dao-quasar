@@ -1,7 +1,7 @@
 <template>
   <q-card class="my-card">
     <moneyIn v-model="showMoneyIn" />
-    <moneyOut v-model="showMoneyOut" />
+    <moneyOut v-model="showMoneyOut" :tokens="tokens" :currentToken="currentToken" />
     <q-card-section class="row no-wrap">
       我的钱包
       <q-space />

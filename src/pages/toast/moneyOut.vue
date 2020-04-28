@@ -1,50 +1,74 @@
 <template>
   <q-dialog v-model="shouldShow">
-    <q-card style="width: 440px" class="q-pa-lg">
-      <q-card-section class="items-center q-pb-none">钱包转账</q-card-section>
-
-      <q-card-actions align="center" class="text-teal">
-        <span>转出地址</span>
-        <input
-          type="text"
+    <div class="main">
+      <div class="text-h5">钱包转账</div>
+      <div>转出地址</div>
+      <div>
+        <q-input
+          class="myinput"
+          outlined
           v-model="user"
-          @change="lookActive"
+          dense
           placeholder="请输入 +ERC20 钱包地址/DAO ID"
         />
-      </q-card-actions>
-      <q-card-actions align="center" class="text-teal">
-        <span>转出金额(单位NES)</span>
-        <input
-          type="text"
+      </div>
+
+      <div>
+        转出金额
+        <q-btn flat :label="'单位 (' + currentToken.contract.name + ')▽'">
+          <q-menu auto-close>
+            <q-list style="min-width: 100px">
+              <div v-for="(token,index) in tokens" :key="token.id">
+                <q-item clickable @click="pickToken(index)">
+                  <q-item-section>{{ token.contract.name }}</q-item-section>
+                </q-item>
+                <q-separator />
+              </div>
+            </q-list>
+          </q-menu>
+        </q-btn>
+      </div>
+      <div>
+        <q-input
+          class="col"
+          outlined
           v-model="val"
-          @change="lookActive"
-          :placeholder="layerInfo && '可转出余额' + totalMoney"
+          dense
+          :placeholder=" '可转出余额' + currentToken.token.value"
+        >
+          <template v-slot:append>
+            <q-btn flat color="white" text-color="black" label="全部" @click="inputAll" />
+          </template>
+        </q-input>
+      </div>
+      <div>
+        <q-btn
+          class="col"
+          color="primary"
+          label="确定"
+          @click="sentMoney"
+          :disable="this.user===''||this.val===''"
         />
-        <i @click="val = totalMoney">全部</i>
-      </q-card-actions>
-      <q-card-actions align="center" class="text-teal">
-        <div class="rollOutBtn" :class="{ active: val != '' && user != '' }" @click="payTo">
-          确定
-        </div>
-        <div class="rollOutDes">所有基于区块链的交易都需要手续费，该手续费将自动扣除。</div>
-      </q-card-actions>
-    </q-card>
+      </div>
+
+      <div class="col">所有基于区块链的交易都需要手续费，该手续费将自动扣除。</div>
+    </div>
   </q-dialog>
 </template>
 
 <script>
 export default {
-  props: { value: Boolean },
+  props: {
+    value: Boolean,
+    tokens: Array,
+  },
   data() {
     return {
-      show: false,
-      title: '转账成功',
-      content: '你也可以在「我的主页」中查看刚刚转账的信息',
       val: '',
       contract: '',
       user: '',
-      layerInfo: {},
       totalMoney: 0,
+      tokenIndex: 0,
     };
   },
   watch: {},
@@ -57,34 +81,39 @@ export default {
         this.$emit('input', v);
       },
     },
+    currentToken() {
+      return this.tokens[this.tokenIndex];
+    },
   },
   methods: {
-    taost_cancel() {
-      this.$q.notify('已取消');
+    inputAll() {
+      this.val = this.currentToken.token.value;
     },
-    taost_confirm() {
-      this.$q.notify('删除成功');
-    }, // 转账
-    payTo: async function() {
-      // let self = this;
-      // console.log(this.layerInfo);
+    sentMoney() {
       // let url = 'protected/user/token/transfer';
-      // 注释掉接口
-      //   let dat = {
-      //     contract: this.layerInfo.post.contract.contract,
-      //     to_user: Number(this.user),
-      //     value: this.val
-      //   };
-      //   const respay = await axios.post("//" + url, dat);
-      // const respay = { code: 0 };
-      // if (respay.code == 0) {
-      // } else {
-      // }
+      // let dat = {
+      //   contract: this.user,
+      //   to_user: Number(this.user),
+      //   value: this.val,
+      // };
+      this.$q.notify('转账功能尚在完善');
     },
-    lookActive: function() {},
+
+    pickToken(index) {
+      this.tokenIndex = index;
+    },
   },
   created() {},
   mounted() {},
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.main {
+  max-width: 440px;
+  background-color: white;
+  padding: 28px;
+  div {
+    padding: 5px 0 5px;
+  }
+}
+</style>
