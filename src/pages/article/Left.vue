@@ -5,7 +5,10 @@
       viewType="article"
       v-if="isReady"
       :post="post"
+      :groupCreatorId="groupCreatorId"
       :addComment="showAddComment"
+      @edit="afterEdit"
+      @del="afterDelete"
     />
     <Comments class="comments" v-if="isReady" :comments="comments" />
     <AddComment
@@ -41,6 +44,10 @@ const getPost = function({ postId, isLoggedIn }) {
   });
 };
 
+const getGroupInfo = function(groupId) {
+  return get(`/grp/${groupId}`).then(res => res.grp);
+};
+
 const getComments = function(postId) {
   return get(`/comments/${postId}`).then(res => res.comments);
 };
@@ -50,6 +57,7 @@ export default {
   data() {
     return {
       post: null,
+      groupInfo: null,
       comments: [],
       isReady: false,
       shouldShowAddComment: false,
@@ -62,6 +70,9 @@ export default {
     postId() {
       return +this.$route.params.id;
     },
+    groupCreatorId() {
+      return this.groupInfo.creator;
+    },
   },
   methods: {
     showAddComment() {
@@ -70,6 +81,12 @@ export default {
     onAddComment() {
       getComments(this.postId).then(res => this.comments = res);
     },
+    afterEdit(newContent) {
+      Object.assign(this.post.post, newContent);
+    },
+    afterDelete() {
+      this.$router.replace(`/group/${this.groupInfo.id}`);
+    },
   },
   mounted() {
     const { isLoggedIn, postId } = this;
@@ -77,8 +94,12 @@ export default {
       .then(([post, comments]) => {
         this.post = post;
         this.comments = comments;
+        return getGroupInfo(post.post.grp);
+      })
+      .then(groupInfo => {
+        this.groupInfo = groupInfo;
         this.isReady = true;
-        this.$emit('getGroupId', post.post.grp);
+        this.$emit('getGroupInfo', groupInfo);
       })
       .catch(err => {
         this.$q.notify(err.message);

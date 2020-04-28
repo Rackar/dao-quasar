@@ -2,8 +2,15 @@
   <div class="container" :data-type="viewType">
     <deleteArticle
       v-model="showDeleteArticle"
-      :postId="post.post.id"
-      @deleteSuccess="$emit('del', post.post.id)"
+      :postId="postId"
+      @deleteSuccess="$emit('del', postId)"
+    />
+    <EditArticle
+      v-if="canEdit"
+      v-model="shouldShowEdit"
+      :postId="postId"
+      :initialData="post.post"
+      :onSave="afterEdit"
     />
     <div class="q-pt-lg header" v-if="post.creator">
       <q-avatar rounded size="35px" v-show="!personPage">
@@ -30,22 +37,22 @@
       />
     </div>
     <div v-else style=" max-width: 500px; max-height: 400px; margin-bottom:20px;">
-      <q-video :ratio="16/9" :src="post.post.images[0]" />
+      <q-video :ratio="16 / 9" :src="post.post.images[0]" />
     </div>
     <div class="actions" v-if="shouldShowActions">
       <q-btn flat :class="{ isLiked }" :label="post.post.num_like" icon="thumb_up" @click="like" />
       <q-btn flat :label="post.post.num_comment" icon="chat_bubble_outline" @click="addComment" />
       <q-btn flat :label="post.post.num_share" icon="share" @click="share" />
       <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
-      <q-btn flat icon="settings" v-show="modifyPermition">
+      <q-btn flat icon="settings" v-if="shouldShowSetting">
         <q-menu auto-close>
           <q-list style="min-width: 100px">
-            <q-item clickable>
-              <q-item-section>编辑</q-item-section>
+            <q-item v-if="canEdit" clickable>
+              <q-item-section @click="edit">编辑</q-item-section>
             </q-item>
             <q-separator />
-            <q-item clickable>
-              <q-item-section @click="deletePost(post.post.id)">删除</q-item-section>
+            <q-item v-if="canDelete" clickable>
+              <q-item-section @click="deletePost(postId)">删除</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
@@ -57,6 +64,7 @@
 <script>
 import { post } from '@/apis/request';
 import deleteArticle from 'pages/toast/deleteArticle';
+import EditArticle from './PublishArticle';
 
 // like状态和code：
 const dict = {
@@ -66,41 +74,47 @@ const dict = {
 };
 
 export default {
-  components: { deleteArticle },
+  components: { deleteArticle, EditArticle },
   props: {
     // 组件在不同的场景展示，行为有不同
     viewType: {
       type: String,
       default: 'group', // article | comment
     },
+    groupCreatorId: Number,
     post: Object,
     personPage: { type: Boolean, default: false },
     addComment: { type: Function },
   },
   data() {
     return {
+      shouldShowEdit: false,
       showDeleteArticle: false,
     };
   },
-  watch: {},
   computed: {
+    canEdit() {
+      if (this.viewType === 'comment') return false;
+      return this.userid === this.post.post.creator;
+    },
+    canDelete() {
+      if (this.viewType === 'comment') return false;
+      return this.userid === this.post.post.creator || this.userid === this.groupCreatorId;
+    },
+    shouldShowSetting() {
+      return this.canEdit || this.canDelete;
+    },
     shouldShowActions() {
       return this.viewType !== 'comment';
     },
     isLiked() {
       return this.post.likeStatus === dict['like'];
     },
-    id() {
+    postId() {
       return this.post.post.id;
     },
     userid() {
       return this.$store.state.user.userid;
-    },
-    owner() {
-      return this.$store.state.group.currentGroupOwner;
-    },
-    modifyPermition() {
-      return this.post.post.creator === this.userid || this.userid === this.owner.id;
     },
     hasVideo() {
       let list = this.post.post.images;
@@ -138,15 +152,21 @@ export default {
     },
   },
   methods: {
+    edit() {
+      this.shouldShowEdit = true;
+    },
+    afterEdit(_, newContent) {
+      this.$emit('edit', newContent);
+    },
     onContentClick() {
       if (this.viewType === 'group') {
-        this.$router.push(`/articles/${this.id}`);
+        this.$router.push(`/articles/${this.postId}`);
       }
     },
     async like() {
       let api = '/protected/post/like';
       let data = {
-        post: this.id,
+        post: this.postId,
         op: this.isLiked ? dict['cancel'] : dict['like'],
       };
       post(api, data)
@@ -205,7 +225,7 @@ export default {
   padding-bottom: 16px;
 }
 
-[data-type="group"] {
+[data-type='group'] {
   &:hover {
     background-color: #fafafa;
   }
@@ -214,10 +234,10 @@ export default {
   }
 }
 
-[data-type="article"] {
+[data-type='article'] {
 }
 
-[data-type="comment"] {
+[data-type='comment'] {
   // &:hover {
   //   background-color: #fafafa;
   // }

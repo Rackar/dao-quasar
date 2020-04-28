@@ -6,8 +6,8 @@
         <HeaderBarRight />
       </div>
       <div class="body" :key="$route.params.id">
-        <BodyLeft class="body_left" @getGroupId="setGroupId"/>
-        <BodyRight v-if="groupId !== -1" class="body_right" :groupId="groupId" />
+        <BodyLeft class="body_left" @getGroupInfo="setGroupInfo" />
+        <BodyRight class="body_right" v-if="groupInfo !== null"  :groupInfo="groupInfo" />
       </div>
     </q-page-container>
   </q-layout>
@@ -22,19 +22,19 @@ import BodyRight from './Right';
 export default {
   components: { HeaderBarLeft, HeaderBarRight, BodyLeft, BodyRight },
   data() {
-    return { groupId: -1 };
+    return { groupInfo: null };
   },
   methods: {
-    setGroupId(id) {
-      this.groupId = id;
-    }
-  }
+    setGroupInfo(val) {
+      this.groupInfo = val;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .page {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 .header {
   display: flex;

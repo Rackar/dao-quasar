@@ -71,10 +71,6 @@ import { get, post } from '@/apis/request';
 import AddArticleBtn from './AddArticleBtn';
 import JoinGroupBtn from './JoinGroupBtn';
 
-const getGroupInfo = function(groupId) {
-  return get(`/grp/${groupId}`).then(res => res.grp);
-};
-
 const getTopPosts = function(groupId, isLoggedIn) {
   if (!isLoggedIn) {
     return post('/post/top', { grp: groupId }).then(res => res.posts);
@@ -91,17 +87,19 @@ const checkIsGroupJoined = function(groupId) {
 export default {
   components: { AddArticleBtn, JoinGroupBtn },
   props: {
-    groupId: { type: Number, required: true },
+    groupInfo: { type: Object, required: true },
   },
   data() {
     return {
       isReady: false,
       isJoined: false,
       topPosts: [],
-      groupInfo: null,
     };
   },
   computed: {
+    groupId() {
+      return this.groupInfo.id;
+    },
     groupLink() {
       return `/group/${this.groupId}`;
     },
@@ -119,7 +117,6 @@ export default {
   },
   mounted: async function() {
     try {
-      this.groupInfo = await getGroupInfo(this.groupId);
       this.topPosts = await getTopPosts(this.groupId, this.isLoggedIn);
       if (this.isLoggedIn) {
         this.isJoined = await checkIsGroupJoined(this.groupInfo.id);
@@ -133,6 +130,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.spinner {
+  display: flex;
+  justify-content: center;
+}
 .container {
   width: 468px;
 }
