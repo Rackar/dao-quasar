@@ -5,7 +5,7 @@
     </div>
 
     <q-drawer show-if-above v-model="right" side="right" bordered :width="480">
-      <groupManage />
+      <ManageGroup />
     </q-drawer>
 
     <q-page-container>
@@ -16,10 +16,10 @@
 
 <script>
 import headerBarLeft from 'components/headerBarLeft';
-import groupManage from 'pages/manage/group';
+import ManageGroup from 'pages/manage/ManageGroup';
 export default {
   name: 'ManageLayout',
-  components: { groupManage, headerBarLeft },
+  components: { ManageGroup, headerBarLeft },
   data() {
     return {
       right: false,

@@ -192,7 +192,7 @@ export default {
   padding: 0 13px;
   background: none;
   border: none;
-  width: 265px;
+  width: 100%;
 }
 input::-webkit-input-placeholder {
   color: #8c909d;

@@ -44,6 +44,7 @@ export default {
         this.$q.notify({
           message: '已退出本群。',
         });
+        this.$router.go(0);
       } else if (res.data.code === 104) {
         this.$router.push({ path: '/login' });
       }

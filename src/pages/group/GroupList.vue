@@ -31,9 +31,9 @@
             <q-menu auto-close>
               <q-list style="min-width: 100px">
                 <q-item clickable>
-                  <q-item-section @click.stop="setGroupToTop(myGroup.grp.id)">
-                    {{ myGroup.pinned === 2 ? '取消置顶' : '置顶群' }}
-                  </q-item-section>
+                  <q-item-section
+                    @click.stop="setGroupToTop(myGroup)"
+                  >{{ myGroup.pinned === 2 ? '取消置顶' : '置顶群' }}</q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable>
@@ -56,9 +56,7 @@
           </q-item-section>
           <q-item-section side top class="justify-between">
             <q-badge color="grey" :label="myGroup.grp.num_post" />
-            <q-item-label caption>
-              {{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}
-            </q-item-label>
+            <q-item-label caption>{{ $utils.timeStringToLocal(myGroup.grp.last_post_at) }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -220,15 +218,21 @@ export default {
     showListTool() {
       this.$q.notify('点击按钮');
     },
-    async setGroupToTop(id) {
+    async setGroupToTop(myGroup) {
+      let pin = myGroup.pinned;
       let data = {
-        grp: id,
-        pinned: 2,
+        grp: myGroup.grp.id,
+        pinned: pin === 1 ? 2 : 1,
       };
       let postUrl = '/protected/grp/pin';
       const res = await post(postUrl, data);
       if (res.code === 0) {
-        this.$q.notify('置顶成功');
+        if (pin === 1) {
+          this.$q.notify('置顶成功');
+        } else {
+          this.$q.notify('取消置顶成功');
+        }
+        this.$router.go(0);
       }
     },
     leaveGroup(id) {
@@ -248,7 +252,7 @@ export default {
   left: 0px;
   top: 20px;
   z-index: 30;
-  padding:1px;
+  padding: 1px;
 }
 
 .pin {

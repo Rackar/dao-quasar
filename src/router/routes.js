@@ -15,9 +15,8 @@ const routes = [
     path: '/person', //人物信息模板
     component: () => import('layouts/PersonLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/person/ReDetails.vue') },
-      { path: 'show/:id', props: true, component: () => import('pages/person/ReDetails.vue') },
-      { path: 'showr/:id', props: true, component: () => import('pages/person/allDetails.vue') },
+      { path: '', component: () => import('pages/person/PersonDetails.vue') },
+      { path: 'show/:id', props: true, component: () => import('pages/person/PersonDetails.vue') },
     ],
     // { path: 'articleLists', component: () => import('pages/Articles.vue') }]
   },
@@ -25,8 +24,8 @@ const routes = [
     path: '/manage', //管理模板
     component: () => import('layouts/ManageLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/manage/member.vue') },
-      { path: ':id', props: true, component: () => import('pages/manage/member.vue') },
+      { path: '', component: () => import('pages/manage/ManageMember.vue') },
+      { path: ':id', props: true, component: () => import('pages/manage/ManageMember.vue') },
     ],
     // { path: 'articleLists', component: () => import('pages/manage/Articles.vue') }]
   },

@@ -24,16 +24,9 @@
       </div>
 
       <q-space />
-      <q-btn
-        outline
-        color="primary"
-        icon="menu"
-        label="编辑资料"
-        v-show="isMyself"
-        @click="clickEdit"
-      />
+      <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" @click="clickEdit" />
     </div>
-    <div class="row ">
+    <div class="row">
       <div class="col-7 offset-md-1">
         <q-card flat class="my-card">
           <q-tabs
@@ -75,8 +68,8 @@
           </q-tab-panels>
         </q-card>
       </div>
-      <div class="col-2  offset-md-1">
-        <wallet :tokens="tokens" :log="log" v-if="isMyself" />
+      <div class="col-2 offset-md-1">
+        <PersonWallet :tokens="tokens" :log="log" v-if="isMyself" />
       </div>
     </div>
   </div>
@@ -85,10 +78,10 @@
 <script>
 import ArticleShow from 'pages/article/ArticleShow';
 import AddComment from 'pages/group/AddComment';
-import wallet from './wallet';
+import PersonWallet from './PersonWallet';
 import Upload from 'components/Upload';
 export default {
-  components: { ArticleShow, wallet, AddComment, Upload },
+  components: { ArticleShow, PersonWallet, AddComment, Upload },
   props: {
     id: String,
   },
@@ -269,15 +262,15 @@ export default {
 .posts {
   height: 550px;
 }
-.my-card {
-  // max-width: 780px;
-}
+// .my-card {
+// max-width: 780px;
+// }
 .title {
   margin-top: -40px;
   padding-bottom: 60px;
   // background-color: #f8f8f8;
 }
-.main {
-  // background-color: #f8f8f8;
-}
+// .main {
+// background-color: #f8f8f8;
+// }
 </style>
