@@ -36,7 +36,7 @@ const getPost = function({ postId, isLoggedIn }) {
       return post;
     });
   }
-  return post('/post/info ').then(function(res) {
+  return post('/post/info', { post_id: postId }).then(function(res) {
     return { ...res.post, likeStatus: 1 };
   });
 };
