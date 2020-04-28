@@ -64,7 +64,13 @@
             </q-tab-panel>
 
             <q-tab-panel name="recycle">
-              <div class="text-h6">回收站</div>
+              <ArticleShow
+                v-for="post in recycleList"
+                :post="post"
+                :key="post.post.id"
+                :personPage="true"
+                viewType="comment"
+              />
             </q-tab-panel>
           </q-tab-panels>
         </q-card>
@@ -117,6 +123,9 @@ export default {
 
       editing: false,
       uploadAvatar: false,
+
+      recycleInited: false,
+      recycleList: [],
     };
   },
   watch: {
@@ -142,9 +151,10 @@ export default {
         //判断是否进入本人信息页
         if (this.isMyself) {
           this.userinfo = this.myUserinfo;
-          this.getMyPosts(false);
+          this.getMyPosts();
           this.getmycode();
           this.tokenLog();
+          this.getMyRecycle();
         } else {
           userid = this.id;
           this.getOtherUser(userid);
@@ -152,6 +162,17 @@ export default {
         }
       } else {
         this.$router.push({ path: '/login', query: {} });
+      }
+    },
+    async getMyRecycle() {
+      let url = 'protected/post/my/pull';
+      const resCode = await this.$axios.post(url, {
+        base_post: null,
+        deleted: true,
+      });
+      if (resCode.data.code == 0) {
+        this.recycleList = [];
+        this.recycleList = resCode.data.data.posts;
       }
     },
 
@@ -174,11 +195,11 @@ export default {
       }
     },
     // 我的帖子
-    getMyPosts: async function(del) {
+    getMyPosts: async function() {
       let url = 'protected/post/my/pull';
       const resCode = await this.$axios.post(url, {
         base_post: null,
-        deleted: del,
+        deleted: false,
       });
       if (resCode.data.code == 0) {
         this.pullList = [];
