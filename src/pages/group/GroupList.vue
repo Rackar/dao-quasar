@@ -6,7 +6,7 @@
           clickable
           @click="jumpToGroup(myGroup.grp.id)"
           @mouseover="showListId = myGroup.grp.id"
-          @mouseout="showListId = 0"
+          @mouseout="handleMouseMoveout"
           v-ripple
           :class="[
             { isActive: isItemActive(myGroup.grp.id), pin: myGroup.pinned === 2 },
@@ -21,14 +21,14 @@
           >
             ...
           </span>-->
-          <q-btn
-            flat
-            no-caps
-            icon="menu"
+
+          <q-icon
+            name="menu"
             v-show="showListId == myGroup.grp.id"
             class="leftHideTool"
+            @mouseover="handleMenuMouseMoveover(myGroup.grp.id)"
           >
-            <q-menu auto-close>
+            <div auto-close v-show="showMenu" @mouseout="showMenuId = 0" class="menu-hover">
               <q-list style="min-width: 100px">
                 <q-item clickable>
                   <q-item-section
@@ -40,8 +40,8 @@
                   <q-item-section @click.stop="leaveGroup(myGroup.grp.id)">退出群</q-item-section>
                 </q-item>
               </q-list>
-            </q-menu>
-          </q-btn>
+            </div>
+          </q-icon>
           <q-item-section avatar>
             <q-avatar rounded size="40px">
               <img :src="myGroup.grp.avatar || 'statics/group.svg'" />
@@ -108,11 +108,14 @@
       </div>
     </q-list>
     <quitGroup v-model="showQuitGroup" :groupId="quitGroupId" />
+    <div></div>
   </div>
 </template>
 <script>
 import { get, post } from 'src/apis/index.js';
 import quitGroup from 'pages/toast/quitGroup';
+
+let eventHandle = null;
 export default {
   inject: ['reload'],
   components: { quitGroup },
@@ -122,6 +125,7 @@ export default {
       recommendGroups: [],
       showTooltip: false,
       showListId: 0,
+      showMenuId: 0,
       showQuitGroup: false,
       quitGroupId: 0,
     };
@@ -137,6 +141,9 @@ export default {
     },
   },
   computed: {
+    showMenu() {
+      return this.showMenuId !== 0;
+    },
     userid() {
       return this.$store.state.user.userid;
     },
@@ -245,6 +252,17 @@ export default {
       this.showQuitGroup = true;
       this.quitGroupId = id;
     },
+    handleMouseMoveout() {
+      this.showListId = 0;
+      // this.showMenuId = 0;
+    },
+    handleMenuMouseMoveover(id) {
+      this.showMenuId = id;
+      clearTimeout(eventHandle);
+      eventHandle = setTimeout(() => {
+        this.showMenuId = 0;
+      }, 2000);
+    },
   },
 };
 </script>
@@ -255,13 +273,23 @@ export default {
 
 .leftHideTool {
   position: absolute;
-  left: 0px;
-  top: 20px;
-  z-index: 30;
+  left: 20px;
+  top: 30px;
+  z-index: 20;
   padding: 1px;
+  font-size: 20px;
 }
 
 .pin {
   background-color: #dddddd;
+}
+
+.menu-hover {
+  position: absolute;
+  font-size: 14px;
+  background-color: white;
+  top: 10px;
+  left: 20px;
+  border-radius: 4px;
 }
 </style>
