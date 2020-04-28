@@ -50,7 +50,9 @@
           <ArticleShow
             :post="post"
             :addComment="() => showAddComment(post.post.id)"
+            :groupCreatorId="owner.id"
             @del="postDeleted"
+            @edit="postEdited"
           />
         </div>
         <template v-slot:loading>
@@ -200,6 +202,10 @@ export default {
       // 删除帖子回调后，直接清除本地数据数组中的值
       let index = this.posts.findIndex(post => post.post.id === id);
       this.posts.splice(index, 1);
+    },
+    postEdited(newContent) {
+      const targetPost = this.posts.find(i => i.post.id === newContent.id);
+      Object.assign(targetPost.post, newContent);
     },
   },
   mounted() {

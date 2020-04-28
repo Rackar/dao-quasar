@@ -1,9 +1,9 @@
 <template>
   <Publish
-    publishBtnLabel="快速发帖"
     placeholder="有什么新鲜事告诉大家…"
     v-bind="$attrs"
     v-model="shouldShow"
+    :publishBtnLabel="publishBtnLabel"
     :doPublish="publish"
   ></Publish>
 </template>
@@ -34,6 +34,10 @@ export default {
     value: Boolean,
   },
   computed: {
+    publishBtnLabel() {
+      const isEdit = this.postId !== undefined;
+      return isEdit ? '确认修改' : '快速发帖';
+    },
     shouldShow: {
       get() {
         return this.value;
@@ -53,7 +57,7 @@ export default {
     publish(data) {
       const apiCall = this.postId === undefined ? this.create : this.update;
       return apiCall(data).then(res => {
-        this.onSave && this.onSave(res);
+        this.onSave && this.onSave(res, { ...data, id: this.postId });
       });
     },
   },
