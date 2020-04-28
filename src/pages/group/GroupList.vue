@@ -114,6 +114,7 @@
 import { get, post } from 'src/apis/index.js';
 import quitGroup from 'pages/toast/quitGroup';
 export default {
+  inject: ['reload'],
   components: { quitGroup },
   data() {
     return {
@@ -176,7 +177,12 @@ export default {
     //
     jumpToGroup(id) {
       //跳转前检查是否已加入该组
+      let joinedId = 0;
       let ifJoined = this.myGroups.some(joined => {
+        if (joined.grp.id == id) {
+          joinedId = id;
+          joined.unread = 0;
+        }
         return joined.grp.id == id;
       });
       this.$store.dispatch('group/jumpToGroup', { id: id, joined: ifJoined });
@@ -232,7 +238,7 @@ export default {
         } else {
           this.$q.notify('取消置顶成功');
         }
-        this.$router.go(0);
+        this.reload();
       }
     },
     leaveGroup(id) {

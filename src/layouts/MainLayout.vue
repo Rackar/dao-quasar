@@ -41,7 +41,6 @@
 <script>
 import grouplist from 'pages/group/GroupList';
 import GroupListHeader from 'components/headerBarLeft';
-// import GroupListHeader from 'pages/group/GroupListHeader';
 const menuList = [
   {
     icon: 'people',
