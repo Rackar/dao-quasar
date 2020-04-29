@@ -49,10 +49,10 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label lines="1">
+            <q-item-label lines="1" style="margin-bottom:5px;">
               <span class="text-weight-bold">{{ myGroup.grp.name }}</span>
             </q-item-label>
-            <q-item-label caption lines="2">{{ myGroup.grp.desc_text }}</q-item-label>
+            <q-item-label caption lines="1">{{ myGroup.grp.desc_text }}</q-item-label>
           </q-item-section>
           <q-item-section side top class="justify-between">
             <q-badge color="grey" :label="myGroup.unread" />
@@ -91,7 +91,7 @@
             <q-item-label lines="1">
               <span class="text-weight-bold">{{ grp.name }}</span>
             </q-item-label>
-            <q-item-label caption lines="2">{{ grp.desc_text }}</q-item-label>
+            <q-item-label caption lines="1">{{ grp.desc_text }}</q-item-label>
           </q-item-section>
           <q-item-section side top class="justify-between">
             <q-icon
@@ -184,10 +184,8 @@ export default {
     //
     jumpToGroup(id) {
       //跳转前检查是否已加入该组
-      let joinedId = 0;
       let ifJoined = this.myGroups.some(joined => {
         if (joined.grp.id == id) {
-          joinedId = id;
           joined.unread = 0;
         }
         return joined.grp.id == id;

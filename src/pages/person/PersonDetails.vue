@@ -1,30 +1,46 @@
 <template>
   <div class="main">
     <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
-    <Upload ref="upload" />
+    <Upload ref="upload" @uploaded="uploaded" />
     <div class="row no-wrap items-end q-mt-md q-px-lg title">
-      <q-avatar rounded size="100px" :class="{ dimmed: editing }" @click="changeAvatar">
-        <img :src="userinfo.avatar || 'statics/user.svg'" />
+      <q-avatar rounded size="100px" @click="changeAvatar" class="avatar">
+        <q-icon name="camera" v-show="editing" class="mask" />
+
+        <img :src="userinfo.avatar || 'statics/user.svg'" :class="{ masked: editing }" />
+        <q-inner-loading :showing="loadingVisible">
+          <q-spinner-gears size="50px" color="primary" />
+        </q-inner-loading>
       </q-avatar>
 
-      <div class="column">
-        <div class="cursor-pointer col" style="width: 100px">
-          {{ this.userinfo.name || this.userinfo.mail_export }}
-          <!-- <q-icon name="edit" color="primary" />
-
-          <q-popup-edit v-model="edit.name" :cover="false" :offset="[0, 10]">
-            <q-input color="primary" v-model="edit.name" dense autofocus counter>
-              <template v-slot:prepend>
-                <q-icon name="record_voice_over" color="primary" />
-              </template>
-            </q-input>
-          </q-popup-edit>-->
+      <div class="userinfo">
+        <div class="row">
+          <div v-show="editing">
+            <q-input square outlined dense v-model="edit.name" />
+          </div>
+          <div v-show="editing">
+            <q-btn outline color="primary" class="btn" label="取消" @click="editing=false" />
+            <q-btn
+              unelevated
+              color="primary"
+              class="btn"
+              label="保存"
+              @click="save"
+              :disable="loadingVisible"
+            />
+          </div>
+          <div
+            v-show="!editing"
+            class="username"
+          >{{ this.userinfo.name || this.userinfo.mail_export }}</div>
+          <div v-show="!editing">
+            <q-icon name="edit" color="primary" v-show="isMyself" @click="clickEdit" size="24px" />
+          </div>
         </div>
         <div class="q-size-sm">DOA ID {{ id }} {{ userinfo.mail_export }}</div>
       </div>
 
-      <q-space />
-      <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" @click="clickEdit" />
+      <!-- <q-space />
+      <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" @click="clickEdit" />-->
     </div>
     <div class="row">
       <div class="col-7 offset-md-1">
@@ -108,7 +124,8 @@ export default {
       pullList: [],
       userinfo: {},
       edit: {
-        name: '111',
+        name: '',
+        avatar: '',
       },
 
       addCommentShow: false,
@@ -119,6 +136,8 @@ export default {
 
       recycleInited: false,
       recycleList: [],
+
+      loadingVisible: false,
     };
   },
   watch: {
@@ -245,11 +264,42 @@ export default {
     },
     clickEdit() {
       this.editing = !this.editing;
+      this.edit.name = this.userinfo.name;
+      this.edit.avatar = this.userinfo.avatar;
     },
     changeAvatar() {
       if (this.editing) {
+        // this.$q.loading.show();
+        this.loadingVisible = true;
         this.$refs.upload.upload();
       }
+    },
+    uploaded(data) {
+      if (data.err) {
+      } else {
+        this.edit.avatar = data.url;
+      }
+
+      this.loadingVisible = false;
+      this.$q.notify('头像上传成功');
+    },
+    async save() {
+      let api = '/protected/user/modify';
+      let data = {
+        name: this.edit.name,
+        avatar: this.edit.avatar,
+      };
+      let res = await this.$axios.put(api, data);
+      if (res.data.code === 0) {
+        this.$q.notify('资料修改成功');
+        let user = { ...this.userinfo };
+        user.name = data.name;
+        user.avatar = data.avatar;
+        this.$store.commit('user/setUserinfo', user);
+      } else {
+        this.$q.notify('资料修改失败');
+      }
+      this.editing = false;
     },
   },
   created() {
@@ -259,6 +309,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.avatar {
+  background-color: #000000;
+}
+.mask {
+  position: absolute;
+  color: white;
+}
+.masked {
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
 .posts {
   height: 550px;
 }
@@ -273,4 +334,14 @@ export default {
 // .main {
 // background-color: #f8f8f8;
 // }
+.userinfo {
+  padding: 14px 0 0 14px;
+  .username {
+    font-size: 24px;
+    margin-right: 20px;
+  }
+  .btn {
+    margin: 0px 10px;
+  }
+}
 </style>

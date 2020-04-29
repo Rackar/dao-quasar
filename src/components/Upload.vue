@@ -28,9 +28,11 @@ export default {
       let result = await upload({ file });
       if (result instanceof Error) {
         this.$q.notify('头像上传失败，' + result);
+        this.$emit('uploaded', { err: result });
       } else {
         //上传成功
-        this.updateUserAvatar(result);
+        // this.updateUserAvatar(result);
+        this.$emit('uploaded', { url: result });
       }
       e.target.value = '';
     },
