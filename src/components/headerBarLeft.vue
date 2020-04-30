@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-btn flat no-caps icon="menu">
+    <q-btn flat no-caps icon="menu" v-if="$store.state.user.userid !== ''">
       <q-menu auto-close>
         <q-list style="min-width: 100px">
           <q-item clickable>

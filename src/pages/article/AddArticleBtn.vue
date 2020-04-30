@@ -1,7 +1,14 @@
 <template>
-    <q-btn outline color="primary" label="发言" @click="showAddArtrcle" icon="create" >
-      <Dialog :groupId="groupId" v-model="shouldShowDialog" :onSave="onSave" />
-    </q-btn>
+  <q-btn
+    v-require-login-click
+    outline
+    color="primary"
+    label="发言"
+    @click="showAddArtrcle"
+    icon="create"
+  >
+    <Dialog :groupId="groupId" v-model="shouldShowDialog" :onSave="onSave" />
+  </q-btn>
 </template>
 
 <script>
@@ -14,7 +21,7 @@ export default {
     onSave: { type: Function },
   },
   data() {
-    return { shouldShowDialog: false  };
+    return { shouldShowDialog: false };
   },
   methods: {
     showAddArtrcle() {

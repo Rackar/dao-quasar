@@ -40,8 +40,8 @@
       <q-video :ratio="16 / 9" :src="post.post.images[0]" />
     </div>
     <div class="actions" v-if="shouldShowActions">
-      <q-btn flat :class="{ isLiked }" :label="post.post.num_like" icon="thumb_up" @click="like" />
-      <q-btn flat :label="post.post.num_comment" icon="chat_bubble_outline" @click="addComment" />
+      <q-btn v-require-login-click flat :class="{ isLiked }" :label="post.post.num_like" icon="thumb_up" @click="like" />
+      <q-btn v-require-login-click flat :label="post.post.num_comment" icon="chat_bubble_outline" @click="addComment" />
       <q-btn flat :label="post.post.num_share" icon="share" @click="share" />
       <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
       <q-btn flat icon="settings" v-if="shouldShowSetting">
