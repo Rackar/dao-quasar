@@ -3,6 +3,7 @@
     <div class="top-login">
       <headerBarRight />
     </div>
+    <Upload ref="upload" @uploaded="uploaded" />
     <div class="q-ma-lg main">
       <div class="main-title" v-if="!editing.title">
         <div class="group-name">
@@ -16,8 +17,12 @@
       </div>
       <div class="main-title" v-if="editing.title">
         <div class="group-name">
-          <q-avatar size="30px">
-            <img :src="owner.avatar || 'statics/user.svg'" />
+          <q-avatar size="30px" class="avatar" @click="changeAvatar">
+            <q-icon name="camera" class="mask" />
+            <img :src="tempGroupData.avatar || 'statics/group.svg'" class="masked" />
+            <q-inner-loading :showing="loadingVisible">
+              <q-spinner-gears size="50px" color="primary" />
+            </q-inner-loading>
           </q-avatar>
           <q-input outlined v-model="editGroupData.name" dense />
         </div>
@@ -102,8 +107,9 @@
 
 <script>
 import headerBarRight from 'components/headerBarRight';
+import Upload from 'components/Upload';
 export default {
-  components: { headerBarRight },
+  components: { headerBarRight, Upload },
   props: {},
 
   watch: {
@@ -129,6 +135,7 @@ export default {
   mounted() {},
   data() {
     return {
+      loadingVisible: false,
       editing: { title: false, read_permission: false, reward: false },
       tempGroupData: {
         id: 0,
@@ -161,6 +168,20 @@ export default {
     init() {
       this.tempGroupData = { ...this.group };
     },
+    changeAvatar() {
+      // this.$q.loading.show();
+      this.loadingVisible = true;
+      this.$refs.upload.upload();
+    },
+    uploaded(data) {
+      if (data.err) {
+      } else {
+        this.editGroupData.avatar = data.url;
+      }
+
+      this.loadingVisible = false;
+      this.$q.notify('头像上传成功');
+    },
 
     startEditTitle() {
       this.editing.title = true;
@@ -179,6 +200,7 @@ export default {
       this.editGroupData.reward_post = this.tempGroupData.reward_post;
     },
     saveTitle() {
+      this.tempGroupData.avatar = this.editGroupData.avatar;
       this.tempGroupData.name = this.editGroupData.name;
       this.tempGroupData.desc_text = this.editGroupData.desc_text;
       this.editing.title = false;
@@ -218,7 +240,19 @@ export default {
 .group-name {
   margin-top: 50px;
   padding: 30px;
+  .avatar {
+    background-color: #000000;
+    .mask {
+      position: absolute;
+      color: white;
+    }
+    .masked {
+      opacity: 0.6;
+      filter: alpha(opacity=60);
+    }
+  }
 }
+
 .desc {
   height: 250px;
   background-color: rgb(221, 221, 221);
