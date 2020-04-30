@@ -66,7 +66,22 @@
       </div>
       <div class="reward">
         <span class="title">奖励机制</span>
-        <span class="subtitle">(单位：NES)</span>
+        <span class="subtitle">
+          (单位：
+          <span v-if="!editing.reward">{{tokenSelect.symbol}}</span>
+          <q-btn no-caps flat :label="tokenSelect.symbol + '▽'" v-if="editing.reward">
+            <q-menu auto-close>
+              <q-list style="min-width: 100px">
+                <div v-for="(token,index) in tokens" :key="index">
+                  <q-item clickable @click="pickToken(token)">
+                    <q-item-section>{{ token.symbol }}</q-item-section>
+                  </q-item>
+                  <q-separator />
+                </div>
+              </q-list>
+            </q-menu>
+          </q-btn>)
+        </span>
         <q-btn
           flat
           icon="edit"
@@ -137,6 +152,14 @@ export default {
     return {
       loadingVisible: false,
       editing: { title: false, read_permission: false, reward: false },
+      tokens: [{ contract: '', symbol: 'ETH' }],
+      tokenSelect: {
+        contract: '',
+        symbol: '',
+        name: '',
+      },
+      tokenIndex: 0,
+
       tempGroupData: {
         id: 0,
         name: '',
@@ -167,9 +190,23 @@ export default {
   methods: {
     init() {
       this.tempGroupData = { ...this.group };
+      this.getTokenInfo();
+    },
+    async getTokenInfo() {
+      let url = '/contracts';
+      const resCode = await this.$axios.get(url);
+      if (resCode.data.code == 0) {
+        this.tokens = resCode.data.data.contracts;
+        for (let index = 0; index < this.tokens.length; index++) {
+          const element = this.tokens[index];
+          if (element.contract === this.group.reward_contract) {
+            this.tokenSelect = element;
+          }
+        }
+      } else if (resCode.data.code == 104) {
+      }
     },
     changeAvatar() {
-      // this.$q.loading.show();
       this.loadingVisible = true;
       this.$refs.upload.upload();
     },
@@ -181,6 +218,10 @@ export default {
 
       this.loadingVisible = false;
       this.$q.notify('头像上传成功');
+    },
+    pickToken(token) {
+      console.log(token);
+      this.tokenSelect = token;
     },
 
     startEditTitle() {
@@ -213,11 +254,11 @@ export default {
       this.saveToServer(this.tempGroupData);
     },
     saveReward() {
-      // this.tempGroupData.reward_contract = this.editGroupData.reward_contract;
-      // this.tempGroupData.reward_join = this.editGroupData.reward_join;
-      // this.tempGroupData.reward_post = this.editGroupData.reward_post;
-      // this.editing.reward = false;
-      // this.saveToServer(this.tempGroupData);
+      this.tempGroupData.reward_contract = this.tokenSelect.contract;
+      this.tempGroupData.reward_join = this.editGroupData.reward_join;
+      this.tempGroupData.reward_post = this.editGroupData.reward_post;
+      this.editing.reward = false;
+      this.saveToServer(this.tempGroupData);
     },
     async saveToServer(data) {
       let api = '/protected/grp';
