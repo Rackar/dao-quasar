@@ -1,5 +1,13 @@
 <template>
-  <q-btn unelevated :disabled="isJoined" color="primary" :label="label" @click="onClick" icon="add" />
+  <q-btn
+    v-require-login-click
+    unelevated
+    :disabled="isJoined"
+    color="primary"
+    :label="label"
+    @click="onClick"
+    icon="add"
+  />
 </template>
 
 <script>

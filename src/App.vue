@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import './utils/loginGuard/directive';
+
 export default {
   name: 'App',
   provide() {
