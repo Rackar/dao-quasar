@@ -13,7 +13,7 @@
       </q-btn>
     </q-card-section>
     <q-card-section class="text-center">
-      <q-btn flat :label="'总金额 (' + currentToken.name + ')▽'">
+      <q-btn no-caps flat :label="'总金额 (' + currentToken.name + ')▽'">
         <q-menu auto-close>
           <q-list style="min-width: 100px">
             <div v-for="token in tokens" :key="token.id">
