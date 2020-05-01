@@ -1,5 +1,8 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-py-md q-px-xl main">
+    <div>
+      <span class="text-weight-bold">组长</span>
+    </div>
     <div class="manage">
       <member :members="[owner]" />
       <!-- <q-space /> -->
@@ -100,6 +103,10 @@ export default {
 
 
  <style lang="stylus" scoped>
+ .main {
+   // background-color: $dgrey;
+ }
+
  .manage {
    position: relative;
 

@@ -2,6 +2,7 @@
   <div class="main">
     <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
     <Upload ref="upload" @uploaded="uploaded" />
+    <div class="hover-color"></div>
     <div class="row no-wrap items-end q-mt-md q-px-lg title">
       <q-avatar rounded size="100px" @click="changeAvatar" class="avatar">
         <q-icon name="camera" v-show="editing" class="mask" />
@@ -310,6 +311,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.main {
+  position: relative;
+  .hover-color {
+    position: absolute;
+    background-color: #74d2c8;
+    height: 40px;
+    width: 100%;
+    top: 0;
+    z-index: 0;
+  }
+}
+
 .avatar {
   background-color: #000000;
 }
@@ -322,7 +335,7 @@ export default {
   filter: alpha(opacity=60);
 }
 .posts {
-  height: 550px;
+  // height: 550px;
 }
 // .my-card {
 // max-width: 780px;
@@ -330,6 +343,7 @@ export default {
 .title {
   margin-top: -40px;
   padding-bottom: 60px;
+  margin-left: 70px;
   // background-color: #f8f8f8;
 }
 // .main {

@@ -1,7 +1,10 @@
 <template>
   <q-layout view="lHR lpR fFf" class="main">
-    <headerbar />
-    <q-page-container>
+    <div class="header">
+      <headerbar />
+    </div>
+
+    <q-page-container class="page">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -19,4 +22,18 @@ export default {
   },
 };
 </script>
-<style lang="stylus" scoped></style>
+<style lang="stylus" scoped>
+.header {
+  background-color: #74D2C8;
+  padding-top: 20px;
+  padding-bottom: 80px;
+}
+
+.main {
+  background-color: rgb(248, 248, 248);
+}
+
+.page {
+  // margin-top: -40px;
+}
+</style>

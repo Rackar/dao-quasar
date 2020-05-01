@@ -1,10 +1,10 @@
 <template>
-  <q-layout view="hHr lpR fFf">
+  <q-layout view="hHr lpR fFf" class="main">
     <div class="q-pa-md">
       <headerBarLeft />
     </div>
 
-    <q-drawer show-if-above v-model="right" side="right" bordered :width="480">
+    <q-drawer elevated show-if-above v-model="right" side="right" :width="480">
       <ManageGroup />
     </q-drawer>
 
@@ -27,3 +27,8 @@ export default {
   },
 };
 </script>
+<style lang="stylus" scoped>
+.main {
+  background-color: rgb(248, 248, 248);
+}
+</style>
