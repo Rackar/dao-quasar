@@ -33,7 +33,8 @@
             class="username"
           >{{ this.userinfo.name || this.userinfo.mail_export }}</div>
           <div v-show="!editing">
-            <q-icon name="edit" color="primary" v-show="isMyself" @click="clickEdit" size="24px" />
+            <!-- <q-icon name="edit" color="primary" v-show="isMyself" @click="clickEdit" size="24px" /> -->
+            <q-btn dense flat icon="edit" color="primary" @click="clickEdit" v-show="isMyself" />
           </div>
         </div>
         <div class="q-size-sm">DOA ID {{ id }} {{ userinfo.mail_export }}</div>

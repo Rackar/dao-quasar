@@ -55,12 +55,10 @@
           <div v-if="editing.read_permission">
             <q-radio v-model="editGroupData.read_permission" :val="1" label="任何人" />
             <q-radio v-model="editGroupData.read_permission" :val="2" label="仅限组员" />
-            <q-input
-              outlined
-              v-model="editGroupData.password"
-              dense
-              v-if="editing.read_permission&&editGroupData.read_permission===2"
-            />
+            <div v-if="editing.read_permission&&editGroupData.read_permission===2">
+              添加加群密码：
+              <q-input outlined v-model="editGroupData.password" dense />
+            </div>
           </div>
 
           <div v-if="editing.read_permission" class="text-right">
