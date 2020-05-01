@@ -4,37 +4,42 @@
       <headerBarRight />
     </div>
     <Upload ref="upload" @uploaded="uploaded" />
-    <div class="q-ma-lg main">
+    <div class="main">
       <div class="main-title" v-if="!editing.title">
         <div class="group-name">
-          <q-avatar size="30px">
+          <q-avatar class="avatar" size="60px">
             <img :src="tempGroupData.avatar || 'statics/group.svg'" />
           </q-avatar>
-          <span class="text-weight-bold q-px-md">{{ tempGroupData.name }}</span>
-          <q-btn flat icon="edit" color="primary" @click="startEditTitle()" v-show="isOwner" />
+          <span class="name-text">{{ tempGroupData.name }}</span>
+          <q-btn dense flat icon="edit" color="primary" @click="startEditTitle()" v-show="isOwner" />
         </div>
         <div class="desc">{{ tempGroupData.desc_text }}</div>
       </div>
       <div class="main-title" v-if="editing.title">
         <div class="group-name">
-          <q-avatar size="30px" class="avatar" @click="changeAvatar">
+          <q-avatar size="60px" class="avatar-edit" @click="changeAvatar">
             <q-icon name="camera" class="mask" />
             <img :src="tempGroupData.avatar || 'statics/group.svg'" class="masked" />
             <q-inner-loading :showing="loadingVisible">
               <q-spinner-gears size="50px" color="primary" />
             </q-inner-loading>
           </q-avatar>
-          <q-input outlined v-model="editGroupData.name" dense />
+          <div class="name-input">
+            <q-input outlined v-model="editGroupData.name" dense />
+          </div>
         </div>
         <q-input v-model="editGroupData.desc_text" filled type="textarea" />
-        <q-btn outline color="primary" label="取消" @click="editing.title=false" />
-        <q-btn unelevated color="primary" label="保存" @click="saveTitle" />
+        <div class="text-right">
+          <q-btn outline color="primary" label="取消" @click="editing.title=false" />
+          <q-btn unelevated color="primary" label="保存" @click="saveTitle" />
+        </div>
       </div>
       <div class="read_permission">
-        <div class="title">
+        <div class="name-text">
           帖子阅读
           <q-btn
             flat
+            dense
             icon="edit"
             color="primary"
             @click="startEditReadPermission()"
@@ -58,14 +63,14 @@
             />
           </div>
 
-          <div v-if="editing.read_permission">
+          <div v-if="editing.read_permission" class="text-right">
             <q-btn outline color="primary" label="取消" @click="editing.read_permission=false" />
             <q-btn unelevated color="primary" label="保存" @click="saveReadPermission" />
           </div>
         </div>
       </div>
       <div class="reward">
-        <span class="title">奖励机制</span>
+        <span class="name-text">奖励机制</span>
         <span class="subtitle">
           (单位：
           <span v-if="!editing.reward">{{tokenSelect.symbol}}</span>
@@ -84,6 +89,7 @@
         </span>
         <q-btn
           flat
+          dense
           icon="edit"
           color="primary"
           @click="startEditReward()"
@@ -111,7 +117,7 @@
           </div>
         </div>
 
-        <div v-if="editing.reward">
+        <div v-if="editing.reward" class="text-right">
           <q-btn outline color="primary" label="取消" @click="editing.reward=false" />
           <q-btn unelevated color="primary" label="保存" @click="saveReward" />
         </div>
@@ -278,40 +284,58 @@ export default {
   top: 20px;
   right: 40px;
 }
-.group-name {
-  margin-top: 50px;
-  padding: 30px;
-  .avatar {
-    background-color: #000000;
-    .mask {
-      position: absolute;
-      color: white;
+.main {
+  margin: 40px;
+  .name-text {
+    font-size: 20px;
+    // line-height: 26px;
+    font-weight: bold;
+    color: #2a3542;
+    margin: 40px 0 10px;
+    // padding-left: 14px;
+  }
+  .main-title {
+    .group-name {
+      margin-top: 50px;
+      padding: 20px 0;
+      .name-input {
+        width: 200px;
+      }
+      .avatar {
+        margin-right: 15px;
+      }
+      .avatar-edit {
+        background-color: #000000;
+        .mask {
+          position: absolute;
+          color: white;
+        }
+        .masked {
+          opacity: 0.6;
+          filter: alpha(opacity=60);
+        }
+      }
     }
-    .masked {
-      opacity: 0.6;
-      filter: alpha(opacity=60);
+    .desc {
+      // height: 250px;
+      // background-color: rgb(221, 221, 221);
+      border-radius: 10px;
+      color: #8c909d;
+      // padding: 20px 0 0;
+      font-size: 16px;
     }
   }
 }
 
-.desc {
-  height: 250px;
-  background-color: rgb(221, 221, 221);
-  border-radius: 10px;
-  padding: 15px;
-}
-.comment {
-  color: #8c909d;
-  font-size: 14px;
-}
-
-.title {
-  padding-top: 10px;
-  color: #2a3542;
-  font-size: 20px;
-}
-.subtitle {
-  color: #2a3542;
-  font-size: 14px;
+.reward {
+  margin: 30px 0 0;
+  .subtitle {
+    color: #2a3542;
+    font-size: 14px;
+  }
+  .comment {
+    color: #8c909d;
+    font-size: 14px;
+  }
 }
 </style>
