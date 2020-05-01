@@ -18,7 +18,7 @@
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
       <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
-      <JoinGroupBtn v-if="!group.joined" :groupInfo="group"/>
+      <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
       <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" />
     </div>
     <div class="warper">
@@ -218,21 +218,21 @@ export default {
   margin-left: -42px;
   margin-right: -42px;
 }
+
 .members {
   display: flex;
   align-items: center;
-  margin-left: -16px;
-  margin-right: -16px;
 
-  &_content {
-    flex-wrap: nowrap;
-    overflow: hidden;
+  // margin-left: -16px;
+  // margin-right: -16px;
+  // &_content {
+  // flex-wrap: nowrap;
+  // overflow: hidden;
 
-    /deep/ .col-1 {
-      width: unset;
-    }
-  }
-
+  // /deep/ .col-1 {
+  // width: unset;
+  // }
+  // }
   &_action {
     white-space: nowrap;
   }

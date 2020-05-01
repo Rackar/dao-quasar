@@ -1,18 +1,24 @@
 <template>
   <div class="q-pa-md">
-    <div class="row no-wrap items-center">
+    <div class="manage">
       <member :members="[owner]" />
-      <q-space />
-      <div>
-        <q-btn outline label="管理组员" color="primary" @click="edit" v-if="canManage" />
-      </div>
+      <!-- <q-space /> -->
+
+      <q-btn
+        outline
+        class="manage-btn"
+        label="管理组员"
+        color="primary"
+        @click="edit"
+        v-if="canManage"
+      />
     </div>
     <div>
       <span class="text-weight-bold">所有成员</span>
 
       <member :members="pagedAliveMember" :edit="editMember" />
     </div>
-    <div class="q-pa-lg flex flex-center">
+    <div class="q-pa-md flex flex-center">
       <q-pagination
         v-model="currentPage"
         :max="maxPage"
@@ -94,6 +100,16 @@ export default {
 
 
  <style lang="stylus" scoped>
+ .manage {
+   position: relative;
+
+   .manage-btn {
+     position: absolute;
+     top: 35px;
+     right: 30px;
+   }
+ }
+
  .total {
    color: $primary;
    padding-left: 15px;

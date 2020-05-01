@@ -1,6 +1,6 @@
 <template>
-  <div class="fit row">
-    <div class="col-1 q-pa-md" v-for="member in members" :key="member.id">
+  <div class="fit row q-gutter-lg q-mt-xs">
+    <div class="main" v-for="member in members" :key="member.id">
       <div>
         <q-avatar class="clickable avatar">
           <img :src="member.avatar || 'statics/user.svg'" @click="jumpToMember(member.id)" />
@@ -47,6 +47,11 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.main {
+  text-align: center;
+  margin: 20px;
+}
+
 .clickable {
   cursor: pointer;
 }
