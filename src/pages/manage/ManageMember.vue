@@ -10,16 +10,18 @@
     <div>
       <span class="text-weight-bold">所有成员</span>
 
-      <member :members="aliveMember" :edit="editMember" />
+      <member :members="pagedAliveMember" :edit="editMember" />
     </div>
     <div class="q-pa-lg flex flex-center">
       <q-pagination
         v-model="currentPage"
-        :max="25"
+        :max="maxPage"
         :max-pages="9"
         :boundary-numbers="true"
-        color="black"
+        :direction-links="true"
+        color="primary"
       ></q-pagination>
+      <span class="total">共{{this.aliveMember.length}}人</span>
     </div>
     <div>
       <span class="text-weight-bold">小黑屋</span>
@@ -42,13 +44,23 @@ export default {
     canManage() {
       return this.$store.state.group.currentGroupOwner.id === this.$store.state.user.userid;
     },
+    maxPage() {
+      return this.aliveMember.length && Math.floor(this.aliveMember.length / this.pageSize) + 1;
+    },
+    pagedAliveMember() {
+      return this.aliveMember.slice(
+        (this.currentPage - 1) * this.pageSize,
+        this.currentPage * this.pageSize
+      );
+    },
   },
   data() {
     return {
-      currentPage: 3,
+      currentPage: 1,
       aliveMember: [],
       blockMember: [],
       editMember: false,
+      pageSize: 30,
     };
   },
   created() {
@@ -62,6 +74,15 @@ export default {
       if (members.data.code == 0) {
         this.aliveMember = members.data.data.alive;
         this.blockMember = members.data.data.blocked;
+
+        // //test page
+        // this.aliveMember.push(...this.aliveMember);
+        // this.aliveMember.push(...this.aliveMember);
+        // this.aliveMember.push(...this.aliveMember);
+        // this.aliveMember.push(...this.aliveMember);
+        // this.aliveMember.push(...this.aliveMember);
+        // this.aliveMember.push(...this.aliveMember);
+        // this.aliveMember.push(...this.aliveMember);
       }
     },
     edit() {
@@ -71,5 +92,10 @@ export default {
 };
 </script>
 
-<style></style>
- 
+
+ <style lang="stylus" scoped>
+ .total {
+   color: $primary;
+   padding-left: 15px;
+ }
+</style>
