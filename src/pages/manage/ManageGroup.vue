@@ -236,7 +236,7 @@ export default {
     startEditReadPermission() {
       this.editing.read_permission = true;
       this.editGroupData.read_permission = this.tempGroupData.read_permission;
-      this.editGroupData.password = this.tempGroupData.password;
+      this.editGroupData.password = null;
     },
     startEditReward() {
       this.editing.reward = true;
@@ -253,8 +253,18 @@ export default {
     },
     saveReadPermission() {
       this.tempGroupData.read_permission = this.editGroupData.read_permission;
-      this.tempGroupData.password = this.editGroupData.password || null;
+      this.tempGroupData.password = this.editGroupData.password;
       this.editing.read_permission = false;
+      if (this.tempGroupData.read_permission === 1) {
+        //如果公开群，清空密码
+        this.tempGroupData.password = '';
+      } else if (
+        this.tempGroupData.read_permission === 2 &&
+        (this.tempGroupData.password === '' || this.tempGroupData.password === '****')
+      ) {
+        // 没有修改密码
+        this.tempGroupData.password = null;
+      }
       this.saveToServer(this.tempGroupData);
     },
     saveReward() {
