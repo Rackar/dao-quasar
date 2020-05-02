@@ -79,7 +79,7 @@ export default {
       this.shouldShowAddComment = true;
     },
     onAddComment() {
-      getComments(this.postId).then(res => this.comments = res);
+      getComments(this.postId).then(res => (this.comments = res));
     },
     afterEdit(newContent) {
       Object.assign(this.post.post, newContent);
@@ -110,8 +110,8 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  width: 860px;
-  margin-right: 16px;
+  // width: 860px;
+  // margin-right: 16px;
   padding-bottom: 16px;
 }
 .spinner {

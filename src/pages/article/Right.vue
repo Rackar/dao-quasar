@@ -135,7 +135,7 @@ export default {
   justify-content: center;
 }
 .container {
-  width: 468px;
+  // width: 468px;
 }
 .info {
   background-color: #fff;

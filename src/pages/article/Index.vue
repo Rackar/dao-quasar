@@ -5,9 +5,9 @@
         <HeaderBarLeft />
         <HeaderBarRight />
       </div>
-      <div class="body" :key="$route.params.id">
-        <BodyLeft class="body_left" @getGroupInfo="setGroupInfo" />
-        <BodyRight class="body_right" v-if="groupInfo !== null"  :groupInfo="groupInfo" />
+      <div class="row q-col-gutter-md" :key="$route.params.id">
+        <BodyLeft class="col-sm-8 col-md-7 offset-md-1" @getGroupInfo="setGroupInfo" />
+        <BodyRight class="col-sm-4 col-md-3 " v-if="groupInfo !== null" :groupInfo="groupInfo" />
       </div>
     </q-page-container>
   </q-layout>
@@ -42,7 +42,7 @@ export default {
   justify-content: space-between;
 }
 .body {
-  display: flex;
-  justify-content: center;
+  // display: flex;
+  // justify-content: center;
 }
 </style>
