@@ -64,11 +64,16 @@ export default {
       miniState: false,
     };
   },
-  methods: {},
-  mounted() {
-    window.addEventListener('resize', () => {
+  methods: {
+    resizeHandler() {
       this.miniState = document.body.clientWidth < 1024;
-    });
+    },
+  },
+  mounted() {
+    window.addEventListener('resize', this.resizeHandler, true);
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.resizeHandler, true);
   },
 };
 </script>
