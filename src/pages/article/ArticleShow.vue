@@ -36,12 +36,43 @@
         style="height: 240px; max-width: 240px; margin:9px;"
       />
     </div>
-    <div v-else style=" max-width: 500px; max-height: 400px; margin-bottom:20px;">
-      <q-video :ratio="16 / 9" :src="post.post.images[0]" />
+    <div v-else class="video-wraper">
+      <!-- <q-video :ratio="16 / 9" :src="post.post.images[0]" /> -->
+      <q-media-player
+        type="video"
+        background-color="white"
+        radius="1rem"
+        hide-volume-slider
+        dense
+        :show-big-play-button="true"
+        :sources="[{ src: post.post.images[0] }]"
+      >
+        <!-- <template v-slot:overlay>
+          <div>
+            <img
+              src="statics/app-logo-128x128.png"
+              style="width: 30vw; max-width: 50px; opacity: 0.25;"
+            />
+          </div>
+        </template> -->
+      </q-media-player>
     </div>
     <div class="actions" v-if="shouldShowActions">
-      <q-btn v-require-login-click flat :class="{ isLiked }" :label="post.post.num_like" icon="thumb_up" @click="like" />
-      <q-btn v-require-login-click flat :label="post.post.num_comment" icon="chat_bubble_outline" @click="addComment" />
+      <q-btn
+        v-require-login-click
+        flat
+        :class="{ isLiked }"
+        :label="post.post.num_like"
+        icon="thumb_up"
+        @click="like"
+      />
+      <q-btn
+        v-require-login-click
+        flat
+        :label="post.post.num_comment"
+        icon="chat_bubble_outline"
+        @click="addComment"
+      />
       <q-btn flat :label="post.post.num_share" icon="share" @click="share" />
       <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
       <q-btn flat icon="settings" v-if="shouldShowSetting">
@@ -207,6 +238,11 @@ export default {
     color: #8c909d;
   }
 }
+.video-wraper {
+  display: flex;
+  width: 300px;
+  height: 300px;
+}
 .header {
   display: flex;
   color: #8c909d;
@@ -216,6 +252,7 @@ export default {
 .body {
   display: block;
   font-size: 16px;
+  overflow: overlay;
 }
 .container {
   background-color: #fff;
