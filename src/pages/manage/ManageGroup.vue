@@ -11,9 +11,16 @@
             <img :src="tempGroupData.avatar || 'statics/group.svg'" />
           </q-avatar>
           <span class="name-text">{{ tempGroupData.name }}</span>
-          <q-btn dense flat icon="edit" color="primary" @click="startEditTitle()" v-show="isOwner" />
+          <q-btn
+            dense
+            flat
+            icon="edit"
+            color="primary"
+            @click="startEditTitle()"
+            v-show="isOwner"
+          />
         </div>
-        <div class="desc">{{ tempGroupData.desc_text }}</div>
+        <div class="desc" v-html="desc"></div>
       </div>
       <div class="main-title" v-if="editing.title">
         <div class="group-name">
@@ -30,7 +37,7 @@
         </div>
         <q-input v-model="editGroupData.desc_text" filled type="textarea" />
         <div class="text-right">
-          <q-btn outline color="primary" label="取消" @click="editing.title=false" />
+          <q-btn outline color="primary" label="取消" @click="editing.title = false" />
           <q-btn unelevated color="primary" label="保存" @click="saveTitle" />
         </div>
       </div>
@@ -55,14 +62,14 @@
           <div v-if="editing.read_permission">
             <q-radio v-model="editGroupData.read_permission" :val="1" label="任何人" />
             <q-radio v-model="editGroupData.read_permission" :val="2" label="仅限组员" />
-            <div v-if="editing.read_permission&&editGroupData.read_permission===2">
+            <div v-if="editing.read_permission && editGroupData.read_permission === 2">
               添加加群密码：
               <q-input outlined v-model="editGroupData.password" dense />
             </div>
           </div>
 
           <div v-if="editing.read_permission" class="text-right">
-            <q-btn outline color="primary" label="取消" @click="editing.read_permission=false" />
+            <q-btn outline color="primary" label="取消" @click="editing.read_permission = false" />
             <q-btn unelevated color="primary" label="保存" @click="saveReadPermission" />
           </div>
         </div>
@@ -71,11 +78,11 @@
         <span class="name-text">奖励机制</span>
         <span class="subtitle">
           (单位：
-          <span v-if="!editing.reward">{{tokenSelect.symbol}}</span>
+          <span v-if="!editing.reward">{{ tokenSelect.symbol }}</span>
           <q-btn no-caps flat :label="tokenSelect.symbol + '▽'" v-if="editing.reward">
             <q-menu auto-close>
               <q-list style="min-width: 100px">
-                <div v-for="(token,index) in tokens" :key="index">
+                <div v-for="(token, index) in tokens" :key="index">
                   <q-item clickable @click="pickToken(token)">
                     <q-item-section>{{ token.symbol }}</q-item-section>
                   </q-item>
@@ -83,7 +90,8 @@
                 </div>
               </q-list>
             </q-menu>
-          </q-btn>)
+          </q-btn>
+          )
         </span>
         <q-btn
           flat
@@ -101,9 +109,9 @@
           <div class="col">发帖奖励</div>
         </div>
         <div class="row text-center text-h6 q-ma-md" v-if="!editing.reward">
-          <div class="col">{{tempGroupData.reward_join}}</div>
+          <div class="col">{{ tempGroupData.reward_join }}</div>
           <q-separator vertical />
-          <div class="col">{{tempGroupData.reward_post}}</div>
+          <div class="col">{{ tempGroupData.reward_post }}</div>
         </div>
         <div class="row text-center text-h6 q-ma-md" v-if="editing.reward">
           <div class="col">
@@ -116,7 +124,7 @@
         </div>
 
         <div v-if="editing.reward" class="text-right">
-          <q-btn outline color="primary" label="取消" @click="editing.reward=false" />
+          <q-btn outline color="primary" label="取消" @click="editing.reward = false" />
           <q-btn unelevated color="primary" label="保存" @click="saveReward" />
         </div>
       </div>
@@ -148,6 +156,9 @@ export default {
     },
     isOwner() {
       return this.owner.id === this.$store.state.user.userid;
+    },
+    desc() {
+      return this.tempGroupData.desc_text.replace(/\n/g, '<br/>');
     },
   },
 

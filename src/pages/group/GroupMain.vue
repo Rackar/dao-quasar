@@ -17,7 +17,14 @@
         <img :src="group.avatar || 'statics/group.svg'" />
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
-      <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
+      <q-btn
+        flat
+        align="around"
+        class="btn-fixed-width"
+        label="分享"
+        icon="share"
+        @click="shareUrl"
+      />
       <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
       <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" />
     </div>
@@ -25,7 +32,7 @@
       <div class="q-pa-md info q-my-md">
         <span class="infotitle">创建于{{ $utils.timeStringToLocal(group.create_at) }}</span>
         <span class="infotitle">组长：{{ owner.name }}</span>
-        <div>{{ group.desc_text }}</div>
+        <div v-html="group.desc_text.replace(/\n/g, '<br/>')"></div>
       </div>
 
       <div class="members">
