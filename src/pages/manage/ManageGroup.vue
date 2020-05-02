@@ -55,16 +55,23 @@
           />
         </div>
         <div class="q-gutter-sm">
-          <div v-if="!editing.read_permission">
+          <div v-if="!editing.read_permission" class="select-read">
             <q-radio disable v-model="tempGroupData.read_permission" :val="1" label="任何人" />
             <q-radio disable v-model="tempGroupData.read_permission" :val="2" label="仅限组员" />
           </div>
-          <div v-if="editing.read_permission">
+          <div v-if="editing.read_permission" class="row select-read">
             <q-radio v-model="editGroupData.read_permission" :val="1" label="任何人" />
             <q-radio v-model="editGroupData.read_permission" :val="2" label="仅限组员" />
-            <div v-if="editing.read_permission && editGroupData.read_permission === 2">
-              添加加群密码：
-              <q-input outlined v-model="editGroupData.password" dense />
+            <div
+              style="width:140px; margin-left:30px;"
+              v-if="editing.read_permission && editGroupData.read_permission === 2"
+            >
+              <q-input
+                outlined
+                v-model="editGroupData.password"
+                dense
+                placeholder="6位数字或字母"
+              />
             </div>
           </div>
 
@@ -343,6 +350,12 @@ export default {
       // padding: 20px 0 0;
       font-size: 16px;
     }
+  }
+}
+
+.read_permission {
+  .select-read {
+    font-size: 16px;
   }
 }
 

@@ -4,7 +4,7 @@
       <headerBarLeft />
     </div>
 
-    <q-drawer elevated show-if-above v-model="right" side="right" :width="480">
+    <q-drawer elevated v-model="right" side="right" :width="480" :breakpoint="780">
       <ManageGroup />
     </q-drawer>
 
