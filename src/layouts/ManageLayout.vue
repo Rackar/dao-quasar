@@ -3,8 +3,10 @@
     <div class="q-pa-md">
       <headerBarLeft />
     </div>
-
-    <q-drawer elevated v-model="right" side="right" :width="480" :breakpoint="780">
+    <div class="lt-md fold">
+      <q-btn color="primary" label="展开" @click="right=true" />
+    </div>
+    <q-drawer elevated v-model="right" side="right" :width="480">
       <ManageGroup />
     </q-drawer>
 
@@ -22,7 +24,7 @@ export default {
   components: { ManageGroup, headerBarLeft },
   data() {
     return {
-      right: false,
+      right: true,
     };
   },
 };
@@ -30,5 +32,11 @@ export default {
 <style lang="stylus" scoped>
 .main {
   background-color: rgb(248, 248, 248);
+}
+
+.fold {
+  position: absolute;
+  top: 30px;
+  right: 40px;
 }
 </style>
