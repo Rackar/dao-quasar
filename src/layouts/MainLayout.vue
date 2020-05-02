@@ -4,9 +4,11 @@
       v-model="leftDrawerOpen"
       show-if-above
       :width="458"
-      :breakpoint="800"
       bordered
       class="drawerContainer"
+      :breakpoint="300"
+      :mini="miniState"
+      @mouseover="miniState = false"
     >
       <q-scroll-area class="fit">
         <GroupListHeader class="q-ma-md" />
@@ -59,9 +61,15 @@ export default {
       leftDrawerOpen: false,
       menuList,
       link: '',
+      miniState: false,
     };
   },
   methods: {},
+  mounted() {
+    window.addEventListener('resize', () => {
+      this.miniState = document.body.clientWidth < 1024;
+    });
+  },
 };
 </script>
 
