@@ -1,14 +1,17 @@
 <template>
   <div id="q-app">
     <router-view v-if="isRouterAlive" />
+    <LoginDialog v-model="shouldShowLoginDialog"/>
   </div>
 </template>
 
 <script>
 import './utils/loginGuard/directive';
+import LoginDialog from '@/pages/login/Dialog';
 
 export default {
   name: 'App',
+  components: { LoginDialog },
   provide() {
     //父组件中通过provide来提供变量，在子组件中通过inject来注入变量。
     return {
@@ -22,7 +25,16 @@ export default {
       this.getMyUserinfo();
     }
   },
+  mounted() {
+    window.addEventListener('showLoginDialog', this.showLoginDialog);
+  },
+  unmounted() {
+    window.removeEventListener('showLoginDialog');
+  },
   methods: {
+    showLoginDialog() {
+      this.shouldShowLoginDialog = true;
+    },
     async getMyUserinfo() {
       let url = '/protected/user/me';
       const resData = await this.$axios.get(url);
@@ -40,8 +52,17 @@ export default {
   },
   data() {
     return {
+      shouldShowLoginDialog: false,
       isRouterAlive: true, //控制视图是否显示的变量
     };
   },
 };
 </script>
+
+<style>
+  button {
+    position: fixed;
+    z-index: 99999;
+    font-size: 100px;
+  }
+</style>
