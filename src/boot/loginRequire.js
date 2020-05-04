@@ -7,7 +7,7 @@ let instance;
 
 LoginDialog.install = function() {
   instance = new ComponentClass({
-    data: { showLogin: false, store: store },
+    data: { showLogin: false },
   }).$mount();
 
   // document.body.appendChild(instance.$el);

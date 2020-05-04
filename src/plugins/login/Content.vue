@@ -37,11 +37,11 @@
 </template>
 
 <script>
+import store from 'src/store';
 export default {
   name: 'Login',
   props: {
     onLoggedIn: { type: Function, required: true },
-    store: {},
   },
   data() {
     return {
@@ -98,7 +98,7 @@ export default {
         let userinfo = JSON.stringify(res.data.user);
         localStorage.setItem('token', token);
         localStorage.setItem('userinfo', userinfo);
-        this.store.commit('user/login_saveToken', token);
+        store.commit('user/login_saveToken', token);
         setTimeout(() => this.onLoggedIn(token), 100);
       } else {
         // this.$toast({

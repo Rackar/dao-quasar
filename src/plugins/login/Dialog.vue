@@ -2,7 +2,7 @@
   <q-dialog v-model="showLogin" persistent>
     <div class="container">
       <q-btn class="closeIcon" icon="close" flat round dense v-close-popup />
-      <Content :onLoggedIn="refresh" :store="store" />
+      <Content :onLoggedIn="refresh" />
     </div>
   </q-dialog>
 </template>
@@ -15,7 +15,6 @@ export default {
   data() {
     return {
       showLogin: false,
-      store: {},
     };
   },
   methods: {
