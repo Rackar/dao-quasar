@@ -34,13 +34,7 @@
         </q-card>
       </q-dialog>
     </div>
-    <q-btn
-      v-else
-      color="primary"
-      flat
-      @click="$router.push('/login')"
-      label="快速登录"
-    />
+    <q-btn v-else color="primary" flat label="快速登录" v-require-login-click />
   </div>
 </template>
 

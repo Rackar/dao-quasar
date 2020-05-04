@@ -4,21 +4,13 @@
       <div class="em" v-if="type == 1">
         <div class="tit">欢迎来到DAO</div>
         <div class="email">
-          <input
-            type="text"
-            class="val"
-            v-model="email"
-            name="email"
-            placeholder="请输入您的邮箱"
-          />
+          <input type="text" class="val" v-model="email" name="email" placeholder="请输入您的邮箱" />
         </div>
         <div class="btn">
           <!-- <button :class="email!=''?'active':''" @click="sumitEmail">下一步</button> -->
           <q-btn color="primary" :disable="!email" @click="sumitEmail" label="下一步" />
         </div>
-        <div class="bei">
-          DAO是一个由用户自治的论坛，该论坛所有社区规则由用户集体投票制定，登录使用DAO代表您同意该论坛的所有社区规则。
-        </div>
+        <div class="bei">DAO是一个由用户自治的论坛，该论坛所有社区规则由用户集体投票制定，登录使用DAO代表您同意该论坛的所有社区规则。</div>
       </div>
       <div class="code" v-if="type == 2">
         <div class="back" @click="back()">
@@ -48,7 +40,8 @@
 export default {
   name: 'Login',
   props: {
-    onLoggedIn: { type: Function, required: true  }
+    onLoggedIn: { type: Function, required: true },
+    store: {},
   },
   data() {
     return {
@@ -105,7 +98,7 @@ export default {
         let userinfo = JSON.stringify(res.data.user);
         localStorage.setItem('token', token);
         localStorage.setItem('userinfo', userinfo);
-        this.$store.commit('user/login_saveToken', token);
+        this.store.commit('user/login_saveToken', token);
         setTimeout(() => this.onLoggedIn(token), 100);
       } else {
         // this.$toast({

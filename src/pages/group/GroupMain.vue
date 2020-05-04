@@ -6,7 +6,7 @@
       class="top-login"
       color="primary"
       flat
-      @click="$router.push('/login')"
+      v-require-login-click
       label="快速登录"
     />
     <div class="top-login" v-else>

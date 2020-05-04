@@ -7,7 +7,7 @@ module.exports = function(ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
-    boot: ['axios', 'utils', 'router'],
+    boot: ['axios', 'utils', 'router', 'loginRequire'],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ['app.styl'],
@@ -71,19 +71,19 @@ module.exports = function(ctx) {
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
       extendWebpack(cfg) {
-        cfg.resolve.alias = {
+        (cfg.resolve.alias = {
           ...cfg.resolve.alias,
-          '@': path.resolve(__dirname, './src')
-        },
-        cfg.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /node_modules/,
-          options: {
-            formatter: require('eslint').CLIEngine.getFormatter('stylish'),
-          },
-        });
+          '@': path.resolve(__dirname, './src'),
+        }),
+          cfg.module.rules.push({
+            enforce: 'pre',
+            test: /\.(js|vue)$/,
+            loader: 'eslint-loader',
+            exclude: /node_modules/,
+            options: {
+              formatter: require('eslint').CLIEngine.getFormatter('stylish'),
+            },
+          });
       },
     },
 

@@ -35,7 +35,7 @@ const routes = [
     name: 'toast',
     // { path: 'articleLists', component: () => import('pages/manage/Articles.vue') }]
   },
-  { path: '/login', name: 'login', component: () => import('pages/login/Login.vue') },
+  // { path: '/login', name: 'login', component: () => import('pages/login/Login.vue') },
 ];
 
 // Always leave this as last one

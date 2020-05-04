@@ -1,8 +1,8 @@
 <template>
-  <q-dialog v-model="shouldShow" persistent>
+  <q-dialog v-model="showLogin" persistent>
     <div class="container">
       <q-btn class="closeIcon" icon="close" flat round dense v-close-popup />
-      <Content :onLoggedIn="refresh"/>
+      <Content :onLoggedIn="refresh" :store="store" />
     </div>
   </q-dialog>
 </template>
@@ -11,21 +11,17 @@
 import Content from './Content';
 export default {
   components: { Content },
-  props: { value: Boolean },
-  computed: {
-    shouldShow: {
-      get() {
-        return this.value;
-      },
-      set(v) {
-        this.$emit('input', v);
-      },
-    },
+
+  data() {
+    return {
+      showLogin: false,
+      store: {},
+    };
   },
   methods: {
     refresh() {
       location.reload();
-    }
+    },
   },
 };
 </script>
