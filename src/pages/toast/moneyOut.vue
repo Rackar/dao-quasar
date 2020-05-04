@@ -106,9 +106,7 @@ export default {
         this.$q.notify('地址不合法');
         return;
       }
-      debugger;
       const res = await this.$axios.post(url, data);
-      debugger;
       if (res.data.code === 0) {
         this.$q.notify({
           message: '转账成功',
@@ -116,7 +114,10 @@ export default {
       } else if (res.data.code === 100) {
         this.$q.notify('错误' + res.data.message);
       } else if (res.data.code === 104) {
-        this.$router.push({ path: '/login' });
+        this.$q.notify({
+          message: '认证失效，请重新登录',
+        });
+        this.$showLogin();
       }
     },
 

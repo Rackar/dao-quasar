@@ -175,7 +175,10 @@ export default {
           this.getOtherPosts(userid);
         }
       } else {
-        this.$router.push({ path: '/login', query: {} });
+        this.$q.notify({
+          message: '认证失效，请重新登录',
+        });
+        this.$showLogin();
       }
     },
     async getMyRecycle() {

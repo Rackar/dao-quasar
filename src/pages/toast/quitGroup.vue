@@ -46,7 +46,10 @@ export default {
         });
         this.$router.go(0);
       } else if (res.data.code === 104) {
-        this.$router.push({ path: '/login' });
+        this.$q.notify({
+          message: '认证失效，请重新登录',
+        });
+        this.$showLogin();
       }
     },
   },

@@ -19,6 +19,12 @@ LoginDialog.install = function() {
     }
   };
 
+  const showLogin = () => {
+    instance.showLogin = true;
+  };
+
+  Vue.prototype.$showLogin = showLogin;
+
   Vue.directive('require-login-click', {
     inserted(elem) {
       elem.addEventListener('click', onClick, true);

@@ -4,9 +4,7 @@
       <div>
         <q-avatar class="clickable avatar">
           <img :src="member.avatar || 'statics/user.svg'" @click="jumpToMember(member.id)" />
-          <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">
-            x
-          </q-badge>
+          <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">x</q-badge>
         </q-avatar>
       </div>
       <div @click="jumpToMember(member.id)" class="clickable name">{{ member.name }}</div>
@@ -59,7 +57,10 @@ export default {
         });
         this.$router.go(0);
       } else if (res.data.code === 104) {
-        this.$router.push({ path: '/login' });
+        this.$q.notify({
+          message: '认证失效，请重新登录',
+        });
+        this.$showLogin();
       }
     },
   },

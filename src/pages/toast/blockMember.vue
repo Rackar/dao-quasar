@@ -48,7 +48,10 @@ export default {
           message: this.blocked ? '已解除拉黑' : '已拉黑该用户',
         });
       } else if (res.data.code === 104) {
-        this.$router.push({ path: '/login' });
+        this.$q.notify({
+          message: '认证失效，请重新登录',
+        });
+        this.$showLogin();
       }
     },
   },
