@@ -45,7 +45,7 @@
       <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" @click="clickEdit" />-->
     </div>
     <div class="row">
-      <div class="col-7 offset-md-1">
+      <div class="col-sm-8 col-md-6 offset-md-1">
         <q-card flat class="my-card">
           <q-tabs
             v-model="tab"
@@ -86,8 +86,8 @@
           </q-tab-panels>
         </q-card>
       </div>
-      <div class="col-2 offset-md-1">
-        <PersonWallet :tokens="tokens" :log="log" v-if="isMyself" />
+      <div class="col-sm-4 col-md-3 offset-md-1">
+        <PersonWallet :tokens="tokens" v-if="isMyself" />
       </div>
     </div>
   </div>
@@ -122,7 +122,6 @@ export default {
           },
         },
       ],
-      log: [],
       pullList: [],
       userinfo: {},
       edit: {
@@ -167,7 +166,7 @@ export default {
           this.userinfo = this.myUserinfo;
           this.getMyPosts();
           this.getmycode();
-          this.tokenLog();
+          // this.tokenLog();
           this.getMyRecycle();
         } else {
           userid = this.id;
@@ -241,19 +240,19 @@ export default {
       }
     },
     // 转账日志
-    tokenLog: async function() {
-      let url = 'protected/user/token/logs';
-      let dat = {
-        contract: '',
-        base_token_log: null,
-      };
-      const resLog = await this.$axios.post(url, dat);
-      if (resLog.data.code == 0) {
-        this.log = resLog.data.data.token_logs;
-      } else {
-        alert(resLog.data.message);
-      }
-    },
+    // tokenLog: async function() {
+    //   let url = 'protected/user/token/logs';
+    //   let dat = {
+    //     contract: '',
+    //     base_token_log: null,
+    //   };
+    //   const resLog = await this.$axios.post(url, dat);
+    //   if (resLog.data.code == 0) {
+    //     this.log = resLog.data.data.token_logs;
+    //   } else {
+    //     alert(resLog.data.message);
+    //   }
+    // },
     showAddComment(id) {
       this.commentPostId = id;
       this.addCommentShow = true;

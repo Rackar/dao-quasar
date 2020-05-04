@@ -28,10 +28,17 @@
       <div>{{ currentToken.value }}</div>
     </q-card-section>
     <q-card-section>
-      <q-list style="min-width: 100px">
+      <q-list>
         <q-item v-for="item in log" :key="item.key">
-          <q-item-section>{{ item.token_log.note }} --{{ item.token_log.value }}</q-item-section>
-          <q-item-section>{{ item.token_log.create_at }}-- $848</q-item-section>
+          <q-item-section>
+            <q-item-label>{{ item.token_log.note }}</q-item-label>
+            <q-item-label caption>{{$utils.timeStringToLocal(item.token_log.create_at) }}</q-item-label>
+          </q-item-section>
+
+          <q-item-section side>
+            <q-item-label>{{item.token_log.value}}</q-item-label>
+            <q-item-label caption>0</q-item-label>
+          </q-item-section>
         </q-item>
         <q-separator />
       </q-list>
@@ -46,7 +53,6 @@ export default {
   components: { moneyIn, moneyOut },
   props: {
     tokens: Array,
-    log: Array,
   },
   data() {
     return {
@@ -57,6 +63,7 @@ export default {
       },
       showMoneyIn: false,
       showMoneyOut: false,
+      log: [],
     };
   },
   watch: {
@@ -75,6 +82,20 @@ export default {
         contract: token.contract.contract,
         value: token.token.value,
       };
+      this.tokenLog(token.contract.contract);
+    },
+    tokenLog: async function(contract) {
+      let url = 'protected/user/token/logs';
+      let dat = {
+        contract: contract,
+        base_token_log: null,
+      };
+      const resLog = await this.$axios.post(url, dat);
+      if (resLog.data.code == 0) {
+        this.log = resLog.data.data.token_logs;
+      } else {
+        this.$q.notify(resLog.data.message);
+      }
     },
   },
   created() {
