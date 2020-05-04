@@ -27,15 +27,11 @@
     </div>
 
     <div class="q-py-lg body" @click="onContentClick">{{ post.post.content }}</div>
-    <div class="row images" style=" max-width: 600px; " v-if="!hasVideo">
-      <q-img
-        v-for="(url, index) in post.post.images"
-        :key="index"
-        :src="url"
-        spinner-color="white"
-        style="height: 240px; max-width: 240px; margin:9px;"
-      />
-    </div>
+    <ImageGrid
+      :images="post.post.images"
+      class="images"
+      v-if="!hasVideo"
+    />
     <div v-else class="video-wraper">
       <!-- <q-video :ratio="16 / 9" :src="post.post.images[0]" /> -->
       <q-media-player
@@ -96,6 +92,7 @@
 import { post } from '@/apis/request';
 import deleteArticle from 'pages/toast/deleteArticle';
 import EditArticle from './PublishArticle';
+import ImageGrid from './ImageGrid';
 
 // like状态和code：
 const dict = {
@@ -105,7 +102,7 @@ const dict = {
 };
 
 export default {
-  components: { deleteArticle, EditArticle },
+  components: { deleteArticle, EditArticle, ImageGrid },
   props: {
     // 组件在不同的场景展示，行为有不同
     viewType: {
@@ -223,13 +220,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.images {
+  max-width: 450px;
+  max-height: 274px;
+}
 .isLiked {
   color: var(--q-color-primary) !important;
-}
-.images {
-  .q-img {
-    border-radius: 4px;
-  }
 }
 .actions {
   margin-left: -16px;
