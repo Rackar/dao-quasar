@@ -106,6 +106,9 @@ export default {
     owner() {
       return this.$store.state.group.currentGroupOwner;
     },
+    reward_type() {
+      return this.$store.state.group.currentGroup.contractSymbol;
+    },
   },
   methods: {
     getInitData() {
@@ -119,7 +122,6 @@ export default {
         addCommentShow: false,
         grpMembers: [],
         password: '',
-        reward_type: '',
       };
     },
     loadMore(_, done) {
@@ -148,7 +150,7 @@ export default {
       this.$nextTick(this.getPosts);
     },
     getPageData() {
-      return Promise.all([this.getGroupMembers(), this.getPosts(), this.getContracts()])
+      return Promise.all([this.getGroupMembers(), this.getPosts()])
         .then(() => {
           this.isReady = true;
         })
@@ -160,20 +162,21 @@ export default {
           }
         });
     },
-    async getContracts() {
-      let url = '/contracts';
-      const resCode = await this.$axios.get(url);
-      if (resCode.data.code == 0) {
-        let tokens = resCode.data.data.contracts;
-        for (let index = 0; index < tokens.length; index++) {
-          const element = tokens[index];
-          if (element.contract === this.group.reward_contract) {
-            this.reward_type = element.symbol;
-          }
-        }
-      } else if (resCode.data.code == 104) {
-      }
-    },
+    // async getContracts() {
+    //   let url = '/contracts';
+    //   const resCode = await this.$axios.get(url);
+    //   if (resCode.data.code == 0) {
+    //     let tokens = resCode.data.data.contracts;
+    //     console.log(tokens, this.group);
+    //     for (let index = 0; index < tokens.length; index++) {
+    //       const element = tokens[index];
+    //       if (element.contract === this.group.reward_contract) {
+    //         this.reward_type = element.symbol;
+    //       }
+    //     }
+    //   } else if (resCode.data.code == 104) {
+    //   }
+    // },
     getPosts() {
       const { groupId, userid, lastPostId } = this;
       return getPosts({ userid, groupId, lastPostId }).then(res => {

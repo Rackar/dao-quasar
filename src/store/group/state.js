@@ -12,6 +12,10 @@ export default function() {
       password: '',
       read_permission: 1,
       joined: false,
+      reward_contract: '',
+      contractSymbol: '',
+      reward_join: '0.00',
+      reward_post: '0.00',
     },
     currentGroupOwner: {
       address: '',
@@ -20,5 +24,13 @@ export default function() {
       mail_export: '',
       name: '',
     },
+    contracts: [
+      {
+        contract: '0x7Ef8ab7d65ed4209a5714e80bD497C2852A1666b',
+        name: 'baby2016',
+        symbol: 'baby2016',
+      },
+      { contract: '', name: 'Ethereum', symbol: 'ETH' },
+    ],
   };
 }
