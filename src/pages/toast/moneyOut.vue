@@ -15,12 +15,12 @@
 
       <div>
         转出金额
-        <q-btn flat :label="'单位 (' + currentToken.contract.name + ')▽'">
+        <q-btn no-caps flat :label="'单位 (' + currentToken.contract.name + ')▽'">
           <q-menu auto-close>
             <q-list style="min-width: 100px">
               <div v-for="(token,index) in tokens" :key="token.id">
                 <q-item clickable @click="pickToken(index)">
-                  <q-item-section>{{ token.contract.name }}</q-item-section>
+                  <q-item-section>{{ token.contract.symbol }}</q-item-section>
                 </q-item>
                 <q-separator />
               </div>
@@ -89,14 +89,35 @@ export default {
     inputAll() {
       this.val = this.currentToken.token.value;
     },
-    sentMoney() {
-      // let url = 'protected/user/token/transfer';
-      // let dat = {
-      //   contract: this.user,
-      //   to_user: Number(this.user),
-      //   value: this.val,
-      // };
-      this.$q.notify('转账功能尚在完善');
+    async sentMoney() {
+      let url = 'protected/user/token/transfer';
+      let data = {
+        contract: this.currentToken.contract.contract,
+        to_user: this.user,
+        value: this.val,
+      };
+      if (!this.val || isNaN(Number(this.val)) || Number(this.val) === 0) {
+        this.$q.notify('金额不合法');
+        return;
+      }
+
+      if (this.user.length >= 5 || this.user.substring(0, 2) === '0x') {
+      } else {
+        this.$q.notify('地址不合法');
+        return;
+      }
+      debugger;
+      const res = await this.$axios.post(url, data);
+      debugger;
+      if (res.data.code === 0) {
+        this.$q.notify({
+          message: '转账成功',
+        });
+      } else if (res.data.code === 100) {
+        this.$q.notify('错误' + res.data.message);
+      } else if (res.data.code === 104) {
+        this.$router.push({ path: '/login' });
+      }
     },
 
     pickToken(index) {
