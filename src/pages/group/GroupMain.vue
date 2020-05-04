@@ -17,14 +17,7 @@
         <img :src="group.avatar || 'statics/group.svg'" />
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
-      <q-btn
-        flat
-        align="around"
-        class="btn-fixed-width"
-        label="分享"
-        icon="share"
-        @click="shareUrl"
-      />
+      <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
       <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
       <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" />
     </div>
@@ -32,7 +25,9 @@
       <div class="q-pa-md info q-my-md">
         <span class="infotitle">创建于{{ $utils.timeStringToLocal(group.create_at) }}</span>
         <span class="infotitle">组长：{{ owner.name }}</span>
-        <div v-html="group.desc_text.replace(/\n/g, '<br/>')"></div>
+        <span class="reward">入群奖励{{ group.reward_join }} {{ reward_type }}</span>
+        <span class="reward">发帖奖励{{ group.reward_post }} {{ reward_type }}</span>
+        <div v-html="group.desc_text.replace(/\n/g, '<br/>')" class="desc"></div>
       </div>
 
       <div class="members">
@@ -124,6 +119,7 @@ export default {
         addCommentShow: false,
         grpMembers: [],
         password: '',
+        reward_type: '',
       };
     },
     loadMore(_, done) {
@@ -152,7 +148,7 @@ export default {
       this.$nextTick(this.getPosts);
     },
     getPageData() {
-      return Promise.all([this.getGroupMembers(), this.getPosts()])
+      return Promise.all([this.getGroupMembers(), this.getPosts(), this.getContracts()])
         .then(() => {
           this.isReady = true;
         })
@@ -163,6 +159,20 @@ export default {
             this.$q.notify(err.message);
           }
         });
+    },
+    async getContracts() {
+      let url = '/contracts';
+      const resCode = await this.$axios.get(url);
+      if (resCode.data.code == 0) {
+        let tokens = resCode.data.data.contracts;
+        for (let index = 0; index < tokens.length; index++) {
+          const element = tokens[index];
+          if (element.contract === this.group.reward_contract) {
+            this.reward_type = element.symbol;
+          }
+        }
+      } else if (resCode.data.code == 104) {
+      }
     },
     getPosts() {
       const { groupId, userid, lastPostId } = this;
@@ -268,8 +278,21 @@ export default {
 
   .infotitle {
     font-weight: bold;
-    padding-right: 30px;
+    padding-right: 15px;
     line-height: 20px;
+  }
+
+  .reward {
+    font-size: 12px;
+    margin-left: 8px;
+    padding: 3px 11px;
+    border-radius: 6px;
+    color: #FF6262;
+    background-color: #FFEAE4;
+  }
+
+  .desc {
+    margin-top: 20px;
   }
 }
 
