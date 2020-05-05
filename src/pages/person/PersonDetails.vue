@@ -1,6 +1,11 @@
 <template>
   <div class="main">
-    <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
+    <AddComment
+      v-if="targetCommentPost !== null"
+      :targetPost="targetCommentPost"
+      v-model="addCommentShow"
+      :onSave="onAddComment"
+    />
     <Upload ref="upload" @uploaded="uploaded" />
     <div class="hover-color"></div>
     <div class="row no-wrap items-end q-mt-md q-px-lg title">
@@ -131,6 +136,7 @@ export default {
 
       addCommentShow: false,
       commentPostId: 0,
+      targetCommentPost: null,
 
       editing: false,
       uploadAvatar: false,
@@ -254,12 +260,11 @@ export default {
     //   }
     // },
     showAddComment(id) {
-      this.commentPostId = id;
+      this.targetCommentPost = this.pullList.find(i => i.post.id === id);
       this.addCommentShow = true;
     },
     onAddComment() {
-      const targetPost = this.pullList.find(i => i.post.id === this.commentPostId);
-      targetPost.post.num_comment = targetPost.post.num_comment + 1;
+      this.targetCommentPost.post.num_comment += 1;
     },
     postDeleted(id) {
       // 删除帖子回调后，直接清除本地数据数组中的值
