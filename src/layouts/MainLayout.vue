@@ -8,6 +8,7 @@
       class="drawerContainer"
       :breakpoint="300"
       :mini="miniState"
+      :mini-width="80"
       @mouseover="miniState = false"
     >
       <q-scroll-area class="fit">

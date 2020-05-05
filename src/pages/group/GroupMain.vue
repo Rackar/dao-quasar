@@ -19,7 +19,8 @@
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
       <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
       <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
-      <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" />
+      <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" v-if="!blocked" />
+      <q-btn unelevated rounded dense text-color="red-7" color="red-1" label="已被禁言" v-else disable />
     </div>
     <div class="warper">
       <div class="q-pa-md info q-my-md">
@@ -109,6 +110,9 @@ export default {
     reward_type() {
       return this.$store.state.group.currentGroup.contractSymbol;
     },
+    blocked() {
+      return this.blockedMembers.some(member => member.id === this.userid);
+    },
   },
   methods: {
     getInitData() {
@@ -122,6 +126,7 @@ export default {
         addCommentShow: false,
         grpMembers: [],
         password: '',
+        blockedMembers: [],
       };
     },
     loadMore(_, done) {
@@ -195,6 +200,7 @@ export default {
       const members = await this.$axios.get(postapi);
       if (members.data.code == 0) {
         this.grpMembers = members.data.data.alive;
+        this.blockedMembers = members.data.data.blocked;
       }
     },
     async shareUrl() {
