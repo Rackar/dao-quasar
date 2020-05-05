@@ -10,8 +10,8 @@
       <q-btn
         outline
         class="manage-btn"
-        label="管理组员"
-        color="primary"
+        :label="this.editMember?'停止编辑':'管理组员'"
+        :color="this.editMember?'negative':'primary'"
         @click="edit"
         v-if="canManage"
       />
@@ -19,7 +19,11 @@
     <div>
       <span class="text-weight-bold">所有成员</span>
 
-      <member :members="pagedAliveMember" :edit="editMember" />
+      <member
+        :members="pagedAliveMember"
+        :edit="editMember"
+        @changeBlockStatus="changeBlockStatus"
+      />
     </div>
     <div class="q-pa-md flex flex-center">
       <q-pagination
@@ -34,7 +38,12 @@
     </div>
     <div>
       <span class="text-weight-bold">小黑屋</span>
-      <member :members="blockMember" :edit="editMember" :blocked="true" />
+      <member
+        :members="blockMember"
+        :edit="editMember"
+        :blocked="true"
+        @changeBlockStatus="changeBlockStatus"
+      />
     </div>
   </div>
 </template>
@@ -92,6 +101,17 @@ export default {
         // this.aliveMember.push(...this.aliveMember);
         // this.aliveMember.push(...this.aliveMember);
         // this.aliveMember.push(...this.aliveMember);
+      }
+    },
+    changeBlockStatus({ userId, type }) {
+      if (type === 'block') {
+        let index = this.aliveMember.findIndex(member => member.id === userId);
+        this.blockMember.push(this.aliveMember[index]);
+        this.aliveMember.splice(index, 1);
+      } else if (type === 'unblock') {
+        let index = this.blockMember.findIndex(member => member.id === userId);
+        this.aliveMember.push(this.blockMember[index]);
+        this.blockMember.splice(index, 1);
       }
     },
     edit() {

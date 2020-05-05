@@ -55,7 +55,11 @@ export default {
         this.$q.notify({
           message: this.blocked ? '已解除拉黑' : '已拉黑该用户',
         });
-        this.$router.go(0);
+        this.$emit('changeBlockStatus', {
+          userId: userId,
+          type: this.blocked ? 'unblock' : 'block',
+        });
+        // this.$router.go(0);
       } else if (res.data.code === 104) {
         this.$q.notify({
           message: '认证失效，请重新登录',
