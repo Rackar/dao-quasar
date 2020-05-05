@@ -13,7 +13,7 @@
     <Comments class="comments" v-if="isReady" :comments="comments" />
     <AddComment
       v-if="isReady"
-      :postId="post.post.id"
+      :targetPost="post"
       v-model="shouldShowAddComment"
       :onSave="onAddComment"
     />
@@ -79,7 +79,10 @@ export default {
       this.shouldShowAddComment = true;
     },
     onAddComment() {
-      getComments(this.postId).then(res => (this.comments = res));
+      getComments(this.postId).then(res => {
+        this.comments = res;
+        this.post.post.num_comment = res.length;
+      });
     },
     afterEdit(newContent) {
       Object.assign(this.post.post, newContent);

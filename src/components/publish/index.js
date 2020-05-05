@@ -1,12 +1,15 @@
 import upload from '@/apis/uploadNew';
 import { matClear } from '@quasar/extras/material-icons';
 import asyncTryCatch from '@/utils/asyncTryCatch';
+import { fasPaperPlane } from '@quasar/extras/fontawesome-v5';
 
 export default {
   created() {
     this.removeIcon = matClear;
+    this.sendIcon = fasPaperPlane;
   },
   props: {
+    maxTextLength: { type: Number, default: 300 },
     placeholder: { type: String },
     publishBtnLabel: { type: String },
     // 修改时应提供 initialData 来显示默认值
@@ -31,8 +34,17 @@ export default {
         this.$emit('input', v);
       },
     },
-    hasMaxText() {
-      return this.content.length >= 200;
+    curUserAvatar() {
+      return this.$store.state.user.avatar || 'statics/user.svg';
+    },
+    mediaLength() {
+      return this.videoList.length > 0 ? this.videoList.length : this.imgList.length;
+    },
+    canUploadImg() {
+      return this.videoList.length === 0 && this.imgList.length !== 4;
+    },
+    canUploadVideo() {
+      return this.videoList.length === 0 && this.imgList.length === 0;
     },
   },
   methods: {
