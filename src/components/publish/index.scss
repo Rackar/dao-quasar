@@ -1,3 +1,5 @@
+@import './_imageGrid.scss';
+
 .waiting {
   position: absolute;
   width: 100%;
@@ -12,41 +14,71 @@
 }
 
 .container {
-  position: fixed;
   width: 680px;
   background: #fff;
-  padding: 50px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 59px;
+  border-bottom: 1px solid #E8E8E8;
+  padding-left: 20px;
+  &_right {
+    font-size: 16px;
+    padding-right: 37px;
+    color: var(--q-color-primary);
+  }
 }
 
 .body {
-  margin-bottom: 23px;
-  textarea {
-    padding: 18px;
-    height: 120px;
-    width: 100%;
-    resize: none;
-    background: rgb(241, 241, 241);
-    border: none;
-    border-radius: 4px;
+  padding-left: 29px;
+  padding-right: 34px;
+  padding-top: 28px;
+  display: flex;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: block;
+  margin-right: 10px;
+}
+
+.textarea {
+  font-size: 16px;
+  flex: 1;
+  border-radius: 4px;
+  padding-top: 5px;
+  margin-bottom: 30px;
+
+  /deep/ textarea {
+    padding: 0 !important;
+    min-height: unset !important;
+    line-height: 1.5 !important;
+  }
+
+  /deep/ .q-field__control {
+    min-height: unset !important;
   }
 }
 
 .sendPostBtn {
-  width: 245px;
+  width: 140px;
   height: 34px;
-  margin: 0 auto;
-  line-height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(0, 214, 194, 1);
   border-radius: 4px;
-  text-align: center;
   color: #ffffff;
   font-size: 14px;
   cursor: pointer;
-  img {
-    margin-top: 0;
+  margin-left: 14px;
+  svg {
     margin-right: 6px;
-    width: 14px;
-    height: 14px;
   }
 }
 
@@ -55,6 +87,12 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 27px;
+  padding-left: 74px;
+  padding-right: 34px;
+  &_right {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .imgBtn {
@@ -63,22 +101,25 @@
   &:last-child {
     margin-right: 0;
   }
+  &[data-disabled="true"] {
+    opacity: 0.3;
+  }
 }
 
 .media {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
+  grid-gap: 16px;
+  padding-left: 74px;
+  padding-right: 34px;
   margin-bottom: 40px;
 }
 
 .media:empty {
-  display: none;
+  height: 40px;
 }
 
 .imgItem {
   position: relative;
-  height: 100px;
+  min-height: 158px;
   background-size: cover;
   background-position: center;
   border-radius: 4px;

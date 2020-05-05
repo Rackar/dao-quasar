@@ -1,6 +1,11 @@
 <template>
   <div class="main">
-    <AddComment :postId="commentPostId" v-model="addCommentShow" :onSave="onAddComment" />
+    <AddComment
+      v-if="targetCommentPost !== null"
+      :targetPost="targetCommentPost"
+      v-model="addCommentShow"
+      :onSave="onAddComment"
+    />
     <q-btn
       v-if="!userid"
       class="top-login"
@@ -17,7 +22,14 @@
         <img :src="group.avatar || 'statics/group.svg'" />
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
-      <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
+      <q-btn
+        flat
+        align="around"
+        class="btn-fixed-width"
+        label="分享"
+        icon="share"
+        @click="shareUrl"
+      />
       <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
       <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" v-if="!blocked" />
       <q-btn unelevated rounded dense text-color="red-7" color="red-1" label="已被禁言" v-else disable />
@@ -122,7 +134,7 @@ export default {
         hasMore: true,
         posts: [],
         lastPostId: null,
-        commentPostId: -1,
+        targetCommentPost: null,
         addCommentShow: false,
         grpMembers: [],
         password: '',
@@ -135,15 +147,14 @@ export default {
       this.getPosts().then(done);
     },
     showAddComment(id) {
-      this.commentPostId = id;
+      this.targetCommentPost = this.posts.find(i => i.post.id === id);
       this.addCommentShow = true;
     },
     onAddArticle() {
       this.reloadList();
     },
     onAddComment() {
-      const targetPost = this.posts.find(i => i.post.id === this.commentPostId);
-      targetPost.post.num_comment = targetPost.post.num_comment + 1;
+      this.targetCommentPost.post.num_comment += 1;
     },
     reloadList() {
       Object.assign(this, {
