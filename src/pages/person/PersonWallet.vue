@@ -26,21 +26,24 @@
         </q-menu>
       </q-btn>
       <div>{{ currentToken.value }}</div>
+      <div>$ 0.00</div>
     </q-card-section>
     <q-card-section>
       <q-list>
-        <q-item v-for="item in log" :key="item.key">
-          <q-item-section>
-            <q-item-label>{{ item.token_log.note }}</q-item-label>
-            <q-item-label caption>{{$utils.timeStringToLocal(item.token_log.create_at) }}</q-item-label>
-          </q-item-section>
+        <div v-for="item in log" :key="item.key">
+          <q-item>
+            <q-item-section>
+              <q-item-label>{{ item.token_log.note }}</q-item-label>
+              <q-item-label caption>{{$utils.timeStringToLocal(item.token_log.create_at) }}</q-item-label>
+            </q-item-section>
 
-          <q-item-section side>
-            <q-item-label>{{item.token_log.value}}</q-item-label>
-            <q-item-label caption>0</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-separator />
+            <q-item-section side>
+              <q-item-label>{{item.token_log.value}}</q-item-label>
+              <q-item-label caption>$ 0</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-separator inset />
+        </div>
       </q-list>
     </q-card-section>
   </q-card>

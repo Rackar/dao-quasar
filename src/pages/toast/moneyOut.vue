@@ -101,6 +101,11 @@ export default {
         return;
       }
 
+      if (this.val > this.currentToken.token.value) {
+        this.$q.notify('余额不足');
+        return;
+      }
+
       if (this.user.length >= 5 || this.user.substring(0, 2) === '0x') {
       } else {
         this.$q.notify('地址不合法');

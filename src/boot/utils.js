@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-function timeStringToLocal(timestring) {
+function timeStringToLocal(timestring, withTime = true) {
   // format: 2020-04-01 11:04
   function addZero(i) {
     if (i <= 9) {
@@ -22,9 +22,10 @@ function timeStringToLocal(timestring) {
   } else if (formNow < 3600 * 24 * 4) {
     string = `${Math.floor(formNow / 3600 / 24)}天前`;
   } else {
-    string = `${t.getFullYear()}-${addZero(t.getMonth() + 1)}-${addZero(t.getDate())} ${addZero(
-      t.getHours()
-    )}:${addZero(t.getMinutes())}`;
+    string = `${t.getFullYear()}-${addZero(t.getMonth() + 1)}-${addZero(t.getDate())}`;
+    if (withTime) {
+      string += ` ${addZero(t.getHours())}:${addZero(t.getMinutes())}`;
+    }
   }
 
   return string;
