@@ -10,6 +10,7 @@
     />
     <q-dialog v-model="dialog">
       <q-carousel
+        class="slide"
         swipeable
         animated
         v-model="slide"
@@ -24,7 +25,7 @@
           :key="index"
           style="padding:0;"
         >
-          <q-img :src="url" />
+          <img :src="url" class="slideImg">
         </q-carousel-slide>
       </q-carousel>
     </q-dialog>
@@ -53,4 +54,21 @@ export default {
 
 <style scoped="true" lang="scss">
 @import '@/components/publish/_imageGrid.scss';
+.slide {
+  background-color: transparent;
+  box-shadow: none;
+  /deep/ .q-carousel__slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /deep/ .q-carousel__arrow button {
+    background-color: rgba(black, 0.7);
+  }
+}
+.slideImg {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
 </style>
