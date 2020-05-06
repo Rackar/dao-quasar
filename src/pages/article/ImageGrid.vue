@@ -17,7 +17,7 @@
         arrows
         navigation
         infinite
-        style="width: 70vw;height: 80vh;max-height: 90vh; max-width: 95vw;"
+        style="min-width: 20vw;height: 80vh;max-height: 90vh; max-width: 95vw;"
       >
         <q-carousel-slide
           v-for="(url, index) in images"
@@ -25,7 +25,7 @@
           :key="index"
           style="padding:0;"
         >
-          <img :src="url" class="slideImg">
+          <img :src="url" class="slideImg" />
         </q-carousel-slide>
       </q-carousel>
     </q-dialog>
@@ -56,7 +56,7 @@ export default {
 @import '@/components/publish/_imageGrid.scss';
 .slide {
   background-color: transparent;
-  box-shadow: none;
+  // box-shadow: none;
   /deep/ .q-carousel__slide {
     display: flex;
     align-items: center;

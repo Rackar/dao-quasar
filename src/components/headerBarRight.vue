@@ -6,9 +6,9 @@
         rounded
         size="36px"
         icon="notifications"
-        @click="showNotice = !showNotice"
+        @click="readNotify"
       >
-        <q-badge color="red" floating>{{unreadNotifyLength}}</q-badge>
+        <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
       </q-avatar>
       <q-avatar
         class="clickable q-px-md q-mr-md"
@@ -26,8 +26,9 @@
               <q-space />
               <q-btn flat round icon="close" v-close-popup />
             </div>
+            <div v-if="unreadNotify.length===0">当前无未读通知。</div>
             <div
-              v-for="notice in notifications"
+              v-for="notice in unreadNotify"
               :key="notice.id"
             >{{ notice.h_text }} - {{ $utils.timeStringToLocal(notice.create_at) }}</div>
           </q-card-section>
@@ -50,8 +51,8 @@ export default {
   },
   watch: {},
   computed: {
-    unreadNotifyLength() {
-      return this.notifications.length;
+    unreadNotify() {
+      return this.notifications.filter(notice => notice.read === 1);
     },
     isLoggedIn() {
       return this.$store.state.user.userid !== '';
@@ -61,17 +62,35 @@ export default {
     async getNotifications(id = 0) {
       let url = '/protected/user/notifications/' + id;
       const resCode = await this.$axios.get(url);
-      if (resCode.data.code == 0) {
-        this.notifications = [];
-        this.notifications = resCode.data.data.notifications;
-        // if (!this.pullList.length) {
-        // }
+      if (resCode.data.code == 0 && resCode.data.data.notifications.length) {
+        let notifications = this.$q.localStorage.getItem('notifications') || [];
+        notifications.unshift(...resCode.data.data.notifications);
+        this.$q.localStorage.set('notifications', notifications);
+        this.notifications = notifications;
+      }
+    },
+    readNotify() {
+      this.showNotice = !this.showNotice;
+      if (this.showNotice && this.unreadNotify.length) {
+        let notifications = this.$q.localStorage.getItem('notifications') || [];
+        notifications.map(notice => {
+          notice.read = 2;
+        });
+        this.$q.localStorage.set('notifications', notifications);
+        this.notifications = notifications;
       }
     },
   },
   mounted() {
     if (this.isLoggedIn) {
-      this.getNotifications(0);
+      let notifications = this.$q.localStorage.getItem('notifications');
+      let rowid = 0;
+      let unread = 0;
+      if (notifications && notifications.length) {
+        this.notifications = notifications;
+        rowid = notifications[0].id;
+      }
+      this.getNotifications(rowid);
     }
   },
 };

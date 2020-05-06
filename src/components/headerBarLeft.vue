@@ -36,6 +36,7 @@ export default {
     clearLogin: function() {
       localStorage.removeItem('token');
       localStorage.removeItem('userinfo');
+      localStorage.removeItem('notifications');
       this.$router.go(0);
     },
   },

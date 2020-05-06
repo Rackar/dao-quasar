@@ -44,7 +44,7 @@ module.exports = function(ctx) {
       directives: [],
 
       // Quasar plugins
-      plugins: ['Notify', 'Loading', 'Dialog'],
+      plugins: ['Notify', 'Loading', 'Dialog', 'LocalStorage'],
       config: {
         notify: { position: 'top', timeout: 1200 /* Notify defaults */ },
         loading: {
