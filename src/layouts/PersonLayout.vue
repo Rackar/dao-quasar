@@ -32,8 +32,4 @@ export default {
 .main {
   background-color: rgb(248, 248, 248);
 }
-
-.page {
-  // margin-top: -40px;
-}
 </style>

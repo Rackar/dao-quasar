@@ -18,7 +18,6 @@ const routes = [
       { path: '', component: () => import('pages/person/PersonDetails.vue') },
       { path: 'show/:id', props: true, component: () => import('pages/person/PersonDetails.vue') },
     ],
-    // { path: 'articleLists', component: () => import('pages/Articles.vue') }]
   },
   {
     path: '/manage', //管理模板
@@ -27,15 +26,12 @@ const routes = [
       { path: '', component: () => import('pages/manage/ManageMember.vue') },
       { path: ':id', props: true, component: () => import('pages/manage/ManageMember.vue') },
     ],
-    // { path: 'articleLists', component: () => import('pages/manage/Articles.vue') }]
   },
   {
     path: '/toast', //测试弹窗模板
     component: () => import('pages/toast/index.vue'),
     name: 'toast',
-    // { path: 'articleLists', component: () => import('pages/manage/Articles.vue') }]
   },
-  // { path: '/login', name: 'login', component: () => import('pages/login/Login.vue') },
 ];
 
 // Always leave this as last one

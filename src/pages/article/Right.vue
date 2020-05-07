@@ -122,9 +122,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.container {
-  // width: 468px;
-}
+
 .info {
   background-color: #fff;
   box-shadow: 0px 4px 15px 0px rgba(176, 176, 176, 0.09);

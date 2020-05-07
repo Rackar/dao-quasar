@@ -261,12 +261,12 @@ export default {
   }
 }
 
-[data-type='article'] {
-}
+// [data-type='article'] {
+// }
 
-[data-type='comment'] {
-  // &:hover {
-  //   background-color: #fafafa;
-  // }
-}
+// [data-type='comment'] {
+//   // &:hover {
+//   //   background-color: #fafafa;
+//   // }
+// }
 </style>

@@ -341,21 +341,13 @@ export default {
   opacity: 0.6;
   filter: alpha(opacity=60);
 }
-.posts {
-  // height: 550px;
-}
-// .my-card {
-// max-width: 780px;
-// }
+
 .title {
   margin-top: -40px;
   padding-bottom: 60px;
   margin-left: 70px;
-  // background-color: #f8f8f8;
 }
-// .main {
-// background-color: #f8f8f8;
-// }
+
 .userinfo {
   padding: 14px 0 0 14px;
   .username {

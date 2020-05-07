@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style scoped="true">
+<style scoped>
 .container {
   position: absolute;
 }

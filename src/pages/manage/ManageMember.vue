@@ -123,10 +123,6 @@ export default {
 
 
  <style lang="stylus" scoped>
- .main {
-   // background-color: $dgrey;
- }
-
  .manage {
    position: relative;
 

@@ -2,21 +2,18 @@
   <div class="fit row q-gutter-lg q-mt-xs">
     <div class="main" v-for="member in members" :key="member.id">
       <div>
-        <q-avatar class="clickable avatar">
+        <q-avatar class="cursor-pointer avatar">
           <img :src="member.avatar || 'statics/user.svg'" @click="jumpToMember(member.id)" />
           <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">x</q-badge>
         </q-avatar>
       </div>
-      <div @click="jumpToMember(member.id)" class="clickable name">{{ member.name }}</div>
+      <div @click="jumpToMember(member.id)" class="cursor-pointer name">{{ member.name }}</div>
     </div>
-    <!-- <blockMember v-model="showBlock" :userId="clickedMemberId" :blocked="blocked" /> -->
   </div>
 </template>
 
 <script>
-// import blockMember from 'pages/toast/blockMember';
 export default {
-  // components: { blockMember },
   props: {
     members: Array,
     edit: {
@@ -75,10 +72,6 @@ export default {
 .main {
   text-align: center;
   margin: 20px;
-}
-
-.clickable {
-  cursor: pointer;
 }
 
 .avatar {

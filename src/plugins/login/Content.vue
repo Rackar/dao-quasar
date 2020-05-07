@@ -111,7 +111,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .login_box {
   text-align: center;
   width: 395px;
@@ -208,11 +208,7 @@ input::-ms-input-placeholder {
   -webkit-transform: rotate(90deg); /* Safari 和 Chrome */
   -o-transform: rotate(90deg);
 }
-.log {
-  /* width: 100%; */
-  /* height: 100%; */
-  /* position: relative; */
-}
+
 .loginNow {
   margin-right: 25px;
   color: #00d6c2;

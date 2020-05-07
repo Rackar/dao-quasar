@@ -2,12 +2,9 @@
   <div>
     <deleteDraft />
     <deleteComment />
-    <deleteArticle />
-    <quitGroup />
+
     <successPublishArticle />
-    <successTransfer />
-    <moneyIn />
-    <moneyOut />测试上传接口
+    <successTransfer />测试上传接口
     <input ref="file" id="file-chooser" @change="testChange" type="file" accept="*" />
   </div>
 </template>
@@ -15,23 +12,15 @@
 <script>
 import deleteDraft from './deleteDraft';
 import deleteComment from './deleteComment';
-import deleteArticle from './deleteArticle';
-import quitGroup from './quitGroup';
 import successPublishArticle from './successPublishArticle';
 import successTransfer from './successTransfer';
-import moneyIn from './moneyIn';
-import moneyOut from './moneyOut';
 import axios from 'axios';
 export default {
   components: {
     deleteDraft,
     deleteComment,
-    deleteArticle,
-    quitGroup,
     successPublishArticle,
     successTransfer,
-    moneyIn,
-    moneyOut,
   },
   props: {},
   data() {

@@ -44,8 +44,4 @@ export default {
   mounted() {},
 };
 </script>
-<style lang="scss">
-.clickable {
-  cursor: pointer;
-}
-</style>
+

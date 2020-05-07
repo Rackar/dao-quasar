@@ -2,7 +2,7 @@
   <div>
     <div v-if="isLoggedIn">
       <q-avatar
-        class="clickable q-mx-xs"
+        class="cursor-pointer q-mx-xs"
         rounded
         size="36px"
         icon="notifications"
@@ -11,7 +11,7 @@
         <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
       </q-avatar>
       <q-avatar
-        class="clickable q-px-md q-mr-md"
+        class="cursor-pointer q-px-md q-mr-md"
         rounded
         size="24px"
         @click="$router.push('/person/show/' + $store.state.user.userid)"
@@ -97,8 +97,4 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.clickable {
-  cursor: pointer;
-}
-</style>
+
