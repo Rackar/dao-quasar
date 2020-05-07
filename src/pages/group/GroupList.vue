@@ -56,7 +56,9 @@
           </q-item-section>
           <q-item-section side top class="justify-between">
             <q-badge color="grey" :label="myGroup.unread" />
-            <q-item-label caption>{{ $utils.timeStringToLocal(myGroup.grp.last_post_at,false) }}</q-item-label>
+            <q-item-label
+              caption
+            >{{ $utils.timeStringToLocal(myGroup.grp.last_post_at,'RelativeDay') }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -100,7 +102,7 @@
               size="xs"
             />
             <q-badge v-else color="grey" :label="grp.num_post" />
-            <q-item-label caption>{{ $utils.timeStringToLocal(grp.last_post_at,false) }}</q-item-label>
+            <q-item-label caption>{{ $utils.timeStringToLocal(grp.last_post_at,'RelativeDay') }}</q-item-label>
           </q-item-section>
         </q-item>
 

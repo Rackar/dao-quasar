@@ -34,7 +34,9 @@
           <q-item>
             <q-item-section>
               <q-item-label>{{ item.token_log.note }}</q-item-label>
-              <q-item-label caption>{{$utils.timeStringToLocal(item.token_log.create_at) }}</q-item-label>
+              <q-item-label
+                caption
+              >{{$utils.timeStringToLocal(item.token_log.create_at,'Accurate') }}</q-item-label>
             </q-item-section>
 
             <q-item-section side>

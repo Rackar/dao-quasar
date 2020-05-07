@@ -11,11 +11,11 @@
       <div class="right">
         <div class="meta">
           <span class="name">{{ targetPost.creator.name }}</span>
-          <span class="time">{{ $utils.timeStringToLocal(targetPost.post.create_at) }}</span>
+          <span
+            class="time"
+          >{{ $utils.timeStringToLocal(targetPost.post.create_at,'RelativeTime') }}</span>
         </div>
-        <div class="content">
-          {{ targetPost.post.content }}
-        </div>
+        <div class="content">{{ targetPost.post.content }}</div>
       </div>
     </div>
   </Publish>
@@ -72,7 +72,7 @@ export default {
   display: flex;
 }
 .meta {
-  color: #8C909D;
+  color: #8c909d;
   font-size: 16px;
   padding-top: 5px;
 }

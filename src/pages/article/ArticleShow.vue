@@ -20,18 +20,12 @@
         class="authorName q-px-md cursor-pointer"
         v-show="!personPage"
         @click="$router.push('/person/show/' + post.creator.id)"
-      >
-        {{ post.creator.name }}
-      </span>
-      <span>{{ $utils.timeStringToLocal(post.post.create_at) }}</span>
+      >{{ post.creator.name }}</span>
+      <span>{{ $utils.timeStringToLocal(post.post.create_at,'RelativeTime') }}</span>
     </div>
 
     <div class="q-py-lg body" @click="onContentClick">{{ post.post.content }}</div>
-    <ImageGrid
-      :images="post.post.images"
-      class="images"
-      v-if="!hasVideo"
-    />
+    <ImageGrid :images="post.post.images" class="images" v-if="!hasVideo" />
     <div v-else class="video-wraper">
       <!-- <q-video :ratio="16 / 9" :src="post.post.images[0]" /> -->
       <q-media-player
@@ -50,7 +44,7 @@
               style="width: 30vw; max-width: 50px; opacity: 0.25;"
             />
           </div>
-        </template> -->
+        </template>-->
       </q-media-player>
     </div>
     <div class="actions" v-if="shouldShowActions">

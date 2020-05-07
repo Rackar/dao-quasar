@@ -22,21 +22,14 @@
         <img :src="group.avatar || 'statics/group.svg'" />
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
-      <q-btn
-        flat
-        align="around"
-        class="btn-fixed-width"
-        label="分享"
-        icon="share"
-        @click="shareUrl"
-      />
+      <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
       <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
       <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" v-if="!blocked" />
       <q-btn unelevated rounded dense text-color="red-7" color="red-1" label="已被禁言" v-else disable />
     </div>
     <div class="warper">
       <div class="q-pa-md info q-my-md">
-        <span class="infotitle">创建于{{ $utils.timeStringToLocal(group.create_at) }}</span>
+        <span class="infotitle">创建于{{ $utils.timeStringToLocal(group.create_at,'Accurate') }}</span>
         <span class="infotitle">组长：{{ owner.name }}</span>
         <span class="reward">入群奖励{{ group.reward_join }} {{ reward_type }}</span>
         <span class="reward">发帖奖励{{ group.reward_post }} {{ reward_type }}</span>

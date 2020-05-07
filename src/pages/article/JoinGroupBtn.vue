@@ -60,6 +60,7 @@ export default {
         .then(() => {
           this.isJoined = true;
           this.$q.notify({ message: '加入成功！' });
+          this.$router.go(0);
         })
         .catch(err => {
           const message = (() => {

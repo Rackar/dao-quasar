@@ -18,7 +18,7 @@
       >
         <img :src="$store.state.user.avatar || 'statics/user.svg'" />
       </q-avatar>
-      <q-dialog v-model="showNotice" seamless position="top">
+      <q-dialog v-model="showNotice" seamless position="top" @hide="hideNotice">
         <q-card>
           <q-card-section>
             <div class="row items-center no-wrap">
@@ -30,7 +30,7 @@
             <div
               v-for="notice in unreadNotify"
               :key="notice.id"
-            >{{ notice.h_text }} - {{ $utils.timeStringToLocal(notice.create_at) }}</div>
+            >{{ notice.h_text }} - {{ $utils.timeStringToLocal(notice.create_at,'RelativeTime') }}</div>
           </q-card-section>
         </q-card>
       </q-dialog>
@@ -69,9 +69,8 @@ export default {
         this.notifications = notifications;
       }
     },
-    readNotify() {
-      this.showNotice = !this.showNotice;
-      if (this.showNotice && this.unreadNotify.length) {
+    hideNotice() {
+      if (!this.showNotice && this.unreadNotify.length) {
         let notifications = this.$q.localStorage.getItem('notifications') || [];
         notifications.map(notice => {
           notice.read = 2;
@@ -80,12 +79,15 @@ export default {
         this.notifications = notifications;
       }
     },
+    readNotify() {
+      this.showNotice = !this.showNotice;
+      // debugger;
+    },
   },
   mounted() {
     if (this.isLoggedIn) {
       let notifications = this.$q.localStorage.getItem('notifications');
       let rowid = 0;
-      let unread = 0;
       if (notifications && notifications.length) {
         this.notifications = notifications;
         rowid = notifications[0].id;

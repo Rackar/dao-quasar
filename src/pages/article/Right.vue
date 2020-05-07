@@ -11,28 +11,16 @@
       <div class="popup">
         <div class="popup_body">
           <div class="popup_data">
-            <div class="popup_data_label">
-              小组成员
-            </div>
-            <div class="popup_data_value">
-              {{ groupInfo.num_member }}
-            </div>
+            <div class="popup_data_label">小组成员</div>
+            <div class="popup_data_value">{{ groupInfo.num_member }}</div>
           </div>
           <div class="popup_data">
-            <div class="popup_data_label">
-              小组文章
-            </div>
-            <div class="popup_data_value">
-              {{ groupInfo.num_post }}
-            </div>
+            <div class="popup_data_label">小组文章</div>
+            <div class="popup_data_value">{{ groupInfo.num_post }}</div>
           </div>
           <div class="popup_data">
-            <div class="popup_data_label">
-              发帖奖励(单位)
-            </div>
-            <div class="popup_data_value">
-              1000
-            </div>
+            <div class="popup_data_label">发帖奖励(单位)</div>
+            <div class="popup_data_value">1000</div>
           </div>
         </div>
         <div class="popup_actions">
@@ -109,7 +97,7 @@ export default {
   },
   methods: {
     formatDate(time) {
-      return this.$utils.timeStringToLocal(time).split(' ')[0];
+      return this.$utils.timeStringToLocal(time, 'RelativeDay');
     },
     onAddArticle() {
       this.$router.push(this.groupLink);
