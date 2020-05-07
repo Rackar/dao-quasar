@@ -215,8 +215,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .images {
-  max-width: 450px;
-  max-height: 274px;
+  width: 450px;
+  height: 274px;
+  &:empty {
+    display: none;
+  }
 }
 .isLiked {
   color: var(--q-color-primary) !important;
@@ -242,6 +245,7 @@ export default {
 .body {
   display: block;
   font-size: 16px;
+  word-break: break-word;
   overflow: overlay;
 }
 .container {

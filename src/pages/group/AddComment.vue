@@ -89,5 +89,9 @@ export default {
 }
 .content {
   font-size: 16px;
+  word-break: break-word;
+}
+.right {
+  flex: 1;
 }
 </style>
