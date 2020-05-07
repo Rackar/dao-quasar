@@ -37,7 +37,15 @@
         </div>
 
         <div class="grid_item videoItem" v-for="item in videoList" :key="item.id">
-          <video controls="true" :src="item.previewUrl" />
+          <q-media-player
+            type="video"
+            background-color="black"
+            radius="4px"
+            hide-volume-slider
+            dense
+            :show-big-play-button="false"
+            :sources="[{ src: item.previewUrl }]"
+          />
           <div class="close removeBtn" @click="removeMedia('videoList', item.id)">
             <q-icon :name="removeIcon" />
           </div>
@@ -62,10 +70,16 @@
         </div>
         <div class="footer_right">
           <div class="wordLength">{{ content.length }}/{{ maxTextLength }}</div>
-          <div class="sendPostBtn" @click="publish">
-            <q-icon :name="sendIcon" />
-            <span>{{ publishBtnLabel }}</span>
-          </div>
+          <q-btn
+            class="sendPostBtn"
+            @click="publish"
+            unelevated
+            :disabled="!canPublish"
+            :icon="sendIcon"
+            color="primary"
+          >
+            {{ publishBtnLabel }}
+          </q-btn>
         </div>
       </div>
 

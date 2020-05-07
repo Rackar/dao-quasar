@@ -25,6 +25,13 @@ export default {
   data() {
     return this.getDefaultData();
   },
+  watch: {
+    shouldShow(val) {
+      if (val === false) {
+        Object.assign(this, this.getDefaultData());
+      }
+    }
+  },
   computed: {
     shouldShow: {
       get() {
@@ -33,6 +40,10 @@ export default {
       set(v) {
         this.$emit('input', v);
       },
+    },
+    canPublish() {
+      const contentLength = this.content.trim().length;
+      return contentLength > 0 && contentLength <= this.maxTextLength;
     },
     curUserAvatar() {
       return this.$store.state.user.avatar || 'statics/user.svg';
