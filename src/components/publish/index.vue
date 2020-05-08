@@ -56,16 +56,18 @@
         <div class="footer_left">
           <!-- <img class="imgBtn" src="~assets/expression.png" /> -->
           <img
-            class="imgBtn"
+            svg-inline
+            class="imgBtn svg-icon svg-icon--middle-grey svg-icon--hover-dark-grey"
             :data-disabled="!canUploadImg"
             @click="onImgBtnClick"
-            src="~assets/picture.png"
+            src="@/statics/icons/icon_tupian_normal.svg"
           />
           <img
-            class="imgBtn"
+            svg-inline
+            class="imgBtn svg-icon svg-icon--middle-grey svg-icon--hover-dark-grey"
             :data-disabled="!canUploadVideo"
             @click="onVideoBtnClick"
-            src="~assets/video.png"
+            src="@/statics/icons/icon_shipin_normal.svg"
           />
         </div>
         <div class="footer_right">
@@ -75,10 +77,14 @@
             @click="publish"
             unelevated
             :disabled="!canPublish"
-            :icon="sendIcon"
             color="primary"
           >
-            {{ publishBtnLabel }}
+            <img
+              svg-inline
+              class="svg-icon svg-icon--white"
+              src="@/statics/icons/icon_fatie.svg"
+            />
+            <span>{{ publishBtnLabel }}</span>
           </q-btn>
         </div>
       </div>

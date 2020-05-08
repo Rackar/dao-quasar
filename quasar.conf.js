@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 const path = require('path');
@@ -10,7 +11,7 @@ module.exports = function(ctx) {
     boot: ['axios', 'utils', 'router', 'loginRequire', 'iconHover'],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
-    css: ['app.styl'],
+    css: ['app.scss'],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
@@ -71,19 +72,26 @@ module.exports = function(ctx) {
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
       extendWebpack(cfg) {
-        (cfg.resolve.alias = {
+        cfg.module.rules.push({
+          test: /\.vue$/,
+          loader: 'vue-svg-inline-loader',
+          options: {
+            /* ... */
+          },
+        });
+        cfg.resolve.alias = {
           ...cfg.resolve.alias,
           '@': path.resolve(__dirname, './src'),
-        }),
-          cfg.module.rules.push({
-            enforce: 'pre',
-            test: /\.(js|vue)$/,
-            loader: 'eslint-loader',
-            exclude: /node_modules/,
-            options: {
-              formatter: require('eslint').CLIEngine.getFormatter('stylish'),
-            },
-          });
+        };
+        cfg.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /node_modules/,
+          options: {
+            formatter: require('eslint').CLIEngine.getFormatter('stylish'),
+          },
+        });
       },
     },
 

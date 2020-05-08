@@ -3,10 +3,11 @@
     v-require-login-click
     outline
     color="primary"
-    label="发言"
+    class="btn"
     @click="showAddArtrcle"
-    icon="create"
   >
+    <img svg-inline src="@/statics/icons/icon_bianji_normal.svg" class="svg-icon svg-icon--primary mr5">
+    <span>发言</span>
     <Dialog :groupId="groupId" v-model="shouldShowDialog" :onSave="onSave" />
   </q-btn>
 </template>
@@ -30,3 +31,10 @@ export default {
   },
 };
 </script>
+
+<style scoped="true" lang="scss">
+.btn {
+  width: 96px;
+  height: 34px;
+}
+</style>
