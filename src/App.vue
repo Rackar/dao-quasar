@@ -5,7 +5,7 @@
 </template>
 
 <script>
-// import myIcons from 'src/statics/icon';
+import myIcons from 'src/statics/icon';
 export default {
   name: 'App',
   provide() {
@@ -20,12 +20,12 @@ export default {
       this.$store.commit('user/login_saveToken', token);
       this.getMyUserinfo();
     }
-    // this.$q.iconMapFn = iconName => {
-    //   const icon = myIcons[iconName];
-    //   if (icon !== void 0) {
-    //     return { icon: `img:statics/icons/${icon}` };
-    //   }
-    // };
+    this.$q.iconMapFn = iconName => {
+      const icon = myIcons[iconName];
+      if (icon !== void 0) {
+        return { icon: `img:statics/icons/${icon}` };
+      }
+    };
   },
   mounted() {},
 

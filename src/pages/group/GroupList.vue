@@ -14,20 +14,12 @@
             'q-py-md',
           ]"
         >
-          <!-- <span
-            v-show="showListId == myGroup.grp.id"
-            class="leftHideTool"
-            @click.stop="showListTool"
-          >
-            ...
-          </span>-->
-
-          <q-icon
-            name="menu"
+          <span
             v-show="showListId == myGroup.grp.id"
             class="leftHideTool"
             @mouseover="handleMenuMouseMoveover(myGroup.grp.id)"
           >
+            <q-icon name="icon_more"></q-icon>
             <div auto-close v-show="showMenu" @mouseout="showMenuId = 0" class="menu-hover">
               <q-list style="min-width: 100px">
                 <q-item clickable>
@@ -41,7 +33,7 @@
                 </q-item>
               </q-list>
             </div>
-          </q-icon>
+          </span>
           <q-item-section avatar>
             <q-avatar rounded size="40px">
               <img :src="myGroup.grp.avatar || 'statics/group.svg'" />
@@ -274,7 +266,7 @@ export default {
 .leftHideTool {
   position: absolute;
   left: 20px;
-  top: 30px;
+  top: 18px;
   z-index: 20;
   padding: 1px;
   font-size: 20px;
