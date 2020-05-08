@@ -9,7 +9,7 @@
     <Upload ref="upload" @uploaded="uploaded" />
     <div class="hover-color"></div>
     <div class="row no-wrap items-end q-mt-md q-px-lg title">
-      <q-avatar rounded size="100px" @click="changeAvatar" class="avatar">
+      <q-avatar size="165px" @click="changeAvatar" class="avatar">
         <q-icon name="camera" v-show="editing" class="mask" />
 
         <img :src="userinfo.avatar || 'statics/user.svg'" :class="{ masked: editing }" />
@@ -24,7 +24,7 @@
             <q-input square outlined dense v-model="edit.name" />
           </div>
           <div v-show="editing">
-            <q-btn outline color="primary" class="btn" label="取消" @click="editing=false" />
+            <q-btn outline color="primary" class="btn" label="取消" @click="editing = false" />
             <q-btn
               unelevated
               color="primary"
@@ -34,13 +34,20 @@
               :disable="loadingVisible"
             />
           </div>
-          <div
-            v-show="!editing"
-            class="username"
-          >{{ this.userinfo.name || this.userinfo.mail_export }}</div>
+          <div v-show="!editing" class="username">
+            {{ this.userinfo.name || this.userinfo.mail_export }}
+          </div>
           <div v-show="!editing">
             <!-- <q-icon name="edit" color="primary" v-show="isMyself" @click="clickEdit" size="24px" /> -->
-            <q-btn dense flat icon="edit" color="primary" @click="clickEdit" v-show="isMyself" />
+            <!-- <q-btn dense flat icon="edit" color="primary" @click="clickEdit" v-show="isMyself" /> -->
+            <IconHover
+              iconName="bianji"
+              width="16px"
+              class="cursor-pointer"
+              v-show="isMyself"
+              @click.native="clickEdit"
+              style="padding-top:8px;"
+            />
           </div>
         </div>
         <div class="q-size-sm">DOA ID {{ id }} {{ userinfo.mail_export }}</div>
@@ -49,12 +56,11 @@
       <!-- <q-space />
       <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" @click="clickEdit" />-->
     </div>
-    <div class="row">
+    <div class="row q-col-gutter-md">
       <div class="col-sm-8 col-md-6 offset-md-1">
         <q-card flat class="my-card">
           <q-tabs
             v-model="tab"
-            dense
             class="text-grey"
             active-color="primary"
             indicator-color="primary"
@@ -65,9 +71,9 @@
             <q-tab name="recycle" label="回收站" />
           </q-tabs>
 
-          <q-separator />
+          <!-- <q-separator /> -->
 
-          <q-tab-panels v-model="tab" animated>
+          <q-tab-panels v-model="tab" animated transition-prev="fade" transition-next="fade">
             <q-tab-panel name="myPosts" class="posts">
               <ArticleShow
                 v-for="post in pullList"
@@ -91,7 +97,7 @@
           </q-tab-panels>
         </q-card>
       </div>
-      <div class="col-sm-4 col-md-3 offset-md-1">
+      <div class="col-sm-4 col-md-4">
         <PersonWallet :tokens="tokens" v-if="isMyself" />
       </div>
     </div>
@@ -323,7 +329,7 @@ export default {
   .hover-color {
     position: absolute;
     background-color: #74d2c8;
-    height: 40px;
+    height: 55px;
     width: 100%;
     top: 0;
     z-index: 0;
@@ -331,7 +337,7 @@ export default {
 }
 
 .avatar {
-  background-color: #000000;
+  // background-color: #000000;
 }
 .mask {
   position: absolute;
@@ -343,7 +349,7 @@ export default {
 }
 
 .title {
-  margin-top: -40px;
+  margin-top: -30px;
   padding-bottom: 60px;
   margin-left: 70px;
 }

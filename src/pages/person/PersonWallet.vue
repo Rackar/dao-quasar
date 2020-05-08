@@ -1,9 +1,10 @@
 <template>
-  <q-card class="my-card">
+  <q-card flat class="my-card">
     <moneyIn v-model="showMoneyIn" />
     <moneyOut v-model="showMoneyOut" :tokens="tokens" :currentToken="currentToken" />
-    <q-card-section class="row no-wrap">
-      我的钱包
+    <q-card-section class="row no-wrap title">
+      <span class="title-name">我的钱包</span>
+
       <q-space />
       <IconHover
         iconName="code"
@@ -32,26 +33,26 @@
           </q-list>
         </q-menu>
       </q-btn>
-      <div>{{ currentToken.value }}</div>
-      <div>$ 0.00</div>
+      <div class="value1">{{ currentToken.value }}</div>
+      <div class="value2">$ 0.00</div>
     </q-card-section>
     <q-card-section>
-      <q-list>
+      <q-list class="money-detail">
         <div v-for="item in log" :key="item.key">
           <q-item>
             <q-item-section>
-              <q-item-label>{{ item.token_log.note }}</q-item-label>
-              <q-item-label
-                caption
-              >{{$utils.timeStringToLocal(item.token_log.create_at,'Accurate') }}</q-item-label>
+              <q-item-label class="detail-big">{{ item.token_log.note }}</q-item-label>
+              <q-item-label class="detail-small" caption>
+                {{ $utils.timeStringToLocal(item.token_log.create_at, 'Accurate') }}
+              </q-item-label>
             </q-item-section>
 
             <q-item-section side>
-              <q-item-label>{{item.token_log.value}}</q-item-label>
-              <q-item-label caption>$ 0</q-item-label>
+              <q-item-label class="detail-big">{{ item.token_log.value }}</q-item-label>
+              <q-item-label caption class="detail-small">$ 0</q-item-label>
             </q-item-section>
           </q-item>
-          <q-separator inset />
+          <!-- <q-separator inset /> -->
         </div>
       </q-list>
     </q-card-section>
@@ -118,3 +119,44 @@ export default {
   mounted() {},
 };
 </script>
+<style lang="stylus" scoped>
+.my-card {
+  padding: 40px;
+
+  .q-card__section--vert {
+    padding: 10px 0;
+  }
+}
+
+.value1 {
+  font-size: 30px;
+  color: #2A3542;
+}
+
+.value2 {
+  font-size: 24px;
+  color: #8C909D;
+}
+
+.title {
+  .title-name {
+    font-size: 24px;
+    color: #2A3542;
+  }
+}
+
+.money-detail {
+  .q-item {
+    padding: 20px 0;
+  }
+
+  .detail-big {
+    font-size: 18px;
+    color: #2A3542;
+  }
+
+  .detail-small {
+    color: #8C909D;
+  }
+}
+</style>
