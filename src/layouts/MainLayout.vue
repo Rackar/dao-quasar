@@ -44,6 +44,7 @@
 <script>
 import grouplist from 'pages/group/GroupList';
 import GroupListHeader from 'components/headerBarLeft';
+import { debounce } from 'quasar';
 const menuList = [
   {
     icon: 'people',
@@ -71,7 +72,7 @@ export default {
     },
   },
   mounted() {
-    window.addEventListener('resize', this.resizeHandler, true);
+    window.addEventListener('resize', debounce(this.resizeHandler, 200), true);
   },
   destroyed() {
     window.removeEventListener('resize', this.resizeHandler, true);

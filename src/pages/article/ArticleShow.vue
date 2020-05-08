@@ -230,8 +230,8 @@ export default {
 }
 .video-wraper {
   display: flex;
-  width: 300px;
-  height: 300px;
+  width: 450px;
+  height: 274px;
 }
 .header {
   display: flex;

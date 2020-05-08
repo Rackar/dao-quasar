@@ -5,12 +5,19 @@
     <q-card-section class="row no-wrap">
       我的钱包
       <q-space />
-      <q-btn flat @click="showMoneyIn = true">
-        <q-icon name="img:statics/icons/icon_code_normal.svg" />
-      </q-btn>
-      <q-btn flat @click="showMoneyOut = true">
-        <q-icon name="img:statics/icons/icon_zhuanzhang_normal.svg" />
-      </q-btn>
+      <IconHover
+        iconName="code"
+        width="36px"
+        class="cursor-pointer"
+        @click.native="showMoneyIn = true"
+      />
+      <IconHover
+        style="margin-left:60px;"
+        iconName="zhuanzhang"
+        width="36px"
+        class="cursor-pointer"
+        @click.native="showMoneyOut = true"
+      />
     </q-card-section>
     <q-card-section class="text-center">
       <q-btn no-caps flat :label="'总金额 (' + currentToken.name + ')▽'">
