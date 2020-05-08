@@ -96,6 +96,7 @@
         @change="uploadImg"
         type="file"
         accept="image/*"
+        multiple
       />
       <input
         hidden="hidden"

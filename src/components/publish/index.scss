@@ -98,7 +98,7 @@
     margin-right: 0;
   }
   &[data-disabled="true"] {
-    opacity: 0.3;
+    color: var(--light-grey);
   }
 }
 
