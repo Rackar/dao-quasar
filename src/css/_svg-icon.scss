@@ -1,0 +1,34 @@
+.svg-icon {
+  color: currentColor;
+  outline: none;
+  --light-grey: #E4E4E4;
+  --middle-grey: #8C909D;
+  --dark-grey: #2A3542 ;
+  --primary: var(--q-color-primary);
+
+  path {
+    transition: color 100ms;
+    fill: currentColor;
+  }
+
+  path[stroke] {
+    transition: color 100ms;
+    stroke: currentColor;
+  }
+}
+
+$colors: white, light-grey, middle-grey, dark-grey, primary;
+
+@each $color in $colors {
+  .svg-icon--#{$color} {
+    color: var(--#{$color});
+  }
+
+  .svg-icon--hover-#{$color}:hover {
+    color: var(--#{$color});
+  }
+
+  .q-btn:hover .svg-icon--hover-#{$color} {
+    color: var(--#{$color});
+  }
+}

@@ -20,8 +20,10 @@
         class="authorName q-px-md cursor-pointer"
         v-show="!personPage"
         @click="$router.push('/person/show/' + post.creator.id)"
-      >{{ post.creator.name }}</span>
-      <span>{{ $utils.timeStringToLocal(post.post.create_at,'RelativeTime') }}</span>
+      >
+        {{ post.creator.name }}
+      </span>
+      <span>{{ $utils.timeStringToLocal(post.post.create_at, 'RelativeTime') }}</span>
     </div>
 
     <div class="q-py-lg body" @click="onContentClick">{{ post.post.content }}</div>
@@ -48,24 +50,40 @@
       </q-media-player>
     </div>
     <div class="actions" v-if="shouldShowActions">
-      <q-btn
-        v-require-login-click
-        flat
-        :class="{ isLiked }"
-        :label="post.post.num_like"
-        icon="thumb_up"
-        @click="like"
-      />
-      <q-btn
-        v-require-login-click
-        flat
-        :label="post.post.num_comment"
-        icon="chat_bubble_outline"
-        @click="addComment"
-      />
-      <q-btn flat :label="post.post.num_share" icon="share" @click="share" />
-      <!-- <q-btn flat rounded icon="settings" @click="showSetting" /> -->
-      <q-btn flat icon="settings" v-if="shouldShowSetting">
+      <q-btn v-require-login-click flat :class="{ isLiked }" @click="like">
+        <img
+          svg-inline
+          class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr10"
+          src="@/statics/icons/icon_like_normal.svg"
+        />
+        <span>{{ post.post.num_like }}</span>
+      </q-btn>
+
+      <q-btn v-require-login-click flat @click="addComment">
+        <img
+          svg-inline
+          class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr10"
+          src="@/statics/icons/icon_comment_normal.svg"
+        />
+        <span>{{ post.post.num_comment }}</span>
+      </q-btn>
+
+      <q-btn v-require-login-click flat @click="share">
+        <img
+          svg-inline
+          class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr10"
+          src="@/statics/icons/icon_share1_normal.svg"
+        />
+        <span>{{ post.post.num_share }}</span>
+      </q-btn>
+
+      <q-btn flat v-if="shouldShowSetting">
+        <img
+          svg-inline
+          class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr10"
+          src="@/statics/icons/icon_shezhi_normal.svg"
+        />
+        <span>设置</span>
         <q-menu auto-close>
           <q-list style="min-width: 100px">
             <q-item v-if="canEdit" clickable>
@@ -214,15 +232,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.isLiked {
+  color: var(--q-color-primary) !important;
+  .svg-icon {
+    color: inherit;
+  }
+}
 .images {
   width: 450px;
   height: 274px;
   &:empty {
     display: none;
   }
-}
-.isLiked {
-  color: var(--q-color-primary) !important;
 }
 .actions {
   margin-left: -16px;
@@ -264,13 +285,4 @@ export default {
     cursor: pointer;
   }
 }
-
-// [data-type='article'] {
-// }
-
-// [data-type='comment'] {
-//   // &:hover {
-//   //   background-color: #fafafa;
-//   // }
-// }
 </style>

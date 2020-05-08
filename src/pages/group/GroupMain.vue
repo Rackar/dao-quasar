@@ -22,7 +22,10 @@
         <img :src="group.avatar || 'statics/group.svg'" />
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
-      <q-btn flat align="around" class="btn-fixed-width" label="分享" icon="share" @click="shareUrl" />
+      <q-btn flat align="around" class="btn-fixed-width shareBtn" @click="shareUrl">
+        <img svg-inline src="@/statics/icons/icon_share_hover.svg" class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr5">
+        <span>分享</span>
+      </q-btn>
       <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
       <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" v-if="!blocked" />
       <q-btn unelevated rounded dense text-color="red-7" color="red-1" label="已被禁言" v-else disable />

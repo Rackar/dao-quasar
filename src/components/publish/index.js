@@ -78,37 +78,51 @@ export default {
     removeMedia(type, id) {
       this[type] = this[type].filter(i => i.id !== id);
     },
+    warnTooManyFiles() {
+      return this.$q.notify('只能上传四张图片，或一个视频');
+    },
     onImgBtnClick() {
       if (this.imgList.length === 4 || this.videoList.length === 1) {
-        return this.$q.notify('只能上传四张图片，或一个视频');
+        return this.warnTooManyFiles();
       }
       this.$refs.imgInput.click();
     },
     onVideoBtnClick() {
       if (this.imgList.length > 0 || this.videoList.length === 1) {
-        return this.$q.notify('只能上传四张图片，或一个视频');
+        return this.warnTooManyFiles();
       }
       this.$refs.videoInput.click();
     },
-    uploadMedia(e, type) {
+    uploadImg(e) {
+      const files = e.target.files;
+      if (files.length === 0) return;
+      if (this.imgList.length + files.length > 4) {
+        return this.warnTooManyFiles();
+      }
+      const _files = [].map.call(files, (file, index) => {
+        return {
+          file,
+          id: Date.now() + index,
+          previewUrl: window.URL.createObjectURL(file),
+        };
+      });
+
+      this.imgList = this.imgList.concat(_files)
+      e.target.value = '';
+    },
+    uploadVideo(e) {
       const file = e.target.files[0];
       if (!file) return;
       if (file.size / 1000000 > 500) {
         e.target.value = '';
-        return this.$q.notify('视频大小不能超过 500M');
+        return this.$q.notify('文件大小不能超过 500M');
       }
-      this[type + 'List'].push({
+      this.videoList.push({
         file,
         id: Date.now(),
         previewUrl: window.URL.createObjectURL(file),
       });
       e.target.value = '';
-    },
-    uploadImg(e) {
-      this.uploadMedia(e, 'img');
-    },
-    uploadVideo(e) {
-      this.uploadMedia(e, 'video');
     },
     publish: async function() {
       if (this.content.trim().length === 0) {
