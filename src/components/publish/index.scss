@@ -14,8 +14,11 @@
 }
 
 .container {
-  width: 680px;
+  width: 706px;
+  max-width: unset;
+  border-radius: 10px;
   background: #fff;
+  box-shadow: none;
 }
 
 .header {
@@ -35,7 +38,7 @@
 .body {
   padding-left: 29px;
   padding-right: 34px;
-  padding-top: 28px;
+  padding-top: 21px;
   display: flex;
 }
 
@@ -68,17 +71,10 @@
 .sendPostBtn {
   width: 140px;
   height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 214, 194, 1);
-  border-radius: 4px;
-  color: #ffffff;
-  font-size: 14px;
-  cursor: pointer;
   margin-left: 14px;
-  svg {
+  /deep/ .q-icon {
     margin-right: 6px;
+    font-size: 14px;
   }
 }
 
@@ -110,7 +106,8 @@
   grid-gap: 16px;
   padding-left: 74px;
   padding-right: 34px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  height: 332px;
 }
 
 .media:empty {
@@ -128,10 +125,8 @@
 
 .videoItem {
   position: relative;
-  video {
-    display: block;
-    height: 100px;
-  }
+  display: flex;
+  justify-content: center;
 }
 
 .removeBtn {
