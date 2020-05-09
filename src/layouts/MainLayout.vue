@@ -3,7 +3,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      :width="458"
+      :width="390"
       bordered
       class="drawerContainer"
       :breakpoint="300"

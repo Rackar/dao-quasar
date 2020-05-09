@@ -42,12 +42,13 @@
 
           <q-item-section>
             <q-item-label lines="1" style="margin-bottom:5px;">
-              <span class="text-weight-bold">{{ myGroup.grp.name }}</span>
+              <span class="group-title">{{ myGroup.grp.name }}</span>
             </q-item-label>
             <q-item-label caption lines="1">{{ myGroup.grp.desc_text }}</q-item-label>
           </q-item-section>
           <q-item-section side top class="justify-between">
-            <q-badge color="grey" :label="myGroup.unread" />
+            <!-- <q-badge color="grey" :label="myGroup.unread" /> -->
+            <q-item-label class="badge-num">{{myGroup.unread}}</q-item-label>
             <q-item-label
               caption
             >{{ $utils.timeStringToLocal(myGroup.grp.last_post_at,'RelativeDay') }}</q-item-label>
@@ -83,7 +84,7 @@
 
           <q-item-section>
             <q-item-label lines="1">
-              <span class="text-weight-bold">{{ grp.name }}</span>
+              <span class="group-title">{{ grp.name }}</span>
             </q-item-label>
             <q-item-label caption lines="1">{{ grp.desc_text }}</q-item-label>
           </q-item-section>
@@ -259,8 +260,35 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.container {
+  .group-title {
+    font-size: 18px;
+    color: #2A3542;
+    font-weight: 600;
+    line-height: 25px;
+  }
+
+  .text-caption {
+    font-size: 16px;
+    color: #8C909D;
+  }
+
+  .badge-num {
+    font-size: 18px;
+    padding: 6px 7px 5px;
+    background: rgb(228, 228, 228);
+    border-radius: 13px;
+    color: #2A3542;
+    font-weight: 600;
+  }
+}
+
 .isActive {
   background-color: #E4E4E4;
+
+  .badge-num {
+    background: rgb(241, 241, 241);
+  }
 }
 
 .leftHideTool {
@@ -274,6 +302,10 @@ export default {
 
 .pin {
   background-color: #dddddd;
+
+  .badge-num {
+    background: rgb(241, 241, 241);
+  }
 }
 
 .menu-hover {

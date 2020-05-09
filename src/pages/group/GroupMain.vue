@@ -18,12 +18,16 @@
       <headerBarRight />
     </div>
     <div class="groupinfo">
-      <q-avatar rounded size="40px">
+      <q-avatar rounded size="50px">
         <img :src="group.avatar || 'statics/group.svg'" />
       </q-avatar>
       <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
       <q-btn flat align="around" class="btn-fixed-width shareBtn" @click="shareUrl">
-        <img svg-inline src="@/statics/icons/icon_share_hover.svg" class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr5">
+        <img
+          svg-inline
+          src="@/statics/icons/icon_share_hover.svg"
+          class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr5"
+        />
         <span>分享</span>
       </q-btn>
       <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
