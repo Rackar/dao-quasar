@@ -20,7 +20,9 @@
         class="authorName q-px-md cursor-pointer"
         v-show="!personPage"
         @click="$router.push('/person/show/' + post.creator.id)"
-      >{{ post.creator.name }}</span>
+      >
+        {{ post.creator.name }}
+      </span>
       <span>{{ $utils.timeStringToLocal(post.post.create_at, 'RelativeTime') }}</span>
     </div>
     <div class="main-body">
@@ -29,13 +31,15 @@
       <div v-else class="video-wraper">
         <!-- <q-video :ratio="16 / 9" :src="post.post.images[0]" /> -->
         <q-media-player
+          :autoplay="true"
+          :muted="true"
           type="video"
           background-color="white"
           radius="1rem"
           hide-volume-slider
           dense
           :show-big-play-button="true"
-          :sources="[{ src: post.post.images[0] }]"
+          :source="post.post.images[0]"
         >
           <!-- <template v-slot:overlay>
           <div>
