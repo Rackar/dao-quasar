@@ -245,8 +245,8 @@ export default {
   }
 }
 .images {
-  width: 450px;
-  height: 274px;
+  width: 510px;
+  height: 310px;
   &:empty {
     display: none;
   }
@@ -260,8 +260,8 @@ export default {
 }
 .video-wraper {
   display: flex;
-  width: 450px;
-  height: 274px;
+  width: 510px;
+  height: 310px;
 }
 .header {
   display: flex;
