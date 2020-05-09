@@ -12,6 +12,22 @@
 @testUserId = 10009
 # token半年有效
 
+# 币价接口
+@tokenapikey=64e6c84a-b974-4572-83a7-e9e1f81264a5
+
+### 测试货币接口
+GET https://pro-api.coinmarketcap.com/v1/fiat/map
+X-CMC_PRO_API_KEY: {{tokenapikey}}
+
+### 获取币种
+GET https://pro-api.coinmarketcap.com/v1/cryptocurrency/map
+X-CMC_PRO_API_KEY: {{tokenapikey}}
+
+### 币种行情
+GET https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?id=1027
+X-CMC_PRO_API_KEY: {{tokenapikey}}
+
+
 ### 未登录推荐组
 GET {{host}}/grp/recommend 
 

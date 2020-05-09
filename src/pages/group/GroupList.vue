@@ -10,7 +10,7 @@
           v-ripple
           :class="[
             { isActive: isItemActive(myGroup.grp.id), pin: myGroup.pinned === 2 },
-            'group-list'
+            'group-list',
           ]"
         >
           <span
@@ -22,9 +22,9 @@
             <div auto-close v-show="showMenu" @mouseout="showMenuId = 0" class="menu-hover">
               <q-list style="min-width: 100px">
                 <q-item clickable>
-                  <q-item-section
-                    @click.stop="setGroupToTop(myGroup)"
-                  >{{ myGroup.pinned === 2 ? '取消置顶' : '置顶群' }}</q-item-section>
+                  <q-item-section @click.stop="setGroupToTop(myGroup)">
+                    {{ myGroup.pinned === 2 ? '取消置顶' : '置顶群' }}
+                  </q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable>
@@ -47,17 +47,17 @@
           </q-item-section>
           <q-item-section side top class="justify-between">
             <!-- <q-badge color="grey" :label="myGroup.unread" /> -->
-            <q-item-label class="badge-num">{{myGroup.unread}}</q-item-label>
-            <q-item-label
-              caption
-            >{{ $utils.timeStringToLocal(myGroup.grp.last_post_at,'RelativeDay') }}</q-item-label>
+            <q-item-label class="badge-num">{{ myGroup.unread }}</q-item-label>
+            <q-item-label caption>
+              {{ $utils.timeStringToLocal(myGroup.grp.last_post_at, 'RelativeDay') }}
+            </q-item-label>
           </q-item-section>
         </q-item>
 
         <q-separator inset="true" />
       </div>
-      <q-item-label header class="q-pa-lg">
-        <div class="text-h6 text-weight-bold">推荐</div>
+      <q-item-label header style="padding: 35px 24px 6px;">
+        <div class="tuijian">推荐</div>
       </q-item-label>
       <div v-for="grp in recommendGroups" :key="grp.id">
         <!-- <q-item
@@ -93,8 +93,11 @@
               name="img:statics/icons/icon_suo_2.svg"
               size="xs"
             />
-            <q-badge v-else color="grey" :label="grp.num_post" />
-            <q-item-label caption>{{ $utils.timeStringToLocal(grp.last_post_at,'RelativeDay') }}</q-item-label>
+            <!-- <q-badge v-else color="grey" :label="grp.num_post" /> -->
+            <q-item-label v-else class="badge-num">{{ grp.num_post }}</q-item-label>
+            <q-item-label caption>
+              {{ $utils.timeStringToLocal(grp.last_post_at, 'RelativeDay') }}
+            </q-item-label>
           </q-item-section>
         </q-item>
 
@@ -286,6 +289,13 @@ export default {
   }
 }
 
+.tuijian{
+  padding-left:22px;
+  font-size:24px;
+  font-weight:600;
+  color:rgb(42,53,66);
+  line-height:33px;
+}
 .isActive {
   background-color: #E4E4E4;
 

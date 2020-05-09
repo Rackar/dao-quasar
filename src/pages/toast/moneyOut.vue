@@ -18,7 +18,7 @@
         <q-btn no-caps flat :label="'单位 (' + currentToken.contract.name + ')▽'">
           <q-menu auto-close>
             <q-list style="min-width: 100px">
-              <div v-for="(token,index) in tokens" :key="token.id">
+              <div v-for="(token, index) in tokens" :key="token.id">
                 <q-item clickable @click="pickToken(index)">
                   <q-item-section>{{ token.contract.symbol }}</q-item-section>
                 </q-item>
@@ -34,10 +34,10 @@
           outlined
           v-model="val"
           dense
-          :placeholder=" '可转出余额' + currentToken.token.value"
+          :placeholder="'可转出余额' + currentToken.token.value"
         >
           <template v-slot:append>
-            <q-btn flat color="white" text-color="black" label="全部" @click="inputAll" />
+            <q-btn flat color="primary" label="全部" @click="inputAll" />
           </template>
         </q-input>
       </div>
@@ -47,7 +47,7 @@
           color="primary"
           label="确定"
           @click="sentMoney"
-          :disable="this.user===''||this.val===''"
+          :disable="this.user === '' || this.val === ''"
         />
       </div>
 
