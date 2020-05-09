@@ -10,8 +10,7 @@
           v-ripple
           :class="[
             { isActive: isItemActive(myGroup.grp.id), pin: myGroup.pinned === 2 },
-            'q-px-xl',
-            'q-py-md',
+            'group-list'
           ]"
         >
           <span
@@ -35,7 +34,7 @@
             </div>
           </span>
           <q-item-section avatar>
-            <q-avatar rounded size="40px">
+            <q-avatar rounded size="50px">
               <img :src="myGroup.grp.avatar || 'statics/group.svg'" />
             </q-avatar>
           </q-item-section>
@@ -77,7 +76,7 @@
         >
           <!-- <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">...</span> -->
           <q-item-section avatar>
-            <q-avatar rounded size="40px">
+            <q-avatar rounded size="50px">
               <img :src="grp.avatar || 'statics/group.svg'" />
             </q-avatar>
           </q-item-section>
@@ -261,6 +260,10 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .container {
+  .group-list {
+    padding: 18px 48px;
+  }
+
   .group-title {
     font-size: 18px;
     color: #2A3542;
@@ -294,7 +297,7 @@ export default {
 .leftHideTool {
   position: absolute;
   left: 20px;
-  top: 18px;
+  top: 26px;
   z-index: 20;
   padding: 1px;
   font-size: 20px;
