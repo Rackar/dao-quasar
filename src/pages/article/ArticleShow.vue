@@ -20,9 +20,7 @@
         class="authorName q-px-md cursor-pointer"
         v-show="!personPage"
         @click="$router.push('/person/show/' + post.creator.id)"
-      >
-        {{ post.creator.name }}
-      </span>
+      >{{ post.creator.name }}</span>
       <span>{{ $utils.timeStringToLocal(post.post.create_at, 'RelativeTime') }}</span>
     </div>
     <div class="main-body">
@@ -70,13 +68,13 @@
           <span>{{ post.post.num_comment }}</span>
         </q-btn>
 
-        <q-btn v-require-login-click flat @click="share">
+        <q-btn v-require-login-click flat @click="share(post.post.id)">
           <img
             svg-inline
             class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr10"
             src="@/statics/icons/icon_share1_normal.svg"
           />
-          <span>{{ post.post.num_share }}</span>
+          <!-- <span>{{ post.post.num_share }}</span> -->
         </q-btn>
 
         <q-btn flat v-if="shouldShowSetting">
@@ -105,6 +103,7 @@
 
 <script>
 import { post } from '@/apis/request';
+import { copyToClipboard } from 'quasar';
 import deleteArticle from 'pages/toast/deleteArticle';
 import EditArticle from './EditArticle';
 import ImageGrid from './ImageGrid';
@@ -225,7 +224,20 @@ export default {
           this.$q.notify(err.message);
         });
     },
-    share() {},
+    share(id) {
+      let t = this.$router.mode === 'hash' ? '/#/' : '/';
+      let url = window.location.protocol + '//' + window.location.host + t + 'articles/' + id;
+      // debugger;
+      copyToClipboard(url)
+        .then(() => {
+          this.$q.notify('帖子地址已复制到剪切板');
+          // 成功!
+        })
+        .catch(() => {
+          this.$q.notify('浏览器不支持，请手动复制地址');
+          // 失败
+        });
+    },
     async deletePost() {
       this.showDeleteArticle = true;
     },
