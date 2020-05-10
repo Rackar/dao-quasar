@@ -122,15 +122,12 @@ export default {
   display: flex;
   justify-content: center;
 }
-
 .info {
   background-color: #fff;
   box-shadow: 0px 4px 15px 0px rgba(176, 176, 176, 0.09);
   padding: 36px 42px 44px 42px;
-  position: relative;
-}
-.info {
   margin-bottom: 14px;
+  position: relative;
 }
 .link {
   display: flex;
@@ -143,6 +140,7 @@ export default {
 }
 .popup {
   position: absolute;
+  z-index: 1;
   visibility: hidden;
   top: 80%;
   background-color: #fff;

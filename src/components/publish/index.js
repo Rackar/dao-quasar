@@ -20,6 +20,8 @@ export default {
       },
     },
     doPublish: { type: Function, required: true },
+    onEdit: { type: Function },
+    shouldResetAfterClose: { type: Boolean, default: true },
     value: Boolean,
   },
   data() {
@@ -27,10 +29,19 @@ export default {
   },
   watch: {
     shouldShow(val) {
-      if (val === false) {
+      if (!val && this.shouldResetAfterClose) {
         Object.assign(this, this.getDefaultData());
       }
-    }
+    },
+    content() {
+      this.onChange();
+    },
+    videoList() {
+      this.onChange();
+    },
+    imgList() {
+      this.onChange();
+    },
   },
   computed: {
     shouldShow: {
@@ -59,6 +70,14 @@ export default {
     },
   },
   methods: {
+    onChange() {
+      if (!this.onEdit) return;
+      const data = {
+        images: [...this.imgList, ...this.videoList],
+        content: this.content
+      };
+      this.onEdit(data);
+    },
     getDefaultData() {
       const { images, ...otherData } = this.initialData;
       const ret = {

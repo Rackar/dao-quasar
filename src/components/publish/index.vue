@@ -7,7 +7,6 @@
 
       <div class="header">
         <q-btn class="closeIcon header_left" icon="close" flat round dense v-close-popup />
-        <div class="header_right">未发布的帖子</div>
       </div>
 
       <slot></slot>
