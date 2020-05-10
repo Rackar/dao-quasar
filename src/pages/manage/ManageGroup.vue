@@ -7,29 +7,19 @@
     <div class="main">
       <div class="main-title" v-if="!editing.title">
         <div class="group-name">
-          <q-avatar class="avatar" size="60px">
+          <q-avatar rounded class="avatar" size="60px">
             <img :src="tempGroupData.avatar || 'statics/group.svg'" />
           </q-avatar>
           <span class="name-text">{{ tempGroupData.name }}</span>
-          <q-btn
-            dense
-            flat
-            icon="edit"
-            color="primary"
-            @click="startEditTitle()"
-            v-show="isOwner"
-          />
+          <q-btn dense flat icon="edit" color="primary" @click="startEditTitle()" v-show="isOwner" />
         </div>
         <div class="desc" v-html="desc"></div>
       </div>
-      <div class="main-title" v-if="editing.title">
+      <div class="main-title relative-position" v-if="editing.title">
         <div class="group-name">
           <q-avatar size="60px" class="avatar-edit" @click="changeAvatar">
             <q-icon name="camera" class="mask" />
-            <img :src="tempGroupData.avatar || 'statics/group.svg'" class="masked" />
-            <q-inner-loading :showing="loadingVisible">
-              <q-spinner-gears size="50px" color="primary" />
-            </q-inner-loading>
+            <img :src="editGroupData.avatar || 'statics/group.svg'" class="masked" />
           </q-avatar>
           <div class="name-input">
             <q-input outlined v-model="editGroupData.name" dense />
@@ -40,6 +30,9 @@
           <q-btn outline color="primary" label="取消" @click="editing.title = false" />
           <q-btn unelevated color="primary" label="保存" @click="saveTitle" />
         </div>
+        <q-inner-loading :showing="loadingVisible">
+          <q-spinner-gears size="50px" color="primary" />
+        </q-inner-loading>
       </div>
       <div class="read_permission">
         <div class="name-text">
@@ -66,12 +59,7 @@
               style="width:140px; margin-left:30px;"
               v-if="editing.read_permission && editGroupData.read_permission === 2"
             >
-              <q-input
-                outlined
-                v-model="editGroupData.password"
-                dense
-                placeholder="6位数字或字母"
-              />
+              <q-input outlined v-model="editGroupData.password" dense placeholder="6位数字或字母" />
             </div>
           </div>
 
@@ -97,8 +85,7 @@
                 </div>
               </q-list>
             </q-menu>
-          </q-btn>
-          )
+          </q-btn>)
         </span>
         <q-btn
           flat
@@ -212,6 +199,7 @@ export default {
   methods: {
     init() {
       this.tempGroupData = { ...this.group };
+      // console.log(this.tempGroupData);
       this.getTokenInfo();
     },
     async getTokenInfo() {
@@ -248,6 +236,7 @@ export default {
 
     startEditTitle() {
       this.editing.title = true;
+      this.editGroupData.avatar = this.tempGroupData.avatar;
       this.editGroupData.name = this.tempGroupData.name;
       this.editGroupData.desc_text = this.tempGroupData.desc_text;
     },
@@ -299,6 +288,7 @@ export default {
         this.$q.notify('修改成功');
       } else {
         this.$q.notify('修改失败');
+        this.$router.go(0);
       }
     },
   },
