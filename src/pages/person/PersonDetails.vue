@@ -222,6 +222,28 @@ export default {
       } else if (resCode.data.code == 104) {
       }
     },
+    getLikes(posts) {
+      return new Promise((resolve, reject) => {
+        const postIds = posts.map(i => i.post.id);
+        this.$axios
+          .post('/protected/post/likes', { posts: postIds })
+          .then((res, err) => {
+            if (err) {
+              resolve(posts);
+              return;
+            }
+            const likeStatus = res.data.data.likes;
+            posts.forEach(function(item) {
+              const status = likeStatus[item.post.id] === undefined ? 1 : likeStatus[item.post.id];
+              item.likeStatus = status;
+            });
+            resolve(posts);
+          })
+          .catch(() => {
+            reject(posts);
+          });
+      });
+    },
     // 我的帖子
     getMyPosts: async function() {
       let url = 'protected/post/my/pull';
@@ -231,9 +253,7 @@ export default {
       });
       if (resCode.data.code == 0) {
         this.pullList = [];
-        this.pullList = resCode.data.data.posts;
-        // if (!this.pullList.length) {
-        // }
+        this.pullList = await this.getLikes(resCode.data.data.posts);
       }
     },
     async getOtherPosts(uid) {
