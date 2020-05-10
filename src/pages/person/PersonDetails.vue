@@ -6,20 +6,19 @@
       v-model="addCommentShow"
       :onSave="onAddComment"
     />
-    <Upload ref="upload" @uploaded="uploaded" />
+    <Upload ref="upload" @uploaded="uploaded" @uploading="uploading" />
     <div class="hover-color"></div>
     <div class="row no-wrap items-end q-mt-md q-px-lg title">
       <q-avatar size="165px" @click="changeAvatar" class="avatar">
-        <q-icon name="camera" v-show="editing" class="mask" />
-
-        <img :src="userinfo.avatar || 'statics/user.svg'" :class="{ masked: editing }" />
-        <q-inner-loading :showing="loadingVisible">
-          <q-spinner-gears size="50px" color="primary" />
-        </q-inner-loading>
+        <q-icon v-show="editing" name="icon_paizhao" class="mask"></q-icon>
+        <img
+          :src="editing?edit.avatar:userinfo.avatar || 'statics/user.svg'"
+          :class="{ masked: editing }"
+        />
       </q-avatar>
 
       <div class="userinfo">
-        <div class="row">
+        <div class="row relative-position">
           <div v-show="editing">
             <q-input square outlined dense v-model="edit.name" />
           </div>
@@ -34,9 +33,10 @@
               :disable="loadingVisible"
             />
           </div>
-          <div v-show="!editing" class="username">
-            {{ this.userinfo.name || this.userinfo.mail_export }}
-          </div>
+          <div
+            v-show="!editing"
+            class="username"
+          >{{ this.userinfo.name || this.userinfo.mail_export }}</div>
           <div v-show="!editing">
             <!-- <q-icon name="edit" color="primary" v-show="isMyself" @click="clickEdit" size="24px" /> -->
             <!-- <q-btn dense flat icon="edit" color="primary" @click="clickEdit" v-show="isMyself" /> -->
@@ -49,12 +49,12 @@
               style="padding-top:8px;"
             />
           </div>
+          <q-inner-loading :showing="loadingVisible">
+            <q-spinner-gears size="50px" color="primary" />
+          </q-inner-loading>
         </div>
         <div class="q-size-sm">DOA ID {{ id }} {{ userinfo.mail_export }}</div>
       </div>
-
-      <!-- <q-space />
-      <q-btn outline color="primary" icon="menu" label="编辑资料" v-show="isMyself" @click="clickEdit" />-->
     </div>
     <div class="row q-col-gutter-md">
       <div class="col-sm-8 col-md-6 offset-md-1">
@@ -285,9 +285,12 @@ export default {
     changeAvatar() {
       if (this.editing) {
         // this.$q.loading.show();
-        this.loadingVisible = true;
+        // this.loadingVisible = true;
         this.$refs.upload.upload();
       }
+    },
+    uploading() {
+      this.loadingVisible = true;
     },
     uploaded(data) {
       if (data.err) {
@@ -341,11 +344,11 @@ export default {
 }
 .mask {
   position: absolute;
-  color: white;
+  // color: white;
 }
 .masked {
-  opacity: 0.6;
-  filter: alpha(opacity=60);
+  opacity: 0.4;
+  filter: alpha(opacity=40);
 }
 
 .title {
