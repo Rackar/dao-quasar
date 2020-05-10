@@ -106,7 +106,7 @@
 <script>
 import { post } from '@/apis/request';
 import deleteArticle from 'pages/toast/deleteArticle';
-import EditArticle from './PublishArticle';
+import EditArticle from './EditArticle';
 import ImageGrid from './ImageGrid';
 
 // like状态和code：
@@ -198,7 +198,7 @@ export default {
     edit() {
       this.shouldShowEdit = true;
     },
-    afterEdit(_, newContent) {
+    afterEdit(newContent) {
       this.$emit('edit', newContent);
     },
     onContentClick() {

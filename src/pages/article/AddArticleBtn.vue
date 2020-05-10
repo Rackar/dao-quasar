@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Dialog from 'pages/article/PublishArticle';
+import Dialog from 'pages/article/CreateArticle';
 
 export default {
   components: { Dialog },
