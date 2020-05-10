@@ -101,7 +101,7 @@ export default {
         return;
       }
 
-      if (this.val > this.currentToken.token.value) {
+      if (Number(this.val) > Number(this.currentToken.token.value)) {
         this.$q.notify('余额不足');
         return;
       }
