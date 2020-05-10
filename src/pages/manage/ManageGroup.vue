@@ -3,7 +3,7 @@
     <div class="top-login">
       <headerBarRight />
     </div>
-    <Upload ref="upload" @uploaded="uploaded" />
+    <Upload ref="upload" @uploaded="uploaded" @uploading="uploading" />
     <div class="main">
       <div class="main-title" v-if="!editing.title">
         <div class="group-name">
@@ -16,9 +16,10 @@
         <div class="desc" v-html="desc"></div>
       </div>
       <div class="main-title relative-position" v-if="editing.title">
-        <div class="group-name">
+        <div class="group-name row">
           <q-avatar size="60px" class="avatar-edit" @click="changeAvatar">
-            <q-icon name="camera" class="mask" />
+            <!-- <q-icon name="camera" class="mask" /> -->
+            <q-icon name="icon_paizhao" class="mask"></q-icon>
             <img :src="editGroupData.avatar || 'statics/group.svg'" class="masked" />
           </q-avatar>
           <div class="name-input">
@@ -217,8 +218,10 @@ export default {
       }
     },
     changeAvatar() {
-      this.loadingVisible = true;
       this.$refs.upload.upload();
+    },
+    uploading() {
+      this.loadingVisible = true;
     },
     uploaded(data) {
       if (data.err) {
@@ -321,14 +324,14 @@ export default {
         margin-right: 15px;
       }
       .avatar-edit {
-        background-color: #000000;
+        // background-color: #000000;
         .mask {
           position: absolute;
-          color: white;
+          // color: white;
         }
         .masked {
-          opacity: 0.6;
-          filter: alpha(opacity=60);
+          opacity: 0.4;
+          filter: alpha(opacity=40);
         }
       }
     }

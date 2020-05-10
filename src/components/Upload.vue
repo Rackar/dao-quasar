@@ -24,6 +24,7 @@ export default {
         e.target.value = '';
         return this.$q.notify('头像大小不能超过 5M');
       }
+      this.$emit('uploading');
       // let previewUrl = window.URL.createObjectURL(file);
       let result = await upload({ file });
       if (result instanceof Error) {
