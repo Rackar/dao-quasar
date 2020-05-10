@@ -51,7 +51,7 @@
         />
       </div>
 
-      <div class="col">所有基于区块链的交易都需要手续费，该手续费将自动扣除。</div>
+      <div class="col">转账手续费（约0.001ETH）将从你的ETH钱包直接扣除。</div>
     </div>
   </q-dialog>
 </template>

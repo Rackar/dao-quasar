@@ -34,7 +34,7 @@
         </q-menu>
       </q-btn>
       <div class="value1">{{ currentToken.value }}</div>
-      <div class="value2">$ 0.00</div>
+      <div class="value2">$ {{priceOf(currentToken)}}</div>
     </q-card-section>
     <q-card-section>
       <q-list class="money-detail">
@@ -42,14 +42,18 @@
           <q-item>
             <q-item-section>
               <q-item-label class="detail-big">{{ item.token_log.note }}</q-item-label>
-              <q-item-label class="detail-small" caption>
-                {{ $utils.timeStringToLocal(item.token_log.create_at, 'Accurate') }}
-              </q-item-label>
+              <q-item-label
+                class="detail-small"
+                caption
+              >{{ $utils.timeStringToLocal(item.token_log.create_at, 'Accurate') }}</q-item-label>
             </q-item-section>
 
             <q-item-section side>
               <q-item-label class="detail-big">{{ item.token_log.value }}</q-item-label>
-              <q-item-label caption class="detail-small">$ 0</q-item-label>
+              <q-item-label
+                caption
+                class="detail-small"
+              >$ {{priceOf({name:item.contract.name,value:item.token_log.value})}}</q-item-label>
             </q-item-section>
           </q-item>
           <!-- <q-separator inset /> -->
@@ -62,6 +66,7 @@
 <script>
 import moneyIn from 'pages/toast/moneyIn';
 import moneyOut from 'pages/toast/moneyOut';
+// import axios from 'axios';
 export default {
   components: { moneyIn, moneyOut },
   props: {
@@ -77,6 +82,7 @@ export default {
       showMoneyIn: false,
       showMoneyOut: false,
       log: [],
+      quotes: [],
     };
   },
   watch: {
@@ -110,11 +116,42 @@ export default {
         this.$q.notify(resLog.data.message);
       }
     },
+    priceOf({ name, value }) {
+      return Number(value) * this.getPrice(name);
+    },
+    getPrice(name) {
+      if (!this.quotes) {
+        let obj = [
+          {
+            name: 'Ethereum',
+            value: 200,
+          },
+        ];
+        this.quotes = obj;
+        this.$q.localStorage.set('quotes', obj);
+      }
+      let quote = this.quotes.find(quoted => quoted.name === name);
+      return (quote && quote.value) || 0;
+    },
+    // pullPriceFromOutside() {
+    //   return new Promise((resolve, reject) => {
+    //     let id = 1027;
+    //     const instance = axios.create({
+    //       timeout: 10000,
+    //       headers: { 'X-CMC_PRO_API_KEY': '64e6c84a-b974-4572-83a7-e9e1f81264a5' },
+    //     });
+    //     instance
+    //       .get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?id=' + id)
+    //       .then(res => {
+    //       });
+    //   });
+    // },
   },
   created() {
     if (this.tokens && this.tokens.length) {
       this.pickToken(this.tokens[0]);
     }
+    this.quotes = this.$q.localStorage.getItem('quotes');
   },
   mounted() {},
 };
