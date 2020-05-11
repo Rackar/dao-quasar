@@ -13,7 +13,8 @@
           <span class="name-text">{{ tempGroupData.name }}</span>
           <q-btn dense flat icon="edit" color="primary" @click="startEditTitle()" v-show="isOwner" />
         </div>
-        <div class="desc" v-html="desc"></div>
+        <!-- <div class="desc" v-html="desc"></div> -->
+        <div v-for="line in desc_breakLines" :key="line.id">{{line}}</div>
       </div>
       <div class="main-title relative-position" v-if="editing.title">
         <div class="group-name row">
@@ -154,6 +155,9 @@ export default {
     },
     desc() {
       return this.tempGroupData.desc_text.replace(/\n/g, '<br/>');
+    },
+    desc_breakLines() {
+      return this.tempGroupData.desc_text.split('\n');
     },
   },
 

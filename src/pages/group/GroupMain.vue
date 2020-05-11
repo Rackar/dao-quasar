@@ -40,7 +40,10 @@
         <span class="infotitle">组长：{{ owner.name }}</span>
         <span class="reward">入群奖励{{ group.reward_join }} {{ reward_type }}</span>
         <span class="reward">发帖奖励{{ group.reward_post }} {{ reward_type }}</span>
-        <div v-html="group.desc_text.replace(/\n/g, '<br/>')" class="desc"></div>
+        <!-- <div v-html="group.desc_text.replace(/\n/g, '<br/>')" class="desc"></div> -->
+        <div class="desc">
+          <div v-for="line in desc_breakLines" :key="line.id">{{line}}</div>
+        </div>
       </div>
 
       <div class="members">
@@ -124,6 +127,9 @@ export default {
     },
     blocked() {
       return this.blockedMembers.some(member => member.id === this.userid);
+    },
+    desc_breakLines() {
+      return this.group.desc_text.split('\n');
     },
   },
   methods: {

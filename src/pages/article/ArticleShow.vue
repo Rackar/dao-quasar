@@ -24,7 +24,10 @@
       <span>{{ $utils.timeStringToLocal(post.post.create_at, 'RelativeTime') }}</span>
     </div>
     <div class="main-body">
-      <div class="q-py-lg body" @click="onContentClick">{{ post.post.content }}</div>
+      <div class="q-py-md body" @click="onContentClick">
+        <!-- {{ post.post.content }} -->
+        <div v-for="line in content_breakLines" :key="line.id">{{line}}</div>
+      </div>
       <ImageGrid :images="post.post.images" class="images" v-if="!hasVideo" />
       <div v-else class="video-wraper">
         <!-- <q-video :ratio="16 / 9" :src="post.post.images[0]" /> -->
@@ -135,6 +138,9 @@ export default {
     };
   },
   computed: {
+    content_breakLines() {
+      return this.post.post.content.split('\n');
+    },
     canEdit() {
       if (this.viewType === 'comment') return false;
       return this.userid === this.post.post.creator;
@@ -265,7 +271,7 @@ export default {
 }
 .actions {
   margin-left: -16px;
-  padding-top: 16px;
+  padding-top: 6px;
   .q-btn {
     color: #8c909d;
   }
@@ -286,6 +292,7 @@ export default {
   font-size: 16px;
   word-break: break-word;
   overflow: overlay;
+  line-height: 26px;
 }
 .container {
   background-color: #fff;
