@@ -1,5 +1,8 @@
 <template>
   <q-layout view="lHh lpR fFf">
+    <div class="absolute xs" style="top: 25px; left: 157px;z-index:7000;">
+      <q-btn dense round unelevated color="primary" icon="chevron_left" @click="miniState = true" />
+    </div>
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
@@ -14,7 +17,7 @@
       <q-scroll-area class="fit">
         <GroupListHeader class="q-ma-md" />
         <grouplist />
-        <span class="text-weight-bold">以下为测试跳转用</span>
+        <!-- <span class="text-weight-bold">以下为测试跳转用</span>
         <q-list v-for="(menuItem, index) in menuList" :key="index">
           <q-item
             clickable
@@ -31,7 +34,12 @@
           </q-item>
 
           <q-separator v-if="menuItem.separator" />
-        </q-list>
+        </q-list>-->
+        <div class="copyright">
+          All rights reserved 2020 DAOChat Inc
+          <br />An user owned company
+          <br />Designed by Alina
+        </div>
       </q-scroll-area>
     </q-drawer>
 
@@ -84,5 +92,13 @@ export default {
 .drawerContainer /deep/ aside {
   position: fixed;
   background-color: #F8F8F8;
+}
+
+.copyright {
+  padding: 18px 48px 30px;
+  font-size: 16px;
+  color: rgba(140, 144, 157, 0.58);
+  text-align: right;
+  line-height: 22px;
 }
 </style>

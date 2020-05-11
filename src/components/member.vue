@@ -24,6 +24,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    mainpage: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {

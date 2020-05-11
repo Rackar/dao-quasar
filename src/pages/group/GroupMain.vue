@@ -295,6 +295,7 @@ export default {
 .info {
   background-color: #d4f6f346;
   color: $dgrey;
+  font-size: 16px;
 
   .infotitle {
     font-weight: bold;
@@ -312,7 +313,7 @@ export default {
   }
 
   .desc {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 }
 
@@ -356,6 +357,7 @@ export default {
       // line-height: 30px;
       font-size: 20px;
       cursor: pointer;
+      color: #2A3542;
       // margin-top: 5px;
       padding: 0 12px 0;
       font-weight: bold;
