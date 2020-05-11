@@ -12,19 +12,19 @@
       :initialData="post.post"
       :onSave="afterEdit"
     />
-    <div class="q-pt-lg header" v-if="post.creator">
-      <q-avatar size="35px" v-show="!personPage">
+    <div class="header" v-if="post.creator">
+      <q-avatar size="30px" v-show="!personPage">
         <img :src="post.creator.avatar || 'statics/user.svg'" />
       </q-avatar>
       <span
-        class="authorName q-px-md cursor-pointer"
+        class="authorName cursor-pointer"
         v-show="!personPage"
         @click="$router.push('/person/show/' + post.creator.id)"
       >{{ post.creator.name }}</span>
       <span>{{ $utils.timeStringToLocal(post.post.create_at, 'RelativeTime') }}</span>
     </div>
     <div class="main-body">
-      <div class="q-py-md body" @click="onContentClick">
+      <div class="body" @click="onContentClick">
         <!-- {{ post.post.content }} -->
         <div v-for="line in content_breakLines" :key="line.id">{{line}}</div>
       </div>
@@ -271,7 +271,7 @@ export default {
 }
 .actions {
   margin-left: -16px;
-  padding-top: 6px;
+  padding-top: 10px;
   .q-btn {
     color: #8c909d;
   }
@@ -283,11 +283,17 @@ export default {
 }
 .header {
   display: flex;
+  padding-top: 15px;
   color: #8c909d;
   align-items: center;
   font-size: 16px;
 }
+.authorName {
+  padding: 0 10px 0 20px;
+}
 .body {
+  padding-top: 15px;
+  padding-bottom: 10px;
   display: block;
   font-size: 16px;
   word-break: break-word;
@@ -299,7 +305,7 @@ export default {
   border-bottom: 1px solid #e4e4e4;
   padding-left: 42px;
   padding-right: 42px;
-  padding-bottom: 16px;
+  padding-bottom: 15px;
 }
 
 [data-type='group'] {

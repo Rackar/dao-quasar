@@ -12,8 +12,7 @@
       </q-avatar>
       <q-avatar
         class="cursor-pointer q-px-md q-mr-md"
-        rounded
-        size="24px"
+        size="30px"
         @click="$router.push('/person/show/' + $store.state.user.userid)"
       >
         <img :src="$store.state.user.avatar || 'statics/user.svg'" />
