@@ -66,7 +66,9 @@ export default {
       } else {
         //调试，注释掉注册接口
         let postapi = '/user/verify/' + this.email;
+        this.$q.loading.show();
         const resDataPost = await this.$axios.get(postapi, {});
+        this.$q.loading.hide();
         // let resDataPost = { code: 0 };
         let res = resDataPost.data;
         // debugger;
@@ -90,7 +92,9 @@ export default {
         code: this.code,
       };
       //调试，注释掉注册接口
+      this.$q.loading.show();
       const resData = await this.$axios.post(apiCode, testData);
+      this.$q.loading.hide();
       // const resData = { code: 0, token: "xx0p", data: { user: "test" } };
       let res = resData.data;
       if (res.code === 0) {
