@@ -261,6 +261,8 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .container {
+  padding-top: 20px;
+
   .group-list {
     padding: 18px 48px;
   }

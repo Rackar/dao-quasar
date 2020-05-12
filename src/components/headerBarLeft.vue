@@ -52,8 +52,8 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .main {
-  margin-top: 35px;
-  margin-left: 48px;
+  padding-top: 35px;
+  padding-left: 48px;
   vertical-align: middle;
   align-items: center;
   justify-content: center;

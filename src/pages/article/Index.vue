@@ -3,7 +3,7 @@
     <q-page-container>
       <div class="header">
         <HeaderBarLeft />
-        <HeaderBarRight />
+        <HeaderBarRight class="right" />
       </div>
       <div class="row q-col-gutter-md" :key="$route.params.id">
         <BodyLeft class="col-sm-8 col-md-7 offset-md-1" @getGroupInfo="setGroupInfo" />
@@ -38,8 +38,16 @@ export default {
 }
 .header {
   display: flex;
-  padding: 16px;
+  padding: 0px 0px 80px;
   justify-content: space-between;
+  // display: flex;
+  // padding: 16px;
+  // justify-content: space-between;
+}
+.right {
+  position: absolute;
+  top: 28px;
+  right: 48px;
 }
 // .body {
 //   // display: flex;

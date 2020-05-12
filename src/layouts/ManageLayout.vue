@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="hHr lpR fFf" class="main">
-    <div class="q-pa-md">
+  <q-layout class="manage-layout">
+    <div>
       <headerBarLeft />
     </div>
     <div class="lt-md fold">
@@ -30,8 +30,10 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.main {
+.manage-layout {
   background-color: rgb(248, 248, 248);
+  padding: 0;
+  margin: 0;
 }
 
 .fold {

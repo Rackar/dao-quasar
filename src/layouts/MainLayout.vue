@@ -15,7 +15,7 @@
       @mouseover="miniState = false"
     >
       <q-scroll-area class="fit">
-        <GroupListHeader class="q-ma-md" />
+        <headerBarLeft />
         <grouplist />
         <!-- <span class="text-weight-bold">以下为测试跳转用</span>
         <q-list v-for="(menuItem, index) in menuList" :key="index">
@@ -51,7 +51,7 @@
 
 <script>
 import grouplist from 'pages/group/GroupList';
-import GroupListHeader from 'components/headerBarLeft';
+import headerBarLeft from 'components/headerBarLeft';
 import { debounce } from 'quasar';
 const menuList = [
   {
@@ -64,7 +64,7 @@ const menuList = [
 export default {
   name: 'MainLayout',
 
-  components: { grouplist, GroupListHeader },
+  components: { grouplist, headerBarLeft },
 
   data() {
     return {
