@@ -14,7 +14,7 @@
       :mini-width="80"
       @mouseover="miniState = false"
     >
-      <q-scroll-area class="fit">
+      <q-scroll-area class="fit" :thumb-style="thumbStyle">
         <headerBarLeft />
         <grouplist />
         <!-- <span class="text-weight-bold">以下为测试跳转用</span>
@@ -73,6 +73,17 @@ export default {
       link: '',
       miniState: false,
     };
+  },
+  computed: {
+    thumbStyle() {
+      return {
+        right: '0px',
+        borderRadius: '3px',
+        backgroundColor: '#00d6c2',
+        width: '3px',
+        opacity: 0.5,
+      };
+    },
   },
   methods: {
     resizeHandler() {
