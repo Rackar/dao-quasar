@@ -86,7 +86,7 @@
             class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr10"
             src="@/statics/icons/icon_shezhi_normal.svg"
           />
-          <span>设置</span>
+          <!-- <span>设置</span> -->
           <q-menu auto-close>
             <q-list style="min-width: 100px">
               <q-item v-if="canEdit" clickable>
@@ -274,6 +274,7 @@ export default {
   padding-top: 10px;
   .q-btn {
     color: #8c909d;
+    margin-right: 24px;
   }
 }
 .video-wraper {

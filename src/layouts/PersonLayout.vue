@@ -1,7 +1,8 @@
 <template>
-  <q-layout view="lHR lpR fFf" class="main">
+  <q-layout view="lHR lpR fFf">
     <div class="header">
-      <headerbar />
+      <headerBarLeft />
+      <headerBarRight class="right" />
     </div>
 
     <q-page-container class="page">
@@ -11,11 +12,14 @@
 </template>
 
 <script>
-import headerbar from 'components/headerBar';
+// import headerbar from 'components/headerBar';
+import headerBarLeft from 'components/headerBarLeft';
+import headerBarRight from 'components/headerBarRight';
 export default {
   name: 'PersonLayout',
   components: {
-    headerbar,
+    headerBarLeft,
+    headerBarRight,
   },
   data() {
     return {};
@@ -25,11 +29,18 @@ export default {
 <style lang="stylus" scoped>
 .header {
   background-color: #74D2C8;
-  padding-top: 20px;
-  padding-bottom: 80px;
+  display: flex;
+  padding: 0px 0px 80px;
+  justify-content: space-between;
 }
 
-.main {
+.right {
+  position: absolute;
+  top: 28px;
+  right: 48px;
+}
+
+.page {
   background-color: rgb(248, 248, 248);
 }
 </style>

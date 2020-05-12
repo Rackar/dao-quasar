@@ -27,6 +27,7 @@
 <script>
 import groupCreate from 'pages/group/GroupCreate';
 export default {
+  name: 'headerBarLeft',
   components: { groupCreate },
   props: {},
   data() {
@@ -51,7 +52,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .main {
-  margin-top: 28px;
+  margin-top: 35px;
   margin-left: 48px;
   vertical-align: middle;
   align-items: center;

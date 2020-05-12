@@ -8,14 +8,14 @@
       <q-space />
       <IconHover
         iconName="code"
-        width="36px"
+        width="30px"
         class="cursor-pointer"
         @click.native="showMoneyIn = true"
       />
       <IconHover
         style="margin-left:60px;"
         iconName="zhuanzhang"
-        width="36px"
+        width="30px"
         class="cursor-pointer"
         @click.native="showMoneyOut = true"
       />
@@ -166,18 +166,18 @@ export default {
 }
 
 .value1 {
-  font-size: 30px;
+  font-size: 24px;
   color: #2A3542;
 }
 
 .value2 {
-  font-size: 24px;
+  font-size: 20px;
   color: #8C909D;
 }
 
 .title {
   .title-name {
-    font-size: 24px;
+    font-size: 20px;
     color: #2A3542;
   }
 }
