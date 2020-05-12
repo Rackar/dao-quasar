@@ -8,9 +8,14 @@
       spinner-color="white"
       @click="showBigPic(index)"
     />
-    <q-dialog v-model="dialog">
+    <q-dialog
+      v-model="dialog"
+      @keyup.37="$refs.carousel.previous()"
+      @keyup.39="$refs.carousel.next()"
+    >
       <q-carousel
         class="slide"
+        ref="carousel"
         swipeable
         animated
         v-model="slide"

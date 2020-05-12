@@ -17,11 +17,11 @@ export default {
     return {
       title: '入群将从你的钱包扣费',
       content: '',
+      reward: '',
     };
   },
   watch: {},
   computed: {
-    reward: '',
     shouldShow: {
       get() {
         return this.value;
