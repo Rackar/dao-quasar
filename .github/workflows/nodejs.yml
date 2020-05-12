@@ -34,4 +34,5 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           privateKey: ${{ secrets.SCP_PPK }}
+          passphrase: ${{ secrets.SCP_PPK_PASS }}
           # concurrency: 20
