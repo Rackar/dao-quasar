@@ -216,7 +216,7 @@ export default {
       let postapi = '/user/members/' + this.groupId;
       const members = await this.$axios.get(postapi);
       if (members.data.code == 0) {
-        this.grpMembers = members.data.data.alive;
+        this.grpMembers = members.data.data.alive.reverse();
         this.blockedMembers = members.data.data.blocked;
       }
     },
