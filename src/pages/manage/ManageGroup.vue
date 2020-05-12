@@ -98,7 +98,10 @@
           v-show="isOwner"
           v-if="!editing.reward"
         />
-        <div class="comment">每发 100 贴转账一次</div>
+        <div class="comment">
+          入群奖励若设定成负数则入群收费
+          <br />发帖奖励每发 100 贴转账一次
+        </div>
 
         <div class="row text-center q-ma-md">
           <div class="col">入群奖励</div>

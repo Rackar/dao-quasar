@@ -1,18 +1,21 @@
 <template>
-  <q-btn
-    v-require-login-click
-    unelevated
-    :disabled="isJoined"
-    color="primary"
-    :label="label"
-    @click="onClick"
-    icon="add"
-  />
+  <div>
+    <q-btn
+      v-require-login-click
+      unelevated
+      :disabled="isJoined"
+      color="primary"
+      :label="label"
+      @click="onClick"
+      icon="add"
+    />
+    <JoinGroupNeedPay v-model="showJoinGroupNeedPay" @wantjoin="checkPass" />
+  </div>
 </template>
 
 <script>
 import { post } from '@/apis/request';
-
+import JoinGroupNeedPay from 'pages/toast/JoinGroupNeedPay';
 const joinGroup = function(groupId, password) {
   return post('/protected/grp/join', { grp: groupId, password });
 };
@@ -22,6 +25,9 @@ export default {
     groupInfo: { type: Object, required: true },
     onJoined: { type: Function },
   },
+  components: {
+    JoinGroupNeedPay,
+  },
   computed: {
     label() {
       return this.isJoined ? '已加入' : '加入小组';
@@ -30,15 +36,24 @@ export default {
   data() {
     return {
       isJoined: false,
+      showJoinGroupNeedPay: false,
     };
   },
   methods: {
     onClick() {
+      if (Number(this.groupInfo.reward_join) < 0) {
+        this.showJoinGroupNeedPay = true;
+      } else {
+        this.checkPass();
+      }
+    },
+    checkPass() {
       const hasPassword = this.groupInfo.password !== '';
       if (hasPassword) {
         return this.requestPassword();
+      } else {
+        this.joinGroup();
       }
-      this.joinGroup('');
     },
     requestPassword() {
       this.$q
@@ -53,7 +68,7 @@ export default {
         })
         .onOk(this.joinGroup);
     },
-    joinGroup(password) {
+    joinGroup(password = '') {
       this.$q.loading.show();
 
       joinGroup(this.groupInfo.id, password)
