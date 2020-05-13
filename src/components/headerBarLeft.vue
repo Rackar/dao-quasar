@@ -2,7 +2,12 @@
   <div class="main">
     <!-- <q-btn flat no-caps icon="menu" v-if="$store.state.user.userid !== ''"> -->
     <span class="hover-wraper">
-      <q-icon name="icon_more1" v-if="$store.state.user.userid !== ''"></q-icon>
+      <img
+        svg-inline
+        src="@/statics/icons/icon_more1.svg"
+        class="svg-icon"
+        v-if="$store.state.user.userid !== ''"
+      />
       <q-menu auto-close>
         <q-list style="min-width: 100px">
           <q-item clickable>
@@ -61,7 +66,6 @@ export default {
 
 .hover-wraper {
   cursor: pointer;
-  vertical-align: top;
 
   &:hover {
     background-color: #eee;

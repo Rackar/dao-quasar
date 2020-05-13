@@ -18,7 +18,8 @@
             class="leftHideTool"
             @mouseover="handleMenuMouseMoveover(myGroup.grp.id)"
           >
-            <q-icon name="icon_more"></q-icon>
+            <!-- <q-icon name="icon_more"></q-icon> -->
+            <img svg-inline src="@/statics/icons/icon_more.svg" class="svg-icon" />
             <div auto-close v-show="showMenu" @mouseout="showMenuId = 0" class="menu-hover">
               <q-list style="min-width: 100px">
                 <q-item clickable>

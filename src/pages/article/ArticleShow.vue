@@ -26,7 +26,7 @@
     <div class="main-body">
       <div class="body" @click="onContentClick">
         <!-- {{ post.post.content }} -->
-        <div v-for="line in content_breakLines" :key="line.id">{{line}}</div>
+        <div v-for="line in content_breakLines" :key="line.id">{{line || '&nbsp;'}}</div>
       </div>
       <ImageGrid :images="post.post.images" class="images" v-if="!hasVideo" />
       <div v-else class="video-wraper">

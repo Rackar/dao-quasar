@@ -36,7 +36,7 @@
           <q-separator v-if="menuItem.separator" />
         </q-list>-->
         <div class="copyright">
-          All rights reserved 2020 DAOChat Inc
+          All rights reserved 2020 DAO Inc
           <br />An user owned company
           <br />Designed by Alina
         </div>

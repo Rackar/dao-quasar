@@ -53,7 +53,7 @@
             <q-spinner-gears size="50px" color="primary" />
           </q-inner-loading>
         </div>
-        <div class="q-size-sm">DOA ID {{ id }} {{ userinfo.mail_export }}</div>
+        <div class="q-size-sm">DAO ID {{ id }} {{ userinfo.mail_export }}</div>
       </div>
     </div>
     <div class="row q-col-gutter-md">

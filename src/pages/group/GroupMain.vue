@@ -42,7 +42,7 @@
         <span class="reward">发帖奖励{{ group.reward_post }} {{ reward_type }}</span>
         <!-- <div v-html="group.desc_text.replace(/\n/g, '<br/>')" class="desc"></div> -->
         <div class="desc">
-          <div v-for="line in desc_breakLines" :key="line.id">{{line}}</div>
+          <div v-for="line in desc_breakLines" :key="line.id">{{line || '&nbsp;'}}</div>
         </div>
       </div>
 
