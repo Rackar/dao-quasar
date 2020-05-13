@@ -308,8 +308,8 @@ export default {
 
 .leftHideTool {
   position: absolute;
-  left: 20px;
-  top: 26px;
+  left: 22px;
+  top: 31px;
   z-index: 20;
   padding: 1px;
   font-size: 20px;

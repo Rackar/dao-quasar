@@ -8,10 +8,12 @@ import store from 'src/store';
 // 请注意，如果我们不在这里设置任何配置，我们不需要
 // 一个命名的导出，因为我们可以`import axios from 'axios'`
 const axiosInstance = axios.create({
-  baseURL:
-    process.env.NODE_ENV === 'production'
-      ? 'https://www.justdao.com/api/v1'
-      : 'https://chatdao.com:3031',
+  // baseURL:
+  //   process.env.NODE_ENV === 'production'
+  //     ? 'https://www.justdao.com/api/v1'
+  //     : 'https://chatdao.com:3031',
+
+  baseURL: 'https://chatdao.com:3031',
 });
 axiosInstance.interceptors.request.use(
   config => {
