@@ -155,10 +155,10 @@ export default {
     margin-right: 30px;
     &_label {
       color: #8c909d;
-      font-size: 16px;
+      font-size: 14px;
     }
     &_value {
-      font-size: 20px;
+      font-size: 16px;
       text-align: center;
     }
   }
