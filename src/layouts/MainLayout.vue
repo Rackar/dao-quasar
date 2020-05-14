@@ -1,18 +1,24 @@
 <template>
-  <q-layout view="lHh lpR fFf">
-    <div class="absolute xs" style="top: 25px; left: 157px;z-index:7000;">
-      <q-btn dense round unelevated color="primary" icon="chevron_left" @click="miniState = true" />
+  <q-layout view="lHh lpR fFf" class="main-layout">
+    <div class="unfold xs">
+      <q-btn color="primary" icon="展开" @click="leftDrawerOpen=true" />
     </div>
-    <q-drawer
+    <!-- <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
       :width="390"
       bordered
       class="drawerContainer"
-      :breakpoint="300"
+      :breakpoint="600"
       :mini="miniState"
       :mini-width="80"
-      @mouseover="miniState = false"
+    >-->
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      class="drawerContainer"
+      :breakpoint="600"
     >
       <q-scroll-area class="fit" :thumb-style="thumbStyle">
         <headerBarLeft />
@@ -100,6 +106,47 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.unfold {
+  position: absolute;
+  top: 25px;
+  left: 27px;
+  z-index: 2300;
+
+  /deep/ .q-icon {
+    font-size: 14px !important;
+  }
+}
+
+.main-layout {
+  /deep/ .q-drawer {
+    width: 390px !important;
+  }
+
+  .q-page-container {
+    padding-left: 390px !important;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .main-layout {
+    /deep/ .q-drawer {
+      width: 280px !important;
+    }
+
+    .q-page-container {
+      padding-left: 280px !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .main-layout {
+    .q-page-container {
+      padding-left: 0px !important;
+    }
+  }
+}
+
 .drawerContainer /deep/ aside {
   position: fixed;
   background-color: #F8F8F8;

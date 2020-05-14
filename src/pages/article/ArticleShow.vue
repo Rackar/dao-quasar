@@ -308,7 +308,12 @@ export default {
   padding-right: 42px;
   padding-bottom: 15px;
 }
-
+@media only screen and (max-width: 1024px) {
+  .container {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
 [data-type='group'] {
   &:hover {
     background-color: #fafafa;

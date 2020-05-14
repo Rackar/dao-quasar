@@ -18,7 +18,7 @@
       </div>
       <div class="main-title relative-position" v-if="editing.title">
         <div class="group-name row">
-          <q-avatar size="60px" class="avatar-edit" @click="changeAvatar">
+          <q-avatar rounded size="60px" class="avatar-edit" @click="changeAvatar">
             <!-- <q-icon name="camera" class="mask" /> -->
             <q-icon name="icon_paizhao" class="mask"></q-icon>
             <img :src="editGroupData.avatar || 'statics/group.svg'" class="masked" />

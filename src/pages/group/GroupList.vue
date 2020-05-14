@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <q-list class="rounded-borders" style="max-width: 550px">
+    <q-list class="rounded-borders">
       <div v-for="myGroup in myGroups" :key="myGroup.id">
         <q-item
           clickable
@@ -73,7 +73,7 @@
           clickable
           @click="jumpToGroup(grp.id)"
           v-ripple
-          :class="[{ isActive: isItemActive(grp.id) }, 'q-px-xl', 'q-py-md']"
+          :class="[{ isActive: isItemActive(grp.id) }, 'group-list']"
         >
           <!-- <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">...</span> -->
           <q-item-section avatar>
@@ -104,7 +104,6 @@
       </div>
     </q-list>
     <quitGroup v-model="showQuitGroup" :groupId="quitGroupId" />
-    <div></div>
   </div>
 </template>
 <script>
@@ -271,6 +270,12 @@ export default {
 
   .group-list {
     padding: 18px 48px;
+  }
+
+  @media only screen and (max-width: 1024px) {
+    .group-list {
+      padding: 18px 12px;
+    }
   }
 
   .group-title {
