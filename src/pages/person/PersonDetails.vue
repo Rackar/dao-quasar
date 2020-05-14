@@ -8,8 +8,8 @@
     />
     <Upload ref="upload" @uploaded="uploaded" @uploading="uploading" />
     <div class="hover-color"></div>
-    <div class="row no-wrap items-end q-mt-md q-px-lg title">
-      <q-avatar size="165px" @click="changeAvatar" class="avatar">
+    <div class="row no-wrap items-end title">
+      <q-avatar @click="changeAvatar" class="avatar">
         <q-icon v-show="editing" name="icon_paizhao" class="mask"></q-icon>
         <img
           :src="editing?edit.avatar:userinfo.avatar || 'statics/user.svg'"
@@ -59,7 +59,7 @@
     <div class="row q-col-gutter-md">
       <div class="col-sm-8 col-md-6 offset-md-1">
         <q-card flat class="my-card">
-          <q-tabs
+          <!-- <q-tabs
             v-model="tab"
             class="text-grey"
             active-color="primary"
@@ -69,9 +69,7 @@
           >
             <q-tab name="myPosts" label="我的帖子" />
             <q-tab name="recycle" label="回收站" />
-          </q-tabs>
-
-          <!-- <q-separator /> -->
+          </q-tabs>-->
 
           <q-tab-panels v-model="tab" animated transition-prev="fade" transition-next="fade">
             <q-tab-panel name="myPosts" class="posts">
@@ -85,7 +83,7 @@
               />
             </q-tab-panel>
 
-            <q-tab-panel name="recycle">
+            <!-- <q-tab-panel name="recycle">
               <ArticleShow
                 v-for="post in recycleList"
                 :post="post"
@@ -93,7 +91,7 @@
                 :personPage="true"
                 viewType="comment"
               />
-            </q-tab-panel>
+            </q-tab-panel>-->
           </q-tab-panels>
         </q-card>
       </div>
@@ -359,9 +357,6 @@ export default {
   }
 }
 
-.avatar {
-  // background-color: #000000;
-}
 .mask {
   position: absolute;
   // color: white;
@@ -371,12 +366,31 @@ export default {
   filter: alpha(opacity=40);
 }
 
+.avatar {
+  width: 165px;
+  height: 165px;
+}
 .title {
   margin-top: -30px;
-  padding-bottom: 60px;
   margin-left: 70px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 60px;
 }
 
+@media only screen and (max-width: 1024px) {
+  .avatar {
+    width: 65px;
+    height: 65px;
+  }
+  .title {
+    margin-top: -30px;
+    margin-left: 10px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 20px;
+  }
+}
 .userinfo {
   padding: 14px 0 0 14px;
   .username {

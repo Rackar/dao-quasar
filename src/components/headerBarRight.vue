@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { get, post } from 'src/apis/index.js';
+import { post } from 'src/apis/index.js';
 import groupCreate from 'pages/group/GroupCreate';
 import quitGroup from 'pages/toast/quitGroup';
 export default {
