@@ -1,7 +1,6 @@
 <template>
   <div class="main">
-    <!-- <q-btn flat no-caps icon="menu" v-if="$store.state.user.userid !== ''"> -->
-    <span class="hover-wraper">
+    <!-- <span class="hover-wraper">
       <img
         svg-inline
         src="@/statics/icons/icon_more1.svg"
@@ -19,21 +18,19 @@
           </q-item>
         </q-list>
       </q-menu>
-    </span>
+    </span>-->
 
-    <!-- </q-btn> -->
-    <!-- <q-btn flat no-caps label="DAO" @click="$router.push('/')" /> -->
     <span class="mainpage-btn" @click="$router.push('/')">DAO</span>
     <!--      创建群-->
-    <groupCreate v-model="showCreate" />
+    <!-- <groupCreate v-model="showCreate" /> -->
   </div>
 </template>
 
 <script>
-import groupCreate from 'pages/group/GroupCreate';
+// import groupCreate from 'pages/group/GroupCreate';
 export default {
   name: 'headerBarLeft',
-  components: { groupCreate },
+  // components: { groupCreate },
   props: {},
   data() {
     return { showCreate: false };

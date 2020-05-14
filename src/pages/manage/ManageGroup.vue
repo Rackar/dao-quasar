@@ -103,20 +103,20 @@
           <br />发帖奖励每发 100 贴转账一次
         </div>
 
-        <div class="row text-center q-ma-md">
+        <div class="row text-center q-mx-md q-my-sm">
           <div class="col">入群奖励</div>
           <div class="col">发帖奖励</div>
         </div>
-        <div class="row text-center text-h6 q-ma-md" v-if="!editing.reward">
+        <div class="row text-center text-h6 q-mx-md" v-if="!editing.reward">
           <div class="col">{{ tempGroupData.reward_join }}</div>
           <q-separator vertical />
           <div class="col">{{ tempGroupData.reward_post }}</div>
         </div>
-        <div class="row text-center text-h6 q-ma-md" v-if="editing.reward">
+        <div class="row text-center text-h6 q-mx-md q-col-gutter-lg" v-if="editing.reward">
           <div class="col">
             <q-input outlined v-model="editGroupData.reward_join" dense />
           </div>
-          <q-separator vertical />
+          <!-- <q-separator vertical /> -->
           <div class="col">
             <q-input outlined v-model="editGroupData.reward_post" dense />
           </div>

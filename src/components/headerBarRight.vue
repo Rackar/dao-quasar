@@ -10,12 +10,31 @@
       >
         <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
       </q-avatar>
-      <q-avatar
-        class="cursor-pointer q-px-md q-mr-md"
-        size="30px"
-        @click="$router.push('/person/show/' + $store.state.user.userid)"
-      >
+      <q-avatar class="cursor-pointer q-px-md q-mr-md" size="30px">
         <img :src="$store.state.user.avatar || 'statics/user.svg'" />
+        <q-menu>
+          <q-list style="min-width: 100px">
+            <q-item clickable v-close-popup>
+              <q-item-section @click="createGrp">新建群</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup v-if="isInGroupPath">
+              <q-item-section
+                @click="setGroupToTop()"
+              >{{ currentGroup.pinned === 2 ? '取消置顶本群' : '置顶本群' }}</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup v-if="isInGroupPath">
+              <q-item-section @click="leaveGroup()">退出本群</q-item-section>
+            </q-item>
+
+            <q-separator />
+            <q-item clickable v-close-popup>
+              <q-item-section @click="$router.push('/person/show/' + $store.state.user.userid)">个人设置</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup>
+              <q-item-section @click="clearLogin">退出登录</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
       </q-avatar>
       <q-dialog v-model="showNotice" seamless position="top" @hide="hideNotice">
         <q-card>
@@ -35,30 +54,78 @@
       </q-dialog>
     </div>
     <q-btn v-else color="primary" flat label="快速登录" v-require-login-click />
+    <groupCreate v-model="showCreate" />
+    <quitGroup v-model="showQuitGroup" :groupId="quitGroupId" />
   </div>
 </template>
 
 <script>
+import { get, post } from 'src/apis/index.js';
+import groupCreate from 'pages/group/GroupCreate';
+import quitGroup from 'pages/toast/quitGroup';
 export default {
   name: 'headerBarRight',
-  components: {},
+  components: { groupCreate, quitGroup },
   props: {},
   data() {
     return {
       showNotice: false,
+      showCreate: false,
+      showQuitGroup: false,
       notifications: [],
+      quitGroupId: 0,
     };
   },
   watch: {},
   computed: {
+    isInGroupPath() {
+      return /\/group\//.test(this.$route.fullPath);
+    },
     unreadNotify() {
       return this.notifications.filter(notice => notice.read === 1);
     },
     isLoggedIn() {
       return this.$store.state.user.userid !== '';
     },
+    currentGroupId() {
+      return this.$store.state.group.currentGroup.id;
+    },
+    currentGroup() {
+      return this.$store.state.group.currentGroup;
+    },
   },
   methods: {
+    createGrp: function() {
+      this.showCreate = true;
+    },
+    clearLogin: function() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userinfo');
+      localStorage.removeItem('notifications');
+      this.$router.go(0);
+    },
+    async setGroupToTop() {
+      let myGroup = this.currentGroup;
+      let pin = myGroup.pinned;
+      let data = {
+        grp: myGroup.id,
+        pinned: pin === 1 ? 2 : 1,
+      };
+      let postUrl = '/protected/grp/pin';
+      const res = await post(postUrl, data);
+      if (res.code === 0) {
+        if (pin === 1) {
+          this.$q.notify('置顶成功');
+        } else {
+          this.$q.notify('取消置顶成功');
+        }
+        this.$router.go(0);
+      }
+    },
+    leaveGroup() {
+      this.showQuitGroup = true;
+      this.quitGroupId = this.currentGroupId;
+    },
     async getNotifications(id = 0) {
       let url = '/protected/user/notifications/' + id;
       const resCode = await this.$axios.get(url);

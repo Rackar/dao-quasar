@@ -180,13 +180,18 @@ export default {
     //
     jumpToGroup(id) {
       //跳转前检查是否已加入该组
-      let ifJoined = this.myGroups.some(joined => {
+      let ifJoined = false;
+
+      let pinned = 0;
+      this.myGroups.forEach(joined => {
         if (joined.grp.id == id) {
           joined.unread = 0;
+          ifJoined = true;
+
+          pinned = joined.pinned;
         }
-        return joined.grp.id == id;
       });
-      this.$store.dispatch('group/jumpToGroup', { id: id, joined: ifJoined });
+      this.$store.dispatch('group/jumpToGroup', { id: id, joined: ifJoined, pinned });
       if (this.$route.params.id != id) {
         this.$router.push('/group/' + id).catch(() => {});
       }

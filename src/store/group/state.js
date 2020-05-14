@@ -16,6 +16,8 @@ export default function() {
       contractSymbol: '',
       reward_join: '0.00',
       reward_post: '0.00',
+
+      pinned: 0,
     },
     currentGroupOwner: {
       address: '',
