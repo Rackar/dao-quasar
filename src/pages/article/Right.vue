@@ -156,6 +156,7 @@ export default {
     &_label {
       color: #8c909d;
       font-size: 14px;
+      white-space: nowrap;
     }
     &_value {
       font-size: 16px;

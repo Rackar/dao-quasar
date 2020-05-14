@@ -30,7 +30,7 @@
           :key="index"
           style="padding:0;"
         >
-          <img :src="url" class="slideImg" />
+          <img :src="url" class="slideImg shadow-12" />
         </q-carousel-slide>
       </q-carousel>
     </q-dialog>
@@ -61,7 +61,8 @@ export default {
 @import '@/components/publish/_imageGrid.scss';
 .slide {
   background-color: transparent;
-  // box-shadow: none;
+  box-shadow: none;
+  overflow: visible;
   /deep/ .q-carousel__slide {
     display: flex;
     align-items: center;
@@ -69,6 +70,9 @@ export default {
   }
   /deep/ .q-carousel__arrow button {
     background-color: rgba(black, 0.7);
+  }
+  /deep/ .q-panel {
+    overflow: visible;
   }
 }
 .slideImg {
