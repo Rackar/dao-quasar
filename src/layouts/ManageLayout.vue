@@ -4,9 +4,9 @@
       <headerBarLeft />
     </div>
     <div class="lt-md fold">
-      <q-btn color="primary" label="展开" @click="right=true" />
+      <q-btn color="primary" label="展开" @click="unfold" />
     </div>
-    <q-drawer elevated v-model="right" side="right" :width="480">
+    <q-drawer elevated v-model="right" side="right">
       <ManageGroup />
     </q-drawer>
 
@@ -25,7 +25,14 @@ export default {
   data() {
     return {
       right: true,
+      mini: false,
     };
+  },
+  methods: {
+    unfold() {
+      this.right = true;
+      this.mini = true;
+    },
   },
 };
 </script>
@@ -34,6 +41,18 @@ export default {
   background-color: rgb(248, 248, 248);
   padding: 0;
   margin: 0;
+
+  /deep/ .q-drawer {
+    width: 480px !important;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .manage-layout {
+    /deep/ .q-drawer {
+      width: 280px !important;
+    }
+  }
 }
 
 .fold {

@@ -301,7 +301,7 @@ export default {
 .info {
   background-color: #d4f6f346;
   color: $dgrey;
-  font-size: 16px;
+  font-size: 14px;
 
   .infotitle {
     font-weight: bold;
@@ -361,7 +361,7 @@ export default {
 
     .groupname {
       // line-height: 30px;
-      font-size: 20px;
+      font-size: 18px;
       cursor: pointer;
       color: #2A3542;
       // margin-top: 5px;

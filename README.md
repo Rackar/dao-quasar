@@ -1,6 +1,6 @@
 # DAO-Quasar
 
-DAOchat front-end with Quasar Framework.
+DAO front-end with Quasar Framework.
 
 ## 说明
 

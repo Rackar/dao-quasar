@@ -28,7 +28,7 @@
           </div>
         </div>
         <q-input v-model="editGroupData.desc_text" filled type="textarea" />
-        <div class="text-right">
+        <div class="text-right button-group">
           <q-btn outline color="primary" label="取消" @click="editing.title = false" />
           <q-btn unelevated color="primary" label="保存" @click="saveTitle" />
         </div>
@@ -65,7 +65,7 @@
             </div>
           </div>
 
-          <div v-if="editing.read_permission" class="text-right">
+          <div v-if="editing.read_permission" class="button-group text-right">
             <q-btn outline color="primary" label="取消" @click="editing.read_permission = false" />
             <q-btn unelevated color="primary" label="保存" @click="saveReadPermission" />
           </div>
@@ -122,7 +122,7 @@
           </div>
         </div>
 
-        <div v-if="editing.reward" class="text-right">
+        <div v-if="editing.reward" class="button-group text-right">
           <q-btn outline color="primary" label="取消" @click="editing.reward = false" />
           <q-btn unelevated color="primary" label="保存" @click="saveReward" />
         </div>
@@ -311,14 +311,20 @@ export default {
   right: 40px;
 }
 .main {
-  margin: 40px;
+  margin: 40px 40px 0;
   .name-text {
-    font-size: 20px;
+    font-size: 14px;
     // line-height: 26px;
     font-weight: bold;
     color: #2a3542;
-    margin: 40px 0 10px;
+    // margin: 40px 0 10px;
     // padding-left: 14px;
+  }
+  .button-group {
+    margin-top: 12px;
+    .q-btn {
+      margin-left: 7px;
+    }
   }
   .main-title {
     .group-name {
@@ -354,6 +360,7 @@ export default {
 }
 
 .read_permission {
+  margin-top: 30px;
   .select-read {
     font-size: 16px;
   }

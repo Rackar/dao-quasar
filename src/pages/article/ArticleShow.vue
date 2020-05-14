@@ -296,7 +296,7 @@ export default {
   padding-top: 15px;
   padding-bottom: 10px;
   display: block;
-  font-size: 16px;
+  font-size: 15px;
   word-break: break-word;
   overflow: overlay;
   line-height: 26px;

@@ -269,19 +269,19 @@ export default {
   }
 
   .group-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 25px;
     color: #5C6876;
   }
 
   .text-caption {
-    font-size: 14px;
+    font-size: 12px;
     color: #8C909D;
   }
 
   .badge-num {
-    font-size: 14px;
+    font-size: 12px;
     padding: 6px 7px 5px;
     background: rgb(228, 228, 228);
     border-radius: 13px;
@@ -292,7 +292,7 @@ export default {
 
 .tuijian {
   padding-left: 22px;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
   color: rgb(42, 53, 66);
   line-height: 33px;
