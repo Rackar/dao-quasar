@@ -263,8 +263,8 @@ export default {
   }
 }
 .images {
-  width: 510px;
-  height: 310px;
+  max-width: 510px;
+  max-height: 310px;
   &:empty {
     display: none;
   }
@@ -279,8 +279,8 @@ export default {
 }
 .video-wraper {
   display: flex;
-  width: 510px;
-  height: 310px;
+  max-width: 510px;
+  max-height: 310px;
 }
 .header {
   display: flex;
@@ -310,8 +310,8 @@ export default {
 }
 @media only screen and (max-width: 1024px) {
   .container {
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 8px;
+    padding-right: 5px;
   }
 }
 [data-type='group'] {
