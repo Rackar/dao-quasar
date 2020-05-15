@@ -1,23 +1,26 @@
 <template>
   <div class="q-py-md q-px-xl main">
-    <div>
-      <span class="text-weight-bold">组长</span>
-    </div>
-    <div class="manage">
-      <member :members="[owner]" />
-      <!-- <q-space /> -->
+    <div class="section">
+      <div class="title text-weight-bold">
+        组长
+      </div>
+      <div class="manage">
+        <member :members="[owner]" />
+        <!-- <q-space /> -->
 
-      <q-btn
-        outline
-        class="manage-btn"
-        :label="this.editMember?'停止编辑':'管理组员'"
-        :color="this.editMember?'negative':'primary'"
-        @click="edit"
-        v-if="canManage"
-      />
+        <q-btn
+          outline
+          class="manage-btn"
+          :label="this.editMember ? '停止编辑' : '管理组员'"
+          :color="this.editMember ? 'negative' : 'primary'"
+          @click="edit"
+          v-if="canManage"
+        />
+      </div>
     </div>
-    <div>
-      <span class="text-weight-bold">所有成员</span>
+
+    <div class="section">
+      <div class="title text-weight-bold">所有成员</div>
 
       <member
         :members="pagedAliveMember"
@@ -34,10 +37,10 @@
         :direction-links="true"
         color="primary"
       ></q-pagination>
-      <span class="total">共{{this.aliveMember.length}}人</span>
+      <span class="total">共{{ this.aliveMember.length }}人</span>
     </div>
     <div>
-      <span class="text-weight-bold">小黑屋</span>
+      <div class="title text-weight-bold">小黑屋</div>
       <member
         :members="blockMember"
         :edit="editMember"
@@ -121,20 +124,31 @@ export default {
 };
 </script>
 
+<style lang="stylus" scoped>
+.manage {
+  position: relative;
 
- <style lang="stylus" scoped>
- .manage {
-   position: relative;
+  .manage-btn {
+    position: absolute;
+    top: 35px;
+    right: 30px;
+  }
+}
 
-   .manage-btn {
-     position: absolute;
-     top: 35px;
-     right: 30px;
-   }
- }
+.total {
+  color: $primary;
+  padding-left: 15px;
+}
 
- .total {
-   color: $primary;
-   padding-left: 15px;
- }
+.title {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 55px;
+  /deep/ .main {
+    margin: 20px;
+  }
+}
 </style>

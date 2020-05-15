@@ -18,24 +18,28 @@
       <headerBarRight />
     </div>
     <div class="groupinfo">
-      <q-avatar rounded size="50px">
-        <img :src="group.avatar || 'statics/group.svg'" />
-      </q-avatar>
-      <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
-      <q-btn flat align="around" class="btn-fixed-width shareBtn" @click="shareUrl">
-        <img
-          svg-inline
-          src="@/statics/icons/icon_share_hover.svg"
-          class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr5"
-        />
-        <span>分享</span>
-      </q-btn>
-      <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
-      <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" v-if="!blocked" />
-      <q-btn unelevated rounded dense text-color="red-7" color="red-1" label="已被禁言" v-else disable />
+      <div class="groupinfo_row">
+        <q-avatar rounded size="50px">
+          <img :src="group.avatar || 'statics/group.svg'" />
+        </q-avatar>
+        <span class="groupname" @click="$router.push('/manage/' + group.id)">{{ group.name }}</span>
+        <q-btn flat align="around" class="btn-fixed-width shareBtn" @click="shareUrl">
+          <img
+            svg-inline
+            src="@/statics/icons/icon_share_hover.svg"
+            class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr5"
+          />
+          <span>分享</span>
+        </q-btn>
+      </div>
+      <div class="groupinfo_row">
+        <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
+        <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" v-if="!blocked" />
+        <q-btn unelevated rounded dense text-color="red-7" color="red-1" label="已被禁言" v-else disable />
+      </div>
     </div>
-    <div class="warper">
-      <div class="q-pa-md info q-my-md">
+    <div class="wrapper">
+      <div class="info">
         <span class="infotitle">创建于{{ $utils.timeStringToLocal(group.create_at,'Accurate') }}</span>
         <span class="infotitle">组长：{{ owner.name }}</span>
         <span class="reward">入群奖励{{ group.reward_join }} {{ reward_type }}</span>
@@ -256,124 +260,5 @@ export default {
   },
 };
 </script>
-<style lang="stylus" scoped>
-.listContainer {
-  margin-left: -42px;
-  margin-right: -42px;
-}
 
-.members {
-  display: flex;
-  align-items: center;
-
-  // margin-left: -16px;
-  // margin-right: -16px;
-  // &_content {
-  // flex-wrap: nowrap;
-  // overflow: hidden;
-
-  // /deep/ .col-1 {
-  // width: unset;
-  // }
-  // }
-  &_action {
-    white-space: nowrap;
-  }
-}
-
-.noPermission {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 10vh;
-
-  &_tip {
-    font-size: 18px;
-  }
-
-  &_icon {
-    width: 26px;
-    height: 34px;
-    margin-bottom: 10px;
-  }
-}
-
-.info {
-  background-color: #d4f6f346;
-  color: $dgrey;
-  font-size: 14px;
-
-  .infotitle {
-    font-weight: bold;
-    padding-right: 15px;
-    line-height: 20px;
-  }
-
-  .reward {
-    font-size: 12px;
-    margin-left: 8px;
-    padding: 3px 11px;
-    border-radius: 6px;
-    color: #FF6262;
-    background-color: #FFEAE4;
-  }
-
-  .desc {
-    margin-top: 10px;
-  }
-}
-
-.top-login {
-  position: absolute;
-  top: 20px;
-  right: 40px;
-}
-
-.main {
-  padding-top: 80px;
-
-  .warper {
-    padding: 0 42px;
-  }
-
-  .groupinfo {
-    position: sticky;
-    padding: 8px 42px;
-    top: 0;
-    z-index: 2500;
-    background-color: white;
-    display: flex;
-    align-items: center;
-
-    /deep/ .q-btn {
-      margin-right: 24px;
-    }
-
-    /deep/ .q-btn__wrapper {
-      padding-left: 8px;
-      padding-right: 12px;
-
-      .q-icon {
-        margin-right: 4px;
-        font-size: 22px;
-      }
-    }
-
-    .groupname {
-      // line-height: 30px;
-      font-size: 18px;
-      cursor: pointer;
-      color: #2A3542;
-      // margin-top: 5px;
-      padding: 0 12px 0;
-      font-weight: bold;
-    }
-  }
-
-  @media only screen and (max-width: 600px) {
-    .groupinfo {
-      padding: 8px 12px 4px 70px;
-    }
-  }
-}
-</style>
+<style src="./GroupMain.scss" lang="scss" scoped/>

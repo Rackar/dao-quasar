@@ -1,0 +1,180 @@
+
+.members {
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #E8E8E8;
+  @media only screen and (min-width: 1024px) {
+    padding-left: 25px;
+    padding-right: 5px;
+  }
+  /deep/ .main {
+    margin-right: 20px;
+  }
+  &_content {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  &_action {
+    white-space: nowrap;
+  }
+}
+
+.shareBtn {
+  span {
+    display: none;
+    @media only screen and (min-width: 1024px) {
+      display: unset;
+    }
+  }
+}
+
+.noPermission {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10vh;
+
+  &_tip {
+    font-size: 18px;
+  }
+
+  &_icon {
+    width: 26px;
+    height: 34px;
+    margin-bottom: 10px;
+  }
+}
+
+.info {
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #d4f6f346;
+  color: #8c909d;
+  font-size: 14px;
+
+  @media only screen and (min-width: 1024px) {
+    margin-left: 25px;
+    margin-right: 25px;
+    padding: 25px;
+  }
+
+  .infotitle {
+    font-weight: bold;
+    padding-right: 15px;
+    line-height: 20px;
+  }
+
+  .reward {
+    font-size: 12px;
+    margin-left: 8px;
+    padding: 3px 11px;
+    border-radius: 6px;
+    color: #FF6262;
+    background-color: #FFEAE4;
+  }
+
+  .desc {
+    padding-top: 10px;
+  }
+}
+
+.top-login {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+}
+
+.main {
+  padding-top: 80px;
+}
+
+.groupinfo {
+  position: sticky;
+  top: 0;
+  z-index: 2500;
+  background-color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+
+  @media only screen and (min-width: 768px) {
+    display: flex;
+    align-items: center;
+  }
+
+  &_row:first-child {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 15px;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 5px;
+    padding-bottom: 15px;
+    @media only screen and (min-width: 768px) {
+      flex: 1;
+      padding-bottom: 0;
+    }
+
+    @media only screen and (min-width: 1024px) {
+      grid-template-columns: repeat(3, auto);
+      justify-content: flex-start;
+      padding-left: 25px;
+      padding-right: 15px;
+    }
+
+    @media only screen and (min-width: 1440px) {
+      flex: auto;
+    }
+  }
+
+  &_row:last-child {
+    display: flex;
+    padding-left: 15px;
+    padding-right: 15px;
+    @media only screen and (min-width: 768px) {
+      padding-left: 0;
+    }
+    @media only screen and (min-width: 1024px) {
+      padding-right: 25px;
+    }
+    > * {
+      flex: 1;
+      margin-right: 15px;
+      @media only screen and (min-width: 1024px) {
+        margin-right: 25px;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    /deep/ button {
+      width: 100%;
+      min-width: 100px;
+    }
+  }
+
+  /deep/ .q-btn__content {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  /deep/ .q-btn__wrapper {
+    padding-left: 10px;
+    padding-right: 10px;
+    .q-icon {
+      margin-right: 5px;
+      font-size: 22px;
+    }
+  }
+
+  .groupname {
+    font-size: 18px;
+    cursor: pointer;
+    color: #2A3542;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}

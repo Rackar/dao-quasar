@@ -254,7 +254,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .main-body {
-  padding-left: 51px;
+  padding-left: 45px;
 }
 .isLiked {
   color: var(--q-color-primary) !important;
@@ -272,9 +272,19 @@ export default {
 .actions {
   margin-left: -16px;
   padding-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  @media only screen and (min-width: 768px) {
+    justify-content: flex-start;
+  }
   .q-btn {
     color: #8c909d;
-    margin-right: 24px;
+    @media only screen and (min-width: 768px) {
+      margin-right: 24px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }
 .video-wraper {
@@ -290,11 +300,11 @@ export default {
   font-size: 16px;
 }
 .authorName {
-  padding: 0 10px 0 20px;
+  padding: 0 10px;
 }
 .body {
-  padding-top: 15px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 15px;
   display: block;
   font-size: 15px;
   word-break: break-word;
@@ -304,16 +314,16 @@ export default {
 .container {
   background-color: #fff;
   border-bottom: 1px solid #e4e4e4;
-  padding-left: 42px;
-  padding-right: 42px;
   padding-bottom: 15px;
-}
-@media only screen and (max-width: 1024px) {
-  .container {
-    padding-left: 8px;
-    padding-right: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  @media only screen and (min-width: 1024px) {
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
+
 [data-type='group'] {
   &:hover {
     background-color: #fafafa;
