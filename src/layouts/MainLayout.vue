@@ -107,7 +107,7 @@ export default {
 
 <style lang="stylus" scoped>
 .unfold {
-  position: sticky;
+  position: absolute;
   padding: 8px 0 0 16px;
   // top: 0;
   z-index: 2600;
@@ -159,7 +159,7 @@ export default {
 
 .copyright {
   padding: 18px 48px 30px;
-  font-size: 16px;
+  font-size: 12px;
   color: rgba(140, 144, 157, 0.58);
   text-align: right;
   line-height: 22px;

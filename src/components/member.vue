@@ -1,5 +1,5 @@
 <template>
-  <div class="fit row q-gutter-lg q-mt-xs">
+  <div class="fit row">
     <div class="main" v-for="member in members" :key="member.id">
       <div>
         <q-avatar class="cursor-pointer" :size="size">
@@ -79,7 +79,6 @@ export default {
 <style lang="stylus" scoped>
 .main {
   text-align: center;
-  margin: 20px;
 }
 
 .avatar {
