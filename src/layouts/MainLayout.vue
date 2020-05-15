@@ -108,7 +108,7 @@ export default {
 <style lang="stylus" scoped>
 .unfold {
   position: sticky;
-  padding: 8px 0 0 42px;
+  padding: 8px 0 0 16px;
   // top: 0;
   z-index: 2600;
   // position: absolute;

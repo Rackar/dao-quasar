@@ -372,7 +372,7 @@ export default {
 
   @media only screen and (max-width: 600px) {
     .groupinfo {
-      padding: 8px 12px 4px 100px;
+      padding: 8px 12px 4px 70px;
     }
   }
 }
