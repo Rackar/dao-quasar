@@ -107,11 +107,16 @@ export default {
 
 <style lang="stylus" scoped>
 .unfold {
-  position: absolute;
-  top: 25px;
-  left: 27px;
-  z-index: 2300;
+  position: sticky;
+  padding: 8px 0 0 42px;
+  // top: 0;
+  z-index: 2600;
+  // position: absolute;
+  top: 12px;
 
+  // left: 27px;
+
+  // z-index: 2300;
   /deep/ .q-icon {
     font-size: 14px !important;
   }

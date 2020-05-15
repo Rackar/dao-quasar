@@ -2,7 +2,7 @@
   <div class="fit row q-gutter-lg q-mt-xs">
     <div class="main" v-for="member in members" :key="member.id">
       <div>
-        <q-avatar class="cursor-pointer avatar">
+        <q-avatar class="cursor-pointer" :size="size">
           <img :src="member.avatar || 'statics/user.svg'" @click="jumpToMember(member.id)" />
           <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">x</q-badge>
         </q-avatar>
@@ -27,6 +27,10 @@ export default {
     mainpage: {
       type: Boolean,
       default: false,
+    },
+    size: {
+      type: String,
+      default: '55px',
     },
   },
   data() {

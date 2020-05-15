@@ -13,7 +13,7 @@
       :onSave="afterEdit"
     />
     <div class="header" v-if="post.creator">
-      <q-avatar size="30px" v-show="!personPage">
+      <q-avatar size="35px" v-show="!personPage">
         <img :src="post.creator.avatar || 'statics/user.svg'" />
       </q-avatar>
       <span

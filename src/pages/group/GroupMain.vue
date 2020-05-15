@@ -47,7 +47,7 @@
       </div>
 
       <div class="members">
-        <member class="members_content" :members="grpMembers" />
+        <member class="members_content" :members="grpMembers" size="35px" />
         <span class="members_action">
           <q-btn
             flat
@@ -367,6 +367,12 @@ export default {
       // margin-top: 5px;
       padding: 0 12px 0;
       font-weight: bold;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .groupinfo {
+      padding: 8px 12px 4px 100px;
     }
   }
 }
