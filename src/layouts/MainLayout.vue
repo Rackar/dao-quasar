@@ -58,7 +58,7 @@
 <script>
 import grouplist from 'pages/group/GroupList';
 import headerBarLeft from 'components/headerBarLeft';
-import { debounce } from 'quasar';
+// import { debounce } from 'quasar';
 const menuList = [
   {
     icon: 'people',
@@ -92,15 +92,15 @@ export default {
     },
   },
   methods: {
-    resizeHandler() {
-      this.miniState = document.body.clientWidth < 1024;
-    },
+    // resizeHandler() {
+    // this.miniState = document.body.clientWidth < 1024;
+    // },
   },
   mounted() {
-    window.addEventListener('resize', debounce(this.resizeHandler, 200), true);
+    // window.addEventListener('resize', debounce(this.resizeHandler, 200), true);
   },
   destroyed() {
-    window.removeEventListener('resize', this.resizeHandler, true);
+    // window.removeEventListener('resize', this.resizeHandler, true);
   },
 };
 </script>

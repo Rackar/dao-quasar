@@ -266,6 +266,7 @@ export default {
       this.tempGroupData.name = this.editGroupData.name;
       this.tempGroupData.desc_text = this.editGroupData.desc_text;
       this.editing.title = false;
+      this.tempGroupData.password = this.tempGroupData.password === '****' ? null : '';
       this.saveToServer(this.tempGroupData);
     },
     saveReadPermission() {
@@ -289,6 +290,7 @@ export default {
       this.tempGroupData.reward_join = this.editGroupData.reward_join;
       this.tempGroupData.reward_post = this.editGroupData.reward_post;
       this.editing.reward = false;
+      this.tempGroupData.password = this.tempGroupData.password === '****' ? null : '';
       this.saveToServer(this.tempGroupData);
     },
     async saveToServer(data) {

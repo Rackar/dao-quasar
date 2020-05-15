@@ -177,7 +177,7 @@ export default {
     },
 
     //
-    jumpToGroup(id) {
+    async jumpToGroup(id) {
       //跳转前检查是否已加入该组
       let ifJoined = false;
 
@@ -190,7 +190,9 @@ export default {
           pinned = joined.pinned;
         }
       });
-      this.$store.dispatch('group/jumpToGroup', { id: id, joined: ifJoined, pinned });
+      this.$q.loading.show();
+      await this.$store.dispatch('group/jumpToGroup', { id: id, joined: ifJoined, pinned });
+      this.$q.loading.hide();
       if (this.$route.params.id != id) {
         this.$router.push('/group/' + id).catch(() => {});
       }
