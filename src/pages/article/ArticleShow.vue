@@ -291,6 +291,13 @@ export default {
   display: flex;
   max-width: 510px;
   max-height: 310px;
+  /deep/ .q-media--big-button-icon {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
 }
 .header {
   display: flex;

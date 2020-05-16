@@ -22,7 +22,6 @@
         arrows
         navigation
         infinite
-        style="min-width: 20vw;height: 80vh;max-height: 90vh; max-width: 95vw;"
       >
         <q-carousel-slide
           v-for="(url, index) in images"
@@ -60,6 +59,15 @@ export default {
 <style scoped="true" lang="scss">
 @import '@/components/publish/_imageGrid.scss';
 .slide {
+  // min-width: 10vw;
+  height: 80vh;
+  min-height: 20vh;
+  max-height: 90vh;
+  max-width: 95vw;
+  @media only screen and (max-width: 768px) {
+    height: auto;
+    width: 80vw;
+  }
   background-color: transparent;
   box-shadow: none;
   overflow: visible;

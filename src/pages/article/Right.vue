@@ -63,7 +63,7 @@ const getTopPosts = function(groupId, isLoggedIn) {
   if (!isLoggedIn) {
     return post('/post/top', { grp: groupId }).then(res => res.posts);
   }
-  return post('/post/top', { grp: groupId }).then(res => res.posts);
+  return post('/protected/post/top', { grp: groupId }).then(res => res.posts);
 };
 
 const checkIsGroupJoined = function(groupId) {

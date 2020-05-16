@@ -1,9 +1,7 @@
 <template>
   <div class="q-py-md q-px-xl main">
     <div class="section">
-      <div class="title text-weight-bold">
-        组长
-      </div>
+      <div class="title text-weight-bold">组长</div>
       <div class="manage">
         <member :members="[owner]" />
         <!-- <q-space /> -->
@@ -141,12 +139,14 @@ export default {
 }
 
 .title {
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 20px;
+  padding-left: 10px;
 }
 
 .section {
   margin-bottom: 55px;
+
   /deep/ .main {
     margin: 20px;
   }
