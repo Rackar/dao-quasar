@@ -6,8 +6,8 @@
         <HeaderBarRight class="right" />
       </div>
       <div class="row q-col-gutter-md" :key="$route.params.id">
-        <BodyLeft class="col-sm-8 col-md-7 offset-md-1" @getGroupInfo="setGroupInfo" />
-        <BodyRight class="col-sm-4 col-md-3" v-if="groupInfo !== null" :groupInfo="groupInfo" />
+        <BodyLeft class="col-sm-8 col-md-6 offset-md-1" @getGroupInfo="setGroupInfo" />
+        <BodyRight class="col-sm-4 col-md-4" v-if="groupInfo !== null" :groupInfo="groupInfo" />
       </div>
     </q-page-container>
   </q-layout>

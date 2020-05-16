@@ -18,7 +18,7 @@
             />
 
             <q-input
-              maxlength="200"
+              maxlength="300"
               placeholder="描述下你的话题，引起大家的兴趣"
               type="textarea"
               v-model="desc_text"
@@ -58,7 +58,7 @@ export default {
     return {
       title: '',
       desc_text: '',
-      read_permission: '',
+      read_permission: '1',
       password: '',
     };
   },

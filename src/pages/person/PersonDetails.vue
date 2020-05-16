@@ -12,7 +12,7 @@
       <q-avatar @click="changeAvatar" class="avatar">
         <q-icon v-show="editing" name="icon_paizhao" class="mask"></q-icon>
         <img
-          :src="editing?edit.avatar:userinfo.avatar || 'statics/user.svg'"
+          :src="(editing?edit.avatar:userinfo.avatar) || 'statics/user.svg'"
           :class="{ masked: editing }"
         />
       </q-avatar>
