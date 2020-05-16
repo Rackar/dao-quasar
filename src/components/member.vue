@@ -90,5 +90,9 @@ export default {
   margin-top: 10px;
   font-size: 14px;
   color: $dgrey;
+  width: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>

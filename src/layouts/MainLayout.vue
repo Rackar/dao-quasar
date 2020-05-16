@@ -43,7 +43,7 @@
         </q-list>-->
         <div class="copyright">
           All rights reserved 2020 DAO Inc
-          <br />An user owned company
+          <br />A user owned company
           <br />Designed by Alina
         </div>
       </q-scroll-area>
@@ -163,5 +163,10 @@ export default {
   color: rgba(140, 144, 157, 0.58);
   text-align: right;
   line-height: 22px;
+
+  @media only screen and (max-width: 1024px) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 }
 </style>
