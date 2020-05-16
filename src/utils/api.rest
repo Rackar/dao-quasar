@@ -4,11 +4,13 @@
 @port = 3031
 
 @host = {{hostname}}:{{port}}
+@hostpro = www.justdao.com/api/v1
 @contentType = application/json
 
 @testemail = 27681135@qq.com
 @createdAt = {{$datetime iso8601}}
 @token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDI4MzY0MDYsImlkIjoxMDAwOX0.E7rsmZiWmrpOkmnnis384RX4dREZsx8ZblR_-pkzvc4
+@tokenpro=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDQ4ODYwNjQsImlkIjoxMDAwM30.o2s29FZN7ile0BWUZ3SseWOgQFR61qhuCHET9mqOCJo
 @testUserId = 10009
 # token半年有效
 
@@ -151,6 +153,9 @@ Content-Type: {{contentType}}
   "avatar": "https://s3.ap-northeast-1.amazonaws.com/justdao/dev/10009/op.jpg"
 }
 ### GET /protected/user/tokens（我的代币）
+GET https://{{hostpro}}/protected/user/tokens HTTP/1.1
+Authorization: Bearer {{tokenpro}}
+
 ### POST /protected/user/token/transfer（转账）
 POST  https://{{host}}/user/token/transfer HTTP/1.1
 Authorization: Bearer {{token}}

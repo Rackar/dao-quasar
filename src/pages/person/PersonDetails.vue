@@ -223,6 +223,9 @@ export default {
     getLikes(posts) {
       return new Promise((resolve, reject) => {
         const postIds = posts.map(i => i.post.id);
+        if (postIds.length === 0) {
+          return resolve(posts);
+        }
         this.$axios
           .post('/protected/post/likes', { posts: postIds })
           .then((res, err) => {

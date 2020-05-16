@@ -35,7 +35,16 @@
       <div class="groupinfo_row">
         <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
         <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" v-if="!blocked" />
-        <q-btn unelevated rounded dense text-color="red-7" color="red-1" label="已被禁言" v-else disable />
+        <q-btn
+          unelevated
+          rounded
+          dense
+          text-color="red-7"
+          color="red-1"
+          label="已被禁言"
+          v-else
+          disable
+        />
       </div>
     </div>
     <div class="wrapper">
@@ -181,10 +190,10 @@ export default {
           this.isReady = true;
         })
         .catch(err => {
-          if (err.code === 100) {
+          if (err && err.code === 100) {
             this.hasPermission = false;
-          } else {
-            this.$q.notify(err.message);
+          } else if (err) {
+            this.$q.notify(err && err.message);
           }
         });
     },
@@ -205,6 +214,9 @@ export default {
     // },
     getPosts() {
       const { groupId, userid, lastPostId } = this;
+      if (!groupId) {
+        return Promise.reject();
+      }
       return getPosts({ userid, groupId, lastPostId }).then(res => {
         const newPosts = res.posts;
         this.posts = this.posts.concat(newPosts);
@@ -217,6 +229,9 @@ export default {
     },
     // 获取群组员
     getGroupMembers: async function() {
+      if (!this.groupId) {
+        return Promise.reject();
+      }
       let postapi = '/user/members/' + this.groupId;
       const members = await this.$axios.get(postapi);
       if (members.data.code == 0) {

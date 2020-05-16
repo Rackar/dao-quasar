@@ -33,6 +33,12 @@ export default function() {
         symbol: 'baby2016',
       },
       { contract: '', name: 'Ethereum', symbol: 'ETH' },
+
+      {
+        contract: '0xa74ae2d3a4c3f6d9454634fee91dc7aab6724cf9',
+        name: 'Gencoin',
+        symbol: 'NES',
+      },
     ],
   };
 }

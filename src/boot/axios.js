@@ -14,6 +14,7 @@ const axiosInstance = axios.create({
   //     : 'https://chatdao.com:3031',
 
   baseURL: 'https://chatdao.com:3031',
+  // baseURL: 'https://www.justdao.com/api/v1',
 });
 axiosInstance.interceptors.request.use(
   config => {
@@ -33,6 +34,25 @@ axiosInstance.interceptors.request.use(
   },
   err => {
     return Promise.reject(err);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  function(response) {
+    // 用户信息是否超时，重定向到登录页面
+    console.log(response);
+    if (
+      response.status != 200 ||
+      (response.data.code === 104 && response.data.message === 'Unauthorized')
+    ) {
+      localStorage.clear();
+      Vue.$router.go(0);
+    }
+    return response;
+  },
+  function(error) {
+    store.commit('logout_delToken');
+    return Promise.reject(error);
   }
 );
 // 在Vue文件中通过this.$axios来使用

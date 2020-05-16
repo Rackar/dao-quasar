@@ -46,6 +46,7 @@
           class="col"
           color="primary"
           label="确定"
+          :loading="loading"
           @click="sentMoney"
           :disable="this.user === '' || this.val === ''"
         />
@@ -69,6 +70,7 @@ export default {
       user: '',
       totalMoney: 0,
       tokenIndex: 0,
+      loading: false,
     };
   },
   watch: {},
@@ -111,7 +113,10 @@ export default {
         this.$q.notify('地址不合法');
         return;
       }
+      this.loading = true;
       const res = await this.$axios.post(url, data);
+      this.loading = false;
+      this.shouldShow = false;
       if (res.data.code === 0) {
         this.$q.notify({
           message: '转账成功',
