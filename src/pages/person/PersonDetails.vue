@@ -176,8 +176,8 @@ export default {
           this.userinfo = this.myUserinfo;
           this.getMyPosts();
           this.getmycode();
-          // this.tokenLog();
-          this.getMyRecycle();
+          //是否拉取回车站内容
+          // this.getMyRecycle();
         } else {
           userid = this.id;
           this.getOtherUser(userid);

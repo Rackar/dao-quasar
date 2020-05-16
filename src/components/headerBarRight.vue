@@ -1,13 +1,7 @@
 <template>
   <div>
     <div v-if="isLoggedIn">
-      <q-avatar
-        class="cursor-pointer q-mx-xs"
-        rounded
-        size="36px"
-        icon="notifications"
-        @click="readNotify"
-      >
+      <q-avatar class="notify" size="36px" icon="notifications_none" @click="readNotify">
         <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
       </q-avatar>
       <q-avatar class="cursor-pointer q-px-md q-mr-md" size="30px">
@@ -164,4 +158,15 @@ export default {
   },
 };
 </script>
+<style lang="stylus" scoped>
+.notify {
+  cursor: pointer;
+
+  // margin: 0 10px;
+  &:hover {
+    color: $primary;
+    background-color: $dback;
+  }
+}
+</style>
 
