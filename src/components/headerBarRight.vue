@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="header-bar-right">
     <div v-if="isLoggedIn">
-      <q-avatar class="notify" size="36px" icon="notifications_none" @click="readNotify">
+      <q-avatar class="header-notify" size="36px" icon="notifications_none" @click="readNotify">
         <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
       </q-avatar>
       <q-avatar class="cursor-pointer q-px-md q-mr-md" size="30px">
@@ -30,19 +30,28 @@
           </q-list>
         </q-menu>
       </q-avatar>
-      <q-dialog v-model="showNotice" seamless position="top" @hide="hideNotice">
+      <q-dialog
+        content-class="notify-dialog"
+        transition-show="fade"
+        transition-hide="fade"
+        v-model="showNotice"
+        seamless
+        position="top"
+        @hide="hideNotice"
+      >
         <q-card>
           <q-card-section>
-            <div class="row items-center no-wrap">
+            <!-- <div class="row items-center no-wrap">
               系统通知
               <q-space />
               <q-btn flat round icon="close" v-close-popup />
-            </div>
+            </div>-->
             <div v-if="unreadNotify.length===0">当前无未读通知。</div>
-            <div
-              v-for="notice in unreadNotify"
-              :key="notice.id"
-            >{{ notice.h_text }} - {{ $utils.timeStringToLocal(notice.create_at,'RelativeTime') }}</div>
+            <div v-for="notice in unreadNotify" :key="notice.id" class="header-notify-detail">
+              {{ notice.h_text }}
+              <!-- - {{ $utils.timeStringToLocal(notice.create_at,'RelativeTime') }} -->
+              <q-separator />
+            </div>
           </q-card-section>
         </q-card>
       </q-dialog>
@@ -158,14 +167,31 @@ export default {
   },
 };
 </script>
-<style lang="stylus" scoped>
-.notify {
-  cursor: pointer;
+<style lang="stylus" >
+.header-bar-right {
+  .header-notify {
+    cursor: pointer;
 
-  // margin: 0 10px;
-  &:hover {
-    color: $primary;
-    background-color: $dback;
+    // margin: 0 10px;
+    &:hover {
+      color: $primary;
+      background-color: $dback;
+    }
+  }
+}
+
+.notify-dialog {
+  .q-dialog__inner {
+    top: 70px;
+    left: auto;
+  }
+
+  .header-notify-detail {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 45px;
+    // padding-top: 10px;
+    // padding-bottom: 10px;
   }
 }
 </style>
