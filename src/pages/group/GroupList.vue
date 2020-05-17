@@ -190,12 +190,18 @@ export default {
           pinned = joined.pinned;
         }
       });
+
+      // 改变 router 时 drawer 会自动关闭。
+      // 在隐藏 loading 和关闭 drawer 之间若没有延时，会导致 iOS 设备上内容无法滚动。
+      // loading 隐藏动画的时间猜测是 300ms，350ms 是动画完成后的2帧之后。
       this.$q.loading.show();
       await this.$store.dispatch('group/jumpToGroup', { id: id, joined: ifJoined, pinned });
       this.$q.loading.hide();
-      if (this.$route.params.id != id) {
-        this.$router.push('/group/' + id).catch(() => {});
-      }
+      setTimeout(() => {
+        if (this.$route.params.id != id) {
+          this.$router.push('/group/' + id).catch(() => {});
+        }
+      }, 350);
     },
     // 获取群信息
     getMyGroups: async function() {
