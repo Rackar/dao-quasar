@@ -100,6 +100,14 @@ export default {
         return getGroupInfo(post.post.grp);
       })
       .then(groupInfo => {
+        //   return get('/protected/grp/joined').then(res => {
+        //     let isJoined = res.grps_joined.some(i => i.grp.id === groupInfo.id);
+        //     groupInfo.joined = isJoined;
+        //     return groupInfo;
+        //   });
+        // })
+        // .then(groupInfo => {
+        //   debugger;
         this.groupInfo = groupInfo;
         this.isReady = true;
         this.$emit('getGroupInfo', groupInfo);
