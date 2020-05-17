@@ -1,8 +1,8 @@
 {
   "name": "quasar-dao",
   "version": "0.0.1",
-  "description": "DAO. A Quasar Framework app",
-  "productName": "DAO",
+  "description": "DAO is a User Generated Content BBS with Blockchain.",
+  "productName": "DAO - Decentralized Autonomous Organization",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "rackar <27681135@qq.com>",
