@@ -33,8 +33,13 @@
         </q-btn>
       </div>
       <div class="groupinfo_row">
-        <JoinGroupBtn v-if="!group.joined" :groupInfo="group" />
-        <AddArticleBtn :groupId="groupId" :onSave="onAddArticle" v-if="!blocked" />
+        <JoinGroupBtn v-if="!group.joined" :groupInfo="group" ref="join" />
+        <AddArticleBtn
+          :groupId="groupId"
+          :onSave="onAddArticle"
+          v-if="!blocked"
+          @wantJoin="wantJoin"
+        />
         <q-btn
           unelevated
           rounded
@@ -268,6 +273,9 @@ export default {
     postEdited(newContent) {
       const targetPost = this.posts.find(i => i.post.id === newContent.id);
       Object.assign(targetPost.post, newContent);
+    },
+    wantJoin() {
+      this.$refs.join.onClick();
     },
   },
   mounted() {
