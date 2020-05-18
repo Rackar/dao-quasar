@@ -117,7 +117,7 @@ export default {
       }
     },
     priceOf({ name, value }) {
-      return Number(value) * this.getPrice(name);
+      return Math.floor(Number(value) * this.getPrice(name) * 1000) / 1000;
     },
     getPrice(name) {
       if (!this.quotes) {

@@ -10,7 +10,7 @@
       <ManageGroup />
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="container-left">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -42,14 +42,18 @@ export default {
   padding: 0;
   margin: 0;
 
+  .container-left {
+    padding-right: 480px !important;
+
+    @media only screen and (max-width: 1006px) {
+      padding-right: 20px !important;
+    }
+  }
+
   /deep/ .q-drawer {
     width: 480px !important;
-  }
-}
 
-@media only screen and (max-width: 600px) {
-  .manage-layout {
-    /deep/ .q-drawer {
+    @media only screen and (max-width: 600px) {
       width: 280px !important;
     }
   }

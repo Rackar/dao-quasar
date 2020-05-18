@@ -138,8 +138,13 @@ export default {
     };
   },
   computed: {
+    content_sub() {
+      return this.viewType === 'group'
+        ? this.post.post.content.substr(0, 300)
+        : this.post.post.content;
+    },
     content_breakLines() {
-      return this.post.post.content.split('\n');
+      return this.content_sub.split('\n');
     },
     canEdit() {
       if (this.viewType === 'comment') return false;

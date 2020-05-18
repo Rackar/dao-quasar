@@ -22,7 +22,9 @@
 
             <q-separator />
             <q-item clickable v-close-popup>
-              <q-item-section @click="$router.push('/person/show/' + $store.state.user.userid)">个人设置</q-item-section>
+              <q-item-section
+                @click="$router.push('/person/show/' + $store.state.user.userid)"
+              >我的DAO</q-item-section>
             </q-item>
             <q-item clickable v-close-popup>
               <q-item-section @click="clearLogin">退出登录</q-item-section>
@@ -187,8 +189,8 @@ export default {
   }
 
   .header-notify-detail {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 600;
     line-height: 45px;
     // padding-top: 10px;
     // padding-bottom: 10px;

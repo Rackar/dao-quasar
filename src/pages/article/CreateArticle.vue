@@ -8,6 +8,7 @@
     :shouldResetAfterClose="false"
     :doPublish="publish"
     :onEdit="onEdit"
+    :maxTextLength="2000"
   />
 </template>
 
@@ -45,7 +46,7 @@ export default {
   },
   data() {
     return {
-      draft: getDraft()
+      draft: getDraft(),
     };
   },
   computed: {
