@@ -89,6 +89,9 @@
           <!-- <span>设置</span> -->
           <q-menu auto-close>
             <q-list style="min-width: 100px">
+              <q-item v-if="canPinTop" clickable>
+                <q-item-section @click="pinTopPost(postId)">置顶</q-item-section>
+              </q-item>
               <q-item v-if="canEdit" clickable>
                 <q-item-section @click="edit">编辑</q-item-section>
               </q-item>
@@ -153,6 +156,10 @@ export default {
     canDelete() {
       if (this.viewType === 'comment') return false;
       return this.userid === this.post.post.creator || this.userid === this.groupCreatorId;
+    },
+    canPinTop() {
+      if (this.viewType === 'comment') return false;
+      return this.userid === this.groupCreatorId;
     },
     shouldShowSetting() {
       return this.canEdit || this.canDelete;
@@ -251,6 +258,9 @@ export default {
     },
     async deletePost() {
       this.showDeleteArticle = true;
+    },
+    pinTopPost() {
+      this.$q.notify('置顶功能尚在开发');
     },
   },
   created() {},

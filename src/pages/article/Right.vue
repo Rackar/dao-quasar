@@ -177,14 +177,14 @@ export default {
   margin-right: 12px;
 }
 .name {
-  font-size: 20px;
+  font-size: 18px;
 }
 .postList {
   background-color: #fff;
   box-shadow: 0px 4px 15px 0px rgba(176, 176, 176, 0.09);
   padding: 37px 40px;
   &_header {
-    font-size: 24px;
+    font-size: 20px;
     margin-bottom: 37px;
   }
 }
@@ -204,14 +204,14 @@ export default {
   }
   &_title {
     grid-area: title;
-    font-size: 18px;
+    font-size: 16px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   &_num {
     grid-area: num;
-    font-size: 16px;
+    font-size: 14px;
     color: #8c909d;
   }
   &_time {

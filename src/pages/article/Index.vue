@@ -38,7 +38,7 @@ export default {
 }
 .header {
   display: flex;
-  padding: 0px 0px 80px;
+  padding: 0px 0px 50px;
   justify-content: space-between;
   // display: flex;
   // padding: 16px;
