@@ -138,6 +138,14 @@ export default {
   background-color: #fff;
 }
 .article {
+  /deep/ .header {
+    margin-bottom: 15px;
+  }
+  /deep/ .main-body {
+    padding-left: 0;
+  }
+}
+.article {
   margin-bottom: 20px;
 }
 </style>

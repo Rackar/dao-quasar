@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="header">{{ comments.length }}条评论</div>
-    <div v-for="item in postLikeComments" :key="item.comment.id">
+    <div class="header" :data-is-empty="postLikeComments.length === 0">{{ comments.length }}条评论</div>
+    <div v-for="item in postLikeComments" :key="item.comment.id" class="body">
       <Article viewType="comment" :post="item" />
     </div>
   </div>
@@ -22,10 +22,19 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  padding-bottom: 31px;
-  padding-top: 27px;
-  padding-left: 42px;
   font-size: 18px;
-  font-weight: bold;
+  padding: 15px;
+  padding-bottom: 0;
+
+  @media only screen and (min-width: 1024px) {
+    padding-left: 42px;
+    padding-right: 42px;
+  }
+
+  &[data-is-empty="true"] {
+    padding-bottom: 15px;
+  }
 }
+
+
 </style>

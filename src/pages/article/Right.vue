@@ -125,9 +125,13 @@ export default {
 .info {
   background-color: #fff;
   box-shadow: 0px 4px 15px 0px rgba(176, 176, 176, 0.09);
-  padding: 36px 42px 44px 42px;
   margin-bottom: 14px;
   position: relative;
+  padding: 15px;
+
+  @media only screen and (min-width: 1440px) {
+    padding: 30px 40px;
+  }
 }
 .link {
   display: flex;
@@ -146,6 +150,12 @@ export default {
   background-color: #fff;
   box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.15);
   padding: 16px 22px;
+
+  display: none;
+  @media only screen and (min-width: 1024px) {
+    display: block;
+  }
+
 
   &_body {
     display: flex;
@@ -182,10 +192,25 @@ export default {
 .postList {
   background-color: #fff;
   box-shadow: 0px 4px 15px 0px rgba(176, 176, 176, 0.09);
-  padding: 37px 40px;
+
   &_header {
-    font-size: 20px;
-    margin-bottom: 37px;
+    font-size: 18px;
+    padding: 15px;
+
+    @media only screen and (min-width: 1440px) {
+      font-size: 24px;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  }
+  &_body {
+    padding: 15px;
+    padding-top: 0;
+
+    @media only screen and (min-width: 1440px) {
+      padding-left: 40px;
+      padding-right: 40px;
+    }
   }
 }
 .post {
@@ -198,7 +223,13 @@ export default {
     'avatar num time';
   grid-column-gap: 16px;
   align-items: center;
-  margin-bottom: 39px;
+  border-bottom: 1px solid #F1F1F1;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
   &_avatar {
     grid-area: avatar;
   }
