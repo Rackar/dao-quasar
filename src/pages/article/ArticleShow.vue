@@ -27,6 +27,7 @@
       <div class="body" @click="onContentClick">
         <!-- {{ post.post.content }} -->
         <div v-for="line in content_breakLines" :key="line.id">{{line || '&nbsp;'}}</div>
+        <div v-show="content_showMore">(点击查看更多...)</div>
       </div>
       <ImageGrid :images="post.post.images" class="images" v-if="!hasVideo" />
       <div v-else class="video-wraper">
@@ -145,6 +146,9 @@ export default {
       return this.viewType === 'group'
         ? this.post.post.content.substr(0, 300)
         : this.post.post.content;
+    },
+    content_showMore() {
+      return this.post.post.content.length > 300 && this.viewType === 'group';
     },
     content_breakLines() {
       return this.content_sub.split('\n');
