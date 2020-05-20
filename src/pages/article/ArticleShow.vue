@@ -53,8 +53,14 @@
           </template>-->
         </q-media-player>
       </div>
-      <div class="actions" v-if="shouldShowActions">
-        <q-btn v-require-login-click flat :class="{ isLiked }" @click="like">
+      <div class="actions">
+        <q-btn
+          v-require-login-click
+          flat
+          :class="{ isLiked }"
+          @click="like"
+          v-if="shouldShowActions"
+        >
           <img
             svg-inline
             class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr10"
@@ -63,7 +69,7 @@
           <span>{{ post.post.num_like }}</span>
         </q-btn>
 
-        <q-btn v-require-login-click flat @click="addComment">
+        <q-btn v-require-login-click flat @click="addComment" v-if="shouldShowActions">
           <img
             svg-inline
             class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr10"
@@ -72,7 +78,7 @@
           <span>{{ post.post.num_comment }}</span>
         </q-btn>
 
-        <q-btn v-require-login-click flat @click="share(post.post.id)">
+        <q-btn v-require-login-click flat @click="share(post.post.id)" v-if="shouldShowActions">
           <img
             svg-inline
             class="svg-icon svg-icon--light-grey svg-icon--hover-middle-grey mr10"
@@ -156,11 +162,11 @@ export default {
       return this.content_sub.split('\n');
     },
     canEdit() {
-      if (this.viewType === 'comment') return false;
+      // if (this.viewType === 'comment') return false;
       return this.userid === this.post.post.creator;
     },
     canDelete() {
-      if (this.viewType === 'comment') return false;
+      // if (this.viewType === 'comment') return false;
       return this.userid === this.post.post.creator || this.userid === this.groupCreatorId;
     },
     canPinTop() {
