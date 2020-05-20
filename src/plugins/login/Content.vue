@@ -21,13 +21,7 @@
           <div class="setcode">验证码已发送至 {{ email }}</div>
         </div>
         <div class="email">
-          <input
-            class="val"
-            :rules="[val => !!val || '验证码不能为空']"
-            v-model="code"
-            name="code"
-            placeholder="四位数验证码"
-          />
+          <input class="val" v-model="code" name="code" placeholder="四位数验证码" />
         </div>
         <div class="btn">
           <!-- <button :class="code!=''?'active':''" @click="login()">登录</button> -->
@@ -91,6 +85,9 @@ export default {
       this.type = 1;
     },
     login: async function() {
+      if (!/^\d{4}$/.test(this.code)) {
+        return this.$q.notify('验证码未正确填写');
+      }
       localStorage.clear();
       let apiCode = '/user/login';
       let testData = {

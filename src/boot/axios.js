@@ -40,7 +40,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   function(response) {
     // 用户信息是否超时，重定向到登录页面
-    console.log(response);
+    // console.log(response);
     if (
       response.status != 200 ||
       (response.data.code === 104 && response.data.message === 'Unauthorized')

@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :data-type="viewType">
+  <div class="container" :data-type="viewType" ref="article">
     <deleteArticle
       v-model="showDeleteArticle"
       :postId="postId"
@@ -111,6 +111,8 @@
 <script>
 import { post } from '@/apis/request';
 import { copyToClipboard } from 'quasar';
+// import { scroll } from 'quasar';
+// const { getScrollPosition, setScrollPosition, getScrollTarget } = scroll;
 import deleteArticle from 'pages/toast/deleteArticle';
 import EditArticle from './EditArticle';
 import ImageGrid from './ImageGrid';
@@ -224,6 +226,8 @@ export default {
     },
     onContentClick() {
       if (this.viewType === 'group') {
+        // let elScrollParent = getScrollTarget(this.$refs.article);
+        // let scrollPosition = getScrollPosition(elScrollParent);
         this.$router.push(`/articles/${this.postId}`);
       }
     },

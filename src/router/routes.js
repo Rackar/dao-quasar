@@ -1,30 +1,44 @@
 const routes = [
   {
     path: '/', //首页模板
+
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/group/GroupMain.vue') },
-      { path: 'group/:id', component: () => import('pages/group/GroupMain.vue') },
+      { path: '', name: 'group', component: () => import('pages/group/GroupMain.vue') },
+      { path: 'group/:id', name: 'group', component: () => import('pages/group/GroupMain.vue') },
     ],
   },
   {
     path: '/articles/:id',
+    name: 'articles',
     component: () => import('pages/article/Index.vue'),
   },
   {
     path: '/person', //人物信息模板
+
     component: () => import('layouts/PersonLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/person/PersonDetails.vue') },
-      { path: 'show/:id', props: true, component: () => import('pages/person/PersonDetails.vue') },
+      { path: '', name: 'person', component: () => import('pages/person/PersonDetails.vue') },
+      {
+        path: 'show/:id',
+        name: 'person',
+        props: true,
+        component: () => import('pages/person/PersonDetails.vue'),
+      },
     ],
   },
   {
     path: '/manage', //管理模板
+
     component: () => import('layouts/ManageLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/manage/ManageMember.vue') },
-      { path: ':id', props: true, component: () => import('pages/manage/ManageMember.vue') },
+      { path: '', name: 'manage', component: () => import('pages/manage/ManageMember.vue') },
+      {
+        path: ':id',
+        name: 'manage',
+        props: true,
+        component: () => import('pages/manage/ManageMember.vue'),
+      },
     ],
   },
   {

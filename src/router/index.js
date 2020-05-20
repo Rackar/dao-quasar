@@ -16,7 +16,7 @@ Vue.use(VueRouter);
 
 export default function(/* { store, ssrContext } */) {
   const Router = new VueRouter({
-    scrollBehavior: () => ({ x: 0, y: 0 }),
+    // scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
 
     // Leave these as they are and change in quasar.conf.js instead!
@@ -24,7 +24,21 @@ export default function(/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE,
+    scrollBehavior(to, from, savedPosition) {
+      // return 期望滚动到哪个的位置
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(savedPosition || { x: 0, y: 0 });
+        }, 1500);
+      });
+    },
   });
+  // Router.beforeEach((to, from, next) => {
+  //   console.log(to, from);
+  //   if (to.name === 'group' && from.name === 'articles') {
+  //   }
+  //   next();
+  // });
 
   return Router;
 }
