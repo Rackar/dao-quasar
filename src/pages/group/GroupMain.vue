@@ -281,6 +281,25 @@ export default {
   mounted() {
     this.getPageData();
   },
+  meta() {
+    return {
+      // sets document title
+      title: this.group.name.substr(0, 20),
+      // optional; sets final title as "Index Page - My Website", useful for multiple level meta
+      titleTemplate: title => ` ${title} - Qroup in DAO (Decentralized Autonomous Organization)`,
+
+      // meta tags
+      meta: {
+        description: { name: 'description', content: this.group.desc_text.substr(0, 60) },
+        keywords: { name: 'keywords', content: 'DAO Decentralized Autonomous Organization' },
+        equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+      },
+
+      noscript: {
+        default: 'Please enable JS or change to other explorer.',
+      },
+    };
+  },
 };
 </script>
 

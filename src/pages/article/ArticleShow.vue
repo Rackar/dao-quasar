@@ -279,6 +279,25 @@ export default {
   },
   created() {},
   mounted() {},
+  // meta() {
+  //   return {
+  //     // sets document title
+  //     title: this.post.post.content.substr(0, 20),
+  //     // optional; sets final title as "Index Page - My Website", useful for multiple level meta
+  //     titleTemplate: title => `Articles in DAO - ${title}`,
+
+  //     // meta tags
+  //     meta: {
+  //       description: { name: 'description', content: this.post.post.content.substr(0, 60) },
+  //       keywords: { name: 'keywords', content: 'DAO Decentralized Autonomous Organization' },
+  //       equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
+  //     },
+
+  //     noscript: {
+  //       default: 'Please enable JS or change to other explorer.',
+  //     },
+  //   };
+  // },
 };
 </script>
 <style lang="scss" scoped>
