@@ -9,7 +9,7 @@ export default {
     this.sendIcon = fasPaperPlane;
   },
   props: {
-    maxTextLength: { type: Number, default: 300 },
+    maxTextLength: { type: Number, default: 2000 },
     placeholder: { type: String },
     publishBtnLabel: { type: String },
     // 修改时应提供 initialData 来显示默认值
@@ -74,7 +74,7 @@ export default {
       if (!this.onEdit) return;
       const data = {
         images: [...this.imgList, ...this.videoList],
-        content: this.content
+        content: this.content,
       };
       this.onEdit(data);
     },
@@ -126,7 +126,7 @@ export default {
         };
       });
 
-      this.imgList = this.imgList.concat(_files)
+      this.imgList = this.imgList.concat(_files);
       e.target.value = '';
     },
     uploadVideo(e) {

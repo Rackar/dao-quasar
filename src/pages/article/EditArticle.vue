@@ -5,6 +5,7 @@
     v-model="shouldShow"
     publishBtnLabel="确认修改"
     :doPublish="publish"
+    :maxTextLength="2000"
   />
 </template>
 
