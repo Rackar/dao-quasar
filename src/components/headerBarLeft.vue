@@ -20,7 +20,7 @@
       </q-menu>
     </span>-->
 
-    <span class="mainpage-btn" @click="$router.push('/')">DAO</span>
+    <q-btn flat dense class="mainpage-btn" @click="$router.push('/')">DAO</q-btn>
     <!--      创建群-->
     <!-- <groupCreate v-model="showCreate" /> -->
   </div>
@@ -61,26 +61,19 @@ export default {
   justify-content: center;
 }
 
-.hover-wraper {
-  cursor: pointer;
-
-  &:hover {
-    background-color: #eee;
-  }
-}
-
 .mainpage-btn {
   cursor: pointer;
   margin-left: 8px;
-  // padding: 6px;
+  // padding: 3px;
+  // border-radius: 4px;
   // margin: 6px 0 0 5px;
   font-size: 18px;
   font-weight: 600;
   color: rgba(42, 53, 66, 1);
 
-  // line-height: 25px;
   &:hover {
-    background-color: #eee;
+    color: $primary;
+    background-color: $dback;
   }
 }
 </style>
