@@ -4,7 +4,7 @@ const routes = [
 
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', name: 'group', component: () => import('pages/group/GroupMain.vue') },
+      { path: '', name: 'main', component: () => import('pages/group/GroupMain.vue') },
       { path: 'group/:id', name: 'group', component: () => import('pages/group/GroupMain.vue') },
     ],
   },
@@ -23,7 +23,7 @@ const routes = [
 
     component: () => import('layouts/PersonLayout.vue'),
     children: [
-      { path: '', name: 'person', component: () => import('pages/person/PersonDetails.vue') },
+      { path: '', name: 'personmain', component: () => import('pages/person/PersonDetails.vue') },
       {
         path: 'show/:id',
         name: 'person',
@@ -37,7 +37,7 @@ const routes = [
 
     component: () => import('layouts/ManageLayout.vue'),
     children: [
-      { path: '', name: 'manage', component: () => import('pages/manage/ManageMember.vue') },
+      { path: '', name: 'managemain', component: () => import('pages/manage/ManageMember.vue') },
       {
         path: ':id',
         name: 'manage',
