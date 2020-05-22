@@ -1,88 +1,16 @@
 <template>
   <div class="container">
     <q-list class="rounded-borders">
-      <div v-for="myGroup in myGroups" :key="myGroup.id">
-        <q-item
-          clickable
-          @click="jumpToGroup(myGroup.grp.id)"
-          @mouseover="showListId = myGroup.grp.id"
-          @mouseout="handleMouseMoveout"
-          v-ripple
-          :class="[
-            { isActive: isItemActive(myGroup.grp.id), pin: myGroup.pinned === 2 },
-            'group-list',
-          ]"
-        >
-          <span
-            v-show="showListId == myGroup.grp.id"
-            class="leftHideTool"
-            @mouseover="handleMenuMouseMoveover(myGroup.grp.id)"
-          >
-            <!-- <q-icon name="icon_more"></q-icon> -->
-            <img svg-inline src="@/statics/icons/icon_more.svg" class="svg-icon" />
-            <div auto-close v-show="showMenu" @mouseout="showMenuId = 0" class="menu-hover">
-              <q-list style="min-width: 100px">
-                <q-item clickable>
-                  <q-item-section
-                    @click.stop="setGroupToTop(myGroup)"
-                  >{{ myGroup.pinned === 2 ? '取消置顶' : '置顶群' }}</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable>
-                  <q-item-section @click.stop="leaveGroup(myGroup.grp.id)">退出群</q-item-section>
-                </q-item>
-              </q-list>
-            </div>
-          </span>
-          <q-item-section avatar>
-            <q-avatar rounded size="50px">
-              <img :src="myGroup.grp.avatar || 'statics/group.svg'" />
-            </q-avatar>
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label lines="1" style="margin-bottom:5px;">
-              <span class="group-title">{{ myGroup.grp.name }}</span>
-            </q-item-label>
-            <q-item-label caption lines="1">{{ myGroup.grp.desc_text }}</q-item-label>
-          </q-item-section>
-          <q-item-section side top class="justify-between">
-            <!-- <q-badge color="grey" :label="myGroup.unread" /> -->
-            <q-item-label class="badge-num">{{ myGroup.unread }}</q-item-label>
-            <q-item-label
-              caption
-            >{{ $utils.timeStringToLocal(myGroup.grp.last_post_at, 'RelativeDay') }}</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-separator inset="true" />
-      </div>
-      <q-item style="margin-top:20px;padding-left:48px;padding-right:48px;">
-        <q-item-section>
-          <q-item-label header style>
-            <div class="tuijian">推荐</div>
-          </q-item-label>
-        </q-item-section>
-        <q-item-section side>
-          <q-btn dense flat color="primary" icon="more_horiz" @click="$router.push('/grouplist')" />
-        </q-item-section>
-      </q-item>
+      <q-item-label header style="padding: 35px 24px 6px;">
+        <div class="tuijian">搜索</div>
+      </q-item-label>
       <div v-for="grp in recommendGroups" :key="grp.id">
-        <!-- <q-item
-          clickable
-          @click="jumpToGroup(grp.id)"
-          @mouseover="showListId = grp.id"
-          @mouseout="showListId = -1"
-          v-ripple
-          class="q-px-xl q-py-md"
-        >-->
         <q-item
           clickable
           @click="jumpToGroup(grp.id)"
           v-ripple
           :class="[{ isActive: isItemActive(grp.id) }, 'group-list']"
         >
-          <!-- <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">...</span> -->
           <q-item-section avatar>
             <q-avatar rounded size="50px">
               <img :src="grp.avatar || 'statics/group.svg'" />
@@ -110,17 +38,15 @@
         <q-separator inset="true" />
       </div>
     </q-list>
-    <quitGroup v-model="showQuitGroup" :groupId="quitGroupId" />
   </div>
 </template>
 <script>
-import { get, post } from 'src/apis/index.js';
-import quitGroup from 'pages/toast/quitGroup';
+import { get } from 'src/apis/index.js';
 
 let eventHandle = null;
 export default {
   inject: ['reload'],
-  components: { quitGroup },
+  components: {},
   data() {
     return {
       myGroups: [],
@@ -162,25 +88,25 @@ export default {
       await this.getReCommendGroups();
 
       if (this.userid) {
-        await this.getMyGroups();
+        // await this.getMyGroups();
       }
 
-      // debugger;
-      let activeGroupId = 0;
-      // console.log(this.myGroups, this.recommendGroups);
+      // // debugger;
+      // let activeGroupId = 0;
+      // // console.log(this.myGroups, this.recommendGroups);
 
-      //如果地址里有群组id参数
-      if (this.$route.params.id) {
-        activeGroupId = this.$route.params.id;
-      } else {
-        if (this.myGroups && this.myGroups.length) {
-          activeGroupId = this.myGroups[0].grp.id;
-        } else if (this.recommendGroups && this.recommendGroups.length) {
-          activeGroupId = this.recommendGroups[0].id;
-        }
-      }
+      // //如果地址里有群组id参数
+      // if (this.$route.params.id) {
+      //   activeGroupId = this.$route.params.id;
+      // } else {
+      //   if (this.myGroups && this.myGroups.length) {
+      //     activeGroupId = this.myGroups[0].grp.id;
+      //   } else if (this.recommendGroups && this.recommendGroups.length) {
+      //     activeGroupId = this.recommendGroups[0].id;
+      //   }
+      // }
 
-      this.jumpToGroup(activeGroupId);
+      // this.jumpToGroup(activeGroupId);
     },
 
     //
@@ -210,20 +136,7 @@ export default {
         }
       }, 350);
     },
-    // 获取群信息
-    getMyGroups: async function() {
-      let apiCode = '/protected/grp/joined';
-      //注释掉接口
-      const getjoined = await get(apiCode);
-      // debugger;
-      if (getjoined) {
-        if (getjoined.code == 0) {
-          this.myGroups = getjoined.data.grps_joined;
-        } else if (getjoined.code == 104) {
-        }
-      } else {
-      }
-    },
+
     // 获取推荐
     getReCommendGroups: async function() {
       let postUrl;
@@ -241,30 +154,7 @@ export default {
       } else {
       }
     },
-    showListTool() {
-      this.$q.notify('点击按钮');
-    },
-    async setGroupToTop(myGroup) {
-      let pin = myGroup.pinned;
-      let data = {
-        grp: myGroup.grp.id,
-        pinned: pin === 1 ? 2 : 1,
-      };
-      let postUrl = '/protected/grp/pin';
-      const res = await post(postUrl, data);
-      if (res.code === 0) {
-        if (pin === 1) {
-          this.$q.notify('置顶成功');
-        } else {
-          this.$q.notify('取消置顶成功');
-        }
-        this.reload();
-      }
-    },
-    leaveGroup(id) {
-      this.showQuitGroup = true;
-      this.quitGroupId = id;
-    },
+
     handleMouseMoveout() {
       this.showListId = 0;
       // this.showMenuId = 0;
@@ -316,7 +206,7 @@ export default {
 }
 
 .tuijian {
-  // padding-left: 22px;
+  padding-left: 22px;
   font-size: 18px;
   font-weight: 600;
   color: rgb(42, 53, 66);

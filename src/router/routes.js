@@ -9,6 +9,11 @@ const routes = [
     ],
   },
   {
+    path: '/grouplist',
+    name: 'grouplist',
+    component: () => import('pages/group/GroupListMore.vue'),
+  },
+  {
     path: '/articles/:id',
     name: 'articles',
     component: () => import('pages/article/Index.vue'),

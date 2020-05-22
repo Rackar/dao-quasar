@@ -8,7 +8,7 @@
     :shouldResetAfterClose="false"
     :doPublish="publish"
     :onEdit="onEdit"
-    :maxTextLength="2000"
+    :maxTextLength="5000"
   />
 </template>
 
