@@ -13,7 +13,7 @@
         <q-card-actions align="center" class="bg-white text-teal" v-if="!showInfo">
           <q-btn
             outline
-            class="q-px-xl q-mr-lg"
+            class="btn-sumit q-mr-lg"
             color="primary"
             label="取消"
             @click="cancel"
@@ -21,7 +21,7 @@
           />
           <q-btn
             unelevated
-            class="q-px-xl"
+            class="btn-sumit"
             color="primary"
             label="确定"
             @click="comfirm"
@@ -91,4 +91,13 @@ export default {
   mounted() {},
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.btn-sumit {
+  padding-left: 48px;
+  padding-right: 48px;
+  @media only screen and (max-width: 600px) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+</style>
