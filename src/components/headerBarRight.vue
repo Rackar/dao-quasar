@@ -4,12 +4,12 @@
       <q-avatar class="header-notify" size="36px" icon="notifications_none" @click="readNotify">
         <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
       </q-avatar>
-      <q-avatar class="cursor-pointer q-px-md q-mr-md" size="30px">
+      <q-avatar size="30px" class="header-avatar">
         <img :src="$store.state.user.avatar || 'statics/user.svg'" />
         <q-menu>
           <q-list style="min-width: 100px">
             <q-item clickable v-close-popup>
-              <q-item-section @click="createGrp">新建群</q-item-section>
+              <q-item-section @click="createGrp">新建一个群</q-item-section>
             </q-item>
             <q-item clickable v-close-popup v-if="isInGroupPath">
               <q-item-section
@@ -24,10 +24,10 @@
             <q-item clickable v-close-popup>
               <q-item-section
                 @click="$router.push('/person/show/' + $store.state.user.userid)"
-              >我的DAO</q-item-section>
+              >我的DAO @{{user.userid}}</q-item-section>
             </q-item>
             <q-item clickable v-close-popup>
-              <q-item-section @click="clearLogin">退出登录</q-item-section>
+              <q-item-section @click="clearLogin">退出登录 ({{user.name}})</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
@@ -89,6 +89,9 @@ export default {
     unreadNotify() {
       return this.notifications.filter(notice => notice.read === 1);
     },
+    user() {
+      return this.$store.state.user;
+    },
     isLoggedIn() {
       return this.$store.state.user.userid !== '';
     },
@@ -107,7 +110,7 @@ export default {
       localStorage.removeItem('token');
       localStorage.removeItem('userinfo');
       localStorage.removeItem('notifications');
-      this.$router.go(0);
+      this.$router.push('/');
     },
     async setGroupToTop() {
       let myGroup = this.currentGroup;
@@ -173,11 +176,34 @@ export default {
 .header-bar-right {
   .header-notify {
     cursor: pointer;
+    margin-right: 15px;
 
     // margin: 0 10px;
     &:hover {
       color: $primary;
       background-color: $dback;
+    }
+  }
+
+  .header-avatar {
+    cursor: pointer;
+    margin-right: 20px;
+
+    img {
+      -webkit-transition: all 0.2s ease-in;
+      transition: all 0.2s ease-in;
+    }
+
+    &:hover {
+      img {
+        // -webkit-transform: scale(1.1);
+        // -ms-transform: scale(1.1);
+        // transform: scale(1.1);
+        // -webkit-filter: contrast(4.3);
+        // filter: contrast(4.3);
+        -webkit-filter: opacity(70%);
+        filter: opacity(70%);
+      }
     }
   }
 }
