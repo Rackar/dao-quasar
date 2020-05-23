@@ -102,6 +102,7 @@
         <div class="noPermission_tip">加入小组才能查看</div>
       </div>
     </div>
+    <JoinGroup v-model="showJoinGroup" :groupId="groupId" @wantJoin="wantJoin" />
   </div>
 </template>
 
@@ -110,13 +111,22 @@ import ArticleShow from 'pages/article/ArticleShow';
 import headerBarRight from 'components/headerBarRight';
 import AddArticleBtn from 'pages/article/AddArticleBtn';
 import JoinGroupBtn from 'pages/article/JoinGroupBtn';
+import JoinGroup from 'pages/toast/JoinGroup';
 import AddComment from './AddComment';
 import member from 'components/member';
 import { copyToClipboard } from 'quasar';
 import getPosts from '@/apis/getPosts';
 
 export default {
-  components: { AddComment, AddArticleBtn, JoinGroupBtn, member, ArticleShow, headerBarRight },
+  components: {
+    AddComment,
+    AddArticleBtn,
+    JoinGroupBtn,
+    JoinGroup,
+    member,
+    ArticleShow,
+    headerBarRight,
+  },
   props: {},
   data() {
     return this.getInitData();
@@ -149,6 +159,9 @@ export default {
     desc_breakLines() {
       return this.group.desc_text.split('\n');
     },
+    groupJoined() {
+      return this.$store.state.group.currentGroup.joined;
+    },
   },
   methods: {
     getInitData() {
@@ -163,6 +176,7 @@ export default {
         grpMembers: [],
         password: '',
         blockedMembers: [],
+        showJoinGroup: false,
       };
     },
     loadMore(_, done) {
@@ -171,8 +185,12 @@ export default {
       this.getPosts().then(done);
     },
     showAddComment(id) {
-      this.targetCommentPost = this.posts.find(i => i.post.id === id);
-      this.addCommentShow = true;
+      if (this.groupJoined) {
+        this.targetCommentPost = this.posts.find(i => i.post.id === id);
+        this.addCommentShow = true;
+      } else {
+        this.showJoinGroup = true;
+      }
     },
     onAddArticle() {
       this.reloadList();
