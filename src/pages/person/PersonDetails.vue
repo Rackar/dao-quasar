@@ -97,6 +97,7 @@
       </div>
       <div class="col-sm-4 col-md-4">
         <PersonWallet :tokens="tokens" v-if="isMyself" />
+        <PersonGroupList :user_id="id" v-else />
       </div>
     </div>
   </div>
@@ -106,9 +107,10 @@
 import ArticleShow from 'pages/article/ArticleShow';
 import AddComment from 'pages/group/AddComment';
 import PersonWallet from './PersonWallet';
+import PersonGroupList from './PersonGroupList';
 import Upload from 'components/Upload';
 export default {
-  components: { ArticleShow, PersonWallet, AddComment, Upload },
+  components: { ArticleShow, PersonWallet, PersonGroupList, AddComment, Upload },
   props: {
     id: String,
   },
