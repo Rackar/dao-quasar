@@ -109,6 +109,7 @@ export default {
     clearLogin: function() {
       localStorage.clear();
       this.$router.push('/');
+      this.$store.commit('user/resetUserinfo');
     },
     async setGroupToTop() {
       let myGroup = this.currentGroup;

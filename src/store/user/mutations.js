@@ -39,11 +39,12 @@ export function setUserinfo(state, userinfo) {
   state.address = userinfo.address;
 }
 
-// export function saveTempContent(state, data) {
-//     state.temp.title = data.title;
-//     state.temp.content = data.content;
-//     state.temp.ifTemp = true;
-// }
-// export function setCurrentPerson(state, data) {
-//     state.currentPerson = data;
-// }
+export function resetUserinfo(state) {
+  state.userid = '';
+  state.token = '';
+
+  state.name = '';
+  state.mail_export = '';
+  state.avatar = '';
+  state.address = '';
+}
