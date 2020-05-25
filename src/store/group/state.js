@@ -39,6 +39,11 @@ export default function() {
         name: 'Gencoin',
         symbol: 'NES',
       },
+      {
+        contract: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+        name: 'Tether USD',
+        symbol: 'USDT',
+      },
     ],
     joinedGroupIdList: [],
   };
