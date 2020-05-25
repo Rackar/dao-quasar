@@ -5,7 +5,11 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', name: 'main', component: () => import('pages/group/GroupMain.vue') },
-      { path: 'group/:id', name: 'group', component: () => import('pages/group/GroupMain.vue') },
+      {
+        path: 'group/:id',
+        name: 'group',
+        component: () => import('pages/group/GroupMain.vue'),
+      },
     ],
   },
   {

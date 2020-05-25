@@ -19,8 +19,9 @@
         </q-list>
       </q-menu>
     </span>-->
-
-    <q-btn flat dense class="mainpage-btn" @click="$router.push('/')">DAO</q-btn>
+    <router-link :to="{path:'/'}">
+      <q-btn flat dense class="mainpage-btn">DAO</q-btn>
+    </router-link>
     <!--      创建群-->
     <!-- <groupCreate v-model="showCreate" /> -->
   </div>

@@ -9,7 +9,7 @@ export function jumpToGroup({ commit }, data) {
       .then(res => {
         // debugger;
         let result = res.data.data;
-        result.grp.joined = data.joined;
+        // result.grp.joined = data.joined;
         result.grp.pinned = data.pinned;
         commit('jumpGroup', result);
         resolve();

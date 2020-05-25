@@ -4,7 +4,7 @@
       <q-avatar class="header-notify" size="36px" icon="notifications_none" @click="readNotify">
         <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
       </q-avatar>
-      <q-avatar size="30px" class="header-avatar">
+      <q-avatar size="30px" class="header-avatar hoverable-avatar">
         <img :src="$store.state.user.avatar || 'statics/user.svg'" />
         <q-menu>
           <q-list style="min-width: 100px">
@@ -107,9 +107,7 @@ export default {
       this.showCreate = true;
     },
     clearLogin: function() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('userinfo');
-      localStorage.removeItem('notifications');
+      localStorage.clear();
       this.$router.push('/');
     },
     async setGroupToTop() {
@@ -186,25 +184,7 @@ export default {
   }
 
   .header-avatar {
-    cursor: pointer;
     margin-right: 20px;
-
-    img {
-      -webkit-transition: all 0.2s ease-in;
-      transition: all 0.2s ease-in;
-    }
-
-    &:hover {
-      img {
-        // -webkit-transform: scale(1.1);
-        // -ms-transform: scale(1.1);
-        // transform: scale(1.1);
-        // -webkit-filter: contrast(4.3);
-        // filter: contrast(4.3);
-        -webkit-filter: opacity(70%);
-        filter: opacity(70%);
-      }
-    }
   }
 }
 

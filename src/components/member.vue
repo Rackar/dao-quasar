@@ -2,9 +2,20 @@
   <div class="fit row">
     <div class="main" v-for="member in members" :key="member.id">
       <div>
-        <q-avatar class="cursor-pointer" :size="size">
-          <img :src="member.avatar || 'statics/user.svg'" @click="jumpToMember(member.id)" />
-          <q-badge v-show="edit" color="red" floating style @click.stop="setMember(member.id)">x</q-badge>
+        <router-link :to="{name:'person',params:{id:member.id+''}}" v-if="!edit">
+          <q-avatar class="hoverable-avatar" :size="size">
+            <img :src="member.avatar || 'statics/user.svg'" />
+          </q-avatar>
+        </router-link>
+        <q-avatar :size="size" v-else>
+          <img :src="member.avatar || 'statics/user.svg'" />
+          <q-badge
+            color="red"
+            class="cursor-pointer"
+            floating
+            style
+            @click.stop="setMember(member.id)"
+          >x</q-badge>
         </q-avatar>
       </div>
       <div @click="jumpToMember(member.id)" class="cursor-pointer name">{{ member.name }}</div>

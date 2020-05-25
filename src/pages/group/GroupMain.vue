@@ -33,7 +33,7 @@
         </q-btn>
       </div>
       <div class="groupinfo_row">
-        <JoinGroupBtn v-if="!group.joined" :groupInfo="group" ref="join" />
+        <JoinGroupBtn v-if="!groupJoined" :groupInfo="group" ref="join" />
         <AddArticleBtn
           :groupId="groupId"
           :onSave="onAddArticle"
@@ -129,12 +129,23 @@ export default {
   },
   props: {},
   data() {
-    return this.getInitData();
+    return {
+      isReady: false,
+      hasPermission: true,
+      hasMore: true,
+      posts: [],
+      lastPostId: null,
+      targetCommentPost: null,
+      addCommentShow: false,
+      grpMembers: [],
+      password: '',
+      blockedMembers: [],
+      showJoinGroup: false,
+    };
   },
   watch: {
     groupId: function() {
-      Object.assign(this, this.getInitData());
-      this.$nextTick(this.getPageData);
+      this.fetchGroupData();
     },
   },
   computed: {
@@ -160,7 +171,8 @@ export default {
       return this.group.desc_text.split('\n');
     },
     groupJoined() {
-      return this.$store.state.group.currentGroup.joined;
+      // return this.$store.state.group.currentGroup.joined;
+      return this.$store.getters['group/ifCurrentGroupJoined'];
     },
   },
   methods: {
@@ -178,6 +190,28 @@ export default {
         blockedMembers: [],
         showJoinGroup: false,
       };
+    },
+    resetData() {
+      this.isReady = false;
+      this.hasPermission = true;
+      this.hasMore = true;
+      this.posts = [];
+      this.lastPostId = null;
+      this.targetCommentPost = null;
+      this.addCommentShow = false;
+      this.grpMembers = [];
+      this.password = '';
+      this.blockedMembers = [];
+      this.showJoinGroup = false;
+    },
+    async fetchGroupData() {
+      // Object.assign(this, this.getInitData());
+      this.resetData();
+      this.$q.loading.show();
+      await this.getPageData();
+
+      // await this.$store.dispatch('group/jumpToGroup', { id: this.groupId });
+      this.$q.loading.hide();
     },
     loadMore(_, done) {
       if (!this.hasMore) return done();
@@ -208,7 +242,11 @@ export default {
       this.$nextTick(this.getPosts);
     },
     getPageData() {
-      return Promise.all([this.getGroupMembers(), this.getPosts()])
+      return Promise.all([
+        this.getGroupMembers(),
+        this.getPosts(),
+        this.$store.dispatch('group/jumpToGroup', { id: this.groupId }),
+      ])
         .then(() => {
           this.isReady = true;
         })
@@ -273,15 +311,6 @@ export default {
           this.$q.notify('浏览器不支持，请手动复制地址');
           // 失败
         });
-      // navigator.clipboard.writeText(url).then(
-      //   () => {
-      //     /* success */ this.$q.notify('地址已复制到剪切板');
-      //   },
-      //   err => {
-      //     /* failure */ this.$q.notify('浏览器不支持，请手动复制地址');
-      //     console.log(err);
-      //   }
-      // );
     },
     postDeleted(id) {
       // 删除帖子回调后，直接清除本地数据数组中的值
@@ -297,7 +326,7 @@ export default {
     },
   },
   mounted() {
-    this.getPageData();
+    this.fetchGroupData();
   },
   meta() {
     return {

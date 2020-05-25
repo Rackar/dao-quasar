@@ -13,19 +13,24 @@
       :onSave="afterEdit"
     />
     <div class="header" v-if="post.creator">
-      <q-avatar size="35px" v-show="!personPage">
-        <img :src="post.creator.avatar || 'statics/user.svg'" />
-      </q-avatar>
-      <span
-        class="authorName cursor-pointer"
-        v-show="!personPage"
-        @click="$router.push('/person/show/' + post.creator.id)"
-      >{{ post.creator.name }}</span>
+      <router-link :to="{name:'person',params:{id:post.creator.id+''}}">
+        <q-avatar size="35px" v-show="!personPage" class="hoverable-avatar">
+          <img :src="post.creator.avatar || 'statics/user.svg'" />
+        </q-avatar>
+      </router-link>
+      <router-link :to="{name:'person',params:{id:post.creator.id+''}}">
+        <span class="authorName" v-show="!personPage">{{ post.creator.name }}</span>
+      </router-link>
       <span>{{ $utils.timeStringToLocal(post.post.create_at, 'RelativeTime') }}</span>
     </div>
     <div class="main-body">
-      <div class="body" @click="onContentClick">
-        <!-- {{ post.post.content }} -->
+      <router-link :to="{name:'articles',params:{id:postId+''}}" v-if="viewType === 'group'">
+        <div class="body">
+          <div v-for="line in content_breakLines" :key="line.id">{{line || '&nbsp;'}}</div>
+          <div v-show="content_showMore">(点击查看更多...)</div>
+        </div>
+      </router-link>
+      <div class="body" v-else>
         <div v-for="line in content_breakLines" :key="line.id">{{line || '&nbsp;'}}</div>
         <div v-show="content_showMore">(点击查看更多...)</div>
       </div>

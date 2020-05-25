@@ -23,7 +23,8 @@ export default {
   },
   computed: {
     groupJoined() {
-      return this.$store.state.group.currentGroup.joined;
+      // return this.$store.state.group.currentGroup.joined;
+      return this.$store.getters['group/ifCurrentGroupJoined'];
     },
   },
   data() {

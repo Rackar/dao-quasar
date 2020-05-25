@@ -3,8 +3,6 @@
     <q-list class="rounded-borders">
       <div v-for="myGroup in myGroups" :key="myGroup.id">
         <q-item
-          clickable
-          @click="jumpToGroup(myGroup.grp.id)"
           @mouseover="showListId = myGroup.grp.id"
           @mouseout="handleMouseMoveout"
           v-ripple
@@ -35,14 +33,18 @@
             </div>
           </span>
           <q-item-section avatar>
-            <q-avatar rounded size="50px">
-              <img :src="myGroup.grp.avatar || 'statics/group.svg'" />
-            </q-avatar>
+            <router-link :to="{name:'group',params:{id:myGroup.grp.id+''}}">
+              <q-avatar rounded size="50px">
+                <img :src="myGroup.grp.avatar || 'statics/group.svg'" />
+              </q-avatar>
+            </router-link>
           </q-item-section>
 
           <q-item-section>
             <q-item-label lines="1" style="margin-bottom:5px;">
-              <span class="group-title">{{ myGroup.grp.name }}</span>
+              <router-link :to="{name:'group',params:{id:myGroup.grp.id+''}}">
+                <span class="group-title">{{ myGroup.grp.name }}</span>
+              </router-link>
             </q-item-label>
             <q-item-label caption lines="1">{{ myGroup.grp.desc_text }}</q-item-label>
           </q-item-section>
@@ -64,7 +66,9 @@
           </q-item-label>
         </q-item-section>
         <q-item-section side>
-          <q-btn dense flat color="primary" icon="more_horiz" @click="$router.push('/grouplist')" />
+          <router-link :to="{name:'grouplist'}">
+            <q-btn dense flat color="primary" icon="more_horiz" />
+          </router-link>
         </q-item-section>
       </q-item>
       <div v-for="grp in recommendGroups" :key="grp.id">
@@ -76,37 +80,33 @@
           v-ripple
           class="q-px-xl q-py-md"
         >-->
-        <q-item
-          clickable
-          @click="jumpToGroup(grp.id)"
-          v-ripple
-          :class="[{ isActive: isItemActive(grp.id) }, 'group-list']"
-        >
-          <!-- <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">...</span> -->
-          <q-item-section avatar>
-            <q-avatar rounded size="50px">
-              <img :src="grp.avatar || 'statics/group.svg'" />
-            </q-avatar>
-          </q-item-section>
+        <router-link :to="{name:'group',params:{id:grp.id+''}}">
+          <q-item clickable v-ripple :class="[{ isActive: isItemActive(grp.id) }, 'group-list']">
+            <!-- <span v-show="showListId == grp.id" class="leftHideTool" @click.stop="showListTool">...</span> -->
+            <q-item-section avatar>
+              <q-avatar rounded size="50px">
+                <img :src="grp.avatar || 'statics/group.svg'" />
+              </q-avatar>
+            </q-item-section>
 
-          <q-item-section>
-            <q-item-label lines="1">
-              <span class="group-title">{{ grp.name }}</span>
-            </q-item-label>
-            <q-item-label caption lines="1">{{ grp.desc_text }}</q-item-label>
-          </q-item-section>
-          <q-item-section side top class="justify-between">
-            <q-icon
-              v-if="grp.read_permission === 2"
-              name="img:statics/icons/icon_suo_2.svg"
-              size="xs"
-            />
-            <!-- <q-badge v-else color="grey" :label="grp.num_post" /> -->
-            <q-item-label v-else class="badge-num">{{ grp.num_post }}</q-item-label>
-            <q-item-label caption>{{ $utils.timeStringToLocal(grp.last_post_at, 'RelativeDay') }}</q-item-label>
-          </q-item-section>
-        </q-item>
-
+            <q-item-section>
+              <q-item-label lines="1">
+                <span class="group-title">{{ grp.name }}</span>
+              </q-item-label>
+              <q-item-label caption lines="1">{{ grp.desc_text }}</q-item-label>
+            </q-item-section>
+            <q-item-section side top class="justify-between">
+              <q-icon
+                v-if="grp.read_permission === 2"
+                name="img:statics/icons/icon_suo_2.svg"
+                size="xs"
+              />
+              <!-- <q-badge v-else color="grey" :label="grp.num_post" /> -->
+              <q-item-label v-else class="badge-num">{{ grp.num_post }}</q-item-label>
+              <q-item-label caption>{{ $utils.timeStringToLocal(grp.last_post_at, 'RelativeDay') }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </router-link>
         <q-separator inset="true" />
       </div>
     </q-list>
@@ -135,14 +135,23 @@ export default {
   created() {
     this.init();
   },
+  props: {
+    id: String,
+  },
   watch: {
     $route(to) {
       if (to.fullPath === '/') {
         this.init();
       }
     },
+    // groupid(val) {
+    //   if (val) this.jumpToGroup(val);
+    // },
   },
   computed: {
+    groupid() {
+      return this.$route.params.id;
+    },
     showMenu() {
       return this.showMenuId !== 0;
     },
@@ -180,7 +189,12 @@ export default {
         }
       }
 
-      this.jumpToGroup(activeGroupId);
+      setTimeout(() => {
+        if (this.$route.params.id != activeGroupId) {
+          this.$router.push('/group/' + activeGroupId).catch(() => {});
+        }
+      }, 350);
+      // this.jumpToGroup(activeGroupId);
     },
 
     //
@@ -204,11 +218,11 @@ export default {
       this.$q.loading.show();
       await this.$store.dispatch('group/jumpToGroup', { id: id, joined: ifJoined, pinned });
       this.$q.loading.hide();
-      setTimeout(() => {
-        if (this.$route.params.id != id) {
-          this.$router.push('/group/' + id).catch(() => {});
-        }
-      }, 350);
+      // setTimeout(() => {
+      //   if (this.$route.params.id != id) {
+      //     this.$router.push('/group/' + id).catch(() => {});
+      //   }
+      // }, 350);
     },
     // 获取群信息
     getMyGroups: async function() {
@@ -219,6 +233,8 @@ export default {
       if (getjoined) {
         if (getjoined.code == 0) {
           this.myGroups = getjoined.data.grps_joined;
+          let list = this.myGroups.map(group => group.grp.id);
+          this.$store.commit('group/setJoinedGroupIdList', { list });
         } else if (getjoined.code == 104) {
         }
       } else {

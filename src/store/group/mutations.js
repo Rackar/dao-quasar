@@ -8,3 +8,7 @@ export function jumpGroup(state, payload) {
   ).symbol;
   state.currentGroup.contractSymbol = contractSymbol;
 }
+
+export function setJoinedGroupIdList(state, payload) {
+  state.joinedGroupIdList = payload.list;
+}
