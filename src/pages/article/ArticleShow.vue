@@ -13,25 +13,28 @@
       :onSave="afterEdit"
     />
     <div class="header" v-if="post.creator">
-      <router-link :to="{name:'person',params:{id:post.creator.id+''}}">
+      <router-link :to="{ name: 'person', params: { id: post.creator.id + '' } }">
         <q-avatar size="35px" v-show="!personPage" class="hoverable-avatar">
           <img :src="post.creator.avatar || 'statics/user.svg'" />
         </q-avatar>
       </router-link>
-      <router-link :to="{name:'person',params:{id:post.creator.id+''}}">
+      <router-link :to="{ name: 'person', params: { id: post.creator.id + '' } }">
         <span class="authorName" v-show="!personPage">{{ post.creator.name }}</span>
       </router-link>
       <span>{{ $utils.timeStringToLocal(post.post.create_at, 'RelativeTime') }}</span>
     </div>
     <div class="main-body">
-      <router-link :to="{name:'articles',params:{id:postId+''}}" v-if="viewType === 'group'">
+      <router-link
+        :to="{ name: 'articles', params: { id: postId + '' } }"
+        v-if="viewType === 'group'"
+      >
         <div class="body">
-          <div v-for="line in content_breakLines" :key="line.id">{{line || '&nbsp;'}}</div>
+          <div v-for="line in content_breakLines" :key="line.id">{{ line || '&nbsp;' }}</div>
           <div v-show="content_showMore">(点击查看更多...)</div>
         </div>
       </router-link>
       <div class="body" v-else>
-        <div v-for="line in content_breakLines" :key="line.id">{{line || '&nbsp;'}}</div>
+        <div v-for="line in content_breakLines" :key="line.id">{{ line || '&nbsp;' }}</div>
         <div v-show="content_showMore">(点击查看更多...)</div>
       </div>
       <ImageGrid :images="post.post.images" class="images" v-if="!hasVideo" />
@@ -221,7 +224,7 @@ export default {
         '.webm',
       ];
       if (list.length) {
-        return videoExt.some(v => list[0].indexOf(v) !== -1);
+        return videoExt.some(v => list[0].toLowerCase().indexOf(v) !== -1);
       } else {
         return false;
       }
