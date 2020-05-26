@@ -1,42 +1,16 @@
 <template>
-  <div class="grid" :data-length="images.length">
-    <q-img
-      class="grid_item cursor-pointer"
-      v-for="(url, index) in images"
-      :key="index"
-      :src="url"
-      spinner-color="white"
-      @click="showBigPic(index)"
-    />
-    <q-dialog
-      v-model="dialog"
-      @keyup.37="$refs.carousel.previous()"
-      @keyup.39="$refs.carousel.next()"
-    >
-      <q-carousel
-        class="slide"
-        ref="carousel"
-        swipeable
-        animated
-        v-model="slide"
-        arrows
-        navigation
-        infinite
-      >
-        <q-carousel-slide
-          v-for="(url, index) in images"
-          :name="index"
-          :key="index"
-          style="padding:0;"
-        >
-          <img :src="url" class="slideImg shadow-12" />
-        </q-carousel-slide>
-      </q-carousel>
-    </q-dialog>
+  <div class="grid" :data-length="images.length" v-viewer>
+    <div v-for="(url, index) in images" :key="index" class="grid_item cursor-pointer">
+      <img class="image" :src="url" />
+    </div>
   </div>
 </template>
 
 <script>
+import 'viewerjs/dist/viewer.css';
+import Viewer from 'v-viewer';
+import Vue from 'vue';
+Vue.use(Viewer);
 export default {
   props: {
     images: { required: true, type: Array },
