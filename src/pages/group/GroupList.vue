@@ -2,14 +2,10 @@
   <div class="container">
     <q-list class="rounded-borders">
       <div v-for="myGroup in myGroups" :key="myGroup.id">
-        <q-item
+        <div
           @mouseover="showListId = myGroup.grp.id"
           @mouseout="handleMouseMoveout"
-          v-ripple
-          :class="[
-            { isActive: isItemActive(myGroup.grp.id), pin: myGroup.pinned === 2 },
-            'group-list',
-          ]"
+          class="left-warpper"
         >
           <span
             v-show="showListId == myGroup.grp.id"
@@ -32,32 +28,41 @@
               </q-list>
             </div>
           </span>
-          <q-item-section avatar>
-            <router-link :to="{name:'group',params:{id:myGroup.grp.id+''}}">
-              <q-avatar rounded size="50px">
-                <img :src="myGroup.grp.avatar || 'statics/group.svg'" />
-              </q-avatar>
-            </router-link>
-          </q-item-section>
+          <router-link :to="{name:'group',params:{id:myGroup.grp.id+''}}">
+            <q-item
+              v-ripple
+              clickable
+              :class="[
+            { isActive: isItemActive(myGroup.grp.id), pin: myGroup.pinned === 2 },
+            'group-list',
+          ]"
+            >
+              <q-item-section avatar>
+                <q-avatar rounded size="50px">
+                  <img :src="myGroup.grp.avatar || 'statics/group.svg'" />
+                </q-avatar>
+              </q-item-section>
 
-          <q-item-section>
-            <q-item-label lines="1" style="margin-bottom:5px;">
-              <router-link :to="{name:'group',params:{id:myGroup.grp.id+''}}">
-                <span class="group-title">{{ myGroup.grp.name }}</span>
-              </router-link>
-            </q-item-label>
-            <q-item-label caption lines="1">{{ myGroup.grp.desc_text }}</q-item-label>
-          </q-item-section>
-          <q-item-section side top class="justify-between">
-            <!-- <q-badge color="grey" :label="myGroup.unread" /> -->
-            <q-item-label class="badge-num">{{ myGroup.unread }}</q-item-label>
-            <q-item-label
-              caption
-            >{{ $utils.timeStringToLocal(myGroup.grp.last_post_at, 'RelativeDay') }}</q-item-label>
-          </q-item-section>
-        </q-item>
+              <q-item-section>
+                <q-item-label lines="1" style="margin-bottom:5px;">
+                  <!-- <router-link :to="{name:'group',params:{id:myGroup.grp.id+''}}"> -->
+                  <span class="group-title">{{ myGroup.grp.name }}</span>
+                  <!-- </router-link> -->
+                </q-item-label>
+                <q-item-label caption lines="1">{{ myGroup.grp.desc_text }}</q-item-label>
+              </q-item-section>
+              <q-item-section side top class="justify-between">
+                <!-- <q-badge color="grey" :label="myGroup.unread" /> -->
+                <q-item-label class="badge-num">{{ myGroup.unread }}</q-item-label>
+                <q-item-label
+                  caption
+                >{{ $utils.timeStringToLocal(myGroup.grp.last_post_at, 'RelativeDay') }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </router-link>
 
-        <q-separator inset="true" />
+          <q-separator inset="true" />
+        </div>
       </div>
       <q-item style="margin-top:20px;padding-left:48px;padding-right:48px;">
         <q-item-section>
@@ -345,6 +350,10 @@ export default {
   .badge-num {
     background: #F1F1F1;
   }
+}
+
+.left-warpper {
+  position: relative;
 }
 
 .leftHideTool {

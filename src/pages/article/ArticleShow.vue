@@ -324,7 +324,7 @@ export default {
 }
 .actions {
   margin-left: -16px;
-  padding-top: 10px;
+  // padding-top: 10px;
   display: flex;
   justify-content: space-between;
   @media only screen and (min-width: 768px) {
@@ -374,7 +374,7 @@ export default {
 .container {
   background-color: #fff;
   border-bottom: 1px solid #e4e4e4;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
   padding-left: 15px;
   padding-right: 15px;
 
