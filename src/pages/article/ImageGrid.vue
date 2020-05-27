@@ -1,5 +1,24 @@
 <template>
-  <div class="grid" :data-length="images.length" v-viewer>
+  <div
+    class="grid"
+    :data-length="images.length"
+    v-viewer="{
+      inline: false,
+      button: true,
+      navbar: false,
+      title: false,
+      toolbar: false,
+      tooltip: false,
+      movable: false,
+      zoomable: false,
+      reset: false,
+      rotatable: false,
+      scalable: false,
+      transition: true,
+      fullscreen: true,
+      keyboard: true,
+    }"
+  >
     <div v-for="(url, index) in images" :key="index" class="grid_item cursor-pointer">
       <img class="image" :src="url" />
     </div>
