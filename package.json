@@ -15,7 +15,8 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
     "qrcode.vue": "^1.7.0",
-    "quasar": "^1.0.0"
+    "quasar": "^1.0.0",
+    "v-viewer": "^1.5.1"
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",
