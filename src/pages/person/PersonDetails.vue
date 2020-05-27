@@ -12,7 +12,7 @@
       <q-avatar @click="changeAvatar" class="avatar">
         <q-icon v-show="editing" name="icon_paizhao" class="mask"></q-icon>
         <img
-          :src="(editing?edit.avatar:userinfo.avatar) || 'statics/user.svg'"
+          :src="(editing ? edit.avatar : userinfo.avatar) || 'statics/user.svg'"
           :class="{ masked: editing }"
         />
       </q-avatar>
@@ -33,10 +33,9 @@
               :disable="loadingVisible"
             />
           </div>
-          <div
-            v-show="!editing"
-            class="username"
-          >{{ this.userinfo.name || this.userinfo.mail_export }}</div>
+          <div v-show="!editing" class="username">
+            {{ this.userinfo.name || this.userinfo.mail_export }}
+          </div>
           <div v-show="!editing">
             <!-- <q-icon name="edit" color="primary" v-show="isMyself" @click="clickEdit" size="24px" /> -->
             <!-- <q-btn dense flat icon="edit" color="primary" @click="clickEdit" v-show="isMyself" /> -->
@@ -81,6 +80,9 @@
                 :addComment="() => showAddComment(post.post.id)"
                 @del="postDeleted"
               />
+              <div v-if="pullList.length === 0">
+                尚未发帖
+              </div>
             </q-tab-panel>
 
             <!-- <q-tab-panel name="recycle">
