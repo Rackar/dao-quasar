@@ -333,7 +333,7 @@ export default {
       // sets document title
       title: this.group.name.substr(0, 20),
       // optional; sets final title as "Index Page - My Website", useful for multiple level meta
-      titleTemplate: title => ` ${title} - Qroup in DAO (Decentralized Autonomous Organization)`,
+      titleTemplate: title => ` ${title} - Group in DAO (Decentralized Autonomous Organization)`,
 
       // meta tags
       meta: {

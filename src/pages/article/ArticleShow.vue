@@ -41,7 +41,7 @@
       <div v-else class="video-wraper">
         <!-- <q-video :ratio="16 / 9" :src="post.post.images[0]" /> -->
         <q-media-player
-          :autoplay="true"
+          :autoplay="autoPlayWhenDesktop"
           :muted="true"
           type="video"
           background-color="white"
@@ -196,6 +196,10 @@ export default {
     userid() {
       return this.$store.state.user.userid;
     },
+    autoPlayWhenDesktop() {
+      return this.$q.platform.is.desktop;
+    },
+
     hasVideo() {
       let list = this.post.post.images;
       //可能的视频格式，没有一一测试验证
