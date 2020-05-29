@@ -15,7 +15,7 @@
             class="time"
           >{{ $utils.timeStringToLocal(targetPost.post.create_at,'RelativeTime') }}</span>
         </div>
-        <div class="content">{{ targetPost.post.content }}</div>
+        <div class="content">{{ targetPost.post.content.substr(0, 300) }}</div>
       </div>
     </div>
   </Publish>

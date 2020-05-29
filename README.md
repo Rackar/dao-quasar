@@ -98,6 +98,10 @@ quasar build
 
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
+## 设计稿
+
+[谷歌云盘链接](https://drive.google.com/drive/folders/1Oqh8XUoER84JwHw9Ae22ualUsV6BGqYD?usp=sharing)
+
 ## 其他说明
 
 [已开启 Github Pages](https://rackar.github.io/dao-quasar)
