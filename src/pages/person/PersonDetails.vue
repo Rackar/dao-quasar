@@ -33,9 +33,10 @@
               :disable="loadingVisible"
             />
           </div>
-          <div v-show="!editing" class="username">
-            {{ this.userinfo.name || this.userinfo.mail_export }}
-          </div>
+          <div
+            v-show="!editing"
+            class="username"
+          >{{ this.userinfo.name || this.userinfo.mail_export }}</div>
           <div v-show="!editing">
             <!-- <q-icon name="edit" color="primary" v-show="isMyself" @click="clickEdit" size="24px" /> -->
             <!-- <q-btn dense flat icon="edit" color="primary" @click="clickEdit" v-show="isMyself" /> -->
@@ -80,9 +81,7 @@
                 :addComment="() => showAddComment(post.post.id)"
                 @del="postDeleted"
               />
-              <div v-if="pullList.length === 0">
-                尚未发帖
-              </div>
+              <div v-if="pullList.length === 0">尚未发帖</div>
             </q-tab-panel>
 
             <!-- <q-tab-panel name="recycle">
@@ -97,7 +96,7 @@
           </q-tab-panels>
         </q-card>
       </div>
-      <div class="col-sm-4 col-md-4">
+      <div class="col-sm-4 col-xs-12">
         <PersonWallet :tokens="tokens" v-if="isMyself" />
         <PersonGroupList :user_id="id" v-else />
       </div>
