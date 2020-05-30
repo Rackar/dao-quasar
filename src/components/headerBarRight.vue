@@ -42,18 +42,44 @@
         @hide="hideNotice"
       >
         <q-card>
-          <q-card-section>
+          <q-card-section style="max-width:310px;">
             <!-- <div class="row items-center no-wrap">
               系统通知
               <q-space />
               <q-btn flat round icon="close" v-close-popup />
             </div>-->
-            <div v-if="unreadNotify.length===0">当前无未读通知。</div>
-            <div v-for="notice in unreadNotify" :key="notice.id" class="header-notify-detail">
-              {{ notice.h_text }}
-              <!-- - {{ $utils.timeStringToLocal(notice.create_at,'RelativeTime') }} -->
+            <div v-if="notificationsShow.length===0">近期无通知。</div>
+            <!-- <div
+              v-for="notice in notificationsShow"
+              :key="notice.id"
+              class="header-notify-detail"
+              :class="{unread:notice.read==1}"
+            >
+              <span class="content-span">{{ notice.h_text }}</span>
+
+              <span
+                class="time-span"
+              >{{ $utils.timeStringToLocal(notice.create_at,'RelativeTime') }}</span>
+
               <q-separator />
-            </div>
+            </div>-->
+
+            <q-list>
+              <div v-for="notice in notificationsShow" :key="notice.id">
+                <q-item class="header-notify-detail" :class="{unread:notice.read==1}">
+                  <q-item-section>
+                    <q-item-label lines="2">{{ notice.h_text }}</q-item-label>
+                  </q-item-section>
+
+                  <q-item-section side>
+                    <q-item-label
+                      caption
+                    >{{ $utils.timeStringToLocal(notice.create_at,'RelativeTime') }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-separator />
+              </div>
+            </q-list>
           </q-card-section>
         </q-card>
       </q-dialog>
@@ -88,6 +114,9 @@ export default {
     },
     unreadNotify() {
       return this.notifications.filter(notice => notice.read === 1);
+    },
+    notificationsShow() {
+      return this.notifications.slice(0, 6);
     },
     user() {
       return this.$store.state.user;
@@ -197,10 +226,24 @@ export default {
 
   .header-notify-detail {
     font-size: 14px;
+    line-height: 40px;
+
+    .content-span {
+      padding-right: 10px;
+      color: $dblack;
+      max-width: 100px;
+    }
+
+    .time-span {
+      font-size: 12px;
+      color: $dgrey;
+      float: right;
+      text-align: right;
+    }
+  }
+
+  .unread {
     font-weight: 600;
-    line-height: 45px;
-    // padding-top: 10px;
-    // padding-bottom: 10px;
   }
 }
 </style>
