@@ -41,6 +41,9 @@
       <div v-else class="video-wraper">
         <!-- <q-video :ratio="16 / 9" :src="post.post.images[0]" /> -->
         <q-media-player
+          :data-id="post.post.id"
+          v-intersection="onIntersection"
+          ref="videoPlayer"
           :autoplay="autoPlayWhenDesktop"
           :muted="true"
           type="video"
@@ -287,6 +290,15 @@ export default {
     },
     pinTopPost() {
       this.$q.notify('置顶功能尚在开发');
+    },
+    onIntersection(entry) {
+      if (entry.isIntersecting === true) {
+        // this.add(entry.target.dataset.id)
+        this.$refs.videoPlayer.play();
+      } else {
+        // this.remove(entry.target.dataset.id)
+        this.$refs.videoPlayer.pause();
+      }
     },
   },
   created() {},
