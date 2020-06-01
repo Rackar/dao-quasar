@@ -5,7 +5,7 @@
         <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
         <q-menu transition-show="jump-down" transition-hide="jump-up" @hide="hideNotice">
           <div v-if="notificationsShow.length===0">近期无通知。</div>
-          <q-list style="max-width:310px;">
+          <q-list style="min-width:310px;">
             <div v-for="notice in notificationsShow" :key="notice.id">
               <q-item class="header-notify-detail" :class="{unread:notice.read==1}">
                 <q-item-section>
