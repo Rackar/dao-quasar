@@ -1,12 +1,31 @@
 <template>
   <div class="header-bar-right">
     <div v-if="isLoggedIn">
-      <q-avatar class="header-notify" size="36px" icon="notifications_none" @click="readNotify">
+      <q-avatar class="header-notify" size="36px" icon="notifications_none">
         <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
+        <q-menu transition-show="jump-down" transition-hide="jump-up" @hide="hideNotice">
+          <div v-if="notificationsShow.length===0">近期无通知。</div>
+          <q-list style="max-width:310px;">
+            <div v-for="notice in notificationsShow" :key="notice.id">
+              <q-item class="header-notify-detail" :class="{unread:notice.read==1}">
+                <q-item-section>
+                  <q-item-label lines="2">{{ notice.h_text }}</q-item-label>
+                </q-item-section>
+
+                <q-item-section side>
+                  <q-item-label
+                    caption
+                  >{{ $utils.timeStringToLocal(notice.create_at,'RelativeTime') }}</q-item-label>
+                </q-item-section>
+              </q-item>
+              <q-separator />
+            </div>
+          </q-list>
+        </q-menu>
       </q-avatar>
       <q-avatar size="30px" class="header-avatar hoverable-avatar">
         <img :src="$store.state.user.avatar || 'statics/user.svg'" />
-        <q-menu>
+        <q-menu transition-show="jump-down" transition-hide="jump-up">
           <q-list style="min-width: 100px">
             <q-item clickable v-close-popup>
               <q-item-section @click="createGrp">新建一个群</q-item-section>
@@ -218,33 +237,26 @@ export default {
   }
 }
 
-.notify-dialog {
-  .q-dialog__inner {
-    top: 70px;
-    left: auto;
+.header-notify-detail {
+  font-size: 14px;
+  line-height: 40px;
+
+  .content-span {
+    padding-right: 10px;
+    color: $dblack;
+    max-width: 100px;
   }
 
-  .header-notify-detail {
-    font-size: 14px;
-    line-height: 40px;
-
-    .content-span {
-      padding-right: 10px;
-      color: $dblack;
-      max-width: 100px;
-    }
-
-    .time-span {
-      font-size: 12px;
-      color: $dgrey;
-      float: right;
-      text-align: right;
-    }
+  .time-span {
+    font-size: 12px;
+    color: $dgrey;
+    float: right;
+    text-align: right;
   }
+}
 
-  .unread {
-    font-weight: 600;
-  }
+.unread {
+  font-weight: 600;
 }
 </style>
 
