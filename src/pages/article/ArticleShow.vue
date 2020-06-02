@@ -38,7 +38,7 @@
         <div v-show="content_showMore">(点击查看更多...)</div>
       </div>
       <ImageGrid :images="post.post.images" class="images" v-if="!hasVideo" />
-      <div v-else class="video-wraper">
+      <div v-else class="video-wraper" :class=" {'video-wraper-squar':videoRadioNormal==false}">
         <!-- <q-video :ratio="16 / 9" :src="post.post.images[0]" /> -->
         <q-media-player
           :data-id="post.post.id"
@@ -53,6 +53,7 @@
           dense
           :show-big-play-button="true"
           :source="post.post.images[0]"
+          @ready="readyToPlayVideo"
         >
           <!-- <template v-slot:overlay>
           <div>
@@ -158,6 +159,7 @@ export default {
     return {
       shouldShowEdit: false,
       showDeleteArticle: false,
+      videoRadioNormal: true,
     };
   },
   computed: {
@@ -300,6 +302,13 @@ export default {
         this.$refs.videoPlayer.pause();
       }
     },
+    readyToPlayVideo() {
+      // console.log(this.$refs.videoPlayer.$media.videoHeight);
+      // console.log(this.$refs.videoPlayer.$media.videoWidth);
+      let height = this.$refs.videoPlayer.$media.videoHeight;
+      let width = this.$refs.videoPlayer.$media.videoWidth;
+      this.videoRadioNormal = width > height * 1.1;
+    },
   },
   created() {},
   mounted() {},
@@ -370,6 +379,9 @@ export default {
     margin-left: 0;
     margin-bottom: 0;
   }
+}
+.video-wraper-squar {
+  max-height: 510px;
 }
 .header {
   display: flex;
