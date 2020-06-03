@@ -54,7 +54,10 @@ export default {
     },
     canPublish() {
       const contentLength = this.content.trim().length;
-      return contentLength > 0 && contentLength <= this.maxTextLength;
+      return (
+        (contentLength > 0 || (contentLength === 0 && this.mediaLength > 0)) &&
+        contentLength <= this.maxTextLength
+      );
     },
     curUserAvatar() {
       return this.$store.state.user.avatar || 'statics/user.svg';
@@ -144,7 +147,7 @@ export default {
       e.target.value = '';
     },
     publish: async function() {
-      if (this.content.trim().length === 0) {
+      if (this.content.trim().length === 0 && this.mediaLength.length == 0) {
         return this.$q.notify('请输入内容');
       }
 
