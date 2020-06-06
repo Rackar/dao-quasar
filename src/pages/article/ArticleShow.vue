@@ -54,6 +54,8 @@
           :show-big-play-button="true"
           :source="post.post.images[0]"
           @ready="readyToPlayVideo"
+          preload="none"
+          @loadeddata="testloaded"
         >
           <!-- <template v-slot:overlay>
           <div>
@@ -202,7 +204,8 @@ export default {
       return this.$store.state.user.userid;
     },
     autoPlayWhenDesktop() {
-      return this.$q.platform.is.desktop;
+      // return this.$q.platform.is.desktop;
+      return false;
     },
 
     hasVideo() {
@@ -308,6 +311,9 @@ export default {
       let height = this.$refs.videoPlayer.$media.videoHeight;
       let width = this.$refs.videoPlayer.$media.videoWidth;
       this.videoRadioNormal = width > height * 1.1;
+    },
+    testloaded() {
+      console.log('loaded');
     },
   },
   created() {},

@@ -8,8 +8,29 @@
           <q-list style="min-width:310px;">
             <div v-for="notice in notificationsShow" :key="notice.id">
               <q-item class="header-notify-detail" :class="{unread:notice.read==1}">
-                <q-item-section>
+                <q-item-section v-if="notice.n_type===1">
                   <q-item-label lines="2">{{ notice.h_text }}</q-item-label>
+                </q-item-section>
+                <q-item-section v-if="notice.n_type===2">
+                  <q-item-label lines="2">
+                    <router-link :to="{ name: 'articles', params: { id: notice.post + '' } }">
+                      {{ notice.h_text }}
+                      <br />
+                      {{notice.postIn.content.substr(0,20)}}
+                    </router-link>
+                  </q-item-label>
+                </q-item-section>
+                <q-item-section v-if="notice.n_type===3">
+                  <q-item-label lines="2">
+                    <router-link
+                      :to="{ name: 'articles', params: { id: notice.commentIn.post + '' } }"
+                    >
+                      {{ notice.h_text }}
+                      <br />
+                      “{{notice.commentIn.content.substr(0,20)}}”
+                      <br />
+                    </router-link>
+                  </q-item-label>
                 </q-item-section>
 
                 <q-item-section side>
@@ -186,7 +207,25 @@ export default {
       const resCode = await this.$axios.get(url);
       if (resCode.data.code == 0 && resCode.data.data.notifications.length) {
         let notifications = this.$q.localStorage.getItem('notifications') || [];
-        notifications.unshift(...resCode.data.data.notifications);
+        let noti = resCode.data.data;
+        let arr = noti.notifications.map(no => {
+          if (no.n_type === 2) {
+            //like
+            let post = noti.posts.find(po => po.id === no.post);
+            let creator = noti.users.find(user => user.id === no.post_user);
+            no.postIn = post;
+            no.creatorIn = creator;
+          } else if (no.n_type === 3) {
+            //comment
+            let comment = noti.comments.find(com => com.id === no.comment);
+            let creator = noti.users.find(user => user.id === comment.creator);
+            no.commentIn = comment;
+            no.creatorIn = creator;
+          }
+          return no;
+        });
+
+        notifications.unshift(...arr);
         this.$q.localStorage.set('notifications', notifications);
         this.notifications = notifications;
       }
