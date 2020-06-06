@@ -46,5 +46,6 @@ export default function() {
       },
     ],
     joinedGroupIdList: [],
+    previewVideoDom: {},
   };
 }

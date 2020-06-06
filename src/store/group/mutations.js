@@ -12,3 +12,22 @@ export function jumpGroup(state, payload) {
 export function setJoinedGroupIdList(state, payload) {
   state.joinedGroupIdList = payload.list;
 }
+
+export function playVideoUnique(state, payload) {
+  state.previewVideoDom = payload;
+  // debugger;
+  // if (state.previewVideoDom === payload) {
+  // } else {
+  //   if (
+  //     state.previewVideoDom &&
+  //     state.previewVideoDom.pause &&
+  //     state.previewVideoDom.state.playing
+  //   ) {
+  //     state.previewVideoDom.pause();
+  //   }
+  //   state.previewVideoDom = payload;
+  //   if (payload.state.playing == false) {
+  //     payload.play();
+  //   }
+  // }
+}

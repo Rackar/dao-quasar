@@ -42,7 +42,7 @@
         <!-- <q-video :ratio="16 / 9" :src="post.post.images[0]" /> -->
         <q-media-player
           :data-id="post.post.id"
-          v-intersection="onIntersection"
+          v-intersection="obOptions"
           ref="videoPlayer"
           :autoplay="autoPlayWhenDesktop"
           :muted="true"
@@ -137,6 +137,11 @@ import deleteArticle from 'pages/toast/deleteArticle';
 import EditArticle from './EditArticle';
 import ImageGrid from './ImageGrid';
 
+const thresholds = [];
+for (let i = 0; i <= 1.0; i += 0.2) {
+  thresholds.push(i);
+}
+
 // like状态和code：
 const dict = {
   cancel: 1,
@@ -162,6 +167,13 @@ export default {
       shouldShowEdit: false,
       showDeleteArticle: false,
       videoRadioNormal: true,
+      obOptions: {
+        handler: this.onIntersection,
+        cfg: {
+          threshold: thresholds,
+        },
+      },
+      lastPercent: 0,
     };
   },
   computed: {
@@ -297,11 +309,23 @@ export default {
       this.$q.notify('置顶功能尚在开发');
     },
     onIntersection(entry) {
+      let ob = this.$store.state.group.previewVideoDom;
+      // debugger;
       if (entry.isIntersecting === true) {
-        // this.add(entry.target.dataset.id)
-        this.$refs.videoPlayer.play();
+        if (entry.intersectionRatio > 0.7 && entry.intersectionRatio > this.lastPercent) {
+          if (ob != this.$refs.videoPlayer.$media) {
+            if (ob && !ob.paused && ob.pause) {
+              ob.pause();
+            }
+            this.$store.commit('group/playVideoUnique', this.$refs.videoPlayer.$media);
+            if (this.$refs.videoPlayer.$media.paused && this.$refs.videoPlayer.$media.play) {
+              this.$refs.videoPlayer.$media.play();
+            }
+          }
+          // this.$refs.videoPlayer.play();
+        }
+        this.lastPercent = entry.intersectionRatio;
       } else {
-        // this.remove(entry.target.dataset.id)
         this.$refs.videoPlayer.pause();
       }
     },

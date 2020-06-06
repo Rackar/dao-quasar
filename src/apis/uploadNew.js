@@ -27,7 +27,7 @@ const upload = function({ file }) {
             head['Content-Type'] = type;
 
             const instance = axios.create({
-              timeout: 30000,
+              timeout: 300000, //上传时限5分钟
               headers: head,
             });
 

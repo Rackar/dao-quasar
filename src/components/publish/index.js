@@ -135,9 +135,9 @@ export default {
     uploadVideo(e) {
       const file = e.target.files[0];
       if (!file) return;
-      if (file.size / 1000000 > 500) {
+      if (file.size / 1000000 > 1000) {
         e.target.value = '';
-        return this.$q.notify('文件大小不能超过 500M');
+        return this.$q.notify('文件大小不能超过 1000M');
       }
       this.videoList.push({
         file,
