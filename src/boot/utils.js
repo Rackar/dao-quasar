@@ -14,6 +14,9 @@ function timeStringToLocal(timestring, flag = 'RelativeTime') {
     RelativeTime: 'RelativeTime',
     RelativeDay: 'RelativeDay',
   };
+  if (!timestring) {
+    return '';
+  }
 
   let t = new Date(timestring);
   let formNow = Math.floor((new Date() - t) / 1000);
