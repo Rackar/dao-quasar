@@ -39,7 +39,7 @@
           v-for="item in topPosts"
           :key="item.post.id"
         >
-          <q-avatar class="post_avatar" rounded size="50px">
+          <q-avatar class="post_avatar" rounded size="35px">
             <img :src="item.creator.avatar || 'statics/user.svg'" />
           </q-avatar>
           <div class="post_title" :title="item.post.content">{{ item.post.content }}</div>
@@ -156,7 +156,6 @@ export default {
     display: block;
   }
 
-
   &_body {
     display: flex;
     margin-bottom: 14px;
@@ -223,7 +222,7 @@ export default {
     'avatar num time';
   grid-column-gap: 16px;
   align-items: center;
-  border-bottom: 1px solid #F1F1F1;
+  border-bottom: 1px solid #f1f1f1;
   padding-bottom: 20px;
   margin-bottom: 20px;
   &:last-child {
@@ -235,7 +234,7 @@ export default {
   }
   &_title {
     grid-area: title;
-    font-size: 16px;
+    font-size: 15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
