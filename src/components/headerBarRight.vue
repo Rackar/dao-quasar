@@ -8,8 +8,13 @@
           <q-list style="min-width:310px;">
             <div v-for="notice in notificationsShow" :key="notice.id">
               <q-item class="header-notify-detail" :class="{unread:notice.read==1}">
-                <q-item-section v-if="notice.n_type===1">
+                <q-item-section v-if="notice.n_type===1 || !notice.n_type">
                   <q-item-label lines="2">{{ notice.h_text }}</q-item-label>
+                </q-item-section>
+                <q-item-section side avatar v-if="notice.n_type===2 ||notice.n_type===3">
+                  <q-avatar size="35px">
+                    <img :src="notice.creatorIn.avatar|| 'statics/user.svg'" />
+                  </q-avatar>
                 </q-item-section>
                 <q-item-section v-if="notice.n_type===2">
                   <q-item-label lines="2">
@@ -20,6 +25,7 @@
                     </router-link>
                   </q-item-label>
                 </q-item-section>
+
                 <q-item-section v-if="notice.n_type===3">
                   <q-item-label lines="2">
                     <router-link

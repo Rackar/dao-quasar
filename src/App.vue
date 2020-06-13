@@ -20,6 +20,7 @@ export default {
       this.$store.commit('user/login_saveToken', token);
       this.getMyUserinfo();
     }
+    this.checkVersion();
     this.$q.iconMapFn = iconName => {
       const icon = myIcons[iconName];
       if (icon !== void 0) {
@@ -30,6 +31,14 @@ export default {
   mounted() {},
 
   methods: {
+    checkVersion() {
+      let version = '20200613';
+      let savedVersion = window.localStorage.version;
+      if (savedVersion !== version) {
+        this.$q.localStorage.set('version', version);
+        this.$q.localStorage.set('notifications', []);
+      }
+    },
     async getMyUserinfo() {
       let url = '/protected/user/me';
       const resData = await this.$axios.get(url);
