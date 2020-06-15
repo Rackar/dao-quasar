@@ -6,5 +6,7 @@ export default function() {
     mail_export: '',
     avatar: '',
     address: '',
+    social_sync_grp: '',
+    social_twitter: '',
   };
 }

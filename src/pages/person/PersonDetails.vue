@@ -54,6 +54,19 @@
           </q-inner-loading>
         </div>
         <div class="q-size-sm">DAO ID {{ id }} {{ userinfo.mail_export }}</div>
+        <div
+          class="q-size-sm"
+          v-show="!editing &&userinfo.social_twitter"
+        >Twitter ID: {{ userinfo.social_twitter }},已绑定群组：{{getGroupNameFromId(userinfo.social_sync_grp)}}</div>
+        <div v-show="editing">
+          <q-btn
+            outline
+            no-caps
+            color="primary"
+            label="绑定 Twitter ID"
+            @click="showBandingTwitter=true"
+          />
+        </div>
       </div>
     </div>
     <div class="row q-col-gutter-md">
@@ -101,10 +114,26 @@
         <PersonGroupList :user_id="id" v-else />
       </div>
     </div>
+
+    <q-dialog v-model="showBandingTwitter">
+      <q-card style="width:300px;">
+        <q-card-section>
+          <div class="text-h6">绑定推特ID，同步内容到群组</div>
+        </q-card-section>
+        <q-card-section>
+          <q-input square outlined v-model="edit.social_twitter" label="twitter ID @" />
+          <q-select outlined v-model="bandGroupObj" :options="joinedGroupList" label="同步群组" />
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn @click="bandTwitter" flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
+import { get } from 'src/apis/index.js';
 import ArticleShow from 'pages/article/ArticleShow';
 import AddComment from 'pages/group/AddComment';
 import PersonWallet from './PersonWallet';
@@ -139,7 +168,14 @@ export default {
       edit: {
         name: '',
         avatar: '',
+        social_twitter: '',
+        social_sync_grp: '',
       },
+      bandGroupObj: '',
+      twitterID: '',
+      twitterPushGroupId: '',
+
+      joinedGroupList: [],
 
       addCommentShow: false,
       commentPostId: 0,
@@ -152,6 +188,7 @@ export default {
       recycleList: [],
 
       loadingVisible: false,
+      showBandingTwitter: false,
     };
   },
   watch: {
@@ -179,6 +216,7 @@ export default {
           this.userinfo = this.myUserinfo;
           this.getMyPosts();
           this.getmycode();
+          this.getMyGroups();
           //是否拉取回车站内容
           // this.getMyRecycle();
         } else {
@@ -212,6 +250,41 @@ export default {
       if (resData.data.code == 0) {
         this.userinfo = resData.data.data.user;
       } else if (resData.code == 104) {
+      }
+    },
+    async getMyGroups() {
+      let apiCode = '/protected/grp/joined';
+      //注释掉接口
+      const getjoined = await get(apiCode);
+      // debugger;
+      if (getjoined) {
+        if (getjoined.code == 0) {
+          const groups = getjoined.data.grps_joined;
+
+          this.joinedGroupList = groups.map(group => {
+            return {
+              label: group.grp.name,
+              value: group.grp.id,
+            };
+          });
+          // let list = this.myGroups.map(group => group.grp.id);
+          // this.$store.commit('group/setJoinedGroupIdList', { list });
+        } else if (getjoined.code == 104) {
+        }
+      } else {
+      }
+    },
+    bandTwitter() {
+      this.twitterID = this.edit.social_twitter;
+      this.twitterPushGroupId = this.bandGroupObj.value;
+    },
+    getGroupNameFromId(id) {
+      if (id && this.joinedGroupList && this.joinedGroupList.length) {
+        let group = this.joinedGroupList.find(group => group.value === id);
+        if (group) return group.label;
+        else return '';
+      } else {
+        return '';
       }
     },
     // 我的代币
@@ -305,6 +378,8 @@ export default {
       this.editing = !this.editing;
       this.edit.name = this.userinfo.name;
       this.edit.avatar = this.userinfo.avatar;
+      this.edit.social_sync_grp = this.userinfo.social_sync_grp;
+      this.edit.social_twitter = this.userinfo.social_twitter;
     },
     changeAvatar() {
       if (this.editing) {
@@ -330,6 +405,8 @@ export default {
       let data = {
         name: this.edit.name,
         avatar: this.edit.avatar,
+        social_twitter: this.twitterID,
+        social_sync_grp: this.twitterPushGroupId,
       };
       let res = await this.$axios.put(api, data);
       if (res.data.code === 0) {
@@ -337,6 +414,8 @@ export default {
         let user = { ...this.userinfo };
         user.name = data.name;
         user.avatar = data.avatar;
+        user.social_twitter = data.social_twitter;
+        user.social_sync_grp = data.social_sync_grp;
         this.$store.commit('user/setUserinfo', user);
       } else {
         this.$q.notify('资料修改失败');

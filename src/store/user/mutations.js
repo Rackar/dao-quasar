@@ -37,6 +37,8 @@ export function setUserinfo(state, userinfo) {
   state.name = userinfo.name;
   state.mail_export = userinfo.mail_export;
   state.address = userinfo.address;
+  state.social_twitter = userinfo.social_twitter;
+  state.social_sync_grp = userinfo.social_sync_grp;
 }
 
 export function resetUserinfo(state) {
@@ -47,4 +49,6 @@ export function resetUserinfo(state) {
   state.mail_export = '';
   state.avatar = '';
   state.address = '';
+  state.social_twitter = '';
+  state.social_sync_grp = '';
 }
