@@ -21,7 +21,7 @@
                     <router-link :to="{ name: 'articles', params: { id: notice.post + '' } }">
                       {{ notice.h_text }}
                       <br />
-                      {{notice.postIn.content.substr(0,20)}}
+                      <div class="content">{{notice.postIn.content.substr(0,30)}}</div>
                     </router-link>
                   </q-item-label>
                 </q-item-section>
@@ -33,17 +33,18 @@
                     >
                       {{ notice.h_text }}
                       <br />
-                      “{{notice.commentIn.content.substr(0,20)}}”
+                      <div class="content">“{{notice.commentIn.content.substr(0,30)}}”</div>
+
                       <br />
                     </router-link>
                   </q-item-label>
                 </q-item-section>
 
-                <q-item-section side>
+                <!-- <q-item-section side>
                   <q-item-label
                     caption
                   >{{ $utils.timeStringToLocal(notice.create_at,'RelativeTime') }}</q-item-label>
-                </q-item-section>
+                </q-item-section>-->
               </q-item>
               <q-separator />
             </div>
@@ -297,6 +298,11 @@ export default {
     color: $dgrey;
     float: right;
     text-align: right;
+  }
+
+  .content {
+    color: grey;
+    padding-top: 8px;
   }
 }
 
