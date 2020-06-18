@@ -49,6 +49,6 @@ export function resetUserinfo(state) {
   state.mail_export = '';
   state.avatar = '';
   state.address = '';
-  state.social_twitter = '';
-  state.social_sync_grp = '';
+  state.social_twitter = null;
+  state.social_sync_grp = null;
 }

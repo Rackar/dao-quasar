@@ -17,9 +17,9 @@
             <div auto-close v-show="showMenu" @mouseout="showMenuId = 0" class="menu-hover">
               <q-list style="min-width: 100px">
                 <q-item clickable>
-                  <q-item-section @click.stop="setGroupToTop(myGroup)">
-                    {{ myGroup.pinned === 2 ? '取消置顶' : '置顶群' }}
-                  </q-item-section>
+                  <q-item-section
+                    @click.stop="setGroupToTop(myGroup)"
+                  >{{ myGroup.pinned === 2 ? '取消置顶' : '置顶群' }}</q-item-section>
                 </q-item>
                 <q-separator />
                 <q-item clickable>
@@ -54,9 +54,9 @@
               <q-item-section side top class="justify-between">
                 <!-- <q-badge color="grey" :label="myGroup.unread" /> -->
                 <q-item-label class="badge-num">{{ myGroup.unread }}</q-item-label>
-                <q-item-label caption>
-                  {{ $utils.timeStringToLocal(myGroup.grp.last_post_at, 'RelativeDay') }}
-                </q-item-label>
+                <q-item-label
+                  caption
+                >{{ $utils.timeStringToLocal(myGroup.grp.last_post_at, 'RelativeDay') }}</q-item-label>
               </q-item-section>
             </q-item>
           </router-link>
@@ -108,9 +108,7 @@
               />
               <!-- <q-badge v-else color="grey" :label="grp.num_post" /> -->
               <q-item-label v-else class="badge-num">{{ grp.num_post }}</q-item-label>
-              <q-item-label caption>
-                {{ $utils.timeStringToLocal(grp.last_post_at, 'RelativeDay') }}
-              </q-item-label>
+              <q-item-label caption>{{ $utils.timeStringToLocal(grp.last_post_at, 'RelativeDay') }}</q-item-label>
             </q-item-section>
           </q-item>
         </router-link>
@@ -118,7 +116,7 @@
       </div>
       <q-item class="flex-center">
         <router-link :to="{ name: 'grouplist' }">
-          <q-btn outline="" color="primary" label="查看所有群组列表" />
+          <q-btn outline color="primary" label="查看更多群" />
         </router-link>
       </q-item>
     </q-list>

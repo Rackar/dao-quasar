@@ -125,7 +125,7 @@
           <q-select outlined v-model="bandGroupObj" :options="joinedGroupList" label="同步群组" />
         </q-card-section>
         <q-card-actions align="right">
-          <q-btn @click="bandTwitter" flat label="OK" color="primary" v-close-popup />
+          <q-btn @click="bandTwitter" flat label="OK" color="primary" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -275,8 +275,19 @@ export default {
       }
     },
     bandTwitter() {
-      this.twitterID = this.edit.social_twitter;
-      this.twitterPushGroupId = this.bandGroupObj.value;
+      // debugger;
+      if (this.edit.social_twitter && this.bandGroupObj.value) {
+        this.twitterID = this.edit.social_twitter;
+        this.twitterPushGroupId = this.bandGroupObj.value;
+        this.showBandingTwitter = false;
+      } else if (this.edit.social_twitter === '' && !this.bandGroupObj.value) {
+        this.$q.notify('清除绑定信息');
+        this.twitterID = null;
+        this.twitterPushGroupId = null;
+        this.showBandingTwitter = false;
+      } else {
+        this.$q.notify('请输入完整');
+      }
     },
     getGroupNameFromId(id) {
       if (id && this.joinedGroupList && this.joinedGroupList.length) {
