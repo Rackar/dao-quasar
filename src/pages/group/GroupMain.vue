@@ -207,11 +207,12 @@ export default {
     async fetchGroupData() {
       // Object.assign(this, this.getInitData());
       this.resetData();
-      this.$q.loading.show();
+      // this.$q.loading.show();
+      this.$q.loadingBar.start();
       await this.getPageData();
-
+      this.$q.loadingBar.stop();
       // await this.$store.dispatch('group/jumpToGroup', { id: this.groupId });
-      this.$q.loading.hide();
+      // this.$q.loading.hide();
     },
     loadMore(_, done) {
       if (!this.hasMore) return done();

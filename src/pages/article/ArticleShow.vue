@@ -44,7 +44,6 @@
           :data-id="post.post.id"
           v-intersection="obOptions"
           ref="videoPlayer"
-          :autoplay="autoPlayWhenDesktop"
           :muted="true"
           type="video"
           background-color="white"
@@ -216,8 +215,8 @@ export default {
       return this.$store.state.user.userid;
     },
     autoPlayWhenDesktop() {
-      // return this.$q.platform.is.desktop;
-      return false;
+      return this.$q.platform.is.desktop;
+      // return false;
     },
 
     hasVideo() {
@@ -309,6 +308,9 @@ export default {
       this.$q.notify('置顶功能尚在开发');
     },
     onIntersection(entry) {
+      if (!this.autoPlayWhenDesktop) {
+        return;
+      }
       let ob = this.$store.state.group.previewVideoDom;
       // debugger;
       if (entry.isIntersecting === true) {
@@ -337,7 +339,7 @@ export default {
       this.videoRadioNormal = width > height * 1.1;
     },
     testloaded() {
-      console.log('loaded');
+      // console.log('loaded');
     },
   },
   created() {},
