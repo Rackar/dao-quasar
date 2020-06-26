@@ -176,33 +176,34 @@ export default {
     },
   },
   methods: {
-    getInitData() {
-      return {
-        isReady: false,
-        hasPermission: true,
-        hasMore: true,
-        posts: [],
-        lastPostId: null,
-        targetCommentPost: null,
-        addCommentShow: false,
-        grpMembers: [],
-        password: '',
-        blockedMembers: [],
-        showJoinGroup: false,
-      };
-    },
     resetData() {
-      this.isReady = false;
-      this.hasPermission = true;
-      this.hasMore = true;
-      this.posts = [];
-      this.lastPostId = null;
-      this.targetCommentPost = null;
-      this.addCommentShow = false;
-      this.grpMembers = [];
-      this.password = '';
-      this.blockedMembers = [];
-      this.showJoinGroup = false;
+      let caches = this.$store.state.group.cachedGroups;
+      let cache = caches.find(group => group.id === this.groupId);
+      if (!cache) {
+        this.isReady = false;
+        this.hasPermission = true;
+        this.hasMore = true;
+        this.posts = [];
+        this.lastPostId = null;
+        this.grpMembers = [];
+        this.password = '';
+        this.blockedMembers = [];
+        this.showJoinGroup = false;
+      } else {
+        this.isReady = cache.data.isReady;
+        this.hasPermission = cache.data.hasPermission;
+        this.hasMore = cache.data.hasMore;
+        this.posts = cache.data.posts;
+        this.lastPostId = cache.data.lastPostId;
+        this.grpMembers = cache.data.grpMembers;
+        this.password = cache.data.password;
+        this.blockedMembers = cache.data.blockedMembers;
+        this.showJoinGroup = cache.data.showJoinGroup;
+        this.$store.commit('group/jumpGroup', {
+          grp: cache.currentGroup,
+          creator: cache.currentGroupOwner,
+        });
+      }
     },
     async fetchGroupData() {
       // Object.assign(this, this.getInitData());
@@ -250,6 +251,18 @@ export default {
       ])
         .then(() => {
           this.isReady = true;
+          let groupCache = {
+            isReady: this.isReady,
+            hasPermission: this.hasPermission,
+            hasMore: this.hasMore,
+            posts: this.posts,
+            lastPostId: this.lastPostId,
+            grpMembers: this.grpMembers,
+            password: this.password,
+            blockedMembers: this.blockedMembers,
+            showJoinGroup: this.showJoinGroup,
+          };
+          this.$store.commit('group/cacheGroupData', { data: groupCache, id: this.groupId });
         })
         .catch(err => {
           if (err && err.code === 100) {

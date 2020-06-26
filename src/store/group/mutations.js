@@ -31,3 +31,28 @@ export function playVideoUnique(state, payload) {
   //   }
   // }
 }
+
+export function cacheGroupData(state, payload) {
+  // let {
+  //   isReady,
+  //   hasPermission,
+  //   hasMore,
+  //   posts,
+  //   lastPostId,
+  //   targetCommentPost,
+  //   addCommentShow,
+  //   grpMembers,
+  //   password,
+  //   blockedMembers,
+  //   showJoinGroup,
+  // } = payload.data;
+  let id = payload.id;
+  let obj = state.cachedGroups.find(group => group.id === id);
+  payload.currentGroup = state.currentGroup;
+  payload.currentGroupOwner = state.currentGroupOwner;
+  if (obj) {
+    obj = payload;
+  } else {
+    state.cachedGroups.push(payload);
+  }
+}
