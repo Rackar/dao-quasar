@@ -10,6 +10,11 @@ const routes = [
         name: 'group',
         component: () => import('pages/group/GroupMain.vue'),
       },
+      {
+        path: 'articles/:id',
+        name: 'articles',
+        component: () => import('pages/article/Left.vue'),
+      },
     ],
   },
   {
@@ -17,11 +22,11 @@ const routes = [
     name: 'grouplist',
     component: () => import('pages/group/GroupListMore.vue'),
   },
-  {
-    path: '/articles/:id',
-    name: 'articles',
-    component: () => import('pages/article/Index.vue'),
-  },
+  // {
+  //   path: '/articles/:id',
+  //   name: 'articles',
+  //   component: () => import('pages/article/Index.vue'),
+  // },
   {
     path: '/person', //人物信息模板
 

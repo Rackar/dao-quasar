@@ -1,5 +1,18 @@
 <template>
   <div class="container">
+    <div class="back-btn">
+      <q-btn outline color="primary" icon="keyboard_return" @click="$router.back()" />
+    </div>
+    <!-- <IconHover
+      iconName="fanhui"
+      width="16px"
+      class="cursor-pointer"
+      style="padding-top:8px;"
+      @click.native="$router.back()"
+    />-->
+    <!-- <q-btn v-require-login-click outline class="btn" @click="$router.back()">
+      <img svg-inline src="@/statics/icons/icon_fanhui.svg" class="svg-icon mr5" />
+    </q-btn>-->
     <Article
       class="article"
       viewType="article"
@@ -124,7 +137,19 @@ export default {
   // width: 860px;
   // margin-right: 16px;
   padding-bottom: 16px;
+  .back-btn {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 75px;
+    padding-right: 15px;
+
+    @media only screen and (min-width: 600px) {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+  }
 }
+
 .spinner {
   height: 50vh;
   display: flex;
