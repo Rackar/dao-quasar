@@ -25,7 +25,7 @@ jobs:
           FOLDER: dist/spa # The folder the action should deploy.
           BUILD_SCRIPT: npm install && npm install -g @quasar/cli &&  quasar build # The build script the action should run prior to deploying.
       - name: Move index.html
-        run: mv dist/spa/index.html dist/index.html
+        run: sudo mv dist/spa/index.html dist/index.html
       - name: DeployToMain
         uses: garygrossgarten/github-action-scp@release
         with:
