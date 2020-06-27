@@ -180,6 +180,7 @@ export default {
       let caches = this.$store.state.group.cachedGroups;
       let cache = caches.find(group => group.id === this.groupId);
       if (!cache) {
+        this.$q.loading.show();
         this.isReady = false;
         this.hasPermission = true;
         this.hasMore = true;
@@ -213,7 +214,7 @@ export default {
       await this.getPageData();
       this.$q.loadingBar.stop();
       // await this.$store.dispatch('group/jumpToGroup', { id: this.groupId });
-      // this.$q.loading.hide();
+      this.$q.loading.hide();
     },
     loadMore(_, done) {
       if (!this.hasMore) return done();
