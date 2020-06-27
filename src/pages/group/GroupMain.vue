@@ -210,9 +210,9 @@ export default {
       // Object.assign(this, this.getInitData());
       this.resetData();
       // this.$q.loading.show();
-      this.$q.loadingBar.start();
+      // this.$q.loadingBar.start();
       await this.getPageData();
-      this.$q.loadingBar.stop();
+      // this.$q.loadingBar.stop();
       // await this.$store.dispatch('group/jumpToGroup', { id: this.groupId });
       this.$q.loading.hide();
     },

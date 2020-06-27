@@ -29,7 +29,7 @@ export default function(/* { store, ssrContext } */) {
       return new Promise(resolve => {
         setTimeout(() => {
           resolve(savedPosition || { x: 0, y: 0 });
-        }, 1500);
+        }, 50);
       });
     },
   });
