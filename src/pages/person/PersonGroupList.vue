@@ -28,6 +28,7 @@
 
         <q-separator inset="true" />
       </div>
+      <div style="padding: 16px 16px 116px;" v-if="recommendGroups.length===0">用户尚未加入任何群组</div>
     </q-list>
   </q-card>
 </template>

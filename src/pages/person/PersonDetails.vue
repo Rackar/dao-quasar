@@ -94,7 +94,9 @@
                 :addComment="() => showAddComment(post.post.id)"
                 @del="postDeleted"
               />
-              <div v-if="pullList.length === 0">尚未发帖</div>
+              <div v-if="pullList.length === 0">
+                <div style="    padding: 20px 0 100px;">用户尚未发帖</div>
+              </div>
             </q-tab-panel>
 
             <!-- <q-tab-panel name="recycle">

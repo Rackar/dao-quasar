@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHR lpR fFf">
+  <q-layout view="lHR lpR fFf" class="person-main">
     <div class="header">
       <headerBarLeft />
       <headerBarRight class="right" />
@@ -41,6 +41,9 @@ export default {
 }
 
 .page {
-  background-color: rgb(248, 248, 248);
+  // background-color: rgb(248, 248, 248);
+}
+.person-main{
+  background-color: #f8f8f8;
 }
 </style>
