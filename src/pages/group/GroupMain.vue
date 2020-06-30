@@ -289,7 +289,7 @@ export default {
     //   }
     // },
     getPosts() {
-      const { groupId, userid, lastPostId,posts } = this;
+      const { groupId, userid, lastPostId } = this;
       if (!groupId) {
         return Promise.reject();
       }
