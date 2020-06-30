@@ -426,13 +426,13 @@ export default {
   padding: 0 10px;
 }
 .body {
-  padding-top: 5px;
-  padding-bottom: 15px;
+  // padding-top: 5px;
+  // padding-bottom: 15px;
   display: block;
   font-size: 15px;
   word-break: break-word;
   overflow: overlay;
-  line-height: 26px;
+  line-height: 22px;
 }
 .container {
   background-color: #fff;
@@ -442,8 +442,8 @@ export default {
   padding-right: 15px;
 
   @media only screen and (min-width: 1024px) {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 48px;
+    padding-right: 48px;
   }
 }
 

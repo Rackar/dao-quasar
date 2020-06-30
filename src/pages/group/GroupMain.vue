@@ -289,18 +289,21 @@ export default {
     //   }
     // },
     getPosts() {
-      const { groupId, userid, lastPostId } = this;
+      const { groupId, userid, lastPostId,posts } = this;
       if (!groupId) {
         return Promise.reject();
       }
       return getPosts({ userid, groupId, lastPostId }).then(res => {
         const newPosts = res.posts;
-        this.posts = this.posts.concat(newPosts);
-        if (newPosts.length > 0) {
-          this.lastPostId = newPosts[newPosts.length - 1].post.id;
-        } else {
-          this.hasMore = false;
-        }
+        // debugger;
+        // if (this.posts && this.posts.concat) {
+          this.posts = this.posts.concat(newPosts);
+          if (newPosts.length > 0) {
+            this.lastPostId = newPosts[newPosts.length - 1].post.id;
+          } else {
+            this.hasMore = false;
+          }
+        // }
       });
     },
     // 获取群组员

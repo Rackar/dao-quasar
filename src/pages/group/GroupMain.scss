@@ -5,8 +5,8 @@
   padding-bottom: 15px;
   border-bottom: 1px solid #e8e8e8;
   @media only screen and (min-width: 1024px) {
-    padding-left: 25px;
-    padding-right: 5px;
+    padding-left: 48px;
+    padding-right: 48px;
   }
   /deep/ .main {
     margin-right: 20px;
@@ -55,8 +55,8 @@
   font-size: 14px;
 
   @media only screen and (min-width: 1024px) {
-    margin-left: 25px;
-    margin-right: 25px;
+    margin-left: 48px;
+    margin-right: 48px;
     padding: 25px;
   }
 
@@ -102,6 +102,8 @@
   @media only screen and (min-width: 768px) {
     display: flex;
     align-items: center;
+    margin-left: 23px;
+    margin-right: 23px;
   }
 
   &_row:first-child {

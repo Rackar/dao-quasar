@@ -50,9 +50,10 @@ export function cacheGroupData(state, payload) {
   let obj = state.cachedGroups.find(group => group.id === id);
   payload.currentGroup = state.currentGroup;
   payload.currentGroupOwner = state.currentGroupOwner;
+  let copy = JSON.parse(JSON.stringify(payload));
   if (obj) {
-    obj = payload;
+    obj = copy;
   } else {
-    state.cachedGroups.push(payload);
+    state.cachedGroups.push(copy);
   }
 }

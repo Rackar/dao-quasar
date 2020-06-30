@@ -51,7 +51,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   function(error) {
-    store.commit('logout_delToken');
+    store.commit('user/logout_delToken');
     return Promise.reject(error);
   }
 );
