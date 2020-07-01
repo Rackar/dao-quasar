@@ -328,7 +328,9 @@ export default {
         }
         this.lastPercent = entry.intersectionRatio;
       } else {
-        this.$refs.videoPlayer.pause();
+        if (!this.$refs.videoPlayer.$media.paused && this.$refs.videoPlayer.$media.play) {
+          this.$refs.videoPlayer.pause();
+        }
       }
     },
     readyToPlayVideo() {

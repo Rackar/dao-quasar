@@ -191,15 +191,16 @@ export default {
         this.blockedMembers = [];
         this.showJoinGroup = false;
       } else {
-        this.isReady = cache.data.isReady;
-        this.hasPermission = cache.data.hasPermission;
-        this.hasMore = cache.data.hasMore;
-        this.posts = cache.data.posts;
-        this.lastPostId = cache.data.lastPostId;
-        this.grpMembers = cache.data.grpMembers;
-        this.password = cache.data.password;
-        this.blockedMembers = cache.data.blockedMembers;
-        this.showJoinGroup = cache.data.showJoinGroup;
+        let data = JSON.parse(JSON.stringify(cache.data));
+        this.isReady = data.isReady;
+        this.hasPermission = data.hasPermission;
+        this.hasMore = data.hasMore;
+        this.posts = data.posts;
+        this.lastPostId = data.lastPostId;
+        this.grpMembers = data.grpMembers;
+        this.password = data.password;
+        this.blockedMembers = data.blockedMembers;
+        this.showJoinGroup = data.showJoinGroup;
         this.$store.commit('group/jumpGroup', {
           grp: cache.currentGroup,
           creator: cache.currentGroupOwner,
@@ -256,7 +257,7 @@ export default {
             isReady: this.isReady,
             hasPermission: this.hasPermission,
             hasMore: this.hasMore,
-            posts: this.posts,
+            posts: JSON.parse(JSON.stringify(this.posts)),
             lastPostId: this.lastPostId,
             grpMembers: this.grpMembers,
             password: this.password,
@@ -297,12 +298,12 @@ export default {
         const newPosts = res.posts;
         // debugger;
         // if (this.posts && this.posts.concat) {
-          this.posts = this.posts.concat(newPosts);
-          if (newPosts.length > 0) {
-            this.lastPostId = newPosts[newPosts.length - 1].post.id;
-          } else {
-            this.hasMore = false;
-          }
+        this.posts = this.posts.concat(newPosts);
+        if (newPosts.length > 0) {
+          this.lastPostId = newPosts[newPosts.length - 1].post.id;
+        } else {
+          this.hasMore = false;
+        }
         // }
       });
     },
