@@ -173,6 +173,7 @@ export default {
         },
       },
       lastPercent: 0,
+      readyed: false,
     };
   },
   computed: {
@@ -323,7 +324,7 @@ export default {
             }
             this.$store.commit('group/playVideoUnique', this.$refs.videoPlayer.$media);
             if (this.$refs.videoPlayer.$media.paused && this.$refs.videoPlayer.$media.play) {
-              this.$refs.videoPlayer.$media.play();
+              if (this.readyed) this.$refs.videoPlayer.$media.play();
             }
           }
           // this.$refs.videoPlayer.play();
@@ -343,6 +344,7 @@ export default {
       let height = this.$refs.videoPlayer.$media.videoHeight;
       let width = this.$refs.videoPlayer.$media.videoWidth;
       this.videoRadioNormal = width > height * 1.1;
+      this.readyed = true;
     },
     testloaded() {
       // console.log('loaded');
