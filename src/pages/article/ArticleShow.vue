@@ -317,7 +317,9 @@ export default {
         if (entry.intersectionRatio > 0.7 && entry.intersectionRatio > this.lastPercent) {
           if (ob != this.$refs.videoPlayer.$media) {
             if (ob && !ob.paused && ob.pause) {
-              ob.pause();
+              try {
+                ob.pause();
+              } catch (error) {}
             }
             this.$store.commit('group/playVideoUnique', this.$refs.videoPlayer.$media);
             if (this.$refs.videoPlayer.$media.paused && this.$refs.videoPlayer.$media.play) {
@@ -329,7 +331,9 @@ export default {
         this.lastPercent = entry.intersectionRatio;
       } else {
         if (!this.$refs.videoPlayer.$media.paused && this.$refs.videoPlayer.$media.play) {
-          this.$refs.videoPlayer.pause();
+          try {
+            this.$refs.videoPlayer.pause();
+          } catch (error) {}
         }
       }
     },

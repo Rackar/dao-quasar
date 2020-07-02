@@ -102,8 +102,8 @@
   @media only screen and (min-width: 768px) {
     display: flex;
     align-items: center;
-    margin-left: 23px;
-    margin-right: 23px;
+    padding-left: 23px;
+    padding-right: 23px;
   }
 
   &_row:first-child {

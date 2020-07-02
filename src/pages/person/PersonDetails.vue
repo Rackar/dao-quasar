@@ -70,7 +70,7 @@
       </div>
     </div>
     <div class="row q-col-gutter-md">
-      <div class="col-sm-8 col-md-6 offset-md-1">
+      <div class="col-xs-12 col-sm-8 col-md-6 offset-md-1">
         <q-card flat class="my-card">
           <!-- <q-tabs
             v-model="tab"
@@ -95,7 +95,7 @@
                 @del="postDeleted"
               />
               <div v-if="pullList.length === 0">
-                <div style="    padding: 20px 0 100px;">用户尚未发帖</div>
+                <div style="padding: 20px 0 100px;">用户尚未发帖</div>
               </div>
             </q-tab-panel>
 
