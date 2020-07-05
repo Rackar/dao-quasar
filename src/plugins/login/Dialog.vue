@@ -20,7 +20,7 @@ export default {
   methods: {
     refresh() {
       // location.reload();
-      this.showLogin=false
+      this.showLogin = false;
     },
   },
 };

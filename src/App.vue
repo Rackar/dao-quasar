@@ -43,8 +43,8 @@ export default {
       let url = '/protected/user/me';
       const resData = await this.$axios.get(url);
       if (resData.data.code === 0) {
-        this.userinfo = resData.data.data.me;
-        this.$store.commit('user/setUserinfo', this.userinfo);
+        let userinfo = resData.data.data.me;
+        this.$store.commit('user/setUserinfo', userinfo);
       }
     },
     reload() {

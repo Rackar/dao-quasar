@@ -38,6 +38,7 @@
 
 <script>
 import store from 'src/store';
+import { Router } from 'boot/router';
 export default {
   name: 'Login',
   props: {
@@ -107,12 +108,18 @@ export default {
         localStorage.setItem('token', token);
         localStorage.setItem('userinfo', userinfo);
         store.commit('user/login_saveToken', token);
-        this.$q.notify("登录成功")
+        this.$q.notify('登录成功');
+        Router.push('/');
         // this.reload();
         // location.reload();
         // setTimeout(() => location.reload(), 200);
-        setTimeout(() => this.onLoggedIn(token), 100);
-
+        setTimeout(() => this.onLoggedIn(), 100);
+        let url = '/protected/user/me';
+        const resData = await this.$axios.get(url);
+        if (resData.data.code === 0) {
+          let userinfo = resData.data.data.me;
+          store.commit('user/setUserinfo', userinfo);
+        }
       } else {
         // this.$toast({
         //   text:
