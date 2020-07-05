@@ -334,6 +334,11 @@ export default {
       padding: 20px 0;
       .name-input {
         width: 200px;
+        margin-left: 20px;
+        margin-top: 10px;
+        @media only screen and (max-width: 600px) {
+          margin-left: 0;
+        }
       }
       .avatar {
         margin-right: 15px;

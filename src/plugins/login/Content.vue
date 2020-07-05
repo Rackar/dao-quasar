@@ -107,6 +107,7 @@ export default {
         localStorage.setItem('token', token);
         localStorage.setItem('userinfo', userinfo);
         store.commit('user/login_saveToken', token);
+        this.$q.notify("登录成功")
         // this.reload();
         // location.reload();
         // setTimeout(() => location.reload(), 200);
