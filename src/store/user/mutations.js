@@ -5,6 +5,7 @@ export function login_saveToken(state, tokenWithB) {
   state.userid = userinfo.userid;
   state.token = token;
   window.localStorage.setItem('token', token);
+  // alert(token)
   function parseJwt(token) {
     let secPart = token.split('.')[1];
     // console.log(secPart);

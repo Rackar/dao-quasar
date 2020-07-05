@@ -19,7 +19,8 @@ export default {
   },
   methods: {
     refresh() {
-      location.reload();
+      // location.reload();
+      this.showLogin=false
     },
   },
 };

@@ -43,6 +43,7 @@ export default {
   props: {
     onLoggedIn: { type: Function, required: true },
   },
+  inject: ['reload'],
   data() {
     return {
       type: 1,
@@ -106,7 +107,11 @@ export default {
         localStorage.setItem('token', token);
         localStorage.setItem('userinfo', userinfo);
         store.commit('user/login_saveToken', token);
+        // this.reload();
+        // location.reload();
+        // setTimeout(() => location.reload(), 200);
         setTimeout(() => this.onLoggedIn(token), 100);
+
       } else {
         // this.$toast({
         //   text:
