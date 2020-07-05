@@ -43,7 +43,7 @@ export default {
   props: {
     onLoggedIn: { type: Function, required: true },
   },
-  inject: ['reload'],
+  // inject: ['reload'],
   data() {
     return {
       type: 1,

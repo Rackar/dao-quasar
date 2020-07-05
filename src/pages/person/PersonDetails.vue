@@ -168,10 +168,10 @@ export default {
       pullList: [],
       userinfo: {},
       edit: {
-        name: '',
-        avatar: '',
-        social_twitter: '',
-        social_sync_grp: '',
+        name: null,
+        avatar: null,
+        social_twitter: null,
+        social_sync_grp: null,
       },
       bandGroupObj: '',
       twitterID: '',
@@ -415,11 +415,12 @@ export default {
     },
     async save() {
       let api = '/protected/user/modify';
+     
       let data = {
         name: this.edit.name,
         avatar: this.edit.avatar,
-        social_twitter: this.twitterID,
-        social_sync_grp: this.twitterPushGroupId,
+        social_twitter: this.twitterID||this.userinfo.social_twitter || null,
+        social_sync_grp: this.twitterPushGroupId||this.userinfo.social_sync_grp ||null,
       };
       let res = await this.$axios.put(api, data);
       if (res.data.code === 0) {
