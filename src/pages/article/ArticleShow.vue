@@ -13,12 +13,18 @@
       :onSave="afterEdit"
     />
     <div class="header" v-if="post.creator">
-      <router-link :to="{ name: 'person', params: { id: post.creator.id + '' } }">
+      <router-link
+        v-require-login-click
+        :to="{ name: 'person', params: { id: post.creator.id + '' } }"
+      >
         <q-avatar size="35px" v-show="!personPage" class="hoverable-avatar">
           <img :src="post.creator.avatar || 'statics/user.svg'" />
         </q-avatar>
       </router-link>
-      <router-link :to="{ name: 'person', params: { id: post.creator.id + '' } }">
+      <router-link
+        v-require-login-click
+        :to="{ name: 'person', params: { id: post.creator.id + '' } }"
+      >
         <span class="authorName" v-show="!personPage">{{ post.creator.name }}</span>
       </router-link>
       <span>{{ $utils.timeStringToLocal(post.post.create_at, 'RelativeTime') }}</span>

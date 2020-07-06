@@ -2,7 +2,11 @@
   <div class="fit row">
     <div class="main" v-for="member in members" :key="member.id">
       <div>
-        <router-link :to="{name:'person',params:{id:member.id+''}}" v-if="!edit">
+        <router-link
+          :to="{name:'person',params:{id:member.id+''}}"
+          v-if="!edit"
+          v-require-login-click
+        >
           <q-avatar class="hoverable-avatar" :size="size">
             <img :src="member.avatar || 'statics/user.svg'" />
           </q-avatar>
@@ -18,7 +22,13 @@
           >x</q-badge>
         </q-avatar>
       </div>
-      <div @click="jumpToMember(member.id)" class="cursor-pointer name">{{ member.name }}</div>
+      <router-link
+        :to="{name:'person',params:{id:member.id+''}}"
+        v-if="!edit"
+        v-require-login-click
+      >
+        <div class="cursor-pointer name">{{ member.name.substr(0,20) }}</div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -100,9 +110,9 @@ export default {
   margin-top: 10px;
   font-size: 14px;
   color: $dgrey;
-  width: 50px;
+  width: 80px;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  white-space: normal;
+  text-overflow: clip;
 }
 </style>

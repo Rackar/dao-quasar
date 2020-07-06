@@ -185,7 +185,9 @@ export default {
     clearLogin: function() {
       localStorage.clear();
       this.$store.commit('user/resetUserinfo');
-      this.$router.go(0);
+      // this.$router.push('/');
+      this.$q.notify('已退出登录');
+      location.href = '/';
     },
     async setGroupToTop() {
       let myGroup = this.currentGroup;
