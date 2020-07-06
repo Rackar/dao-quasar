@@ -45,6 +45,7 @@ export default function() {
       },
     ],
     joinedGroupIdList: [],
+    joinedGroupPinnedList: [],
     previewVideoDom: {},
     cachedGroups: [],
   };

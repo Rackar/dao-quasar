@@ -14,7 +14,7 @@ export function jumpToGroup({ commit }, data) {
           // debugger;
           let result = res.data.data;
           // result.grp.joined = data.joined;
-          result.grp.pinned = data.pinned;
+          result.grp.pinned = data.pinned || 1;
           commit('jumpGroup', result);
           resolve();
         })

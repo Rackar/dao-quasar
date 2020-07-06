@@ -58,12 +58,10 @@
             <q-item clickable v-close-popup>
               <q-item-section @click="createGrp">新建一个群</q-item-section>
             </q-item>
-            <q-item clickable v-close-popup v-if="isInGroupPath">
-              <q-item-section
-                @click="setGroupToTop()"
-              >{{ currentGroup.pinned === 2 ? '取消置顶本群' : '置顶本群' }}</q-item-section>
+            <q-item clickable v-close-popup v-if="isInGroupPath && groupJoined">
+              <q-item-section @click="setGroupToTop()">{{ isPinned === 2 ? '取消置顶本群' : '置顶本群' }}</q-item-section>
             </q-item>
-            <q-item clickable v-close-popup v-if="isInGroupPath">
+            <q-item clickable v-close-popup v-if="isInGroupPath && groupJoined">
               <q-item-section @click="leaveGroup()">退出本群</q-item-section>
             </q-item>
 
@@ -177,6 +175,20 @@ export default {
     currentGroup() {
       return this.$store.state.group.currentGroup;
     },
+    groupJoined() {
+      // return this.$store.state.group.currentGroup.joined;
+      return this.$store.getters['group/ifCurrentGroupJoined'];
+    },
+    isPinned() {
+      let pinObj = this.$store.state.group.joinedGroupPinnedList.find(
+        group => group.id === this.currentGroupId
+      );
+      if (pinObj) {
+        return pinObj.pinned;
+      } else {
+        return null;
+      }
+    },
   },
   methods: {
     createGrp: function() {
@@ -191,20 +203,22 @@ export default {
     },
     async setGroupToTop() {
       let myGroup = this.currentGroup;
-      let pin = myGroup.pinned;
-      let data = {
-        grp: myGroup.id,
-        pinned: pin === 1 ? 2 : 1,
-      };
-      let postUrl = '/protected/grp/pin';
-      const res = await post(postUrl, data);
-      if (res.code === 0) {
-        if (pin === 1) {
-          this.$q.notify('置顶成功');
-        } else {
-          this.$q.notify('取消置顶成功');
+      let pin = this.isPinned;
+      if (pin) {
+        let data = {
+          grp: myGroup.id,
+          pinned: pin === 1 ? 2 : 1,
+        };
+        let postUrl = '/protected/grp/pin';
+        const res = await post(postUrl, data);
+        if (res.code === 0) {
+          if (pin === 1) {
+            this.$q.notify('置顶成功');
+          } else {
+            this.$q.notify('取消置顶成功');
+          }
+          this.$router.go(0);
         }
-        this.$router.go(0);
       }
     },
     leaveGroup() {

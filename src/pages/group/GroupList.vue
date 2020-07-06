@@ -244,7 +244,11 @@ export default {
         if (getjoined.code == 0) {
           this.myGroups = getjoined.data.grps_joined;
           let list = this.myGroups.map(group => group.grp.id);
+          let pinList = this.myGroups.map(group => {
+            return { id: group.grp.id, pinned: group.pinned };
+          });
           this.$store.commit('group/setJoinedGroupIdList', { list });
+          this.$store.commit('group/setJoinedGroupPinnedList', pinList);
         } else if (getjoined.code == 104) {
         }
       } else {

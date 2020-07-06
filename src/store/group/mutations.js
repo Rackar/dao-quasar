@@ -13,6 +13,10 @@ export function setJoinedGroupIdList(state, payload) {
   state.joinedGroupIdList = payload.list;
 }
 
+export function setJoinedGroupPinnedList(state, payload) {
+  state.joinedGroupPinnedList = payload;
+}
+
 export function playVideoUnique(state, payload) {
   state.previewVideoDom = payload;
   // debugger;
