@@ -23,29 +23,11 @@
       <q-scroll-area class="fit" :thumb-style="thumbStyle">
         <headerBarLeft />
         <grouplist />
-        <!-- <span class="text-weight-bold">以下为测试跳转用</span>
-        <q-list v-for="(menuItem, index) in menuList" :key="index">
-          <q-item
-            clickable
-            v-ripple
-            :to="menuItem.path"
-            exact
-            :active="link === menuItem.path"
-            @click="link = menuItem.path"
-          >
-            <q-item-section avatar>
-              <q-icon :name="menuItem.icon" />
-            </q-item-section>
-            <q-item-section>{{ menuItem.label }}</q-item-section>
-          </q-item>
-
-          <q-separator v-if="menuItem.separator" />
-        </q-list>-->
-        <div class="copyright">
+        <!-- <div class="copyright">
           All rights reserved 2020 DAO Inc
           <br />A user owned company
           <br />Designed by Alina
-        </div>
+        </div>-->
       </q-scroll-area>
     </q-drawer>
 
@@ -154,7 +136,7 @@ export default {
 
 .drawerContainer /deep/ aside {
   position: fixed;
-  background-color: #F8F8F8;
+  // background-color: #F8F8F8;
 }
 
 .copyright {
