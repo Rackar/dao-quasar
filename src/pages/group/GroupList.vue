@@ -61,7 +61,7 @@
             </q-item>
           </router-link>
 
-          <q-separator inset="true" />
+          <!-- <q-separator inset="true" /> -->
         </div>
       </div>
       <q-item style="margin-top:20px;padding-left:48px;padding-right:48px;">
@@ -112,7 +112,7 @@
             </q-item-section>
           </q-item>
         </router-link>
-        <q-separator inset="true" />
+        <!-- <q-separator inset="true" /> -->
       </div>
       <q-item class="flex-center">
         <router-link :to="{ name: 'grouplist' }">
