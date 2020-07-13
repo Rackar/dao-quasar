@@ -196,7 +196,7 @@ export default {
         this.hasPermission = data.hasPermission;
         this.hasMore = data.hasMore;
         this.posts = data.posts;
-        this.lastPostId = data.lastPostId;
+        this.lastPostId = null;
         this.grpMembers = data.grpMembers;
         this.password = data.password;
         this.blockedMembers = data.blockedMembers;
@@ -258,7 +258,7 @@ export default {
             hasPermission: this.hasPermission,
             hasMore: this.hasMore,
             posts: JSON.parse(JSON.stringify(this.posts)),
-            lastPostId: this.lastPostId,
+            // lastPostId: this.lastPostId,
             grpMembers: this.grpMembers,
             password: this.password,
             blockedMembers: this.blockedMembers,
@@ -298,7 +298,12 @@ export default {
         const newPosts = res.posts;
         // debugger;
         // if (this.posts && this.posts.concat) {
-        this.posts = this.posts.concat(newPosts);
+        if (lastPostId) {
+          this.posts = this.posts.concat(newPosts);
+        } else {
+          this.posts = newPosts;
+        }
+
         if (newPosts.length > 0) {
           this.lastPostId = newPosts[newPosts.length - 1].post.id;
         } else {
