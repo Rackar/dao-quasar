@@ -57,6 +57,7 @@
         <div
           class="q-size-sm"
           v-show="!editing &&userinfo.social_twitter"
+          v-if="isMyself"
         >Twitter ID: {{ userinfo.social_twitter }},已绑定群组：{{getGroupNameFromId(userinfo.social_sync_grp)}}</div>
         <div v-show="editing">
           <q-btn
