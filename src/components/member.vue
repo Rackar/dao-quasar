@@ -8,7 +8,10 @@
           v-require-login-click
         >
           <q-avatar class="hoverable-avatar" :size="size">
-            <img :src="member.avatar || 'statics/user.svg'" />
+            <img v-if="member.avatar" :src="member.avatar || 'statics/user.svg'" />
+            <div v-else :style="{width:size,height:size,margin: '0 auto'}">
+              <avataaars class="img" style="margin-top:-5px;"></avataaars>
+            </div>
           </q-avatar>
         </router-link>
         <q-avatar :size="size" v-else>
@@ -34,7 +37,12 @@
 </template>
 
 <script>
+import Avataaars from 'vuejs-avataaars';
+
 export default {
+  components: {
+    Avataaars,
+  },
   props: {
     members: Array,
     edit: {
