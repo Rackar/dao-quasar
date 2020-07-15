@@ -205,6 +205,16 @@ Content-Type: {{contentType}}
   "key": "my-avatar.jpg"
 }
 
+### POST /protected/moon/categories（置顶群）
+POST https://{{host}}/protected/moon/categories HTTP/1.1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "grp": 10018,
+  "categories": [42]
+}
+
 # s3上传预签名
 # 注意：前端拿到 headers 和 presigned_url 后向s3上传对象，其中 headers 是字典，需遍历添加到往s3的请求header内，body必须是纯 binary 数据，非 form-data，参见 
 # https://github.com/aws/aws-sdk-js/issues/547#issuecomment-86404872

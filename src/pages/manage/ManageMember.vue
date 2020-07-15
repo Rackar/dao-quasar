@@ -18,7 +18,17 @@
     </div>
 
     <div class="section">
-      <div class="title text-weight-bold">所有成员</div>
+      <div class="title text-weight-bold">
+        所有成员
+        <q-btn
+          outline
+          class="manage-btn"
+          label="手动添加成员"
+          color="primary"
+          @click="linkMember"
+          v-if="canManage"
+        />
+      </div>
 
       <member
         :members="pagedAliveMember"
@@ -46,6 +56,31 @@
         @changeBlockStatus="changeBlockStatus"
       />
     </div>
+    <q-dialog v-model="showBandingMember">
+      <q-card style="width:420px;">
+        <q-card-section>
+          <div class="text-h6">添加成员</div>
+        </q-card-section>
+        <q-btn-toggle
+          v-model="selectMood"
+          spread
+          no-caps
+          toggle-color="primary"
+          color="white"
+          text-color="primary"
+          :options="[
+          {label: '绑定Moonbbs板块', value: 'one'},
+          {label: '绑定Twitter成员', value: 'two'}
+        ]"
+        />
+        <q-card-section>
+          <q-input square outlined v-model="tw_input" label="id数字，用逗号隔开" />
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn @click="submit" flat label="OK" color="primary" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -80,6 +115,9 @@ export default {
       blockMember: [],
       editMember: false,
       pageSize: 30,
+      showBandingMember: false,
+      selectMood: 'one',
+      tw_input: '',
     };
   },
   created() {
@@ -117,6 +155,27 @@ export default {
     },
     edit() {
       this.editMember = !this.editMember;
+    },
+    linkMember() {
+      this.showBandingMember = true;
+    },
+    async submit() {
+      if (this.selectMood === 'one') {
+        let api = '/protected/moon/categories';
+        let data = {
+          grp: +this.id,
+          categories: this.tw_input.split(',').map(str => +str),
+        };
+        debugger;
+        let res = await this.$axios.put(api, data);
+        if (res.data.code === 0) {
+          this.$q.notify('添加成功');
+        } else {
+          this.$q.notify('操作失败');
+        }
+      } else {
+        this.$q.notify('此功能尚未上线');
+      }
     },
   },
 };

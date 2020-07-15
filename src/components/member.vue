@@ -25,11 +25,7 @@
           >x</q-badge>
         </q-avatar>
       </div>
-      <router-link
-        :to="{name:'person',params:{id:member.id+''}}"
-        v-if="!edit"
-        v-require-login-click
-      >
+      <router-link :to="{name:'person',params:{id:member.id+''}}" v-require-login-click>
         <div class="cursor-pointer name">{{ member.name.substr(0,20) }}</div>
       </router-link>
     </div>
