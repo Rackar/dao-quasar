@@ -166,7 +166,6 @@ export default {
           grp: +this.id,
           categories: this.tw_input.split(',').map(str => +str),
         };
-        debugger;
         let res = await this.$axios.put(api, data);
         if (res.data.code === 0) {
           this.$q.notify('添加成功');
