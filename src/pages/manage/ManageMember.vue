@@ -160,15 +160,22 @@ export default {
       this.showBandingMember = true;
     },
     async submit() {
+      if (!this.tw_input) {
+        return this.$q.notify('请输入id');
+      }
       if (this.selectMood === 'one') {
         let api = '/protected/moon/categories';
         let data = {
           grp: +this.id,
           categories: this.tw_input.split(',').map(str => +str),
         };
+        if (data.categories.some(id => isNaN(id))) {
+          return this.$q.notify('请检查输入');
+        }
         let res = await this.$axios.put(api, data);
         if (res.data.code === 0) {
           this.$q.notify('添加成功');
+          this.showBandingMember = false;
         } else {
           this.$q.notify('操作失败');
         }
