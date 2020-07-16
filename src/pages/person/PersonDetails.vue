@@ -65,7 +65,7 @@
             no-caps
             color="primary"
             label="绑定 Twitter ID"
-            @click="showBandingTwitter=true"
+            @click="clickBandingTwitterBtn"
           />
         </div>
       </div>
@@ -192,6 +192,7 @@ export default {
 
       loadingVisible: false,
       showBandingTwitter: false,
+      isClearBanding: false,
     };
   },
   watch: {
@@ -279,6 +280,7 @@ export default {
     },
     bandTwitter() {
       // debugger;
+      this.isClearBanding = false;
       if (this.edit.social_twitter && this.bandGroupObj.value) {
         this.twitterID = this.edit.social_twitter;
         this.twitterPushGroupId = this.bandGroupObj.value;
@@ -288,6 +290,7 @@ export default {
         this.twitterID = null;
         this.twitterPushGroupId = null;
         this.showBandingTwitter = false;
+        this.isClearBanding = true;
       } else {
         this.$q.notify('请输入完整');
       }
@@ -405,6 +408,10 @@ export default {
     uploading() {
       this.loadingVisible = true;
     },
+    clickBandingTwitterBtn() {
+      this.showBandingTwitter = true;
+      this.isClearBanding = false;
+    },
     uploaded(data) {
       if (data.err) {
       } else {
@@ -423,6 +430,10 @@ export default {
         social_twitter: this.twitterID || this.userinfo.social_twitter || null,
         social_sync_grp: this.twitterPushGroupId || this.userinfo.social_sync_grp || null,
       };
+      if (this.isClearBanding) {
+        data.social_twitter = null;
+        data.social_sync_grp = null;
+      }
       let res = await this.$axios.put(api, data);
       if (res.data.code === 0) {
         this.$q.notify('资料修改成功');

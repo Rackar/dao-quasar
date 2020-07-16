@@ -74,7 +74,7 @@
         ]"
         />
         <q-card-section>
-          <q-input square outlined v-model="tw_input" label="id数字，用逗号隔开" />
+          <q-input square outlined v-model="tw_input" label="板块ID" />
         </q-card-section>
         <q-card-actions align="right">
           <q-btn @click="submit" flat label="OK" color="primary" />
