@@ -357,12 +357,16 @@ export default {
       // sets document title
       title: this.group.name.substr(0, 20),
       // optional; sets final title as "Index Page - My Website", useful for multiple level meta
-      titleTemplate: title => ` ${title} - Group in DAO (Decentralized Autonomous Organization)`,
+      titleTemplate: title =>
+        ` ${title} - Group in Justdao (Decentralized Autonomous Organization)`,
 
       // meta tags
       meta: {
         description: { name: 'description', content: this.group.desc_text.substr(0, 60) },
-        keywords: { name: 'keywords', content: 'DAO Decentralized Autonomous Organization' },
+        keywords: {
+          name: 'keywords',
+          content: 'Justdao,DAO,Decentralized,Autonomous,Organization,bbs',
+        },
         equiv: { 'http-equiv': 'Content-Type', content: 'text/html; charset=UTF-8' },
       },
 

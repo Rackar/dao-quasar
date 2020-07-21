@@ -1,8 +1,14 @@
 {
   "name": "quasar-dao",
   "version": "0.0.1",
-  "description": "DAO is a User Generated Content BBS with Blockchain. Social platforms like Facebook, Twitter and Wechat are all owned by its founders and investors. However, a social network should really be owned by its users. we want to create a social network platform owned by its users, governed by its users and for the users. ",
-  "productName": "DAO - Decentralized Autonomous Organization",
+  "description": "Justdao is a User Generated Content BBS with Blockchain. Social platforms like Facebook, Twitter and Wechat are all owned by its founders and investors. However, a social network should really be owned by its users. we want to create a social network platform owned by its users, governed by its users and for the users. ",
+  "productName": "Justdao - Decentralized Autonomous Organization",
+  "keywords": [
+    "Justdao",
+    "DAO",
+    "BBS",
+    "北美华人论坛"
+  ],
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "rackar <27681135@qq.com>",
