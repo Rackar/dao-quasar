@@ -21,6 +21,7 @@ export default {
     refresh() {
       // location.reload();
       this.showLogin = false;
+      location.reload(true);
     },
   },
 };
