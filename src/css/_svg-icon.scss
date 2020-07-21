@@ -1,10 +1,11 @@
 .svg-icon {
   color: currentColor;
   outline: none;
-  --light-grey: #E4E4E4;
-  --middle-grey: #8C909D;
-  --dark-grey: #2A3542 ;
+  --light-grey: #e4e4e4;
+  --middle-grey: #8c909d;
+  --dark-grey: #2a3542;
   --primary: var(--q-color-primary);
+  width: 16px;
 
   path {
     transition: color 100ms;
