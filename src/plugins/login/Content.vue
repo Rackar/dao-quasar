@@ -83,10 +83,10 @@ export default {
       }
     },
 
-    back: function() {
+    back: function () {
       this.type = 1;
     },
-    login: async function() {
+    login: async function () {
       if (!/^\d{4}$/.test(this.code)) {
         return this.$q.notify('验证码未正确填写');
       }
@@ -96,7 +96,6 @@ export default {
         mail: this.email,
         code: this.code,
       };
-      //调试，注释掉注册接口
       this.$q.loading.show();
       const resData = await this.$axios.post(apiCode, testData);
       this.$q.loading.hide();
@@ -105,17 +104,24 @@ export default {
       if (res.code === 0) {
         let token = res.data.token;
         let userinfo = JSON.stringify(res.data.user);
-        localStorage.setItem('token', token);
+        // localStorage.setItem('token', token);
         localStorage.setItem('userinfo', userinfo);
         store.commit('user/login_saveToken', token);
         this.$q.notify('登录成功');
+
+        let url = '/protected/user/me';
+        const resData2 = await this.$axios.get(url);
+        if (resData2.data.code === 0) {
+          let userinfo = resData2.data.data.me;
+          store.commit('user/setUserinfo', userinfo);
+        }
 
         // this.reload();
         // location.reload();
         // setTimeout(() => location.reload(), 200);
         setTimeout(() => {
           this.onLoggedIn();
-        }, 100);
+        }, 250);
 
         // let url = '/protected/user/me';
         // const resData = await this.$axios.get(url);
