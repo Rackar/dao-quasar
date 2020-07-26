@@ -53,7 +53,7 @@
             <q-spinner-gears size="50px" color="primary" />
           </q-inner-loading>
         </div>
-        <div class="q-size-sm">DAO ID {{ id }} {{ userinfo.mail_export }}</div>
+        <div class="q-size-sm" style="padding-top: 2px;">DAO ID {{ id }} {{ userinfo.mail_export }}</div>
         <div
           class="q-size-sm"
           v-show="!editing &&userinfo.social_twitter"
@@ -248,7 +248,7 @@ export default {
     },
 
     // 个人信息
-    getOtherUser: async function(id) {
+    getOtherUser: async function (id) {
       let url = '/user/' + id;
       const resData = await this.$axios.get(url);
       if (resData.data.code == 0) {
@@ -265,7 +265,7 @@ export default {
         if (getjoined.code == 0) {
           const groups = getjoined.data.grps_joined;
 
-          this.joinedGroupList = groups.map(group => {
+          this.joinedGroupList = groups.map((group) => {
             return {
               label: group.grp.name,
               value: group.grp.id,
@@ -297,7 +297,7 @@ export default {
     },
     getGroupNameFromId(id) {
       if (id && this.joinedGroupList && this.joinedGroupList.length) {
-        let group = this.joinedGroupList.find(group => group.value === id);
+        let group = this.joinedGroupList.find((group) => group.value === id);
         if (group) return group.label;
         else return '';
       } else {
@@ -305,7 +305,7 @@ export default {
       }
     },
     // 我的代币
-    getmycode: async function() {
+    getmycode: async function () {
       let url = 'protected/user/tokens';
       const resCode = await this.$axios.get(url, {});
       if (resCode.data.code == 0) {
@@ -315,7 +315,7 @@ export default {
     },
     getLikes(posts) {
       return new Promise((resolve, reject) => {
-        const postIds = posts.map(i => i.post.id);
+        const postIds = posts.map((i) => i.post.id);
         if (postIds.length === 0) {
           return resolve(posts);
         }
@@ -327,7 +327,7 @@ export default {
               return;
             }
             const likeStatus = res.data.data.likes;
-            posts.forEach(function(item) {
+            posts.forEach(function (item) {
               const status = likeStatus[item.post.id] === undefined ? 1 : likeStatus[item.post.id];
               item.likeStatus = status;
             });
@@ -339,7 +339,7 @@ export default {
       });
     },
     // 我的帖子
-    getMyPosts: async function() {
+    getMyPosts: async function () {
       let url = 'protected/post/my/pull';
       const resCode = await this.$axios.post(url, {
         base_post: null,
@@ -380,7 +380,7 @@ export default {
     //   }
     // },
     showAddComment(id) {
-      this.targetCommentPost = this.pullList.find(i => i.post.id === id);
+      this.targetCommentPost = this.pullList.find((i) => i.post.id === id);
       this.addCommentShow = true;
     },
     onAddComment() {
@@ -388,7 +388,7 @@ export default {
     },
     postDeleted(id) {
       // 删除帖子回调后，直接清除本地数据数组中的值
-      let index = this.pullList.findIndex(post => post.post.id === id);
+      let index = this.pullList.findIndex((post) => post.post.id === id);
       this.pullList.splice(index, 1);
     },
     clickEdit() {
@@ -461,6 +461,9 @@ export default {
   .hover-color {
     position: absolute;
     background-color: #74d2c8;
+    @media only screen and (max-width: 1024px) {
+      background-color: #f8f8f8;
+    }
     height: 55px;
     width: 100%;
     top: 0;
