@@ -56,6 +56,11 @@ const routes = [
     ],
   },
   {
+    path: '/transfer',
+    name: 'transfer',
+    component: () => import('pages/transfer/buy.vue'),
+  },
+  {
     path: '/toast', //测试弹窗模板
     component: () => import('pages/toast/index.vue'),
     name: 'toast',

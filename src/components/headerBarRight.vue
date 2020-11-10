@@ -2,38 +2,38 @@
   <div class="header-bar-right">
     <div v-if="isLoggedIn">
       <q-avatar class="header-notify" size="36px" icon="notifications_none">
-        <q-badge color="red" floating v-if="unreadNotify.length">{{unreadNotify.length}}</q-badge>
+        <q-badge color="red" floating v-if="unreadNotify.length">{{ unreadNotify.length }}</q-badge>
         <q-menu transition-show="jump-down" transition-hide="jump-up" @hide="hideNotice">
-          <div v-if="notificationsShow.length===0">近期无通知。</div>
+          <div v-if="notificationsShow.length === 0">近期无通知。</div>
           <q-list style="min-width:310px;">
             <div v-for="notice in notificationsShow" :key="notice.id">
-              <q-item class="header-notify-detail" :class="{unread:notice.read==1}">
-                <q-item-section v-if="notice.n_type===1 || !notice.n_type">
+              <q-item class="header-notify-detail" :class="{ unread: notice.read == 1 }">
+                <q-item-section v-if="notice.n_type === 1 || !notice.n_type">
                   <q-item-label lines="2">{{ notice.h_text }}</q-item-label>
                 </q-item-section>
-                <q-item-section side avatar v-if="notice.n_type===2 ||notice.n_type===3">
+                <q-item-section side avatar v-if="notice.n_type === 2 || notice.n_type === 3">
                   <q-avatar size="35px">
-                    <img :src="notice.creatorIn.avatar|| 'statics/user.svg'" />
+                    <img :src="notice.creatorIn.avatar || 'statics/user.svg'" />
                   </q-avatar>
                 </q-item-section>
-                <q-item-section v-if="notice.n_type===2">
+                <q-item-section v-if="notice.n_type === 2">
                   <q-item-label lines="2">
                     <router-link :to="{ name: 'articles', params: { id: notice.post + '' } }">
                       {{ notice.h_text }}
                       <br />
-                      <div class="content">{{notice.postIn.content.substr(0,30)}}</div>
+                      <div class="content">{{ notice.postIn.content.substr(0, 30) }}</div>
                     </router-link>
                   </q-item-label>
                 </q-item-section>
 
-                <q-item-section v-if="notice.n_type===3">
+                <q-item-section v-if="notice.n_type === 3">
                   <q-item-label lines="2">
                     <router-link
                       :to="{ name: 'articles', params: { id: notice.commentIn.post + '' } }"
                     >
                       {{ notice.h_text }}
                       <br />
-                      <div class="content">“{{notice.commentIn.content.substr(0,30)}}”</div>
+                      <div class="content">“{{ notice.commentIn.content.substr(0, 30) }}”</div>
 
                       <br />
                     </router-link>
@@ -59,7 +59,9 @@
               <q-item-section @click="createGrp">新建一个群</q-item-section>
             </q-item>
             <q-item clickable v-close-popup v-if="isInGroupPath && groupJoined">
-              <q-item-section @click="setGroupToTop()">{{ isPinned === 2 ? '取消置顶本群' : '置顶本群' }}</q-item-section>
+              <q-item-section @click="setGroupToTop()">
+                {{ isPinned === 2 ? '取消置顶本群' : '置顶本群' }}
+              </q-item-section>
             </q-item>
             <q-item clickable v-close-popup v-if="isInGroupPath && groupJoined">
               <q-item-section @click="leaveGroup()">退出本群</q-item-section>
@@ -67,12 +69,15 @@
 
             <q-separator />
             <q-item clickable v-close-popup>
-              <q-item-section
-                @click="$router.push('/person/show/' + $store.state.user.userid)"
-              >我的DAO @{{user.userid}}</q-item-section>
+              <q-item-section @click="$router.push('/person/show/' + $store.state.user.userid)">
+                我的DAO @{{ user.userid }}
+              </q-item-section>
             </q-item>
             <q-item clickable v-close-popup>
-              <q-item-section @click="clearLogin">退出登录 ({{user.name}})</q-item-section>
+              <q-item-section @click="$router.push('/transfer')">进行交易</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup>
+              <q-item-section @click="clearLogin">退出登录 ({{ user.name }})</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
@@ -93,7 +98,7 @@
               <q-space />
               <q-btn flat round icon="close" v-close-popup />
             </div>-->
-            <div v-if="notificationsShow.length===0">近期无通知。</div>
+            <div v-if="notificationsShow.length === 0">近期无通知。</div>
             <!-- <div
               v-for="notice in notificationsShow"
               :key="notice.id"
@@ -111,15 +116,15 @@
 
             <q-list>
               <div v-for="notice in notificationsShow" :key="notice.id">
-                <q-item class="header-notify-detail" :class="{unread:notice.read==1}">
+                <q-item class="header-notify-detail" :class="{ unread: notice.read == 1 }">
                   <q-item-section>
                     <q-item-label lines="2">{{ notice.h_text }}</q-item-label>
                   </q-item-section>
 
                   <q-item-section side>
-                    <q-item-label
-                      caption
-                    >{{ $utils.timeStringToLocal(notice.create_at,'RelativeTime') }}</q-item-label>
+                    <q-item-label caption>
+                      {{ $utils.timeStringToLocal(notice.create_at, 'RelativeTime') }}
+                    </q-item-label>
                   </q-item-section>
                 </q-item>
                 <q-separator />
@@ -281,7 +286,7 @@ export default {
   },
 };
 </script>
-<style lang="stylus" >
+<style lang="stylus">
 .header-bar-right {
   .header-notify {
     cursor: pointer;
@@ -326,4 +331,3 @@ export default {
   font-weight: 600;
 }
 </style>
-
