@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>D733DAF0-4224-4387-84C5-893EDEA29D67</title>
+    <desc>Created with Sketch.</desc>
+    <g id="设计规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="视觉规范" transform="translate(-1061.000000, -3926.000000)">
+            <g id="icon_touxiang2" transform="translate(1061.000000, 3926.000000)">
+                <rect id="矩形" fill="#F1F1F1" x="0" y="0" width="50" height="50" rx="8"></rect>
+                <path d="M11,28.5046904 L24,28.5046904 C28.418278,28.5046904 32,32.0864124 32,36.5046904 L32,42.5046904 L32,42.5046904 L7,42.5046904 C5.34314575,42.5046904 4,41.1615447 4,39.5046904 L4,35.5046904 C4,31.6386972 7.13400675,28.5046904 11,28.5046904 Z" id="形状结合" fill="#8C909D"></path>
+                <circle id="椭圆形" fill="#8C909D" cx="18.5" cy="20.5" r="6.5"></circle>
+                <path d="M29.7523452,31 L40.2460438,31 C43.4229763,31 45.998389,33.5754127 45.998389,36.7523452 L45.998389,39.5046904 C45.998389,41.1615447 44.6552432,42.5046904 42.998389,42.5046904 L27,42.5046904 C25.3431458,42.5046904 24,41.1615447 24,39.5046904 L24,36.7523452 C24,33.5754127 26.5754127,31 29.7523452,31 Z" id="形状结合" fill="#CED0D5"></path>
+                <circle id="椭圆形" fill="#CED0D5" cx="35" cy="24" r="5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

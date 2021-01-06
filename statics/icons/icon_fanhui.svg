@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="17px" viewBox="0 0 16 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>3026F98D-FBA7-4FDC-B159-5F1DB35DC45E</title>
+    <desc>Created with Sketch.</desc>
+    <g id="设计规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="视觉规范" transform="translate(-941.000000, -4215.000000)" stroke="#2A3542" stroke-width="1.2">
+            <g id="icon_fanhui" transform="translate(948.500000, 4223.500000) scale(-1, 1) translate(-948.500000, -4223.500000) translate(941.000000, 4216.000000)">
+                <path d="M12.5,2.5 L12.5,12 C12.5,12.2761424 12.2761424,12.5 12,12.5 L2.5,12.5 L2.5,12.5" id="路径" transform="translate(7.500000, 7.500000) rotate(-45.000000) translate(-7.500000, -7.500000) "></path>
+                <line x1="4.25959657e-14" y1="7.5" x2="14.0731791" y2="7.5" id="路径-2"></line>
+            </g>
+        </g>
+    </g>
+</svg>

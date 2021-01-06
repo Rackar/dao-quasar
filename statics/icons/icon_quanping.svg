@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="20px" viewBox="0 0 34 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>157B06E8-38EA-4A42-8499-ECE72BC8452C</title>
+    <desc>Created with Sketch.</desc>
+    <g id="视觉规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-242.000000, -4265.000000)" id="icon_quanping">
+            <g transform="translate(242.000000, 4265.000000)">
+                <rect id="矩形" fill="#8C909D" style="mix-blend-mode: multiply;" x="0" y="0" width="34" height="20" rx="2"></rect>
+                <text id="全屏" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" line-spacing="12" fill="#FFFFFF">
+                    <tspan x="5" y="17">全屏</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
